@@ -1,0 +1,26 @@
+.i-button {
+  position: relative;
+  z-index: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 32px;
+  margin: 0;
+  padding-right: 16px;
+  padding-left: 16px;
+  overflow: hidden;
+  font-size: 14px;
+  white-space: nowrap;
+  border: none;
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s linear;
+  &:hover {
+    background-color: rgb(220, 220, 220);
+  }
+  &:active {
+    background-color: rgb(205, 205, 205);
+  }
+}
