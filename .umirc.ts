@@ -7,7 +7,7 @@ export default defineConfig({
   favicon: BaseUrl + '/images/logo.ico',
   logo: BaseUrl + '/images/logo.svg',
   description: 'iDesign React 组件库',
-  outputPath: 'docs-dist',
+  outputPath: 'dist',
   mode: 'site',
   navs: [
     null, // null 值代表保留约定式生成的导航，只做增量配置
