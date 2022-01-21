@@ -1,0 +1,116 @@
+.home-container {
+  width: 100vw;
+  height: auto;
+  margin-top: -50px;
+  margin-left: -58px;
+}
+
+.home-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 100px);
+  padding: 50px;
+  padding-bottom: 0;
+  .home-banner-left {
+    padding-left: 200px;
+    h1 {
+      margin: 0;
+      font-size: 80px;
+    }
+    p {
+      margin: 36px 0;
+      color: #555555;
+      font-size: 32px;
+    }
+    .home-banner-btn-wrap {
+      display: flex;
+      align-items: center;
+    }
+    .home-banner-btn {
+      width: fit-content;
+      margin-right: 36px;
+      padding: 16px 32px;
+      color: #fff;
+      font-size: 24px;
+      white-space: nowrap;
+      background: #3a3cf5;
+      border-color: #3a3cf5;
+      border-radius: 32px;
+      box-shadow: 0 2px #0000000b;
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      &.trans {
+        color: #3a3cf5;
+        background: #fff;
+        border: 1px solid #3a3cf5;
+      }
+    }
+  }
+  .home-banner-right {
+    padding-right: 200px;
+    img {
+      width: 600px;
+    }
+  }
+}
+
+.home-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .home-content-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 22%;
+    .home-content-item-title {
+      height: 24px;
+      margin: 20px 0 30px;
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 24px;
+    }
+    .home-content-item-description {
+      width: 50%;
+      color: #697a8c;
+      font-size: 18px;
+      text-align: left;
+    }
+  }
+}
+
+.home-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(100% - 116px);
+  height: 72px;
+  margin-top: 100px;
+  margin-bottom: -50px;
+  padding: 0 58px;
+  background: #0b0d17;
+  .home-footer-left {
+    width: 500px;
+    color: #d9dbe1;
+  }
+  .home-footer-center {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    .home-footer-center-title {
+      margin-left: 10px;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    img {
+      width: 28px;
+    }
+  }
+  .home-footer-right {
+    display: flex;
+    align-items: center;
+    width: 500px;
+    color: #d9dbe1;
+  }
+}
