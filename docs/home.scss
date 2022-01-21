@@ -1,8 +1,15 @@
+a {
+  text-decoration: none;
+}
+
 .home-container {
   width: 100vw;
   height: auto;
   margin-top: -50px;
   margin-left: -58px;
+  * {
+    cursor: default;
+  }
 }
 
 .home-banner {
@@ -21,7 +28,7 @@
     p {
       margin: 36px 0;
       color: #555555;
-      font-size: 32px;
+      font-size: 30px;
     }
     .home-banner-btn-wrap {
       display: flex;
@@ -32,7 +39,7 @@
       margin-right: 36px;
       padding: 16px 32px;
       color: #fff;
-      font-size: 24px;
+      font-size: 22px;
       white-space: nowrap;
       background: #3a3cf5;
       border-color: #3a3cf5;
@@ -40,6 +47,9 @@
       box-shadow: 0 2px #0000000b;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+      &:hover {
+        opacity: 0.9;
+      }
       &.trans {
         color: #3a3cf5;
         background: #fff;
@@ -99,9 +109,9 @@
     align-items: center;
     color: #fff;
     .home-footer-center-title {
-      margin-left: 10px;
+      margin-left: 12px;
       font-weight: bold;
-      font-size: 18px;
+      font-size: 22px;
     }
     img {
       width: 28px;
@@ -112,5 +122,8 @@
     align-items: center;
     width: 500px;
     color: #d9dbe1;
+    a {
+      color: #d9dbe1;
+    }
   }
 }

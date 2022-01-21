@@ -1,5 +1,7 @@
 import React from 'react';
 import './home.scss';
+import { Link } from 'react-router-dom';
+
 import banner from './assets/banner.png';
 
 import fast from './assets/fast.svg';
@@ -33,6 +35,9 @@ const contentArr = [
 ];
 
 const Home = () => {
+  const toVueVersion = () => {
+    alert('开发中');
+  };
   return (
     <div className="home-container">
       <header className="home-banner">
@@ -40,8 +45,12 @@ const Home = () => {
           <h1>iDesign</h1>
           <p>一套基于 React 的高质量 UI 组件库</p>
           <div className="home-banner-btn-wrap">
-            <div className="home-banner-btn">开始使用</div>
-            <div className="home-banner-btn trans">切换 Vue3 版本</div>
+            <Link to="/components">
+              <div className="home-banner-btn">开始使用</div>
+            </Link>
+            <div className="home-banner-btn trans" onClick={toVueVersion}>
+              切换 Vue3 版本
+            </div>
           </div>
         </div>
         <div className="home-banner-right">
@@ -62,12 +71,15 @@ const Home = () => {
       </section>
 
       <footer className="home-footer">
-        <div className="home-footer-left">© 2022 iDesign UI.</div>
+        <div className="home-footer-left">© 2022 iDesign UI. Made with ❤ by Leophen</div>
         <div className="home-footer-center">
           <img src={logo} alt="idesign" />
           <div className="home-footer-center-title">iDesign</div>
         </div>
-        <div className="home-footer-right">联系方式：leophen@foxmail.com</div>
+        <div className="home-footer-right">
+          联系方式：
+          <a href="mailto:leophen@foxmail.com">leophen@foxmail.com</a>
+        </div>
       </footer>
     </div>
   );
