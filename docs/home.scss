@@ -96,10 +96,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 116px);
+  width: calc(100% - 200px);
   height: 90px;
   margin-top: 100px;
-  padding: 0 58px;
+  padding: 0 100px;
   background: #0b0d17;
   .home-footer-left {
     width: 500px;
@@ -121,6 +121,7 @@ a {
   .home-footer-right {
     display: flex;
     align-items: center;
+    justify-content: right;
     width: 500px;
     color: #d9dbe1;
     a {
