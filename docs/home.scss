@@ -1,3 +1,5 @@
+$theme_color: #3a3cf5;
+
 a {
   text-decoration: none;
 }
@@ -40,8 +42,8 @@ a {
       color: #fff;
       font-size: 22px;
       white-space: nowrap;
-      background: #3a3cf5;
-      border-color: #3a3cf5;
+      background: $theme_color;
+      border-color: $theme_color;
       border-radius: 32px;
       box-shadow: 0 2px #0000000b;
       cursor: pointer;
@@ -50,9 +52,9 @@ a {
         opacity: 0.9;
       }
       &.trans {
-        color: #3a3cf5;
+        color: $theme_color;
         background: #fff;
-        border: 1px solid #3a3cf5;
+        border: 1px solid $theme_color;
       }
     }
   }
@@ -96,10 +98,10 @@ a {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: calc(100% - 200px);
+  width: calc(100% - 72px);
   height: 90px;
   margin-top: 100px;
-  padding: 0 100px;
+  padding: 0 36px;
   background: #0b0d17;
   .home-footer-left {
     width: 500px;

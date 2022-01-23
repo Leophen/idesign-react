@@ -3,33 +3,35 @@ import './home.scss';
 import { Link } from 'react-router-dom';
 
 import banner from './assets/banner.png';
-
 import fast from './assets/fast.svg';
 import customizable from './assets/customizable.svg';
 import atomic from './assets/atomic.svg';
 import fluent from './assets/fluent.svg';
-
 import logo from './assets/logo.svg';
 
 const contentArr = [
   {
     icon: fast,
     title: '高性能',
+    value: 'high_performance',
     description: '为严苛场景精心优化，无需配置，即可拥有最佳的包体积大小和极致的性能。',
   },
   {
     icon: customizable,
     title: '可定制',
+    value: 'customizable',
     description: '可以可靠且高效地对组件外观进行调整，或是创造出自己的主题。',
   },
   {
     icon: atomic,
     title: '原子化',
+    value: 'atomization',
     description: '每个组件的功能，不多也不少，恰好就是你所需。',
   },
   {
     icon: fluent,
     title: '流畅',
+    value: 'fluency',
     description: '拥有流畅和细腻的动画，助力产品打造出极致体验。',
   },
 ];
@@ -60,7 +62,7 @@ const Home = () => {
 
       <section className="home-content">
         {contentArr.map((item) => (
-          <div className="home-content-item">
+          <div className="home-content-item" key={item.value}>
             <div className="home-content-item-icon">
               <img src={item.icon} alt="fast" />
             </div>

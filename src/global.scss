@@ -1,5 +1,12 @@
-.__dumi-default-layout[data-site-mode='true'] {
+$theme_color: #3a3cf5;
+$theme_color2: #3998ff;
+
+.__dumi-default-layout[data-route='\/'] {
   padding: 0;
+}
+
+.__dumi-default-navbar {
+  padding: 0 36px;
 }
 
 .__dumi-default-navbar-logo {
@@ -12,4 +19,68 @@
 
 .__dumi-default-layout-content {
   margin: 0 !important;
+}
+
+.__dumi-default-layout-footer-meta {
+  display: none;
+}
+
+.__dumi-default-navbar-tool {
+  display: none;
+}
+
+.__dumi-default-navbar nav > span > a:hover,
+.__dumi-default-navbar nav > span > a.active {
+  color: $theme_color;
+  &::after {
+    background-color: $theme_color;
+  }
+}
+
+// 组件展示页
+.__dumi-default-menu-list > li > a {
+  padding-left: 36px !important;
+}
+
+.__dumi-default-menu-inner > ul > li > a:not([href]) {
+  color: #303133 !important;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 1.7;
+}
+
+.__dumi-default-menu-inner .__dumi-default-menu-list > li > a ~ ul {
+  margin-left: 0 !important;
+}
+
+.__dumi-default-menu-inner ul li ul {
+  padding-left: 0;
+}
+
+.__dumi-default-menu-list > li > a.active,
+.__dumi-default-menu-inner > ul ul a {
+  height: 40px;
+  margin: 0 24px;
+  margin-top: 6px;
+  padding: 0px 24px !important;
+  overflow: hidden;
+  color: #606266;
+  font-size: 16px;
+  line-height: 40px;
+  white-space: nowrap;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  border-radius: 8px;
+  transition: all 0.1s linear 0s;
+  &::after {
+    display: none !important;
+  }
+  &:hover {
+    color: #38393b;
+    background: #f6f6f6 !important;
+  }
+  &.active {
+    color: $theme_color;
+    background: rgba(58, 60, 245 ,0.06) !important;
+  }
 }
