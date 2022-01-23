@@ -1,6 +1,8 @@
+// 全局色模块
 $theme_color: #3a3cf5;
 $theme_color2: #3998ff;
 
+// 通用模块
 .__dumi-default-layout[data-route='\/'] {
   padding: 0;
 }
@@ -37,7 +39,7 @@ $theme_color2: #3998ff;
   }
 }
 
-// 组件展示页
+// 组件展示页模块
 .__dumi-default-menu-list > li > a {
   padding-left: 36px !important;
 }
@@ -81,6 +83,46 @@ $theme_color2: #3998ff;
   }
   &.active {
     color: $theme_color;
-    background: rgba(58, 60, 245 ,0.06) !important;
+    background: rgba(58, 60, 245, 0.06) !important;
   }
+}
+
+// 文档页模块
+.__dumi-default-layout-content {
+  .markdown {
+    a {
+      color: $theme_color;
+    }
+  }
+}
+
+// 代码块模块
+.__dumi-default-previewer {
+  border-radius: 8px;
+}
+
+.__dumi-default-previewer-source-wrapper {
+  overflow: hidden;
+  border-radius: 0 0 8px 8px;
+}
+
+.__dumi-default-previewer-demo {
+  padding: 40px;
+}
+
+.idesign-demo-block-column {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  column-gap: 16px;
+  row-gap: 16px;
+}
+
+.idesign-demo-block-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+  column-gap: 16px;
+  row-gap: 16px;
 }

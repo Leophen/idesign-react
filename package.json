@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "@umijs/plugin-sass": "^1.1.1",
+    "classnames": "^2.3.1",
     "react": "^16.12.0 || ^17.0.0",
     "react-router-dom": "6"
   },
