@@ -1,6 +1,6 @@
 ---
 hero:
-  title:
+  title: iDesign - 一套基于 React 的高质量 UI 组件库
 #   desc: 一套基于 React 的高质量 UI 组件库
 #   actions:
 #     - text: 开始使用
