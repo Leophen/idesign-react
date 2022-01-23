@@ -1,4 +1,4 @@
-import React, { forwardRef, useRef } from 'react';
+import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
@@ -40,38 +40,36 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 /**
  * 按钮组件
  */
-const Button = forwardRef(
-  ({
-    active,
-    children,
-    disabled,
-    shape = 'round',
-    size = 'medium',
-    theme = 'primary',
-    variant = 'base',
-    className,
-    ...buttonProps
-  }: ButtonProps) => {
-    return (
-      <button
-        className={classNames(
-          'i-button',
-          `i-button--theme-${theme}`,
-          `i-button--variant-${variant}`,
-          `i-button--size-${size}`,
-          `i-button--shape-${shape}`,
-          active && 'i-button-active',
-          disabled && 'i-button-disabled',
-          className,
-        )}
-        disabled={disabled}
-        {...buttonProps}
-      >
-        {children}
-      </button>
-    );
-  },
-);
+const Button = ({
+  active,
+  children = '按钮',
+  disabled,
+  shape = 'round',
+  size = 'medium',
+  theme = 'primary',
+  variant = 'base',
+  className,
+  ...buttonProps
+}: ButtonProps) => {
+  return (
+    <button
+      className={classNames(
+        'i-button',
+        `i-button--theme-${theme}`,
+        `i-button--variant-${variant}`,
+        `i-button--size-${size}`,
+        `i-button--shape-${shape}`,
+        active && 'i-button-active',
+        disabled && 'i-button-disabled',
+        className,
+      )}
+      disabled={disabled}
+      {...buttonProps}
+    >
+      {children}
+    </button>
+  );
+};
 
 Button.displayName = 'Button';
 

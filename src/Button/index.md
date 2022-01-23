@@ -378,3 +378,15 @@ const App = () => {
 
 export default App;
 ```
+
+## API
+
+| 属性     | 说明     | 类型      | 可选值                                      | 默认值  |
+| -------- | -------- | --------- | ------------------------------------------- | ------- | ------ |
+| theme    | 按钮颜色 | string    | info / primary / danger / warning / success | primary |
+| variant  | 边框样式 | string    | base / outline / dashed / text              | base    |
+| size     | 按钮尺寸 | string    | small / medium                              | large   | medium |
+| shape    | 按钮形状 | string    | square / round / circle                     | round   |
+| active   | 是否聚焦 | boolean   | -                                           | false   |
+| disabled | 是否禁用 | boolean   | -                                           | false   |
+| children | 按钮内容 | ReactNode | -                                           | 按钮    |

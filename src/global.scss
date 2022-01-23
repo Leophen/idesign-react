@@ -31,12 +31,20 @@ $theme_color2: #3998ff;
   display: none;
 }
 
+.__dumi-default-navbar nav > span > a {
+  font-size: 16px;
+}
+
 .__dumi-default-navbar nav > span > a:hover,
 .__dumi-default-navbar nav > span > a.active {
   color: $theme_color;
   &::after {
     background-color: $theme_color;
   }
+}
+
+.__dumi-default-search > ul li a:hover {
+  color: $theme_color;
 }
 
 // 组件展示页模块
@@ -96,6 +104,66 @@ $theme_color2: #3998ff;
   }
 }
 
+.markdown {
+  font-size: 18px;
+  h1,
+  h2 {
+    color: #515151;
+    font-weight: 700;
+    font-size: 32px;
+  }
+  h2 {
+    font-size: 26px;
+  }
+  p {
+    color: #304455;
+  }
+  code {
+    color: $theme_color2 !important;
+  }
+}
+
+.__dumi-default-layout[data-site-mode='true'][data-show-slugs='true'] {
+  padding-right: 360px;
+}
+
+.__dumi-default-layout-toc {
+  width: 290px;
+}
+
+.__dumi-default-layout-toc li {
+  display: flex;
+  padding: 0;
+}
+
+.__dumi-default-layout-toc li a {
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  margin-bottom: 6px;
+  margin-left: 24px !important;
+  padding: 10px 2px;
+  font-size: 16px;
+  border-radius: 8px;
+  transition: all 0.1s ease-out;
+  &:hover {
+    background: #f6f6f6;
+  }
+}
+
+.__dumi-default-layout-toc li a:hover,
+ul[role='slug-list'] li > a.active {
+  color: $theme_color;
+}
+
+.__dumi-default-layout-toc li a::before {
+  width: 1px;
+}
+
+.__dumi-default-layout-toc li a.active::before {
+  background: $theme_color;
+}
+
 // 代码块模块
 .__dumi-default-previewer {
   border-radius: 8px;
@@ -125,4 +193,361 @@ $theme_color2: #3998ff;
   box-sizing: border-box;
   column-gap: 16px;
   row-gap: 16px;
+}
+
+.prism-code {
+  padding: 20px 24px !important;
+}
+
+.__dumi-default-previewer-actions button {
+  transform: scale(1.2);
+}
+
+.__dumi-default-previewer-actions > a:not(:last-child), .__dumi-default-previewer-actions > button:not(:last-child) {
+  margin-right: 16px;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  font-size: 18px;
+  font-family: Menlo, Monaco, Consolas, Courier New, monospace !important;
+  line-height: 28px;
+  text-shadow: none;
+}
+
+.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string {
+  background: none;
+}
+
+$white: #bbc3d2;
+$sfgrey: #bbbbbb;
+$grey: #818a9b;
+$yellow: #edc67e;
+$green: #98c379;
+$greblue: #54c4b9;
+$blue: #61afef;
+$red: #e06c75;
+$orange: #d19a66;
+$purple: #bd93f9;
+
+.__dumi-default-code-block > pre[class*='language-'] {
+  background: #282c34;
+}
+
+.language-ts {
+  .token-line {
+    .token {
+      &.maybe-class-name {
+        color: $blue !important;
+      }
+    }
+  }
+}
+
+.token-line {
+  .token {
+    // js
+    &.imports {
+      color: $white !important;
+    }
+    &.string {
+      color: $yellow !important;
+    }
+    &.boolean {
+      color: $greblue !important;
+    }
+    &.keyword {
+      color: $greblue !important;
+      font-style: italic !important;
+      &.control-flow {
+        color: $red !important;
+      }
+      &.module {
+        color: $red !important;
+      }
+    }
+    &.exports {
+      color: $white !important;
+      &.operator {
+        color: $greblue !important;
+      }
+    }
+    &.imports {
+      color: $white !important;
+      &.operator {
+        color: $greblue !important;
+      }
+    }
+    &.function {
+      color: $green !important;
+    }
+    &.function-variable {
+      &.function {
+        &.maybe-class-name {
+          color: $green !important;
+        }
+      }
+    }
+    &.method.function.property-access {
+      color: $green !important;
+    }
+    &.punctuation {
+      color: $yellow !important;
+    }
+    &.parameter {
+      color: $orange !important;
+      &.punctuation {
+        color: $white !important;
+      }
+    }
+    &,
+    &.parameter,
+    &.spread {
+      &.operator {
+        color: $red !important;
+      }
+    }
+    &.plain {
+      color: $white !important;
+    }
+    &.comment {
+      color: $grey !important;
+      font-style: unset !important;
+    }
+    &.number {
+      color: $purple !important;
+    }
+    &.dom.variable {
+      color: $purple !important;
+      font-style: italic !important;
+    }
+    &.constant {
+      color: $purple !important;
+    }
+    &.property-access {
+      color: $greblue !important;
+    }
+    &.known-class-name.class-name {
+      color: $greblue !important;
+    }
+    &.console.class-name {
+      color: $blue !important;
+    }
+    &.class-name {
+      color: $blue !important;
+    }
+    &.regex {
+      &.regex-delimiter {
+        color: $yellow !important;
+      }
+      &.regex-source.language-regex {
+        color: $greblue !important;
+      }
+      &.regex-flags {
+        color: $red !important;
+      }
+    }
+    &.maybe-class-name {
+      // color: $blue !important;
+      color: $white !important;
+    }
+    &.template-string {
+      &.string {
+        color: $yellow !important;
+      }
+      &.interpolation {
+        color: $blue !important;
+        &.operator,
+        &.punctuation {
+          color: $red !important;
+        }
+        &.interpolation-punctuation.punctuation {
+          color: $purple !important;
+        }
+        &.function {
+          color: $green !important;
+        }
+        &.regex {
+          &.regex-delimiter {
+            color: $yellow !important;
+          }
+          &.regex-flags {
+            color: $red !important;
+          }
+        }
+      }
+    }
+    &.script {
+      &.language-javascript {
+        color: $blue;
+      }
+    }
+
+    // python
+    &.builtin {
+      color: $blue !important;
+    }
+
+    // html
+    &.tag {
+      color: $red !important;
+      &.punctuation {
+        color: $sfgrey !important;
+      }
+      &.attr-name {
+        color: $green !important;
+      }
+      &.class-name {
+        color: $blue !important;
+      }
+      &.spread {
+        &.punctuation {
+          color: $purple !important;
+        }
+        &.attr-value {
+          color: $orange !important;
+        }
+      }
+      &.attr-value {
+        color: $yellow !important;
+        &.punctuation {
+          color: $yellow !important;
+          &.attr-equals {
+            color: $red !important;
+          }
+        }
+      }
+      &.script.language-javascript {
+        color: $white !important;
+        &.operator,
+        &.script-punctuation.punctuation {
+          color: $red !important;
+        }
+        &.punctuation {
+          color: $purple !important;
+        }
+        &.function {
+          color: $blue !important;
+        }
+        &.keyword {
+          color: $greblue !important;
+        }
+        &.parameter {
+          color: $orange !important;
+        }
+        &.string {
+          color: $yellow !important;
+        }
+        &.tag {
+          &.class-name {
+            color: $blue !important;
+          }
+        }
+      }
+    }
+    &.entity.named-entity {
+      color: $greblue !important;
+    }
+    &.style.language-css {
+      color: $blue;
+      &.atrule {
+        &.rule {
+          color: $red !important;
+        }
+        &.url {
+          color: $orange !important;
+          &.function {
+            color: $green !important;
+          }
+        }
+      }
+    }
+    &.doctype {
+      font-style: unset !important;
+      &.punctuation {
+        color: $white !important;
+      }
+      &.doctype-tag {
+        color: $red !important;
+      }
+      &.name {
+        color: $greblue !important;
+      }
+    }
+
+    // xml
+    &.prolog {
+      color: $purple !important;
+      font-style: italic !important;
+    }
+
+    // css
+    &.selector {
+      color: $green !important;
+      &.parent.important {
+        color: $red !important;
+      }
+    }
+    &.property {
+      color: $greblue !important;
+    }
+    &.unit {
+      color: $red !important;
+    }
+    &.important {
+      color: $red !important;
+    }
+    &.hexcode.color {
+      color: $purple !important;
+    }
+    &.color {
+      color: $purple !important;
+    }
+    &.atrule {
+      color: $red !important;
+      &.rule {
+        color: $purple !important;
+      }
+      &.keyword {
+        color: $blue !important;
+      }
+      &.punctuation {
+        color: $orange !important;
+      }
+      &.property {
+        color: $greblue !important;
+      }
+      &.number {
+        color: $purple !important;
+      }
+      &.unit {
+        color: $red !important;
+      }
+    }
+
+    // diff
+    &.unchanged.line {
+      color: $white !important;
+    }
+    &.inserted-sign {
+      &.inserted {
+        &.line,
+        &.prefix.inserted {
+          color: $green !important;
+        }
+        &.prefix.inserted {
+          user-select: none;
+        }
+      }
+    }
+    &.deleted-sign.deleted {
+      &.line,
+      &.prefix.deleted {
+        color: $red !important;
+      }
+      &.prefix.deleted {
+        user-select: none;
+      }
+    }
+  }
 }
