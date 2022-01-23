@@ -121,13 +121,30 @@ a {
     }
   }
   .home-footer-right {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: right;
     width: 500px;
     color: #d9dbe1;
-    a {
+    .home-footer-right-email {
       color: #d9dbe1;
+      cursor: pointer;
+    }
+    .home-footer-right-tip {
+      position: absolute;
+      opacity: 0;
+      top: -42px;
+      left: 340px;
+      font-size: 14px;
+      color: #333;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: #f4f5f7;
+      box-shadow: 0 0px 12px rgb(0 0 0 / 25%);
+      &.-visible {
+        opacity: 1;
+      }
     }
   }
 }

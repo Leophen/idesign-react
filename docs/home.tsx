@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './home.scss';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames';
 
 import banner from './assets/banner.png';
 import fast from './assets/fast.svg';
@@ -39,6 +40,20 @@ const contentArr = [
 const Home = () => {
   const toVueVersion = () => {
     alert('开发中');
+  };
+  const [tipVisible, setTipVisible] = useState(false);
+  const [copyText, setCopyText] = useState('点击复制邮箱');
+  const myEmail = 'leophen@foxmail.com';
+  const handleCopyEmail = () => {
+    setCopyText('已复制');
+    navigator.clipboard.writeText(myEmail);
+  };
+  const handleEnterEmail = () => {
+    setTipVisible(true);
+  };
+  const handleLeaveEmail = () => {
+    setCopyText('点击复制邮箱');
+    setTipVisible(false);
   };
   return (
     <div className="home-container">
@@ -80,7 +95,17 @@ const Home = () => {
         </div>
         <div className="home-footer-right">
           联系方式：
-          <a href="mailto:leophen@foxmail.com">leophen@foxmail.com</a>
+          <div
+            className="home-footer-right-email"
+            onClick={handleCopyEmail}
+            onMouseEnter={handleEnterEmail}
+            onMouseLeave={handleLeaveEmail}
+          >
+            {myEmail}
+          </div>
+          <div className={classNames('home-footer-right-tip', tipVisible && '-visible')}>
+            {copyText}
+          </div>
         </div>
       </footer>
     </div>
