@@ -1,0 +1,24 @@
+.i-layout {
+  display: flex;
+  flex: auto;
+  flex-direction: column;
+  &.i-layout-has-aside {
+    flex-direction: row;
+  }
+}
+
+.i-layout--header {
+  box-sizing: border-box;
+}
+
+.i-layout--aside {
+  box-sizing: border-box;
+}
+
+.i-layout--content {
+  box-sizing: border-box;
+}
+
+.i-layout--footer {
+  box-sizing: border-box;
+}

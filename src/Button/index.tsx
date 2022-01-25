@@ -13,6 +13,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    */
   children?: React.ReactNode;
   /**
+   * 类名
+   */
+  className?: string;
+  /**
    * 是否禁用按钮
    * @default false
    */
@@ -28,6 +32,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    */
   size?: 'small' | 'medium' | 'large';
   /**
+   * 组件自定义样式
+   */
+  style?: React.CSSProperties;
+  /**
    * 组件风格
    */
   theme?: 'info' | 'primary' | 'danger' | 'warning' | 'success';
@@ -40,17 +48,19 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
 /**
  * 按钮组件
  */
-const Button = ({
-  active,
-  children = '按钮',
-  disabled,
-  shape = 'round',
-  size = 'medium',
-  theme = 'primary',
-  variant = 'base',
-  className,
-  ...buttonProps
-}: ButtonProps) => {
+const Button = (props: ButtonProps) => {
+  const {
+    active,
+    children = '按钮',
+    className,
+    disabled,
+    shape = 'round',
+    size = 'medium',
+    style,
+    theme = 'primary',
+    variant = 'base',
+    ...buttonProps
+  } = props;
   return (
     <button
       className={classNames(

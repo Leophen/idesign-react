@@ -5,8 +5,8 @@ $theme_color2: #3998ff;
 // 通用模块
 .__dumi-default-layout[data-route='\/'] {
   padding: 0;
-  user-select: none;
   overflow-x: hidden;
+  user-select: none;
 }
 
 .__dumi-default-navbar {
@@ -115,13 +115,24 @@ $theme_color2: #3998ff;
     font-size: 32px;
   }
   h2 {
-    font-size: 26px;
+    font-size: 24px;
   }
   p {
     color: #304455;
   }
   code {
     color: $theme_color2 !important;
+  }
+  table th {
+    text-align: left;
+  }
+  h1:hover > a[aria-hidden]::after,
+  h2:hover > a[aria-hidden]::after,
+  h3:hover > a[aria-hidden]::after,
+  h4:hover > a[aria-hidden]::after,
+  h5:hover > a[aria-hidden]::after,
+  h6:hover > a[aria-hidden]::after {
+    display: none;
   }
 }
 
@@ -167,6 +178,12 @@ ul[role='slug-list'] li > a.active {
 }
 
 // 代码块模块
+.__dumi-default-layout[data-route='\/guide'] {
+  .prism-code {
+    border-radius: 8px;
+  }
+}
+
 .__dumi-default-previewer {
   border-radius: 8px;
 }
@@ -205,8 +222,15 @@ ul[role='slug-list'] li > a.active {
   transform: scale(1.2);
 }
 
-.__dumi-default-previewer-actions > a:not(:last-child), .__dumi-default-previewer-actions > button:not(:last-child) {
+.__dumi-default-previewer-actions > a:not(:last-child),
+.__dumi-default-previewer-actions > button:not(:last-child) {
   margin-right: 16px;
+}
+
+.__dumi-default-previewer-actions a,
+.__dumi-default-icon[title='Get JSX via TypeScript Playground'],
+.__dumi-default-icon[title='Open demo on CodeSandbox.io'] {
+  display: none;
 }
 
 code[class*='language-'],
@@ -217,7 +241,53 @@ pre[class*='language-'] {
   text-shadow: none;
 }
 
-.token.operator, .token.entity, .token.url, .language-css .token.string, .style .token.string {
+.__dumi-default-previewer-demo {
+  .i-layout--header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 64px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    background: #9dbbf3;
+  }
+  .i-layout--aside {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    background: #5886e9;
+  }
+  .i-layout--content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    background: #759eee;
+  }
+  .i-layout--footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 46px;
+    color: #fff;
+    font-size: 16px;
+    text-align: center;
+    background: #9dbbf3;
+  }
+}
+
+.token.operator,
+.token.entity,
+.token.url,
+.language-css .token.string,
+.style .token.string {
   background: none;
 }
 

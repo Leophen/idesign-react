@@ -1,4 +1,7 @@
-$theme_color: #3a3cf5;
+$primary: #3a3cf5;
+$primary_hover: #5d5ff3;
+$primary_active: #2e31d5;
+$primary_disabled: #9fa1fe;
 
 a {
   text-decoration: none;
@@ -42,19 +45,32 @@ a {
       color: #fff;
       font-size: 22px;
       white-space: nowrap;
-      background: $theme_color;
-      border-color: $theme_color;
+      background: $primary;
+      border-color: $primary;
       border-radius: 32px;
       box-shadow: 0 2px #0000000b;
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       &:hover {
-        opacity: 0.9;
+        background: $primary_hover;
+        border-color: $primary_hover;
+      }
+      &:active {
+        background: $primary_active;
+        border-color: $primary_active;
       }
       &.trans {
-        color: $theme_color;
+        color: $primary;
         background: #fff;
-        border: 1px solid $theme_color;
+        border: 1px solid $primary;
+        &:hover {
+          color: $primary_hover;
+          border-color: $primary_hover;
+        }
+        &:active {
+          color: $primary_active;
+          border-color: $primary_active;
+        }
       }
     }
   }

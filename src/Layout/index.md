@@ -7,13 +7,131 @@ group:
   order: 1
 ---
 
-## Layout 布局
+# Layout 布局
 
-Demo:
+用于组织网页的框架结构。
+
+## 顶部导航布局
+
+`<Layout>` 容器、可包裹子组件 `<Header>`、`<Footer>`、`<Aside>`、`<Content>`。
 
 ```tsx
 import React from 'react';
 import { Layout } from 'idesign-react';
 
-export default () => <Layout title="First Demo" />;
+const { Header, Content, Footer, Aside } = Layout;
+
+const App = () => {
+  return (
+    <Layout>
+      <Header>Header</Header>
+      <Content>Content</Content>
+      <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+    </Layout>
+  );
+};
+
+export default App;
 ```
+
+## 侧边导航布局
+
+当 `<Layout>` 容器子元素中包含 `<Aside>` 侧边栏组件时，`<Layout>` 容器的全部子元素会水平排列，否则会垂直排列。
+
+```tsx
+import React from 'react';
+import { Layout } from 'idesign-react';
+
+const { Header, Content, Footer, Aside } = Layout;
+
+const App = () => {
+  return (
+    <Layout>
+      <Aside>Aside</Aside>
+      <Layout>
+        <Content>Content</Content>
+        <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default App;
+```
+
+## 组合导航布局
+
+可根据所需场景自由组合。
+
+```tsx
+import React from 'react';
+import { Layout } from 'idesign-react';
+
+const { Header, Content, Footer, Aside } = Layout;
+
+const App = () => {
+  return (
+    <>
+      <Layout>
+        <Header>Header</Header>
+        <Layout>
+          <Aside>Aside</Aside>
+          <Layout>
+            <Content>Content</Content>
+            <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+          </Layout>
+        </Layout>
+      </Layout>
+
+      <br />
+
+      <Layout>
+        <Header>Header</Header>
+        <Layout>
+          <Layout>
+            <Content>Content</Content>
+            <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+          </Layout>
+          <Aside>Aside</Aside>
+        </Layout>
+      </Layout>
+    </>
+  );
+};
+
+export default App;
+```
+
+## 自定义侧边栏
+
+`Aside` 提供 `width` 属性来自定义宽度。
+
+```tsx
+import React from 'react';
+import { Layout } from 'idesign-react';
+
+const { Header, Content, Footer, Aside } = Layout;
+
+const App = () => {
+  return (
+    <Layout>
+      <Header>Header</Header>
+      <Layout>
+        <Aside width={100}>Aside</Aside>
+        <Layout>
+          <Content>Content</Content>
+          <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+        </Layout>
+      </Layout>
+    </Layout>
+  );
+};
+
+export default App;
+```
+
+## Aside API
+
+| 属性  | 说明 | 类型   | 可选值 | 默认值 |
+| ----- | ---- | ------ | ------ | ------ |
+| width | 宽度 | string | -      | -      |
