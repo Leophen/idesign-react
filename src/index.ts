@@ -1,5 +1,6 @@
 // 基础
 export { default as Button } from './Button';
+export { default as Icon } from './Icon';
 export { default as Layout } from './Layout';
 // 导航
 export { default as Pagination } from './Pagination';

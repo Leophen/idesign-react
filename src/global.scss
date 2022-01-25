@@ -11,6 +11,14 @@ $theme_color2: #3998ff;
 
 .__dumi-default-navbar {
   padding: 0 36px;
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.__dumi-default-search-input {
+  width: 220px;
+  height: 36px;
+  border-radius: 10px;
 }
 
 .__dumi-default-navbar-logo {
@@ -82,7 +90,7 @@ $theme_color2: #3998ff;
   white-space: nowrap;
   text-decoration: none;
   text-overflow: ellipsis;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.1s linear 0s;
   &::after {
     display: none !important;
@@ -157,7 +165,7 @@ $theme_color2: #3998ff;
   margin-left: 24px !important;
   padding: 10px 2px;
   font-size: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   transition: all 0.1s ease-out;
   &:hover {
     background: #f6f6f6;
@@ -180,12 +188,12 @@ ul[role='slug-list'] li > a.active {
 // 代码块模块
 .__dumi-default-layout[data-route='\/guide'] {
   .prism-code {
-    border-radius: 8px;
+    border-radius: 10px;
   }
 }
 
 .__dumi-default-previewer {
-  border-radius: 8px;
+  border-radius: 10px;
 }
 
 .__dumi-default-previewer-source-wrapper {
@@ -212,6 +220,54 @@ ul[role='slug-list'] li > a.active {
   box-sizing: border-box;
   column-gap: 16px;
   row-gap: 16px;
+}
+
+.i-design-demo-icon-list {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  color: #303133;
+  border: 1px solid #ebedf1;
+  border-radius: 10px;
+  text-size-adjust: 100%;
+}
+
+.i-design-demo-icon-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 125px;
+  color: #606266;
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: center;
+  list-style: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-size-adjust: 100%;
+  &:hover {
+    background: #f2f2f2;
+  }
+  &::after {
+    position: absolute;
+    top: 4px;
+    color: #999ba2;
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.1s ease-out;
+    content: '已复制组件';
+  }
+  &.-copyed {
+    &::after {
+      opacity: 1;
+    }
+  }
 }
 
 .prism-code {

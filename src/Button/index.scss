@@ -2,6 +2,7 @@ $info: #e7e7e7;
 $info_hover: #dcdcdc;
 $info_active: #c1c1c1;
 $info_disabled: #ededed;
+$info_font: rgba(0, 0, 0, 0.8);
 
 $primary: #3a3cf5;
 $primary_hover: #5d5ff3;
@@ -148,29 +149,29 @@ $null_bg: transparent;
 
 .i-button--theme-info {
   @include injectColor($info, $info_hover, $info_active, $info_disabled);
-  color: rgba(0, 0, 0, 0.8);
+  color: $info_font;
 
   &.i-button--variant-text,
   &.i-button--variant-outline,
   &.i-button--variant-dashed {
-    color: rgba(0, 0, 0, 0.8);
+    color: $info_font;
     &:hover {
-      color: rgba(0, 0, 0, 0.8);
+      color: $info_font;
     }
     &:active {
-      color: rgba(0, 0, 0, 0.8);
+      color: $info_font;
     }
   }
 
   &.i-button-active {
-    color: rgba(0, 0, 0, 0.8);
+    color: $info_font;
 
     &.i-button--variant-text,
     &.i-button--variant-outline,
     &.i-button--variant-dashed {
-      color: rgba(0, 0, 0, 0.8);
+      color: $info_font;
       &:hover {
-        color: rgba(0, 0, 0, 0.8);
+        color: $info_font;
       }
     }
   }
