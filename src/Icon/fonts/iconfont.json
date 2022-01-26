@@ -6,6 +6,13 @@
   "description": "iDesign 图标库",
   "glyphs": [
     {
+      "icon_id": "27434657",
+      "name": "AddFile",
+      "font_class": "AddFile",
+      "unicode": "e6b9",
+      "unicode_decimal": 59065
+    },
+    {
       "icon_id": "27431421",
       "name": "CheckBold",
       "font_class": "CheckBold",

@@ -13,6 +13,10 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-AddFile:before {
+  content: '\e6b9';
+}
+
 .icon-CheckBold:before {
   content: '\e653';
 }
