@@ -129,10 +129,4 @@ const App = () => {
 export default App;
 ```
 
-## API
-
-| 属性  | 说明     | 类型            | 可选值 | 默认值 |
-| ----- | -------- | --------------- | ------ | ------ |
-| name  | 图标名称 | string          | -      | -      |
-| size  | 图标大小 | number / string | -      | 16     |
-| color | 图标颜色 | string          | -      | -      |
+<API src="./index.tsx"></API>

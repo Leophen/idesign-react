@@ -131,6 +131,12 @@ $theme_color2: #3998ff;
   code {
     color: $theme_color2 !important;
   }
+  table {
+    box-sizing: border-box;
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px #ebedf1;
+  }
   table th {
     text-align: left;
   }
@@ -189,6 +195,12 @@ ul[role='slug-list'] li > a.active {
 .__dumi-default-layout[data-route='\/guide'] {
   .prism-code {
     border-radius: 10px;
+  }
+}
+
+.__dumi-default-layout[data-route*='\/components'] {
+  .prism-code {
+    border-radius: 0 0 10px 10px;
   }
 }
 

@@ -3,7 +3,7 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 反馈组件
+  title: 弹框提示组件
   order: 5
 ---
 

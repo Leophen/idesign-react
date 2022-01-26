@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps {
   /**
    * 是否聚焦状态
    * @default false
@@ -32,15 +32,17 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * 组件自定义样式
+   * 自定义样式
    */
   style?: React.CSSProperties;
   /**
    * 组件风格
+   * @default primary
    */
   theme?: 'info' | 'primary' | 'danger' | 'warning' | 'success';
   /**
    * 按钮形式
+   * @default base
    */
   variant?: 'base' | 'outline' | 'dashed' | 'text';
 }
@@ -50,10 +52,10 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
  */
 const Button = (props: ButtonProps) => {
   const {
-    active,
-    children = '按钮',
+    active = false,
+    children = '',
     className,
-    disabled,
+    disabled = false,
     shape = 'round',
     size = 'medium',
     style,
@@ -73,6 +75,7 @@ const Button = (props: ButtonProps) => {
         disabled && 'i-button-disabled',
         className,
       )}
+      style={{ ...style }}
       disabled={disabled}
       {...buttonProps}
     >

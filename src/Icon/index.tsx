@@ -3,9 +3,22 @@ import './index.scss';
 import classNames from 'classnames';
 
 interface IconProps {
+  /**
+   * 图标颜色
+   */
   color?: string;
+  /**
+   * 图标名称
+   */
   name?: string;
+  /**
+   * 图标尺寸
+   * @default 16
+   */
   size?: number | string;
+  /**
+   * 组件自定义样式
+   */
   style?: React.CSSProperties;
 }
 
@@ -18,9 +31,7 @@ const Icon = (props: IconProps) => {
     ...style,
   };
 
-  return (
-    <i style={iconStyles} className={classNames('i-design-icon', `icon-${name}`)} {...others} />
-  );
+  return <i style={iconStyles} className={classNames('i-icon', `icon-${name}`)} {...others} />;
 };
 
 export default Icon;

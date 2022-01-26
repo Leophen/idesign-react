@@ -133,6 +133,9 @@ export default App;
 
 ## Aside API
 
-| 属性  | 说明 | 类型   | 可选值 | 默认值 |
-| ----- | ---- | ------ | ------ | ------ |
-| width | 宽度 | string | -      | -      |
+| 属性      | 说明       | 类型            | 默认值 |
+| --------- | ---------- | --------------- | ------ |
+| children  | 内容       | `ReactNode`     | `- -`  |
+| className | 自定义类名 | `string`        | `- -`  |
+| style     | 自定义样式 | `CSSProperties` | `- -`  |
+| width     | 宽度       | `string`        | `240`  |
