@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
@@ -13,7 +13,7 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
-  "main": "dist/src/index.d.ts",
+  "main": "es/index.js",
   "module": "dist/index.esm.js",
   "typings": "dist/src/index.d.ts",
   "gitHooks": {
