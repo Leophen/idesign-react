@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "scripts": {
     "start": "dumi dev",
     "docs:build": "dumi build",
