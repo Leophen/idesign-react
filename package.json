@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "iDesign 前端通用组件库",
   "scripts": {
     "start": "dumi dev",
@@ -17,6 +17,9 @@
   "main": "dist/src/index.d.ts",
   "module": "dist/index.esm.js",
   "typings": "dist/src/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "gitHooks": {
     "pre-commit": "lint-staged"
   },
