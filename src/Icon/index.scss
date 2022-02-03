@@ -1,8 +1,11 @@
 @font-face {
   font-family: 'idesignicon';
-  src: url('./fonts/iconfont.woff2') format('woff2'),
-    url('./fonts/iconfont.woff') format('woff'),
-    url('./fonts/iconfont.ttf') format('truetype');
+  src: url('');
+  src: url('?#iefix') format('embedded-opentype'),
+  url('//at.alicdn.com/t/font_3161433_y2popfodwa.woff2') format('woff2'),
+  url('//at.alicdn.com/t/font_3161433_y2popfodwa.woff') format('woff'),
+  url('//at.alicdn.com/t/font_3161433_y2popfodwa.ttf') format('truetype'),
+  url('#iconfont') format('svg');
 }
 
 .i-icon {

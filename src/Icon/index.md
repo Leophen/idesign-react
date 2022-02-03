@@ -83,12 +83,15 @@ export default App;
 
 import React, { useState } from 'react';
 import { Icon } from 'idesign-react';
-import iconData from './fonts/iconfont.json';
 import _ from 'lodash';
+import axios from 'axios';
 import classNames from 'classnames';
 
 const App = () => {
-  const iconArr = iconData.glyphs;
+  const [iconArr, setIconArr] = useState([]);
+  const api =
+    'https://at.alicdn.com/t/font_3161433_y2popfodwa.json?spm=a313x.7781069.1998910419.43&file=font_3161433_y2popfodwa.json';
+  const iconData = axios.get(api).then((res) => setIconArr(res.data.glyphs));
   const sortedIconArr = _.sortBy(iconArr, (item) => item.name);
 
   const [copyed, setCopyed] = useState(false);
