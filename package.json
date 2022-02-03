@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "iDesign 前端通用组件库",
   "scripts": {
     "start": "dumi dev",
@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "@umijs/plugin-sass": "^1.1.1",
+    "axios": "^0.25.0",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "react": "^16.12.0 || ^17.0.0",
