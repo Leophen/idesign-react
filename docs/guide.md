@@ -20,8 +20,8 @@ yarn add idesign-react
 直接引入组件使用即可：
 
 ```tsx | pure
-import { Button } from 'idesign-react';
+import { Button } from 'idesign-react'
 
 // ...
-<Button>按钮</Button>;
+<Button>按钮</Button>
 ```
