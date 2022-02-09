@@ -36,7 +36,7 @@ export interface AsideProps extends UsualProps {
    * 侧边栏宽度。样式表（class）中定义的默认宽度为：232px
    * @default ''
    */
-  width?: string;
+  width?: string | number;
 }
 
 export interface ContentProps extends UsualProps {}

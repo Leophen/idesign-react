@@ -1,3 +1,5 @@
+$primary: #3a3cf5;
+
 .i-breadcrumb {
   display: flex;
   align-items: center;
@@ -6,10 +8,49 @@
 .i-breadcrumb__item {
   display: flex;
   align-items: center;
+  &:last-of-type {
+    .i-breadcrumb__inner,
+    .i-breadcrumb__inner a {
+      color: rgba(0, 0, 0, 0.902);
+      &:hover {
+        color: $primary;
+        transition: color 0.2s ease-out;
+      }
+    }
+    .i-breadcrumb__separator {
+      display: none;
+    }
+  }
+}
+
+.i-breadcrumb__inner,
+.i-breadcrumb__inner a {
+  display: inline-block;
+  overflow: hidden;
+  color: rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  cursor: pointer;
+  &:hover {
+    color: $primary;
+    transition: color 0.2s ease-out;
+  }
 }
 
 .i-breadcrumb__separator {
   display: flex;
   align-items: center;
   margin: 0 4px;
+}
+
+.i-breadcrumb-is-disabled {
+  .i-breadcrumb__inner,
+  .i-breadcrumb__inner a {
+    color: #c0c4cc;
+    cursor: not-allowed;
+    &:hover {
+      color: #c0c4cc;
+    }
+  }
 }

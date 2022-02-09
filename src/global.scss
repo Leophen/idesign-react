@@ -134,8 +134,13 @@ $theme_color2: #3998ff;
   table {
     box-sizing: border-box;
     overflow: hidden;
+    border: 1px solid transparent;
     border-radius: 10px;
-    box-shadow: 0 0 0 1px #ebedf1;
+    box-shadow: inset 0 0 0 1px #ebedf1;
+  }
+  table thead {
+    border: 2px solid #ebedf1;
+    border-bottom: 0;
   }
   table th {
     text-align: left;
@@ -284,6 +289,10 @@ ul[role='slug-list'] li > a.active {
 
 .prism-code {
   padding: 20px 24px !important;
+}
+
+.__dumi-default-previewer-actions {
+  background-color: rgba(58, 60, 245, 0.01);
 }
 
 .__dumi-default-previewer-actions button {

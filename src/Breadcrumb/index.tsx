@@ -1,17 +1,7 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import classNames from 'classnames';
 import Icon from '../Icon';
 import './index.scss';
-
-export type RouteData = { [key: string]: string | string[] };
-
-export interface Route {
-  path?: string;
-  name?: string;
-  hash?: string;
-  query?: RouteData;
-  params?: RouteData;
-}
 
 export interface BreadcrumbProps {
   /**
@@ -22,6 +12,14 @@ export interface BreadcrumbProps {
    * 类名
    */
   className?: string;
+  /**
+   * 单项最大宽度，超出后会以省略号形式呈现
+   */
+  maxItemWidth?: string | number;
+  /**
+   * 自定义分隔符
+   */
+  separator?: React.ReactNode;
   /**
    * 自定义样式
    */
@@ -42,19 +40,13 @@ export interface BreadcrumbItemProps {
    */
   disabled?: boolean;
   /**
-   * 跳转链接
-   * @default ''
+   * 单项最大宽度，超出后会以省略号形式呈现
    */
-  href?: string;
+  maxItemWidth?: string | number;
   /**
-   * 路由跳转是否采用覆盖的方式（覆盖后将没有浏览器历史记录）
-   * @default false
+   * 最大宽度，超出后会以省略号形式呈现。优先级高于 maxItemWidth
    */
-  replace?: boolean;
-  /**
-   * 路由对象。如果项目存在 Router，则默认使用 Router。
-   */
-  router?: Record<string, any>;
+  maxWidth?: string | number;
   /**
    * 自定义分隔符
    */
@@ -63,15 +55,6 @@ export interface BreadcrumbItemProps {
    * 自定义样式
    */
   style?: React.CSSProperties;
-  /**
-   * 链接或路由跳转方式
-   * @default _self
-   */
-  target?: '_blank' | '_self' | '_parent' | '_top';
-  /**
-   * 路由跳转目标，当且仅当 Router 存在时，该 API 有效
-   */
-  to?: Route;
 }
 
 const BreadcrumbItem = (props: BreadcrumbItemProps) => {
@@ -79,47 +62,68 @@ const BreadcrumbItem = (props: BreadcrumbItemProps) => {
     children = '',
     className,
     disabled,
-    href,
-    replace,
-    router,
+    maxItemWidth,
+    maxWidth,
     separator = <Icon name="ArrowRight" size={16} color="rgba(0,0,0,.3)" />,
     style,
-    target,
-    to,
     ...others
   } = props;
 
-  let itemContent = <span className="i-breadcrumb__inner">{children}</span>;
-  if ((href || to) && !disabled) {
-    const handleRouting = () => {
-      if (href || !router) return;
-      replace ? router.replace(to) : router.push(to);
+  // 限制最大宽度
+  const computedMaxWidth = useMemo(() => {
+    let curMaxWidth;
+    if (maxWidth) {
+      curMaxWidth = typeof maxWidth === 'number' ? `${maxWidth}px` : String(maxWidth);
+    }
+    let curMaxItemWidth;
+    if (maxItemWidth) {
+      curMaxItemWidth =
+        typeof maxItemWidth === 'number' ? `${maxItemWidth}px` : String(maxItemWidth);
+    }
+    return {
+      maxWidth: curMaxWidth || curMaxItemWidth || '200px',
     };
-    itemContent = (
-      <a className="i-breadcrumb__link" href={href} target={target} onClick={handleRouting}>
-        {children}
-      </a>
-    );
-  }
+  }, [maxItemWidth, maxWidth]);
 
   return (
-    <div className={classNames('i-breadcrumb__item', className)} style={{ ...style }} {...others}>
-      {itemContent}
+    <div
+      className={classNames(
+        'i-breadcrumb__item',
+        disabled && 'i-breadcrumb-is-disabled',
+        className,
+      )}
+      style={{ ...style }}
+      {...others}
+    >
+      <span className="i-breadcrumb__inner" style={computedMaxWidth}>
+        {children}
+      </span>
       <span className="i-breadcrumb__separator">{separator}</span>
     </div>
   );
 };
 
 const Breadcrumb = (props: BreadcrumbProps) => {
-  const { children = '', className, style, ...others } = props;
+  const { children = '', className, maxItemWidth, separator, style, ...others } = props;
+
   return (
     <div className={classNames('i-breadcrumb', className)} style={{ ...style }} {...others}>
-      {children}
+      {/* 将 separator 分隔符及 maxItemWidth 最大单项宽度传入 children */}
+      {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) {
+          return null;
+        }
+        const childProps = {
+          separator,
+          maxItemWidth,
+        };
+        return React.cloneElement(child, childProps);
+      })}
     </div>
   );
 };
 
-Breadcrumb.BreadcrumbItem = BreadcrumbItem;
+Breadcrumb.Item = BreadcrumbItem;
 
 BreadcrumbItem.displayName = 'BreadcrumbItem';
 Breadcrumb.displayName = 'Breadcrumb';

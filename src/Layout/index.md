@@ -115,16 +115,32 @@ const { Header, Content, Footer, Aside } = Layout;
 
 const App = () => {
   return (
-    <Layout>
-      <Header>Header</Header>
+    <>
       <Layout>
-        <Aside width={100}>Aside</Aside>
+        <Header>Header</Header>
         <Layout>
-          <Content>Content</Content>
-          <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+          <Aside width={100}>Aside</Aside>
+          <Layout>
+            <Content>Content</Content>
+            <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+          </Layout>
         </Layout>
       </Layout>
-    </Layout>
+
+      <br />
+      <br />
+
+      <Layout>
+        <Header>Header</Header>
+        <Layout>
+          <Aside width="100px">Aside</Aside>
+          <Layout>
+            <Content>Content</Content>
+            <Footer>Copyright @ 2019-2021 iDesign. All Rights Reserved</Footer>
+          </Layout>
+        </Layout>
+      </Layout>
+    </>
   );
 };
 
@@ -135,7 +151,7 @@ export default App;
 
 | 属性      | 说明       | 类型            | 默认值 |
 | --------- | ---------- | --------------- | ------ |
-| children  | 内容       | `ReactNode`     | `- -`  |
-| className | 自定义类名 | `string`        | `- -`  |
-| style     | 自定义样式 | `CSSProperties` | `- -`  |
+| children  | 内容       | `ReactNode`     | `--`   |
+| className | 自定义类名 | `string`        | `--`   |
+| style     | 自定义样式 | `CSSProperties` | `--`   |
 | width     | 宽度       | `string`        | `240`  |
