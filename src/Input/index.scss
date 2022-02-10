@@ -1,0 +1,43 @@
+$primary: #3a3cf5;
+
+.i-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 500px;
+  height: 32px;
+  padding: 0 8px;
+  overflow: hidden;
+  color: #303133;
+  font-size: 14px;
+  line-height: 32px;
+  border: 1px solid #e5e7eb;
+  border-radius: 3px;
+  outline: none;
+  visibility: visible;
+  transition: all 0.2s cubic-bezier(0.38, 0, 0.24, 1);
+  &:hover {
+    border-color: #c0c4cc;
+  }
+  &:focus-within {
+    border-color: $primary;
+  }
+}
+
+.i-input__inner {
+  flex: 1;
+  box-sizing: border-box;
+  height: 32px;
+  margin: 0;
+  padding: 0;
+  color: #303133;
+  line-height: 32px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+  &::placeholder {
+    color: #C1C4CB;
+  }
+}

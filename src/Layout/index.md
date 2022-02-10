@@ -11,7 +11,7 @@ group:
 
 用于组织网页的框架结构。
 
-## 顶部导航布局
+## 基本用法
 
 `<Layout>` 容器、可包裹子组件 `<Header>`、`<Footer>`、`<Aside>`、`<Content>`。
 
