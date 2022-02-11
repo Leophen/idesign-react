@@ -1,0 +1,108 @@
+$primary: #3a3cf5;
+$primary_hover: #5d5ff3;
+$primary_active: #2e31d5;
+
+$info: #909399;
+$info_background: #f4f4f5;
+
+$success: #67c23a;
+$success_background: #f0f9eb;
+
+$warning: #e6a23c;
+$warning_background: #fdf6ec;
+
+$error: #f56c6c;
+$error_background: #fef0f0;
+
+.i-alert {
+  position: relative;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0;
+  padding: 12px 20px;
+  overflow: hidden;
+  border-radius: 4px;
+  opacity: 1;
+  transition: opacity 0.2s ease-out;
+}
+
+.i-alert--content {
+  padding-right: 26px;
+}
+
+.i-alert--title {
+  margin-bottom: 6px;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.i-alert--description {
+  box-sizing: border-box;
+  margin: 0;
+  font-size: 14px;
+  word-break: break-all;
+}
+
+.i-alert--operation {
+  display: inline-block;
+  box-sizing: border-box;
+  margin-left: 8px;
+  color: $primary;
+  cursor: pointer;
+  user-select: none;
+  &:hover {
+    color: $primary_hover;
+  }
+  &:active {
+    color: $primary_active;
+  }
+}
+
+.i-alert--close-btn {
+  position: absolute;
+  right: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  cursor: pointer;
+  &:hover {
+    .icon-Close {
+      color: #3b3c3f !important;
+      transition: color 0.2s ease-out;
+    }
+  }
+}
+
+@mixin injectColor($color, $color_background) {
+  color: $color;
+  background-color: $color_background;
+  .i-icon {
+    align-self: flex-start;
+    margin-top: 2px;
+    margin-right: 8px;
+    color: $color !important;
+  }
+  .icon-Close {
+    margin-right: 0;
+    color: $info !important;
+  }
+}
+
+.i-alert--type-info {
+  @include injectColor($info, $info_background);
+}
+
+.i-alert--type-success {
+  @include injectColor($success, $success_background);
+}
+
+.i-alert--type-warning {
+  @include injectColor($warning, $warning_background);
+}
+
+.i-alert--type-error {
+  @include injectColor($error, $error_background);
+}
