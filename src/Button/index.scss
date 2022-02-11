@@ -147,7 +147,7 @@ $null_bg: transparent;
   }
 }
 
-.i-button--theme-info {
+.i-button--type-info {
   @include injectColor($info, $info_hover, $info_active, $info_disabled);
   color: $info_font;
 
@@ -193,18 +193,18 @@ $null_bg: transparent;
   }
 }
 
-.i-button--theme-primary {
+.i-button--type-primary {
   @include injectColor($primary, $primary_hover, $primary_active, $primary_disabled);
 }
 
-.i-button--theme-success {
+.i-button--type-success {
   @include injectColor($success, $success_hover, $success_active, $success_disabled);
 }
 
-.i-button--theme-warning {
+.i-button--type-warning {
   @include injectColor($warning, $warning_hover, $warning_active, $warning_disabled);
 }
 
-.i-button--theme-danger {
+.i-button--type-danger {
   @include injectColor($danger, $danger_hover, $danger_active, $danger_disabled);
 }

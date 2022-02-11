@@ -144,6 +144,12 @@ $theme_color2: #3998ff;
   }
   table th {
     text-align: left;
+    &:first-of-type {
+      border-radius: 12px 0 0 0;
+    }
+    &:last-of-type {
+      border-radius: 0 12px 0 0;
+    }
   }
   h1:hover > a[aria-hidden]::after,
   h2:hover > a[aria-hidden]::after,

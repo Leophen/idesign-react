@@ -2,10 +2,10 @@
   font-family: 'idesignicon';
   src: url('');
   src: url('?#iefix') format('embedded-opentype'),
-  url('//at.alicdn.com/t/font_3161433_y2popfodwa.woff2') format('woff2'),
-  url('//at.alicdn.com/t/font_3161433_y2popfodwa.woff') format('woff'),
-  url('//at.alicdn.com/t/font_3161433_y2popfodwa.ttf') format('truetype'),
-  url('#iconfont') format('svg');
+    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.woff2?t=1644485433154') format('woff2'),
+    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.woff?t=1644485433154') format('woff'),
+    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.ttf?t=1644485433154') format('truetype'),
+    url('#iconfont') format('svg');
 }
 
 .i-icon {
@@ -14,6 +14,14 @@
   font-style: normal;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-TagPrice:before {
+  content: "\e6ba";
+}
+
+.icon-TagCollection:before {
+  content: "\e6bb";
 }
 
 .icon-AddFile:before {

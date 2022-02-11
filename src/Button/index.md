@@ -24,66 +24,66 @@ const App = () => {
     <div className="idesign-demo-block-column">
       {/* 灰色 info */}
       <div className="idesign-demo-block-row">
-        <Button theme="info">填充按钮</Button>
-        <Button theme="info" variant="outline">
+        <Button type="info">填充按钮</Button>
+        <Button type="info" variant="outline">
           描边按钮
         </Button>
-        <Button theme="info" variant="dashed">
+        <Button type="info" variant="dashed">
           虚框按钮
         </Button>
-        <Button theme="info" variant="text">
+        <Button type="info" variant="text">
           文字按钮
         </Button>
       </div>
       {/* 蓝色 primary（默认） */}
       <div className="idesign-demo-block-row">
-        <Button theme="primary">填充按钮</Button>
-        <Button theme="primary" variant="outline">
+        <Button type="primary">填充按钮</Button>
+        <Button type="primary" variant="outline">
           描边按钮
         </Button>
-        <Button theme="primary" variant="dashed">
+        <Button type="primary" variant="dashed">
           虚框按钮
         </Button>
-        <Button theme="primary" variant="text">
+        <Button type="primary" variant="text">
           文字按钮
         </Button>
       </div>
       {/* 绿色 success */}
       <div className="idesign-demo-block-row">
-        <Button theme="success">填充按钮</Button>
-        <Button theme="success" variant="outline">
+        <Button type="success">填充按钮</Button>
+        <Button type="success" variant="outline">
           描边按钮
         </Button>
-        <Button theme="success" variant="dashed">
+        <Button type="success" variant="dashed">
           虚框按钮
         </Button>
-        <Button theme="success" variant="text">
+        <Button type="success" variant="text">
           文字按钮
         </Button>
       </div>
       {/* 黄色 warning */}
       <div className="idesign-demo-block-row">
-        <Button theme="warning">填充按钮</Button>
-        <Button theme="warning" variant="outline">
+        <Button type="warning">填充按钮</Button>
+        <Button type="warning" variant="outline">
           描边按钮
         </Button>
-        <Button theme="warning" variant="dashed">
+        <Button type="warning" variant="dashed">
           虚框按钮
         </Button>
-        <Button theme="warning" variant="text">
+        <Button type="warning" variant="text">
           文字按钮
         </Button>
       </div>
       {/* 红色 danger */}
       <div className="idesign-demo-block-row">
-        <Button theme="danger">填充按钮</Button>
-        <Button theme="danger" variant="outline">
+        <Button type="danger">填充按钮</Button>
+        <Button type="danger" variant="outline">
           描边按钮
         </Button>
-        <Button theme="danger" variant="dashed">
+        <Button type="danger" variant="dashed">
           虚框按钮
         </Button>
-        <Button theme="danger" variant="text">
+        <Button type="danger" variant="text">
           文字按钮
         </Button>
       </div>
@@ -107,73 +107,73 @@ const App = () => {
     <div className="idesign-demo-block-column">
       {/* 填充按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" active>
+        <Button type="info" active>
           Info
         </Button>
-        <Button theme="primary" active>
+        <Button type="primary" active>
           Primary
         </Button>
-        <Button theme="success" active>
+        <Button type="success" active>
           Success
         </Button>
-        <Button theme="warning" active>
+        <Button type="warning" active>
           Warning
         </Button>
-        <Button theme="danger" active>
+        <Button type="danger" active>
           Danger
         </Button>
       </div>
       {/* 描边按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="outline" active>
+        <Button type="info" variant="outline" active>
           Info
         </Button>
-        <Button theme="primary" variant="outline" active>
+        <Button type="primary" variant="outline" active>
           Primary
         </Button>
-        <Button theme="success" variant="outline" active>
+        <Button type="success" variant="outline" active>
           Success
         </Button>
-        <Button theme="warning" variant="outline" active>
+        <Button type="warning" variant="outline" active>
           Warning
         </Button>
-        <Button theme="danger" variant="outline" active>
+        <Button type="danger" variant="outline" active>
           Danger
         </Button>
       </div>
       {/* 虚框按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="dashed" active>
+        <Button type="info" variant="dashed" active>
           Info
         </Button>
-        <Button theme="primary" variant="dashed" active>
+        <Button type="primary" variant="dashed" active>
           Primary
         </Button>
-        <Button theme="success" variant="dashed" active>
+        <Button type="success" variant="dashed" active>
           Success
         </Button>
-        <Button theme="warning" variant="dashed" active>
+        <Button type="warning" variant="dashed" active>
           Warning
         </Button>
-        <Button theme="danger" variant="dashed" active>
+        <Button type="danger" variant="dashed" active>
           Danger
         </Button>
       </div>
       {/* 文字按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="text" active>
+        <Button type="info" variant="text" active>
           Info
         </Button>
-        <Button theme="primary" variant="text" active>
+        <Button type="primary" variant="text" active>
           Primary
         </Button>
-        <Button theme="success" variant="text" active>
+        <Button type="success" variant="text" active>
           Success
         </Button>
-        <Button theme="warning" variant="text" active>
+        <Button type="warning" variant="text" active>
           Warning
         </Button>
-        <Button theme="danger" variant="text" active>
+        <Button type="danger" variant="text" active>
           Danger
         </Button>
       </div>
@@ -197,73 +197,73 @@ const App = () => {
     <div className="idesign-demo-block-column">
       {/* 填充按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" disabled>
+        <Button type="info" disabled>
           Info
         </Button>
-        <Button theme="primary" disabled>
+        <Button type="primary" disabled>
           Primary
         </Button>
-        <Button theme="success" disabled>
+        <Button type="success" disabled>
           Success
         </Button>
-        <Button theme="warning" disabled>
+        <Button type="warning" disabled>
           Warning
         </Button>
-        <Button theme="danger" disabled>
+        <Button type="danger" disabled>
           Danger
         </Button>
       </div>
       {/* 描边按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="outline" disabled>
+        <Button type="info" variant="outline" disabled>
           Info
         </Button>
-        <Button theme="primary" variant="outline" disabled>
+        <Button type="primary" variant="outline" disabled>
           Primary
         </Button>
-        <Button theme="success" variant="outline" disabled>
+        <Button type="success" variant="outline" disabled>
           Success
         </Button>
-        <Button theme="warning" variant="outline" disabled>
+        <Button type="warning" variant="outline" disabled>
           Warning
         </Button>
-        <Button theme="danger" variant="outline" disabled>
+        <Button type="danger" variant="outline" disabled>
           Danger
         </Button>
       </div>
       {/* 虚框按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="dashed" disabled>
+        <Button type="info" variant="dashed" disabled>
           Info
         </Button>
-        <Button theme="primary" variant="dashed" disabled>
+        <Button type="primary" variant="dashed" disabled>
           Primary
         </Button>
-        <Button theme="success" variant="dashed" disabled>
+        <Button type="success" variant="dashed" disabled>
           Success
         </Button>
-        <Button theme="warning" variant="dashed" disabled>
+        <Button type="warning" variant="dashed" disabled>
           Warning
         </Button>
-        <Button theme="danger" variant="dashed" disabled>
+        <Button type="danger" variant="dashed" disabled>
           Danger
         </Button>
       </div>
       {/* 文字按钮 */}
       <div className="idesign-demo-block-row">
-        <Button theme="info" variant="text" disabled>
+        <Button type="info" variant="text" disabled>
           Info
         </Button>
-        <Button theme="primary" variant="text" disabled>
+        <Button type="primary" variant="text" disabled>
           Primary
         </Button>
-        <Button theme="success" variant="text" disabled>
+        <Button type="success" variant="text" disabled>
           Success
         </Button>
-        <Button theme="warning" variant="text" disabled>
+        <Button type="warning" variant="text" disabled>
           Warning
         </Button>
-        <Button theme="danger" variant="text" disabled>
+        <Button type="danger" variant="text" disabled>
           Danger
         </Button>
       </div>

@@ -90,7 +90,7 @@ import classNames from 'classnames';
 const App = () => {
   const [iconArr, setIconArr] = useState([]);
   const api =
-    'https://at.alicdn.com/t/font_3161433_y2popfodwa.json?spm=a313x.7781069.1998910419.43&file=font_3161433_y2popfodwa.json';
+    'https://at.alicdn.com/t/font_3161433_6k834y8hvht.json?spm=a313x.7781069.1998910419.74&file=font_3161433_6k834y8hvht.json';
   const iconData = axios.get(api).then((res) => setIconArr(res.data.glyphs));
   const sortedIconArr = _.sortBy(iconArr, (item) => item.name);
 

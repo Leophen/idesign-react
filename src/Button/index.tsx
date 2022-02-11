@@ -36,10 +36,10 @@ export interface ButtonProps {
    */
   style?: React.CSSProperties;
   /**
-   * 组件风格
+   * 按钮类型，用于描述组件不同的应用场景
    * @default primary
    */
-  theme?: 'info' | 'primary' | 'danger' | 'warning' | 'success';
+  type?: 'info' | 'primary' | 'danger' | 'warning' | 'success';
   /**
    * 按钮形式
    * @default base
@@ -59,7 +59,7 @@ const Button = (props: ButtonProps) => {
     shape = 'round',
     size = 'medium',
     style,
-    theme = 'primary',
+    type = 'primary',
     variant = 'base',
     ...buttonProps
   } = props;
@@ -67,7 +67,7 @@ const Button = (props: ButtonProps) => {
     <button
       className={classNames(
         'i-button',
-        `i-button--theme-${theme}`,
+        `i-button--type-${type}`,
         `i-button--variant-${variant}`,
         `i-button--size-${size}`,
         `i-button--shape-${shape}`,
