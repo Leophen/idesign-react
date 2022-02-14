@@ -1,0 +1,97 @@
+$grid-list: (
+  0,
+  1,
+  2,
+  3,
+  4,
+  5,
+  6,
+  7,
+  8,
+  9,
+  10,
+  11,
+  12,
+  13,
+  14,
+  15,
+  16,
+  17,
+  18,
+  19,
+  20,
+  21,
+  22,
+  23,
+  24
+);
+
+.i-grid {
+  display: flex;
+  flex-flow: row wrap;
+  margin-right: 0px;
+  margin-left: 0px;
+}
+
+.i-grid--align-top {
+  align-items: flex-start;
+}
+
+.i-grid--align-middle {
+  align-items: center;
+}
+
+.i-grid--align-bottom {
+  align-items: flex-end;
+}
+
+.i-grid--justify-start {
+  justify-content: flex-start;
+}
+
+.i-grid--justify-center {
+  justify-content: center;
+}
+
+.i-grid--justify-end {
+  justify-content: flex-end;
+}
+
+.i-grid--justify-space-between {
+  justify-content: space-between;
+}
+
+.i-grid--justify-space-around {
+  justify-content: space-around;
+}
+
+.i-grid__item {
+  position: relative;
+  max-width: 100%;
+}
+
+.i-grid__item--align-top {
+  align-self: flex-start;
+}
+
+.i-grid__item--align-middle {
+  align-self: center;
+}
+
+.i-grid__item--align-bottom {
+  align-self: flex-end;
+}
+
+@each $item in $grid-list {
+  .i-grid__item--span-#{$item} {
+    @if $item == 0 { display: none; } @else { display: block; };
+    max-width: calc((nth($item, 1) / 24) * 100%);
+    flex: 0 0 calc((nth($item, 1) / 24) * 100%);
+  }
+  .i-grid__item--offset-#{$item} {
+    margin-left: calc((nth($item, 1) / 24) * 100%);
+  }
+  .i-grid__item--order-#{$item} {
+    order: $item;
+  }
+}

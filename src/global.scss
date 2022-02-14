@@ -233,6 +233,31 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-demo {
   padding: 40px;
+  h3 {
+    color: #515151;
+    font-weight: 700;
+  }
+  .i-grid {
+    margin-bottom: 16px;
+    &:last-of-type {
+      margin-bottom: 0;
+    }
+  }
+  .i-grid__item {
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      color: #fff;
+      background: #759eee;
+    }
+    &:nth-of-type(2n) {
+      & > div {
+        background: #9dbbf3;
+      }
+    }
+  }
 }
 
 .idesign-demo-block-column {
@@ -318,8 +343,7 @@ ul[role='slug-list'] li > a.active {
 }
 
 .__dumi-default-previewer-actions a,
-.__dumi-default-icon[title='Get JSX via TypeScript Playground'],
-.__dumi-default-icon[title='Open demo on CodeSandbox.io'] {
+.__dumi-default-icon[title='Get JSX via TypeScript Playground'] {
   display: none;
 }
 
