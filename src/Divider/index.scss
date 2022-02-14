@@ -1,0 +1,49 @@
+.i-divider {
+  box-sizing: border-box;
+  margin: 24px 0;
+  color: #303133;
+  font-size: 14px;
+  border-top: 1px solid #e5e7eb;
+}
+
+.i-divider--dashed {
+  border-top-style: dashed;
+}
+
+.i-divider--with-text {
+  display: flex;
+  white-space: nowrap;
+  border-top: 0;
+  &::before,
+  &::after {
+    position: relative;
+    top: 50%;
+    width: 50%;
+    border-top: 1px solid #e5e7eb;
+    transform: translateY(calc(50% - 0.5px));
+    content: '';
+  }
+}
+
+.i-divider--with-text-left {
+  &::before {
+    width: 5%;
+  }
+  &::after {
+    width: 95%;
+  }
+}
+
+.i-divider--with-text-right {
+  &::after {
+    width: 5%;
+  }
+  &::before {
+    width: 95%;
+  }
+}
+
+.i-divider--text {
+  display: inline-block;
+  padding: 0 1em;
+}
