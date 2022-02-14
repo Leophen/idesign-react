@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface TemplateProps {
+export interface UploadProps {
   /**
    * 按钮内容
    */
@@ -17,7 +17,7 @@ export interface TemplateProps {
   style?: React.CSSProperties;
 }
 
-const Template = (props: TemplateProps) => {
+const Upload = (props: UploadProps) => {
   const { children = '', className, style, ...others } = props;
 
   return (
@@ -27,6 +27,6 @@ const Template = (props: TemplateProps) => {
   );
 };
 
-Template.displayName = 'Template';
+Upload.displayName = 'Upload';
 
-export default Template;
+export default Upload;

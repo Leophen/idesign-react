@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface TemplateProps {
+export interface GridProps {
   /**
    * 按钮内容
    */
@@ -17,9 +17,11 @@ export interface TemplateProps {
   style?: React.CSSProperties;
 }
 
-const Template = (props: TemplateProps) => {
+/**
+ * XX组件
+ */
+const Grid = (props: GridProps) => {
   const { children = '', className, style, ...others } = props;
-
   return (
     <div className={classNames('i-template', className)} style={{ ...style }} {...others}>
       {children}
@@ -27,6 +29,6 @@ const Template = (props: TemplateProps) => {
   );
 };
 
-Template.displayName = 'Template';
+Grid.displayName = 'Grid';
 
-export default Template;
+export default Grid;

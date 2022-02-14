@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface TemplateProps {
+export interface DividerProps {
   /**
    * 按钮内容
    */
@@ -17,9 +17,11 @@ export interface TemplateProps {
   style?: React.CSSProperties;
 }
 
-const Template = (props: TemplateProps) => {
+/**
+ * XX组件
+ */
+const Divider = (props: DividerProps) => {
   const { children = '', className, style, ...others } = props;
-
   return (
     <div className={classNames('i-template', className)} style={{ ...style }} {...others}>
       {children}
@@ -27,6 +29,6 @@ const Template = (props: TemplateProps) => {
   );
 };
 
-Template.displayName = 'Template';
+Divider.displayName = 'Divider';
 
-export default Template;
+export default Divider;

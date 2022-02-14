@@ -5,6 +5,7 @@ nav:
 group:
   title: 基础组件
   order: 1
+order: 2
 ---
 
 # Icon 图标

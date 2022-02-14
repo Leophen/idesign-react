@@ -5,6 +5,7 @@ nav:
 group:
   title: 基础组件
   order: 1
+order: 1
 ---
 
 # Button 按钮

@@ -3,23 +3,23 @@ nav:
   title: 组件
   path: /components
 group:
-  title: XX组件
-  order: 6
+  title: 弹框提示组件
+  order: 5
 ---
 
-# Template XX（开发中）
+# Dialog 对话框（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Template } from 'idesign-react';
+import { Dialog } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Template>填充按钮</Template>
+        <Dialog>填充按钮</Dialog>
       </div>
     </div>
   );

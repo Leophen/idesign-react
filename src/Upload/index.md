@@ -3,23 +3,23 @@ nav:
   title: 组件
   path: /components
 group:
-  title: XX组件
-  order: 6
+  title: 表单组件
+  order: 3
 ---
 
-# Template XX（开发中）
+# Upload 上传（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Template } from 'idesign-react';
+import { Upload } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Template>填充按钮</Template>
+        <Upload>填充按钮</Upload>
       </div>
     </div>
   );

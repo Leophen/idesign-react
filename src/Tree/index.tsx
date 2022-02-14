@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface TemplateProps {
+export interface TreeProps {
   /**
    * 按钮内容
    */
@@ -17,7 +17,7 @@ export interface TemplateProps {
   style?: React.CSSProperties;
 }
 
-const Template = (props: TemplateProps) => {
+const Tree = (props: TreeProps) => {
   const { children = '', className, style, ...others } = props;
 
   return (
@@ -27,6 +27,6 @@ const Template = (props: TemplateProps) => {
   );
 };
 
-Template.displayName = 'Template';
+Tree.displayName = 'Tree';
 
-export default Template;
+export default Tree;

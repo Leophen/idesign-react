@@ -19,6 +19,7 @@ export interface PaginationProps {
 
 const Pagination = (props: PaginationProps) => {
   const { children = '', className, style, ...others } = props;
+
   return (
     <div className={classNames('i-pagination', className)} style={{ ...style }} {...others}>
       {children}

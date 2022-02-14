@@ -3,23 +3,23 @@ nav:
   title: 组件
   path: /components
 group:
-  title: XX组件
-  order: 6
+  title: 导航组件
+  order: 2
 ---
 
-# Template XX（开发中）
+# Tabs 选项卡（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Template } from 'idesign-react';
+import { Tabs } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Template>填充按钮</Template>
+        <Tabs>填充按钮</Tabs>
       </div>
     </div>
   );
