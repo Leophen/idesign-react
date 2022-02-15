@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 8
 ---
 
 # DatePicker 日期选择器（开发中）

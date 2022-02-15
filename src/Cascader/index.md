@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 6
 ---
 
 # Cascader 级联选择器（开发中）

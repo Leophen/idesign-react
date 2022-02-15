@@ -5,22 +5,22 @@ nav:
 group:
   title: 表单组件
   order: 3
-order: 10
+order: 9
 ---
 
-# Form 表单（开发中）
+# ColorPicker 颜色选择器（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Form } from 'idesign-react';
+import { ColorPicker } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Form>填充按钮</Form>
+        <ColorPicker>填充按钮</ColorPicker>
       </div>
     </div>
   );

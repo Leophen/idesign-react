@@ -5,22 +5,22 @@ nav:
 group:
   title: 表单组件
   order: 3
-order: 10
+order: 17
 ---
 
-# Form 表单（开发中）
+# Rate 评分（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Form } from 'idesign-react';
+import { Rate } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Form>填充按钮</Form>
+        <Rate>填充按钮</Rate>
       </div>
     </div>
   );

@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 4
 ---
 
 # Input 输入框（开发中）

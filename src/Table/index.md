@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 11
 ---
 
 # Table 表格（开发中）

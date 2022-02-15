@@ -5,6 +5,7 @@ nav:
 group:
   title: 数据展示组件
   order: 4
+order: 4
 ---
 
 # Avatar 头像（开发中）

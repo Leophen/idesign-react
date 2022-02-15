@@ -3,24 +3,24 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 表单组件
-  order: 3
-order: 10
+  title: 数据展示组件
+  order: 4
+order: 2
 ---
 
-# Form 表单（开发中）
+# Empty 空状态（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Form } from 'idesign-react';
+import { Empty } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Form>填充按钮</Form>
+        <Empty>填充按钮</Empty>
       </div>
     </div>
   );

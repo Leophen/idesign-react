@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 13
 ---
 
 # Transfer 穿梭框（开发中）

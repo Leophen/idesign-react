@@ -5,6 +5,7 @@ nav:
 group:
   title: 导航组件
   order: 2
+order: 2
 ---
 
 # Tabs 选项卡（开发中）

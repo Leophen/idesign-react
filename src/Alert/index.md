@@ -5,6 +5,7 @@ nav:
 group:
   title: 弹框提示组件
   order: 5
+order: 1
 ---
 
 # Alert 提示

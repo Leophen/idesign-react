@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 14
 ---
 
 # Slider 滑块（开发中）

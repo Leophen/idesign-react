@@ -3,24 +3,24 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 表单组件
-  order: 3
-order: 10
+  title: 弹框提示组件
+  order: 5
+order: 3
 ---
 
-# Form 表单（开发中）
+# Notification 消息通知（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Form } from 'idesign-react';
+import { Notification } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Form>填充按钮</Form>
+        <Notification>填充按钮</Notification>
       </div>
     </div>
   );

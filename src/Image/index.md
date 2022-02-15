@@ -3,23 +3,24 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 弹框提示组件
-  order: 5
+  title: 数据展示组件
+  order: 4
+order: 6
 ---
 
-# Tooltip 文字提示（开发中）
+# Image 图片查看器（开发中）
 
 ## 基本用法
 
 ```tsx
 import React from 'react';
-import { Tooltip } from 'idesign-react';
+import { Image } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Tooltip>填充按钮</Tooltip>
+        <Image>填充按钮</Image>
       </div>
     </div>
   );

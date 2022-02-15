@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 7
 ---
 
 # TimePicker 时间选择器（开发中）

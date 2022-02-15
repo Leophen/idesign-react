@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
 
-export interface SwiperProps {
+export interface NotificationProps {
   /**
    * 按钮内容
    */
@@ -17,7 +17,7 @@ export interface SwiperProps {
   style?: React.CSSProperties;
 }
 
-const Swiper = (props: SwiperProps) => {
+const Notification = (props: NotificationProps) => {
   const { children = '', className, style, ...others } = props;
 
   return (
@@ -27,6 +27,6 @@ const Swiper = (props: SwiperProps) => {
   );
 };
 
-Swiper.displayName = 'Swiper';
+Notification.displayName = 'Notification';
 
-export default Swiper;
+export default Notification;

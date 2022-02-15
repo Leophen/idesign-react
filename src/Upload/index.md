@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 12
 ---
 
 # Upload 上传（开发中）

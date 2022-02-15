@@ -3,11 +3,14 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 导航组件
-  order: 2
+  title: 表单组件
+  order: 3
+order: 16
 ---
 
 # Steps 步骤条（开发中）
+
+结合 element Timeline 时间线
 
 ## 基本用法
 

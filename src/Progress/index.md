@@ -3,8 +3,9 @@ nav:
   title: 组件
   path: /components
 group:
-  title: 数据展示组件
-  order: 4
+  title: 表单组件
+  order: 3
+order: 15
 ---
 
 # Progress 进度条（开发中）

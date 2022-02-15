@@ -5,9 +5,10 @@ nav:
 group:
   title: 弹框提示组件
   order: 5
+order: 6
 ---
 
-# Popup 弹出框（开发中）
+# Popup 气泡提示（开发中）
 
 ## 基本用法
 

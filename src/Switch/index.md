@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 3
 ---
 
 # Switch 开关（开发中）

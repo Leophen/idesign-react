@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 2
 ---
 
 # Checkbox 多选框（开发中）

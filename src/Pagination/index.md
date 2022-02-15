@@ -5,6 +5,7 @@ nav:
 group:
   title: 导航组件
   order: 2
+order: 4
 ---
 
 # Pagination 分页（开发中）

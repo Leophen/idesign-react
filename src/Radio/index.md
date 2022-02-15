@@ -5,6 +5,7 @@ nav:
 group:
   title: 表单组件
   order: 3
+order: 1
 ---
 
 # Radio 单选框（开发中）

@@ -5,6 +5,7 @@ nav:
 group:
   title: 弹框提示组件
   order: 5
+order: 2
 ---
 
 # Message 全局提示（开发中）

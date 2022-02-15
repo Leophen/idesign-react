@@ -5,6 +5,7 @@ nav:
 group:
   title: 弹框提示组件
   order: 5
+order: 4
 ---
 
 # Dialog 对话框（开发中）

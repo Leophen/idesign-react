@@ -5,6 +5,7 @@ nav:
 group:
   title: 数据展示组件
   order: 4
+order: 5
 ---
 
 # Badge 提示徽章（开发中）
