@@ -17,7 +17,7 @@ export interface PopupProps {
   style?: React.CSSProperties;
 }
 
-const Popup = (props: PopupProps) => {
+const Popup: React.FC<PopupProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

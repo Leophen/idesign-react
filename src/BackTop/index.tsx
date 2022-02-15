@@ -17,7 +17,7 @@ export interface BackTopProps {
   style?: React.CSSProperties;
 }
 
-const BackTop = (props: BackTopProps) => {
+const BackTop: React.FC<BackTopProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

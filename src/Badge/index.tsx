@@ -17,7 +17,7 @@ export interface BadgeProps {
   style?: React.CSSProperties;
 }
 
-const Badge = (props: BadgeProps) => {
+const Badge: React.FC<BadgeProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

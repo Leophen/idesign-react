@@ -17,7 +17,7 @@ export interface AffixProps {
   style?: React.CSSProperties;
 }
 
-const Affix = (props: AffixProps) => {
+const Affix: React.FC<AffixProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

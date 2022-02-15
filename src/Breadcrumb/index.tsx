@@ -57,7 +57,7 @@ export interface BreadcrumbItemProps {
   style?: React.CSSProperties;
 }
 
-const BreadcrumbItem = (props: BreadcrumbItemProps) => {
+const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
   const {
     children = '',
     className,
@@ -103,7 +103,7 @@ const BreadcrumbItem = (props: BreadcrumbItemProps) => {
   );
 };
 
-const Breadcrumb = (props: BreadcrumbProps) => {
+const Breadcrumb: React.FC<BreadcrumbProps> & { Item: React.ElementType } = (props) => {
   const { children = '', className, maxItemWidth, separator, style, ...others } = props;
 
   return (

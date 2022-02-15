@@ -17,7 +17,7 @@ export interface SliderProps {
   style?: React.CSSProperties;
 }
 
-const Slider = (props: SliderProps) => {
+const Slider: React.FC<SliderProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

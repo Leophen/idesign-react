@@ -17,7 +17,7 @@ export interface ProgressProps {
   style?: React.CSSProperties;
 }
 
-const Progress = (props: ProgressProps) => {
+const Progress: React.FC<ProgressProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

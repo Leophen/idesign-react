@@ -17,7 +17,7 @@ export interface CollapseProps {
   style?: React.CSSProperties;
 }
 
-const Collapse = (props: CollapseProps) => {
+const Collapse: React.FC<CollapseProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

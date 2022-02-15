@@ -17,7 +17,7 @@ export interface TemplateProps {
   style?: React.CSSProperties;
 }
 
-const Template = (props: TemplateProps) => {
+const Template: React.FC<TemplateProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

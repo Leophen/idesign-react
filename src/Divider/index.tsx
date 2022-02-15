@@ -27,7 +27,7 @@ export interface DividerProps {
   style?: React.CSSProperties;
 }
 
-const Divider = (props: DividerProps) => {
+const Divider: React.FC<DividerProps> = (props) => {
   const { align = 'center', children, className, dashed = false, style, ...others } = props;
 
   return (

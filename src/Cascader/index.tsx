@@ -17,7 +17,7 @@ export interface CascaderProps {
   style?: React.CSSProperties;
 }
 
-const Cascader = (props: CascaderProps) => {
+const Cascader: React.FC<CascaderProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

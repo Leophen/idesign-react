@@ -17,7 +17,7 @@ export interface LoadingProps {
   style?: React.CSSProperties;
 }
 
-const Loading = (props: LoadingProps) => {
+const Loading: React.FC<LoadingProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

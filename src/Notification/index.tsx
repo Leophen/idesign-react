@@ -17,7 +17,7 @@ export interface NotificationProps {
   style?: React.CSSProperties;
 }
 
-const Notification = (props: NotificationProps) => {
+const Notification: React.FC<NotificationProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

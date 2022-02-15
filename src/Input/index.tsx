@@ -63,7 +63,7 @@ export interface InputProps {
   onKeyup?: (value: InputValue, context: { e: React.KeyboardEvent<HTMLDivElement> }) => void;
 }
 
-const Input = (props: InputProps) => {
+const Input: React.FC<InputProps> = (props) => {
   const {
     className,
     placeholder,

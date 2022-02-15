@@ -17,7 +17,7 @@ export interface CheckboxProps {
   style?: React.CSSProperties;
 }
 
-const Checkbox = (props: CheckboxProps) => {
+const Checkbox: React.FC<CheckboxProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

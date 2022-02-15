@@ -17,7 +17,7 @@ export interface FormProps {
   style?: React.CSSProperties;
 }
 
-const Form = (props: FormProps) => {
+const Form: React.FC<FormProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

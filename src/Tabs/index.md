@@ -18,11 +18,11 @@ import { Tabs } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Tabs>填充按钮</Tabs>
-      </div>
-    </div>
+    <Tabs>
+      <Tabs.Item>选项卡1</Tabs.Item>
+      <Tabs.Item>选项卡2</Tabs.Item>
+      <Tabs.Item>选项卡3</Tabs.Item>
+    </Tabs>
   );
 };
 

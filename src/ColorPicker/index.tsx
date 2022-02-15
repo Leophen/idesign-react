@@ -17,7 +17,7 @@ export interface ColorPickerProps {
   style?: React.CSSProperties;
 }
 
-const ColorPicker = (props: ColorPickerProps) => {
+const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

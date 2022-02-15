@@ -50,7 +50,7 @@ export interface ButtonProps {
 /**
  * 按钮组件
  */
-const Button = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props) => {
   const {
     active = false,
     children = '',

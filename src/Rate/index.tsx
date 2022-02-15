@@ -17,7 +17,7 @@ export interface RateProps {
   style?: React.CSSProperties;
 }
 
-const Rate = (props: RateProps) => {
+const Rate: React.FC<RateProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

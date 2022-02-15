@@ -17,7 +17,7 @@ export interface SelectProps {
   style?: React.CSSProperties;
 }
 
-const Select = (props: SelectProps) => {
+const Select: React.FC<SelectProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

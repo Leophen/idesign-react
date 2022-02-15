@@ -17,7 +17,7 @@ export interface RadioProps {
   style?: React.CSSProperties;
 }
 
-const Radio = (props: RadioProps) => {
+const Radio: React.FC<RadioProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

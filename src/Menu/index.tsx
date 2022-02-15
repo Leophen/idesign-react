@@ -17,7 +17,7 @@ export interface MenuProps {
   style?: React.CSSProperties;
 }
 
-const Menu = (props: MenuProps) => {
+const Menu: React.FC<MenuProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

@@ -17,7 +17,7 @@ export interface TreeProps {
   style?: React.CSSProperties;
 }
 
-const Tree = (props: TreeProps) => {
+const Tree: React.FC<TreeProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

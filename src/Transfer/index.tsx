@@ -17,7 +17,7 @@ export interface TransferProps {
   style?: React.CSSProperties;
 }
 
-const Transfer = (props: TransferProps) => {
+const Transfer: React.FC<TransferProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

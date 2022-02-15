@@ -17,7 +17,7 @@ export interface UploadProps {
   style?: React.CSSProperties;
 }
 
-const Upload = (props: UploadProps) => {
+const Upload: React.FC<UploadProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

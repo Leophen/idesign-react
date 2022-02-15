@@ -49,7 +49,7 @@ export interface FooterProps extends UsualProps {
   height?: string;
 }
 
-const Header = (props: HeaderProps) => {
+const Header: React.FC<HeaderProps> = (props) => {
   const { children, className, style, ...others } = props;
   return (
     <header className={classNames('i-layout--header', className)} style={style} {...others}>
@@ -58,7 +58,7 @@ const Header = (props: HeaderProps) => {
   );
 };
 
-const Aside = (props: AsideProps) => {
+const Aside: React.FC<AsideProps> = (props) => {
   const { width = 240, className, style, children, ...otherAsideProps } = props;
 
   const asideClassNames = classNames('i-layout--aside', className);
@@ -79,7 +79,7 @@ const Aside = (props: AsideProps) => {
   );
 };
 
-const Content = (props: ContentProps) => {
+const Content: React.FC<ContentProps> = (props) => {
   const { children, className, style, ...others } = props;
   return (
     <main className={classNames('i-layout--content', className)} style={style} {...others}>
@@ -88,7 +88,7 @@ const Content = (props: ContentProps) => {
   );
 };
 
-const Footer = (props: FooterProps) => {
+const Footer: React.FC<FooterProps> = (props) => {
   const { children, className, style, ...others } = props;
   return (
     <footer className={classNames('i-layout--footer', className)} style={style} {...others}>
@@ -100,7 +100,12 @@ const Footer = (props: FooterProps) => {
 /**
  * 布局组件
  */
-const Layout = (props: LayoutProps) => {
+const Layout: React.FC<LayoutProps> & {
+  Header: React.ElementType;
+  Aside: React.ElementType;
+  Content: React.ElementType;
+  Footer: React.ElementType;
+} = (props) => {
   const { children, className, style, ...others } = props;
 
   const [asides, setAsides] = useState([]);

@@ -36,7 +36,7 @@ export interface AlertProps {
   type?: 'info' | 'success' | 'warning' | 'error';
 }
 
-const Alert = (props: AlertProps) => {
+const Alert: React.FC<AlertProps> = (props) => {
   const {
     className,
     closable = false,

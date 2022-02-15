@@ -17,7 +17,7 @@ export interface SwiperProps {
   style?: React.CSSProperties;
 }
 
-const Swiper = (props: SwiperProps) => {
+const Swiper: React.FC<SwiperProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

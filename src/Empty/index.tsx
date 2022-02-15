@@ -17,7 +17,7 @@ export interface EmptyProps {
   style?: React.CSSProperties;
 }
 
-const Empty = (props: EmptyProps) => {
+const Empty: React.FC<EmptyProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

@@ -17,7 +17,7 @@ export interface DatePickerProps {
   style?: React.CSSProperties;
 }
 
-const DatePicker = (props: DatePickerProps) => {
+const DatePicker: React.FC<DatePickerProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

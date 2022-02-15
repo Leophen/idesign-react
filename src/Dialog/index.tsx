@@ -17,7 +17,7 @@ export interface DialogProps {
   style?: React.CSSProperties;
 }
 
-const Dialog = (props: DialogProps) => {
+const Dialog: React.FC<DialogProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

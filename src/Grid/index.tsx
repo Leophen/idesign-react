@@ -71,7 +71,7 @@ export interface GridItemProps {
   width?: string | number;
 }
 
-const GridItem = (props: GridItemProps) => {
+const GridItem: React.FC<GridItemProps> = (props) => {
   const {
     align,
     children = '',
@@ -129,7 +129,7 @@ const GridItem = (props: GridItemProps) => {
   );
 };
 
-const Grid = (props: GridProps) => {
+const Grid: React.FC<GridProps> & { Item: React.ElementType } = (props) => {
   const { align, children = '', className, gutter, justify, style, ...others } = props;
 
   return (

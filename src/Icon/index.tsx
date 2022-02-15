@@ -22,7 +22,7 @@ interface IconProps {
   style?: React.CSSProperties;
 }
 
-const Icon = (props: IconProps) => {
+const Icon: React.FC<IconProps> = (props) => {
   const { color = '#606266', name = 'UserAvatar', size = 16, style, ...others } = props;
 
   const iconStyles = {

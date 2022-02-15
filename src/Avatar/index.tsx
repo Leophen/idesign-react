@@ -17,7 +17,7 @@ export interface AvatarProps {
   style?: React.CSSProperties;
 }
 
-const Avatar = (props: AvatarProps) => {
+const Avatar: React.FC<AvatarProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

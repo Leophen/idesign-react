@@ -17,7 +17,7 @@ export interface MessageProps {
   style?: React.CSSProperties;
 }
 
-const Message = (props: MessageProps) => {
+const Message: React.FC<MessageProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

@@ -17,7 +17,7 @@ export interface ImageProps {
   style?: React.CSSProperties;
 }
 
-const Image = (props: ImageProps) => {
+const Image: React.FC<ImageProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

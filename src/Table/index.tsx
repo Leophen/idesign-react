@@ -17,7 +17,7 @@ export interface TableProps {
   style?: React.CSSProperties;
 }
 
-const Table = (props: TableProps) => {
+const Table: React.FC<TableProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

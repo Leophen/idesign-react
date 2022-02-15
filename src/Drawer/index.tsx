@@ -17,7 +17,7 @@ export interface DrawerProps {
   style?: React.CSSProperties;
 }
 
-const Drawer = (props: DrawerProps) => {
+const Drawer: React.FC<DrawerProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

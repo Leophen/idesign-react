@@ -5,7 +5,7 @@ interface ScrollbarProps {
   children?: React.ReactNode;
 }
 
-const Scrollbar = (props: ScrollbarProps) => {
+const Scrollbar: React.FC<ScrollbarProps> = (props) => {
   const { children } = props;
 
   return <div className="i-design-scrollbar">{children}</div>;

@@ -17,7 +17,7 @@ export interface TimePickerProps {
   style?: React.CSSProperties;
 }
 
-const TimePicker = (props: TimePickerProps) => {
+const TimePicker: React.FC<TimePickerProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

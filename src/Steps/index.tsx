@@ -17,7 +17,7 @@ export interface StepsProps {
   style?: React.CSSProperties;
 }
 
-const Steps = (props: StepsProps) => {
+const Steps: React.FC<StepsProps> = (props) => {
   const { children = '', className, style, ...others } = props;
 
   return (

@@ -53,7 +53,7 @@ export interface TagProps {
   onClose?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
 }
 
-const Tag = (props: TagProps) => {
+const Tag: React.FC<TagProps> = (props) => {
   const {
     children = '',
     className,
