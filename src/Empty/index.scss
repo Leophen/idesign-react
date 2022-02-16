@@ -1,0 +1,42 @@
+$base_width: 200px;
+$base_height: auto;
+
+.i-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &.i-empty--size-small {
+    .i-empty-image {
+      width: calc($base_width * 0.8);
+    }
+    .i-empty-description {
+      font-size: 14px;
+    }
+  }
+  &.i-empty--size-large {
+    .i-empty-image {
+      width: calc($base_width * 1.2);
+    }
+    .i-empty-description {
+      font-size: 18px;
+    }
+  }
+}
+
+.i-empty-image {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: $base_width;
+  height: $base_height;
+  svg {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.i-empty-description {
+  margin-top: 20px;
+  color: #888;
+  font-size: 16px;
+}
