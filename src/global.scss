@@ -330,21 +330,52 @@ ul[role='slug-list'] li > a.active {
 }
 
 .__dumi-default-previewer-actions {
+  position: relative;
   background-color: rgba(58, 60, 245, 0.01);
 }
 
 .__dumi-default-previewer-actions button {
+  position: relative;
   transform: scale(1.2);
+  opacity: 1;
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: 26px;
+    height: 26px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.2s ease-out;
+    content: '';
+  }
+  &::after {
+    z-index: 1;
+  }
+  &:hover {
+    opacity: 1;
+    &::before {
+      opacity: 1;
+    }
+  }
 }
 
 .__dumi-default-previewer-actions > a:not(:last-child),
 .__dumi-default-previewer-actions > button:not(:last-child) {
-  margin-right: 16px;
+  margin-right: 20px;
 }
 
 .__dumi-default-previewer-actions a,
 .__dumi-default-icon[title='Get JSX via TypeScript Playground'] {
   display: none;
+}
+
+.__dumi-default-previewer-actions button[role='codesandbox'] {
+  position: absolute;
+  right: 70px;
 }
 
 code[class*='language-'],
@@ -613,6 +644,9 @@ $purple: #bd93f9;
           color: $purple !important;
         }
         &.function {
+          color: $blue !important;
+        }
+        &.boolean {
           color: $blue !important;
         }
         &.keyword {

@@ -13,6 +13,10 @@ export interface TagProps {
    */
   className?: string;
   /**
+   * 自定义样式
+   */
+  style?: React.CSSProperties;
+  /**
    * 标签中的图标，可自定义图标呈现
    */
   icon?: string;
@@ -25,10 +29,6 @@ export interface TagProps {
    * @default medium
    */
   size?: 'small' | 'medium' | 'large';
-  /**
-   * 自定义样式
-   */
-  style?: React.CSSProperties;
   /**
    * 标签主题
    * @default dark
