@@ -18,10 +18,22 @@ export interface TemplateProps {
 }
 
 const Template: React.FC<TemplateProps> = (props) => {
-  const { children = '', className, style, ...others } = props;
+  const {
+    children = '',
+    className,
+    style,
+    ...others
+  } = props;
 
   return (
-    <div className={classNames('i-template', className)} style={{ ...style }} {...others}>
+    <div
+      className={classNames(
+        'i-template',
+        className
+      )}
+      style={{ ...style }}
+      {...others}
+    >
       {children}
     </div>
   );

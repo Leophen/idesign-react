@@ -18,7 +18,12 @@ export interface TabsItemProps {
 }
 
 const TabsItem: React.FC<TabsItemProps> = (props) => {
-  const { children = '', className, style, ...others } = props;
+  const {
+    children = '',
+    className,
+    style,
+    ...others
+  } = props;
 
   return (
     <div className={classNames('i-tabs__item', className)} style={{ ...style }} {...others}>

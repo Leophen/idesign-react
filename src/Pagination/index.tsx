@@ -18,7 +18,12 @@ export interface PaginationProps {
 }
 
 const Pagination: React.FC<PaginationProps> = (props) => {
-  const { children = '', className, style, ...others } = props;
+  const {
+    children = '',
+    className,
+    style,
+    ...others
+  } = props;
 
   return (
     <div className={classNames('i-pagination', className)} style={{ ...style }} {...others}>

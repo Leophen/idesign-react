@@ -18,10 +18,22 @@ export interface SelectProps {
 }
 
 const Select: React.FC<SelectProps> = (props) => {
-  const { children = '', className, style, ...others } = props;
+  const {
+    children = '',
+    className,
+    style,
+    ...others
+  } = props;
 
   return (
-    <div className={classNames('i-template', className)} style={{ ...style }} {...others}>
+    <div
+      className={classNames(
+        'i-template',
+        className
+      )}
+      style={{ ...style }}
+      {...others}
+    >
       {children}
     </div>
   );
