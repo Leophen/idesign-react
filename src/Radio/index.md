@@ -43,7 +43,7 @@ export default App;
 
 ## 单选框组
 
-一组互斥的 Radio 配合使用。
+使用 `Radio.Group` 可以包裹 `Radio` 形成一组单选框组。
 
 ```tsx
 import React, { useState } from 'react';
@@ -72,7 +72,7 @@ export default App;
 
 ## 单选框（按钮型）
 
-按钮形式的单选框。
+`Radio` 提供 `type` 属性切换为按钮形式的单选框。
 
 ```tsx
 import React, { useState } from 'react';
@@ -103,7 +103,7 @@ export default App;
 
 ## 单选框组（按钮型）
 
-按钮形式的单选框组。
+`Radio.Group` 提供 `type` 属性全局修改每一项为按钮型单选框。
 
 ```tsx
 import React, { useState } from 'react';
@@ -132,7 +132,7 @@ export default App;
 
 ## 不同尺寸（按钮型）
 
-按钮形式的单选框组。
+`Radio` 按钮形式的单选框提供 `size` 属性控制尺寸，`Radio.Group` 也有 `size` 属性可以全局控制每一项按钮单选框的尺寸。
 
 ```tsx
 import React, { useState } from 'react';
@@ -206,7 +206,7 @@ export default App;
 
 ## 禁用状态
 
-按钮形式的单选框组。
+`Radio` 提供 `disabled` 属性控制单选框为禁用状态，`Radio.Group` 可以全局控制每一项为禁用状态。
 
 ```tsx
 import React, { useState } from 'react';
