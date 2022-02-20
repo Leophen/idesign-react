@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "iDesign 前端通用组件库",
   "scripts": {
     "start": "dumi dev",
