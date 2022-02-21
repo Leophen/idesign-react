@@ -301,7 +301,7 @@ export default App;
 | children | 按钮内容 | `ReactNode` | `--` |
 | className | 类名 | `string` | `--` |
 | style | 自定义样式 | `CSSProperties` | `--` |
-| value | 单选框组选中的值 | `string〡number` | `--` |
+| currentValue | 单选框组选中的值 | `string〡number` | `--` |
 | type | 单选框组全局类型 | `"radio"〡"radio-button"` | `"radio"` |
 | size | 按钮单选框全局尺寸 | `"small"〡"medium"〡"large"` | `"medium"` |
 | disabled | 单选框组是否全局禁用 | `boolean` | `false` |
