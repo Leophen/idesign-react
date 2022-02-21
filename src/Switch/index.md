@@ -23,7 +23,7 @@ import { Switch } from 'idesign-react';
 const App = () => {
   const [checked, setChecked] = useState(true);
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log('value', val);
     setChecked(val);
   };
@@ -31,7 +31,7 @@ const App = () => {
   return (
     <div className="idesign-demo-block-row">
       <Switch />
-      <Switch value={checked} onChange={onChange} />
+      <Switch value={checked} onChange={handleChange} />
     </div>
   );
 };
@@ -48,11 +48,22 @@ import React, { useState } from 'react';
 import { Switch } from 'idesign-react';
 
 const App = () => {
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = (val) => {
+    setChecked(val);
+  };
+
   return (
     <div className="idesign-demo-block-row">
-      <Switch inactiveColor="#64D878" />
-      <Switch activeColor="#64D878" />
-      <Switch inactiveColor="#ff4949" activeColor="#64D878" />
+      <Switch inactiveColor="#64D878" value={checked} onChange={handleChange} />
+      <Switch activeColor="#64D878" value={checked} onChange={handleChange} />
+      <Switch
+        inactiveColor="#ff4949"
+        activeColor="#64D878"
+        value={checked}
+        onChange={handleChange}
+      />
     </div>
   );
 };
@@ -69,11 +80,17 @@ import React, { useState } from 'react';
 import { Switch } from 'idesign-react';
 
 const App = () => {
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = (val) => {
+    setChecked(val);
+  };
+
   return (
     <div className="idesign-demo-block-row">
-      <Switch size="small" />
-      <Switch size="medium" />
-      <Switch size="large" />
+      <Switch size="small" value={checked} onChange={handleChange} />
+      <Switch size="medium" value={checked} onChange={handleChange} />
+      <Switch size="large" value={checked} onChange={handleChange} />
     </div>
   );
 };
@@ -91,20 +108,62 @@ import { Switch } from 'idesign-react';
 import { Icon } from 'idesign-react';
 
 const App = () => {
+  const [checked, setChecked] = useState(false);
+
+  const handleChange = (val) => {
+    setChecked(val);
+  };
+
   const inactiveIcon = <Icon name="Close" />;
   const activeIcon = <Icon name="Check" />;
 
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Switch size="small" inactiveLabel="关" activeLabel="开" />
-        <Switch size="medium" inactiveLabel="关" activeLabel="开" />
-        <Switch size="large" inactiveLabel="关" activeLabel="开" value={true} />
+        <Switch
+          size="small"
+          inactiveLabel="关"
+          activeLabel="开"
+          value={checked}
+          onChange={handleChange}
+        />
+        <Switch
+          size="medium"
+          inactiveLabel="关"
+          activeLabel="开"
+          value={checked}
+          onChange={handleChange}
+        />
+        <Switch
+          size="large"
+          inactiveLabel="关"
+          activeLabel="开"
+          value={checked}
+          onChange={handleChange}
+        />
       </div>
       <div className="idesign-demo-block-row">
-        <Switch size="small" inactiveLabel={inactiveIcon} activeLabel={activeIcon} />
-        <Switch size="medium" inactiveLabel={inactiveIcon} activeLabel={activeIcon} />
-        <Switch size="large" inactiveLabel={inactiveIcon} activeLabel={activeIcon} value={true} />
+        <Switch
+          size="small"
+          inactiveLabel={inactiveIcon}
+          activeLabel={activeIcon}
+          value={checked}
+          onChange={handleChange}
+        />
+        <Switch
+          size="medium"
+          inactiveLabel={inactiveIcon}
+          activeLabel={activeIcon}
+          value={checked}
+          onChange={handleChange}
+        />
+        <Switch
+          size="large"
+          inactiveLabel={inactiveIcon}
+          activeLabel={activeIcon}
+          value={checked}
+          onChange={handleChange}
+        />
       </div>
     </div>
   );
@@ -125,7 +184,6 @@ const App = () => {
   const [checked, setChecked] = useState(true);
 
   const onChange = (val) => {
-    console.log('value', val);
     setChecked(val);
   };
 

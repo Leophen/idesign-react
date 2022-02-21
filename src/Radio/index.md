@@ -151,7 +151,7 @@ const App = () => {
         <Radio type="radio-button" size="small">
           未选中
         </Radio>
-        <Radio type="radio-button" size="medium">
+        <Radio type="radio-button" size="medium" checked={true}>
           未选中
         </Radio>
         <Radio type="radio-button" size="large">
