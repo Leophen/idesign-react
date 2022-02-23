@@ -48,7 +48,7 @@ export interface InputProps {
    * 输入框类型
    * @default text
    */
-  type?: 'text' | 'password';
+  type?: 'text' | 'password' | 'number';
   /**
    * 组件前置图标名
    */
@@ -146,14 +146,14 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
     setContentHeight(maxHeight);
   });
 
-  const handleClickWith = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleClickWith = (location: 'pre' | 'suf', e: React.MouseEvent<HTMLDivElement>) => {
     e.persist();
     e.stopPropagation();
-    if (clickPrefix) {
+    if (clickPrefix && location === 'pre') {
       clickPrefix(e as any);
       return;
     }
-    if (clickSuffix) {
+    if (clickSuffix && location === 'suf') {
       clickSuffix(e as any);
       return;
     }
@@ -164,7 +164,7 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
       {prefixContent && (
         <div
           className={classNames('i-input__group-prefix', clickPrefix && 'i-input__group-cursor')}
-          onClick={handleClickWith}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickWith('pre', e)}
         >
           {prefixContent}
         </div>
@@ -173,7 +173,7 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
       {suffixContent && (
         <div
           className={classNames('i-input__group-suffix', clickSuffix && 'i-input__group-cursor')}
-          onClick={handleClickWith}
+          onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickWith('suf', e)}
         >
           {suffixContent}
         </div>
@@ -268,33 +268,74 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     />
   );
 
-  const handleClickInnerIcon = (e: React.MouseEvent<HTMLDivElement>) => {
+  // 数字调整按钮
+  const handleAdjustValue = (handle = true, e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    let currentValue;
+    let result = 0;
+    if (inputNode) {
+      currentValue = Number((inputNode.current as any).value);
+      if (handle) {
+        result = currentValue + 1;
+      } else {
+        result = currentValue - 1;
+      }
+    }
+    (inputNode.current as any).value = result;
+    onChange?.(result, e as any);
+  };
+  const renderNumberBtn = (
+    <div className="i-input-number-button">
+      <Icon
+        name="ArrowCaretTop"
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => handleAdjustValue(true, e)}
+      />
+      <Icon
+        name="ArrowCaretBottom"
+        onClick={(e: React.MouseEvent<HTMLDivElement>) => handleAdjustValue(false, e)}
+      />
+    </div>
+  );
+
+  // 数字调整滑块
+  const handleSliderDown = () => {};
+  const handleSliderUp = () => {};
+  const renderNumberSlider = (
+    <div
+      className="i-input-number-slider"
+      onMouseDown={handleSliderDown}
+      onMouseUp={handleSliderUp}
+    >
+      <div className="i-input-number-scrubbable"></div>
+    </div>
+  );
+
+  // 内置图标
+  const handleClickInnerIcon = (location: 'pre' | 'suf', e: React.MouseEvent<HTMLDivElement>) => {
     e.persist();
     e.stopPropagation();
-    if (clickPrefixIcon) {
+    if (clickPrefixIcon && location === 'pre') {
       clickPrefixIcon(e as any);
       return;
     }
-    if (clickSuffixIcon) {
+    if (clickSuffixIcon && location === 'suf') {
       clickSuffixIcon(e as any);
       return;
     }
     focusInputNode();
   };
-
   const renderPrefixIcon = (
     <Icon
       className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor')}
       name={prefixIcon}
-      onClick={handleClickInnerIcon}
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('pre', e)}
     />
   );
-
   const renderSuffixIcon = (
     <Icon
       className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor')}
       name={suffixIcon}
-      onClick={handleClickInnerIcon}
+      onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('suf', e)}
     />
   );
 
@@ -330,6 +371,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         />
       )}
       {suffixIcon && renderSuffixIcon}
+      {!disabled && type === 'number' && renderNumberBtn}
+      {!disabled && type === 'number' && renderNumberSlider}
     </div>
   );
 };

@@ -151,6 +151,34 @@ const App = () => {
 export default App;
 ```
 
+## 数字滑块输入框
+
+通过将 `type` 属性指定为 `number` 切换为数字滑块输入框：右侧显示数控按钮、悬浮左边缘出现鼠标数控滑块、聚焦可通过鼠标滚轮微调数值。
+
+```tsx
+import React, { useState } from 'react';
+import { Input } from 'idesign-react';
+
+const App = () => {
+  return (
+    <>
+      <Input type="number" />
+      <br />
+      <Input
+        type="number"
+        prefixIcon="TagCollection"
+        suffixIcon="Search"
+        clickSuffixIcon={() => {
+          alert('Search');
+        }}
+      />
+    </>
+  );
+};
+
+export default App;
+```
+
 ## 带清空按钮的输入框
 
 通过 `clearable` 属性或 `onClear` 显示清空按钮，实现一键清空输入框内容。

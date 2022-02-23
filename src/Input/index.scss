@@ -129,6 +129,73 @@ $danger: #f16262;
   }
 }
 
+.i-input--type-number {
+  padding-right: 0;
+  user-select: none;
+  .i-input__inner {
+    padding-right: 8px;
+    &:focus {
+      user-select: text;
+    }
+  }
+  .i-input-suffix-icon {
+    position: relative;
+    right: 8px;
+  }
+  input::-webkit-inner-spin-button,
+  input::-webkit-outer-spin-button {
+    display: none;
+    -webkit-appearance: none !important;
+  }
+}
+
+.i-input-number-button {
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 24px;
+  height: 100%;
+  border-left: 1px solid #e5e7eb;
+  .i-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    margin: 0;
+    overflow: hidden;
+    &:first-of-type {
+      padding-top: 2px;
+    }
+    &:last-of-type {
+      padding-bottom: 2px;
+    }
+    &:hover {
+      background-color: #f5f7fa;
+    }
+    &:active {
+      color: #666 !important;
+    }
+  }
+}
+
+.i-input-number-slider {
+  position: absolute;
+  left: 0;
+  width: 8px;
+  height: 100%;
+  cursor: url('./resize.svg') 10 8, auto;
+}
+
+.i-input-number-scrubbable {
+  width: 5px;
+  height: 5px;
+  background-color: black;
+}
+
 .i-input--limit {
   margin-left: 8px;
 }
