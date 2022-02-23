@@ -82,7 +82,7 @@ export default App;
  * inline: true
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Icon } from 'idesign-react';
 import _ from 'lodash';
 import axios from 'axios';
@@ -91,8 +91,21 @@ import classNames from 'classnames';
 const App = () => {
   const [iconArr, setIconArr] = useState([]);
   const api =
-    'https://at.alicdn.com/t/font_3161433_6k834y8hvht.json?spm=a313x.7781069.1998910419.74&file=font_3161433_6k834y8hvht.json';
-  const iconData = axios.get(api).then((res) => setIconArr(res.data.glyphs));
+    'https://at.alicdn.com/t/font_3161433_e9j1oj7xi5i.json?spm=a313x.7781069.1998910419.85&file=font_3161433_e9j1oj7xi5i.json';
+
+  useEffect(() => {
+    let isUnmounted = false;
+    const abortController = new window.AbortController();
+    axios
+      .get(api)
+      .then((res) => setIconArr(res.data.glyphs))
+      .finally(() => {});
+    return () => {
+      isUnmounted = true;
+      abortController.abort;
+    };
+  }, []);
+
   const sortedIconArr = _.sortBy(iconArr, (item) => item.name);
 
   const [copyed, setCopyed] = useState(false);

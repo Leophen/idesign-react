@@ -59,9 +59,9 @@ const Tag: React.FC<TagProps> = (props) => {
     className,
     icon,
     maxWidth,
-    size = 'medium',
+    size,
     style,
-    theme = 'light',
+    theme,
     type = 'default',
     onAdd,
     onClick = () => {},
@@ -80,9 +80,9 @@ const Tag: React.FC<TagProps> = (props) => {
     <div
       className={classNames(
         'i-tag',
-        `i-tag--size-${size}`,
-        `i-tag--type-${type}`,
-        `i-tag--theme-${theme}`,
+        size && `i-tag--size-${size}`,
+        type && `i-tag--type-${type}`,
+        theme && `i-tag--theme-${theme}`,
         onAdd && 'i-tag--add-btn',
         maxWidth && 'i-tag--ellipsis',
         className,
@@ -92,7 +92,7 @@ const Tag: React.FC<TagProps> = (props) => {
       {...others}
     >
       {onAdd && <Icon name="ThePlus" size={size === 'large' ? 16 : 12} />}
-      {icon && <Icon name={icon} size={{ small: 12, medium: 14, large: 16 }[size]} />}
+      {icon && <Icon name={icon} size={size && { small: 12, medium: 14, large: 16 }[size]} />}
       {children}
       {onClose && (
         <div className="i-tag--close-btn" onClick={(e) => onClose({ e })}>

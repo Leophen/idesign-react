@@ -2,9 +2,9 @@
   font-family: 'idesignicon';
   src: url('');
   src: url('?#iefix') format('embedded-opentype'),
-    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.woff2?t=1644485433154') format('woff2'),
-    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.woff?t=1644485433154') format('woff'),
-    url('//at.alicdn.com/t/font_3161433_6k834y8hvht.ttf?t=1644485433154') format('truetype'),
+    url('//at.alicdn.com/t/font_3161433_e9j1oj7xi5i.woff2?t=1645514626261') format('woff2'),
+    url('//at.alicdn.com/t/font_3161433_e9j1oj7xi5i.woff?t=1645514626261') format('woff'),
+    url('//at.alicdn.com/t/font_3161433_e9j1oj7xi5i.ttf?t=1645514626261') format('truetype'),
     url('#iconfont') format('svg');
 }
 
@@ -16,12 +16,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.icon-ViewHide:before {
+  content: "\e6bc";
+}
+
+.icon-View:before {
+  content: "\e6bd";
+}
+
 .icon-TagPrice:before {
-  content: "\e6ba";
+  content: '\e6ba';
 }
 
 .icon-TagCollection:before {
-  content: "\e6bb";
+  content: '\e6bb';
 }
 
 .icon-AddFile:before {
@@ -54,10 +62,6 @@
 
 .icon-RefreshLeft:before {
   content: '\e659';
-}
-
-.icon-View:before {
-  content: '\e65a';
 }
 
 .icon-Filter:before {

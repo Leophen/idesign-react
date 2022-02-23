@@ -31,6 +31,7 @@ $danger_border_opacity: rgba(251, 196, 196, 0.2);
   border: 1px solid transparent;
   border-radius: 4px;
   cursor: default;
+  user-select: none;
 }
 
 a .i-tag {

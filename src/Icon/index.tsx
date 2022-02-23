@@ -4,9 +4,13 @@ import classNames from 'classnames';
 
 interface IconProps {
   /**
-   * 图标颜色
+   * 类名
    */
-  color?: string;
+  className?: string;
+  /**
+   * 组件自定义样式
+   */
+  style?: React.CSSProperties;
   /**
    * 图标名称
    */
@@ -17,13 +21,25 @@ interface IconProps {
    */
   size?: number | string;
   /**
-   * 组件自定义样式
+   * 图标颜色
    */
-  style?: React.CSSProperties;
+  color?: string;
+  /**
+   * 点击图标触发事件
+   */
+  onClick?: any;
 }
 
 const Icon: React.FC<IconProps> = (props) => {
-  const { color = '#606266', name = 'UserAvatar', size = 16, style, ...others } = props;
+  const {
+    className,
+    style,
+    name = 'UserAvatar',
+    size = 16,
+    color = '#606266',
+    onClick,
+    ...others
+  } = props;
 
   const iconStyles = {
     color,
@@ -31,7 +47,14 @@ const Icon: React.FC<IconProps> = (props) => {
     ...style,
   };
 
-  return <i style={iconStyles} className={classNames('i-icon', `icon-${name}`)} {...others} />;
+  return (
+    <i
+      style={iconStyles}
+      className={classNames('i-icon', `icon-${name}`, className)}
+      onClick={onClick}
+      {...others}
+    />
+  );
 };
 
 export default Icon;

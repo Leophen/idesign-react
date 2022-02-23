@@ -108,6 +108,9 @@ const App = () => {
         <Grid.Item span={4}>
           <div>GridItem5</div>
         </Grid.Item>
+        <Grid.Item>
+          <div>GridItem6</div>
+        </Grid.Item>
       </Grid>
     </>
   );
