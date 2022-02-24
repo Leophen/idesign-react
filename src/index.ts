@@ -17,6 +17,7 @@ export { default as Radio } from './Radio';
 export { default as Checkbox } from './Checkbox';
 export { default as Switch } from './Switch';
 export { default as Input } from './Input';
+export { default as Textarea } from './Textarea';
 export { default as Select } from './Select';
 export { default as Cascader } from './Cascader';
 export { default as TimePicker } from './TimePicker';

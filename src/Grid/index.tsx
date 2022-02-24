@@ -120,7 +120,12 @@ const GridItem: React.FC<GridItemProps> = (props) => {
           paddingLeft: gutter,
           paddingRight: gutter,
         } || {}),
-        ...(width && { flex: `0 0 ${computedWidth(width)}` }),
+        ...(width
+          ? {
+              flex: `0 0 ${computedWidth(width)}`,
+              maxWidth: computedWidth(width),
+            }
+          : { flex: '1' }),
       }}
       {...others}
     >

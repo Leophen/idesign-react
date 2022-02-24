@@ -164,7 +164,6 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     const checkedValue = e.currentTarget.checked;
-    setInnerChecked(checkedValue);
     // 单选框组时使用 context 提供的修改 checked 方法同步整组的 currentValue
     if (typeof newProps.onChange === 'function') {
       newProps.onChange(checkedValue, e);

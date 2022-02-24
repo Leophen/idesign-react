@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import Icon from '../Icon';
@@ -72,10 +72,13 @@ const Switch: React.FC<SwitchProps> = (props) => {
 
   const [innerChecked, setInnerChecked] = useState(value);
 
+  useEffect(() => {
+    setInnerChecked(value);
+  }, [value]);
+
   const handleSwitch = () => {
     if (disabled || loading) return;
     const changedValue = !innerChecked;
-    setInnerChecked(changedValue);
     onChange?.(changedValue);
   };
 
