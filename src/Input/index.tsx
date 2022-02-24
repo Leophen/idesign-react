@@ -50,6 +50,29 @@ export interface InputProps {
    */
   type?: 'text' | 'password' | 'number';
   /**
+   * 数字输入框滑块数值变化速率
+   * @default default
+   */
+  speed?: 'slow' | 'default' | 'fast';
+  /**
+   * 数字输入框最大值
+   */
+  maxNumber?: number;
+  /**
+   * 数字输入框最小值
+   */
+  minNumber?: number;
+  /**
+   * 数字输入框保留几位小数
+   * @default 0
+   */
+  precision?: number;
+  /**
+   * 数字输入框数值变化间隔
+   * @default 1
+   */
+  step?: number;
+  /**
    * 组件前置图标名
    */
   prefixIcon?: string;
@@ -103,6 +126,14 @@ export interface InputProps {
 
 export interface InputGroupProps {
   /**
+   * 类名
+   */
+  className?: string;
+  /**
+   * 自定义样式
+   */
+  style?: React.CSSProperties;
+  /**
    * 输入框组合内容
    */
   children?: React.ReactNode;
@@ -125,7 +156,8 @@ export interface InputGroupProps {
 }
 
 const InputGroup: React.FC<InputGroupProps> = (props) => {
-  const { children, prefixContent, suffixContent, clickPrefix, clickSuffix } = props;
+  const { className, children, style, prefixContent, suffixContent, clickPrefix, clickSuffix } =
+    props;
 
   const [contentHeight, setContentHeight] = useState(0);
   const groupNode = useRef(null);
@@ -160,7 +192,11 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
   };
 
   return (
-    <div className="i-input__group" style={{ height: contentHeight }} ref={groupNode}>
+    <div
+      className={classNames('i-input__group', className)}
+      style={{ ...(style || {}), ...{ height: contentHeight } }}
+      ref={groupNode}
+    >
       {prefixContent && (
         <div
           className={classNames('i-input__group-prefix', clickPrefix && 'i-input__group-cursor')}
@@ -194,6 +230,11 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     maxLength,
     clearable = false,
     type,
+    speed = 'default',
+    maxNumber = Number.MAX_VALUE,
+    minNumber = Number.MIN_SAFE_INTEGER,
+    precision = 0,
+    step = 1,
     prefixIcon,
     suffixIcon,
     onChange,
@@ -219,7 +260,13 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     maxLength && setValueLength(e.target.value.length);
-    onChange?.(e.target.value, e as any);
+    if (type === 'number' && Number(e.target.value) > maxNumber) {
+      e.target.value = maxNumber.toFixed(precision).toString();
+    }
+    if (type === 'number' && Number(e.target.value) < minNumber) {
+      e.target.value = minNumber.toFixed(precision).toString();
+    }
+    onChange?.(Number(e.target.value).toFixed(precision), e as any);
   };
 
   // 点击清空按钮
@@ -243,11 +290,35 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   };
 
   // 通用事件
-  const handleEvent = (e: any) => {
+  const handleEvent = (eventType: 'focus' | 'blur' | 'up', e: any) => {
     e.persist();
-    onFocus?.(e.target.value, e);
-    onBlur?.(e.target.value, e);
-    onKeyUp?.(e.target.value, e);
+    if (eventType === 'focus') {
+      onFocus?.(e.target.value, e);
+    }
+    if (eventType === 'blur') {
+      if (e.target.value) {
+        const fixedValue = Number(e.target.value).toFixed(precision);
+        e.target.value = fixedValue;
+      }
+      onBlur?.(e.target.value, e);
+    }
+    if (eventType === 'up') {
+      onKeyUp?.(e.target.value, e);
+      if (type === 'number') {
+        // 设置最大值最小值按钮禁用状态
+        const currentValue = Number((inputNode.current as any).value);
+        if (currentValue === maxNumber) {
+          setIfMaximum(true);
+        } else {
+          setIfMaximum(false);
+        }
+        if (currentValue === minNumber) {
+          setIfLeastValue(true);
+        } else {
+          setIfLeastValue(false);
+        }
+      }
+    }
   };
 
   const renderInput = (
@@ -259,54 +330,204 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       value={value}
       type={currentType}
       maxLength={maxLength}
+      max={maxNumber}
+      min={minNumber}
+      step={step}
       onChange={handleChange}
-      onFocus={onFocus && handleEvent}
-      onBlur={onBlur && handleEvent}
+      onFocus={(e) => handleEvent('focus', e)}
+      onBlur={(e) => handleEvent('blur', e)}
       onKeyDown={handleKeyDown}
-      onKeyUp={onKeyUp && handleEvent}
+      onKeyUp={(e) => handleEvent('up', e)}
       {...others}
     />
   );
+
+  // 最大值 | 最小值判断
+  const [ifMaximum, setIfMaximum] = useState(false);
+  const [ifLeastValue, setIfLeastValue] = useState(false);
 
   // 数字调整按钮
   const handleAdjustValue = (handle = true, e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     let currentValue;
-    let result = 0;
+    let computedValue = 0;
     if (inputNode) {
       currentValue = Number((inputNode.current as any).value);
       if (handle) {
-        result = currentValue + 1;
+        computedValue = currentValue + step;
       } else {
-        result = currentValue - 1;
+        computedValue = currentValue - step;
       }
+      // 设置最大值最小值按钮禁用状态
+      computedValue === maxNumber ? setIfMaximum(true) : setIfMaximum(false);
+      computedValue === minNumber ? setIfLeastValue(true) : setIfLeastValue(false);
     }
+    const result = computedValue.toFixed(precision);
     (inputNode.current as any).value = result;
     onChange?.(result, e as any);
   };
+
   const renderNumberBtn = (
     <div className="i-input-number-button">
       <Icon
         name="ArrowCaretTop"
+        disabled={ifMaximum}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => handleAdjustValue(true, e)}
       />
       <Icon
         name="ArrowCaretBottom"
+        disabled={ifLeastValue}
         onClick={(e: React.MouseEvent<HTMLDivElement>) => handleAdjustValue(false, e)}
       />
     </div>
   );
 
   // 数字调整滑块
-  const handleSliderDown = () => {};
-  const handleSliderUp = () => {};
+  const [sliderDown, setSliderDown] = useState(false);
+  const [sliderX, setSliderX] = useState(0);
+  const [sliderY, setSliderY] = useState(0);
+  const [sliderMovingX, setSliderMovingX] = useState(0);
+  const [sliderMovingY, setSliderMovingY] = useState(0);
+  let startX = 0;
+  let startY = 0;
+  let countValue = 0;
+  let criticalValue = 0;
+  const handleSliderMove = (e: any) => {
+    startX += e.movementX;
+    startY += e.movementY;
+
+    // 滑块更新输入框数值
+    if (inputNode) {
+      countValue = Number((inputNode.current as any).value);
+      criticalValue += e.movementX;
+      let changeSpeedNum = { slow: 30, default: 10, fast: 1 }[speed];
+      if (criticalValue > changeSpeedNum && countValue < maxNumber) {
+        criticalValue = 0;
+        countValue += step;
+      }
+      if (criticalValue < -changeSpeedNum && countValue > minNumber) {
+        criticalValue = 0;
+        countValue -= step;
+      }
+      // 设置最大值最小值按钮禁用状态
+      countValue === maxNumber ? setIfMaximum(true) : setIfMaximum(false);
+      countValue === minNumber ? setIfLeastValue(true) : setIfLeastValue(false);
+
+      const result = countValue.toFixed(precision);
+      (inputNode.current as any).value = result;
+      onChange?.(result, e as any);
+    }
+
+    // 滑块超出屏幕边界处理
+    if (e.clientX + startX < 0) {
+      startX += window.innerWidth;
+    }
+    if (e.clientX + startX > window.innerWidth) {
+      startX -= window.innerWidth;
+    }
+    if (e.clientY + startY < 0) {
+      startY += window.innerHeight;
+    }
+    if (e.clientY + startY > window.innerHeight) {
+      startY -= window.innerHeight;
+    }
+
+    // 更新滑块位置
+    setSliderMovingX(startX);
+    setSliderMovingY(startY);
+  };
+  const handleSliderUp = () => {
+    setSliderDown(false);
+    document.exitPointerLock();
+    setSliderMovingX(0);
+    setSliderMovingY(0);
+    window.removeEventListener('mouseup', handleSliderUp);
+    window.removeEventListener('mousemove', handleSliderMove);
+  };
+  const handleSliderDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.persist();
+
+    if (size && size === 'small') {
+      setSliderY(e.clientY - 8);
+    } else if (size && size === 'large') {
+      setSliderY(e.clientY - 15);
+    } else {
+      setSliderY(e.clientY - 10);
+    }
+    setSliderX(e.clientX - 14);
+    (e.target as HTMLElement).requestPointerLock();
+    setSliderDown(true);
+    window.addEventListener('mouseup', handleSliderUp);
+    window.addEventListener('mousemove', handleSliderMove);
+  };
   const renderNumberSlider = (
-    <div
-      className="i-input-number-slider"
-      onMouseDown={handleSliderDown}
-      onMouseUp={handleSliderUp}
-    >
-      <div className="i-input-number-scrubbable"></div>
+    <div className="i-input-number-slider" onMouseDown={handleSliderDown}>
+      {sliderDown && (
+        <div
+          className="i-input-number-scrubbable"
+          style={{
+            left: sliderX,
+            top: sliderY,
+            transform: `translate(${sliderMovingX}px,${sliderMovingY}px)`,
+          }}
+        >
+          <svg
+            width="30"
+            height="19"
+            viewBox="0 0 30 19"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g filter="url(#filter0_d_7775_2255)">
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M3 8.999V9.004L8.997 15L8.998 11.001H10.997H21V15L27 9L21 3V7.022H10.997H8.997L8.998 3L3 8.999ZM4.411 9.002L7.998 5.414L7.997 8.001H11.497H22V5.414L25.5 9L22 12.587V10L11.497 10.002L7.998 10.001L7.997 12.587L4.411 9.002Z"
+                fill="white"
+              />
+              <path
+                fillRule="evenodd"
+                clipRule="evenodd"
+                d="M11.4971 10.0015L22 10.0005V12.5875L25.5 9L22 5.41451V8.02151H11.4971H7.99707V5.41451L4.41107 9.0015L7.99707 12.5875V10.0005L11.4971 10.0015Z"
+                fill="black"
+              />
+            </g>
+            <defs>
+              <filter
+                id="filter0_d_7775_2255"
+                x="-0.6"
+                y="-1.6"
+                width="31.2"
+                height="23.2"
+                filterUnits="userSpaceOnUse"
+                colorInterpolationFilters="sRGB"
+              >
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
+                <feColorMatrix
+                  in="SourceAlpha"
+                  type="matrix"
+                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
+                  result="hardAlpha"
+                />
+                <feOffset dy="1" />
+                <feGaussianBlur stdDeviation="1.3" />
+                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.32 0" />
+                <feBlend
+                  mode="normal"
+                  in2="BackgroundImageFix"
+                  result="effect1_dropShadow_7775_2255"
+                />
+                <feBlend
+                  mode="normal"
+                  in="SourceGraphic"
+                  in2="effect1_dropShadow_7775_2255"
+                  result="shape"
+                />
+              </filter>
+            </defs>
+          </svg>
+        </div>
+      )}
     </div>
   );
 

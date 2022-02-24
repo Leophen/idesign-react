@@ -75,6 +75,14 @@ $danger: #f16262;
       margin-right: 5px;
       margin-left: 0;
     }
+    .i-input-number-button {
+      width: 12px;
+      .i-icon {
+        margin-left: 6px;
+        padding-right: 3px;
+        padding-left: 3px;
+      }
+    }
   }
   &.i-input--size-large {
     height: 40px;
@@ -87,6 +95,14 @@ $danger: #f16262;
     .i-input-prefix-icon {
       margin-right: 7px;
       margin-left: 0;
+    }
+    .i-input-number-button {
+      width: 16px;
+      .i-icon {
+        margin-left: 10px;
+        padding-right: 5px;
+        padding-left: 5px;
+      }
     }
   }
   &:hover {
@@ -172,12 +188,24 @@ $danger: #f16262;
     }
     &:last-of-type {
       padding-bottom: 2px;
+      border-top: 1px solid #e5e7eb;
     }
     &:hover {
       background-color: #f5f7fa;
     }
     &:active {
       color: #666 !important;
+    }
+    &.i-icon-is-disabled {
+      background-color: #f5f7fa;
+      cursor: not-allowed;
+      opacity: 0.5;
+      &:hover {
+        color: #c0c4cc !important;
+      }
+      &:active {
+        color: #c0c4cc !important;
+      }
     }
   }
 }
@@ -191,9 +219,12 @@ $danger: #f16262;
 }
 
 .i-input-number-scrubbable {
-  width: 5px;
-  height: 5px;
-  background-color: black;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: auto;
+  height: auto;
 }
 
 .i-input--limit {

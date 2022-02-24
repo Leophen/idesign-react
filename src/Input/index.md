@@ -8,7 +8,7 @@ group:
 order: 4
 ---
 
-# Input 输入框（开发中）
+# Input 输入框
 
 ## 基本用法
 
@@ -151,9 +151,11 @@ const App = () => {
 export default App;
 ```
 
-## 数字滑块输入框
+## 高级数字输入框
 
-通过将 `type` 属性指定为 `number` 切换为数字滑块输入框：右侧显示数控按钮、悬浮左边缘出现鼠标数控滑块、聚焦可通过鼠标滚轮微调数值。
+通过将 `type` 属性指定为 `number` 切换为数字滑块输入框：右侧显示数控按钮、悬浮左边缘出现鼠标数控滑块、可通过键盘上下键微调数值。
+
+另外，可通过 `speed` 属性值设置滑块移动数值变化速率，通过 `step` 设置数值变化间隔，通过 `precision` 设置数值保留几位有效数字。
 
 ```tsx
 import React, { useState } from 'react';
@@ -163,6 +165,25 @@ const App = () => {
   return (
     <>
       <Input type="number" />
+      <br />
+      <Input
+        placeholder="speed 设为 slow + 最大值 100"
+        speed="slow"
+        type="number"
+        maxNumber={100}
+      />
+      <br />
+      <Input placeholder="speed 设为 fast + 最小值 0" speed="fast" type="number" minNumber={0} />
+      <br />
+      <Input
+        placeholder="保留 2 位有效数字 + 间隔 0.5"
+        type="number"
+        precision={2}
+        step={0.5}
+        onChange={(value) => {
+          console.log(value);
+        }}
+      />
       <br />
       <Input
         type="number"
@@ -400,4 +421,17 @@ const App = () => {
 export default App;
 ```
 
-<API src="./index.tsx" />
+## Input API
+
+<API hideTitle />
+
+## InputGroup API
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| children | 按钮内容 | `ReactNode` | `--` |
+| className | 类名 | `string` | `--` |
+| style | 自定义样式 | `CSSProperties` | `--` |
+| prefixContent | 输入框组合前缀 | `ReactNode` | `--` |
+| clickPrefix | 点击前缀触发事件 | `(context: { e: React.MouseEvent<HTMLDivElement> }) => void` | `--` |
+| clickSuffix | 点击后缀触发事件 | `(context: { e: React.MouseEvent<HTMLDivElement> }) => void` | `--` |

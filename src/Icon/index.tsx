@@ -25,6 +25,10 @@ interface IconProps {
    */
   color?: string;
   /**
+   * 是否禁用按钮
+   */
+  disabled?: boolean;
+  /**
    * 点击图标触发事件
    */
   onClick?: any;
@@ -37,6 +41,7 @@ const Icon: React.FC<IconProps> = (props) => {
     name = 'UserAvatar',
     size = 16,
     color = '#606266',
+    disabled = false,
     onClick,
     ...others
   } = props;
@@ -50,8 +55,14 @@ const Icon: React.FC<IconProps> = (props) => {
   return (
     <i
       style={iconStyles}
-      className={classNames('i-icon', `icon-${name}`, className)}
-      onClick={onClick}
+      className={classNames('i-icon', `icon-${name}`, disabled && 'i-icon-is-disabled', className)}
+      onClick={
+        !disabled
+          ? onClick
+          : () => {
+              return;
+            }
+      }
       {...others}
     />
   );
