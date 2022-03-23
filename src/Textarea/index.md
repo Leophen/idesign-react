@@ -12,17 +12,196 @@ order: 4
 
 ## 基本用法
 
+用于字符输入的多行输入框。
+
+```tsx
+import React, { useState } from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  const [value, setValue] = useState('iDesign');
+
+  return (
+    <>
+      <Textarea
+        placeholder="请输入内容（无默认值）"
+        onChange={(value) => {
+          console.log(value);
+        }}
+      />
+      <br />
+      <Textarea
+        placeholder="请输入内容（有默认值）"
+        value={value}
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+    </>
+  );
+};
+
+export default App;
+```
+
+## 禁用状态
+
+通过 `disabled` 属性指定是否禁用输入框。
+
+```tsx
+import React from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  return <Textarea disabled />;
+};
+
+export default App;
+```
+
+## 只读状态
+
+通过 `readonly` 属性指定是否为只读状态。
+
+```tsx
+import React from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  return <Textarea readonly />;
+};
+
+export default App;
+```
+
+## 不同状态
+
+通过 `status` 属性指定不同状态的输入框。
+
 ```tsx
 import React from 'react';
 import { Textarea } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Textarea>填充按钮</Textarea>
-      </div>
-    </div>
+    <>
+      <Textarea placeholder="成功状态" status="success" />
+      <br />
+      <Textarea placeholder="警告状态" status="warning" />
+      <br />
+      <Textarea placeholder="错误状态" status="error" />
+      <br />
+      <Textarea placeholder="成功状态" status="success" tips="成功状态提示" />
+      <Textarea placeholder="警告状态" status="warning" tips="警告状态提示" />
+      <Textarea placeholder="错误状态" status="error" tips="错误状态提示" />
+    </>
+  );
+};
+
+export default App;
+```
+
+## 禁用高度调整
+
+通过 `noResize` 属性指定是否禁用右下角高度调整模块。
+
+```tsx
+import React, { useState } from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  return <Textarea noResize />;
+};
+
+export default App;
+```
+
+## 限制高度
+
+通过 `minRows` 和 `maxRows` 属性控制最小和最大高度。
+
+```tsx
+import React, { useState } from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <>
+      <Textarea
+        placeholder="限制最小高度，minRows={2}"
+        value={value}
+        minRows={2}
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+      <br />
+      <Textarea
+        placeholder="限制最大高度，maxRows={6}"
+        value={value}
+        maxRows={6}
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+      <br />
+      <Textarea
+        placeholder="限制最小和最大高度，minRows={2} maxRows={6}"
+        value={value}
+        minRows={2}
+        maxRows={6}
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+    </>
+  );
+};
+
+export default App;
+```
+
+## 高度自适应
+
+通过 `autoSize` 属性控制高度自适应。
+
+```tsx
+import React, { useState } from 'react';
+import { Textarea } from 'idesign-react';
+
+const App = () => {
+  const [value, setValue] = useState('');
+
+  return (
+    <>
+      <Textarea
+        placeholder="高度自适应，autoSize = true"
+        value={value}
+        autoSize
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+      <br />
+      <Textarea
+        placeholder="高度自适应 + 限制高度，minRows={2} maxRows={6}"
+        value={value}
+        autoSize
+        minRows={2}
+        maxRows={6}
+        onChange={(value) => {
+          console.log(value);
+          setValue(value);
+        }}
+      />
+    </>
   );
 };
 

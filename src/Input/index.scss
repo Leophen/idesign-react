@@ -125,6 +125,12 @@ $danger: #f16262;
       border-color: #e5e7eb;
     }
   }
+  &.i-input-is-readonly {
+    &,
+    * {
+      cursor: default;
+    }
+  }
   &.i-input--status-success {
     @include settingStatus($success);
   }
@@ -375,4 +381,21 @@ $danger: #f16262;
 .i-input__group-suffix {
   border-left-width: 0;
   border-radius: 0 4px 4px 0;
+}
+
+.i-input__tips {
+  height: auto;
+  min-height: 24px;
+  color: #999;
+  font-size: 12px;
+  line-height: 20px;
+  &.i-input__tips--status-success {
+    color: $success;
+  }
+  &.i-input__tips--status-warning {
+    color: $warning;
+  }
+  &.i-input__tips--status-error {
+    color: $danger;
+  }
 }

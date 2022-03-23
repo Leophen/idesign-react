@@ -14,7 +14,7 @@ export interface InputProps {
   style?: React.CSSProperties;
   /**
    * 占位符
-   * @default ''
+   * @default 请输入
    */
   placeholder?: string;
   /**
@@ -27,6 +27,11 @@ export interface InputProps {
    */
   disabled?: boolean;
   /**
+   * 输入框是否只读
+   * @default false
+   */
+  readonly?: boolean;
+  /**
    * 输入框尺寸
    * @default medium
    */
@@ -35,6 +40,10 @@ export interface InputProps {
    * 输入框状态
    */
   status?: 'success' | 'warning' | 'error';
+  /**
+   * 输入框底部提示
+   */
+  tips?: string;
   /**
    * 用户最多可以输入的字符个数
    */
@@ -225,8 +234,10 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     style,
     value,
     disabled = false,
+    readonly = false,
     size,
     status,
+    tips,
     maxLength,
     clearable = false,
     type,
@@ -266,7 +277,11 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     if (type === 'number' && Number(e.target.value) < minNumber) {
       e.target.value = minNumber.toFixed(precision).toString();
     }
-    onChange?.(Number(e.target.value).toFixed(precision), e as any);
+    if (type === 'number') {
+      onChange?.(Number(e.target.value).toFixed(precision), e as any);
+    } else {
+      onChange?.(e.target.value, e as any);
+    }
   };
 
   // 点击清空按钮
@@ -296,7 +311,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       onFocus?.(e.target.value, e);
     }
     if (eventType === 'blur') {
-      if (e.target.value) {
+      if (type === 'number' && e.target.value) {
         const fixedValue = Number(e.target.value).toFixed(precision);
         e.target.value = fixedValue;
       }
@@ -326,13 +341,14 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       className="i-input__inner"
       placeholder={placeholder}
       disabled={disabled}
+      readOnly={readonly}
       ref={inputNode}
       value={value}
       type={currentType}
       maxLength={maxLength}
-      max={maxNumber}
-      min={minNumber}
-      step={step}
+      max={currentType === 'number' ? maxNumber : undefined}
+      min={currentType === 'number' ? minNumber : undefined}
+      step={currentType === 'number' ? step : undefined}
       onChange={handleChange}
       onFocus={(e) => handleEvent('focus', e)}
       onBlur={(e) => handleEvent('blur', e)}
@@ -561,40 +577,51 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   );
 
   return (
-    <div
-      className={classNames(
-        'i-input',
-        disabled && 'i-input-is-disabled',
-        size && `i-input--size-${size}`,
-        status && `i-input--status-${status}`,
-        currentType && `i-input--type-${currentType}`,
-        className,
-      )}
-      style={{ ...style }}
-      onClick={focusInputNode}
-    >
-      {prefixIcon && renderPrefixIcon}
-      {renderInput}
-      {maxLength && (
-        <div className="i-input--limit">
-          <span className="i-input--limit-count">
-            {valueLength < maxLength ? valueLength : maxLength} / {maxLength}
-          </span>
-        </div>
-      )}
-      {!disabled && value && (clearable || onClear) && (
-        <Icon name="TipCloseFill" onClick={handleClear} />
-      )}
-      {!disabled && type === 'password' && (
-        <Icon
-          name={currentType === 'password' ? 'ViewHide' : 'View'}
-          onClick={handleSwitchPassword}
-        />
-      )}
-      {suffixIcon && renderSuffixIcon}
-      {!disabled && type === 'number' && renderNumberBtn}
-      {!disabled && type === 'number' && renderNumberSlider}
-    </div>
+    <>
+      <div
+        className={classNames(
+          'i-input',
+          disabled && 'i-input-is-disabled',
+          readonly && 'i-input-is-readonly',
+          size && `i-input--size-${size}`,
+          status && `i-input--status-${status}`,
+          currentType && `i-input--type-${currentType}`,
+          className,
+        )}
+        style={{ ...style }}
+        onClick={focusInputNode}
+      >
+        {prefixIcon && renderPrefixIcon}
+        {renderInput}
+        {maxLength && (
+          <div className="i-input--limit">
+            <span className="i-input--limit-count">
+              {valueLength < maxLength ? valueLength : maxLength} / {maxLength}
+            </span>
+          </div>
+        )}
+        {!disabled && value && (clearable || onClear) && (
+          <Icon name="TipCloseFill" onClick={handleClear} />
+        )}
+        {!disabled && type === 'password' && (
+          <Icon
+            name={currentType === 'password' ? 'ViewHide' : 'View'}
+            onClick={handleSwitchPassword}
+          />
+        )}
+        {suffixIcon && renderSuffixIcon}
+        {!disabled && type === 'number' && renderNumberBtn}
+        {!disabled && type === 'number' && renderNumberSlider}
+      </div>
+      {tips && <div
+        className={classNames(
+          'i-input__tips',
+          status && `i-input__tips--status-${status}`,
+        )}
+      >
+        {tips}
+      </div>}
+    </>
   );
 };
 

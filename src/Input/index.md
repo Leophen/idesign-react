@@ -10,6 +10,8 @@ order: 4
 
 # Input 输入框
 
+用于字符输入的单行输入框。
+
 ## 基本用法
 
 基础的单行输入框，可通过 `value` 属性设置默认值，通过 `onChange` 设置值改变时触发的操作。
@@ -60,6 +62,21 @@ const App = () => {
 export default App;
 ```
 
+## 只读状态
+
+通过 `readonly` 属性指定是否为只读状态。
+
+```tsx
+import React, { useState } from 'react';
+import { Input } from 'idesign-react';
+
+const App = () => {
+  return <Input readonly />;
+};
+
+export default App;
+```
+
 ## 不同尺寸
 
 通过 `size` 属性指定不同尺寸的输入框。
@@ -99,6 +116,10 @@ const App = () => {
       <Input placeholder="警告状态" status="warning" />
       <br />
       <Input placeholder="错误状态" status="error" />
+      <br />
+      <Input placeholder="成功状态" status="success" tips="成功状态提示" />
+      <Input placeholder="警告状态" status="warning" tips="警告状态提示" />
+      <Input placeholder="错误状态" status="error" tips="错误状态提示" />
     </>
   );
 };
@@ -108,7 +129,7 @@ export default App;
 
 ## 限制字数
 
-通过 `maxLength` 属性指定 最多可以输入的字符个数。
+通过 `maxLength` 属性指定最多可以输入的字符个数。
 
 ```tsx
 import React, { useState } from 'react';
@@ -357,7 +378,7 @@ export default App;
 
 ## 触发事件
 
-基础的单行输入框，可通过 `value` 属性设置默认值，通过 `onChange` 设置值改变时触发的操作。
+一系列的事件触发操作。
 
 ```tsx
 import React, { useState } from 'react';

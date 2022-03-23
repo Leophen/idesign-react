@@ -1,0 +1,90 @@
+$primary: #3a3cf5;
+
+$success: #67c23a;
+
+$warning: #e69e31;
+
+$danger: #f16262;
+
+@mixin settingStatus($color) {
+  &,
+  &:hover,
+  &:focus-within {
+    border-color: $color;
+  }
+}
+
+.i-textarea {
+  position: relative;
+  width: 100%;
+}
+
+.i-textarea__inner {
+  display: flex;
+  width: 100%;
+  height: 56px;
+  min-height: 56px;
+  padding: 5px 8px;
+  color: inherit;
+  color: #333;
+  font-size: 14px;
+  font-family: auto;
+  line-height: 22px;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  outline: none;
+  transition: all 0.2s cubic-bezier(0.38, 0, 0.24, 1), height 0s;
+  resize: vertical;
+  &::placeholder {
+    color: #c1c4cb;
+    user-select: none;
+  }
+  &:hover {
+    border-color: #c0c4cc;
+  }
+  &:focus {
+    border-color: $primary;
+  }
+  &.i-textarea__inner-is-disabled {
+    background-color: #f5f7fa;
+    &,
+    * {
+      cursor: not-allowed;
+    }
+    &:hover {
+      border-color: #e5e7eb;
+    }
+  }
+  &.i-textarea__inner-is-readonly {
+    &,
+    * {
+      cursor: default;
+    }
+  }
+  &.i-textarea__inner--status-success {
+    @include settingStatus($success);
+  }
+  &.i-textarea__inner--status-warning {
+    @include settingStatus($warning);
+  }
+  &.i-textarea__inner--status-error {
+    @include settingStatus($danger);
+  }
+}
+
+.i-textarea__tips {
+  height: auto;
+  min-height: 24px;
+  color: #999;
+  font-size: 12px;
+  line-height: 20px;
+  &.i-textarea__tips--status-success {
+    color: $success;
+  }
+  &.i-textarea__tips--status-warning {
+    color: $warning;
+  }
+  &.i-textarea__tips--status-error {
+    color: $danger;
+  }
+}
