@@ -52,7 +52,7 @@ export default App;
 通过 `disabled` 属性指定是否禁用输入框。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -67,7 +67,7 @@ export default App;
 通过 `readonly` 属性指定是否为只读状态。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -82,7 +82,7 @@ export default App;
 通过 `size` 属性指定不同尺寸的输入框。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -102,10 +102,10 @@ export default App;
 
 ## 不同状态
 
-通过 `status` 属性指定不同状态的输入框。
+通过 `status` 属性指定不同状态的输入框，通过 `tips` 属性指定 底部提示信息。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -162,7 +162,7 @@ export default App;
 通过将 `type` 属性指定为 `password` 切换为密码输入框。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -179,7 +179,7 @@ export default App;
 另外，可通过 `speed` 属性值设置滑块移动数值变化速率，通过 `step` 设置数值变化间隔，通过 `precision` 设置数值保留几位有效数字。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
@@ -303,7 +303,7 @@ export default App;
 通过 `Input.Group` 包裹不同内容组成单行的组合输入框，可结合 [Grid](./grid) 组件来控制宽度占比。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Input } from 'idesign-react';
 import { Grid } from 'idesign-react';
 import { Button } from 'idesign-react';

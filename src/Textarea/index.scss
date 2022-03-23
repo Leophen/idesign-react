@@ -72,6 +72,18 @@ $danger: #f16262;
   }
 }
 
+.i-textarea--limit {
+  position: absolute;
+  right: 0px;
+  bottom: 8px;
+  margin-left: 8px;
+}
+
+.i-textarea--limit-count {
+  color: #999;
+  font-size: 12px;
+}
+
 .i-textarea__tips {
   height: auto;
   min-height: 24px;

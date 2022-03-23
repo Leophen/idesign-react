@@ -39,6 +39,10 @@ export interface TextareaProps {
    */
   tips?: string;
   /**
+   * 用户最多可以输入的字符个数
+   */
+  maxLength?: number;
+  /**
    * 自动聚焦
    * @default false
    */
@@ -65,6 +69,14 @@ export interface TextareaProps {
    * 输入内容变化时触发
    */
   onChange?: (value: string | number, context?: { e?: React.FormEvent<HTMLDivElement> }) => void;
+  /**
+   * 输入框聚焦时触发
+   */
+  onFocus?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
+  /**
+   * 输入框失焦时触发
+   */
+  onBlur?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
 }
 
 const Textarea: React.FC<TextareaProps> = (props) => {
@@ -76,6 +88,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     readonly = false,
     status,
     tips,
+    maxLength,
     autofocus = false,
     autoSize = false,
     noResize = false,
@@ -83,11 +96,16 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     maxRows,
     value,
     onChange,
+    onFocus,
+    onBlur,
     ...others
   } = props;
 
+  const [valueLength, setValueLength] = useState(value?.toString().length || 0);
+
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     e.persist();
+    maxLength && setValueLength((e.target as HTMLTextAreaElement).value.length);
     onChange?.((e.target as HTMLTextAreaElement).value, e as any);
     resize()
   };
@@ -111,6 +129,17 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     }
   }
 
+  // 通用事件
+  const handleEvent = (eventType: 'focus' | 'blur', e: any) => {
+    e.persist();
+    if (eventType === 'focus') {
+      onFocus?.(e.target.value, e);
+    }
+    if (eventType === 'blur') {
+      onBlur?.(e.target.value, e);
+    }
+  };
+
   return (
     <>
       <div
@@ -122,7 +151,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
         {...others}
       >
         <textarea
-          ref={textareaRef}
           className={classNames(
             'i-textarea__inner',
             disabled && 'i-textarea__inner-is-disabled',
@@ -134,14 +162,25 @@ const Textarea: React.FC<TextareaProps> = (props) => {
             maxHeight: maxRows && (22 * maxRows),
             resize: noResize ? 'none' : undefined
           }}
-          rows={autoSize ? 1 : undefined}
           placeholder={placeholder}
           disabled={disabled}
           readOnly={readonly}
+          ref={textareaRef}
+          rows={autoSize ? 1 : undefined}
+          maxLength={maxLength}
           autoFocus={autofocus}
           value={value}
           onChange={handleChange}
+          onFocus={(e) => handleEvent('focus', e)}
+          onBlur={(e) => handleEvent('blur', e)}
         ></textarea>
+        {maxLength && (
+          <div className="i-textarea--limit">
+            <span className="i-textarea--limit-count">
+              {valueLength < maxLength ? valueLength : maxLength} / {maxLength}
+            </span>
+          </div>
+        )}
       </div>
       {tips && <div
         className={classNames(
