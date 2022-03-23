@@ -152,43 +152,26 @@ export default App;
 通过 `minRows` 和 `maxRows` 属性控制最小和最大高度。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Textarea } from 'idesign-react';
 
 const App = () => {
-  const [value, setValue] = useState('');
-
   return (
     <>
       <Textarea
         placeholder="限制最小高度，minRows={2}"
-        value={value}
         minRows={2}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
       />
       <br />
       <Textarea
         placeholder="限制最大高度，maxRows={6}"
-        value={value}
         maxRows={6}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
       />
       <br />
       <Textarea
         placeholder="限制最小和最大高度，minRows={2} maxRows={6}"
-        value={value}
         minRows={2}
         maxRows={6}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
       />
     </>
   );
@@ -202,34 +185,22 @@ export default App;
 通过 `autoSize` 属性控制高度自适应。
 
 ```tsx
-import React, { useState } from 'react';
+import React from 'react';
 import { Textarea } from 'idesign-react';
 
 const App = () => {
-  const [value, setValue] = useState('');
-
   return (
     <>
       <Textarea
         placeholder="高度自适应，autoSize = true"
-        value={value}
         autoSize
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
       />
       <br />
       <Textarea
         placeholder="高度自适应 + 限制高度，minRows={2} maxRows={6}"
-        value={value}
         autoSize
         minRows={2}
         maxRows={6}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
       />
     </>
   );
