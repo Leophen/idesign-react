@@ -4,10 +4,6 @@ import './index.scss';
 
 export interface RadioGroupProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;
@@ -40,10 +36,6 @@ export interface RadioGroupProps {
 }
 
 export interface RadioProps {
-  /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
   /**
    * 类名
    */

@@ -5,10 +5,6 @@ import Icon from '../Icon';
 
 export interface TagProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;

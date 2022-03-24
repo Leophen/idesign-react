@@ -5,10 +5,6 @@ import './index.scss';
 
 export interface BreadcrumbProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;
@@ -27,10 +23,6 @@ export interface BreadcrumbProps {
 }
 
 export interface BreadcrumbItemProps {
-  /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
   /**
    * 类名
    */

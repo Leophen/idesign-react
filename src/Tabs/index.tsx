@@ -4,10 +4,6 @@ import './index.scss';
 
 export interface TabsItemProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;
@@ -33,10 +29,6 @@ const TabsItem: React.FC<TabsItemProps> = (props) => {
 };
 
 export interface TabsProps {
-  /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
   /**
    * 类名
    */

@@ -4,10 +4,6 @@ import './index.scss';
 
 export interface LoadingProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;

@@ -9,10 +9,6 @@ export interface DividerProps {
    */
   align?: 'left' | 'right' | 'center';
   /**
-   * 分割线内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;

@@ -143,10 +143,6 @@ export interface InputGroupProps {
    */
   style?: React.CSSProperties;
   /**
-   * 输入框组合内容
-   */
-  children?: React.ReactNode;
-  /**
    * 输入框组合前缀
    */
   prefixContent?: React.ReactNode;

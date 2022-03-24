@@ -9,10 +9,6 @@ export interface GridProps {
    */
   align?: 'top' | 'middle' | 'bottom';
   /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;
@@ -36,10 +32,6 @@ export interface GridItemProps {
    * 栅格单项的垂直对齐方式
    */
   align?: 'top' | 'middle' | 'bottom';
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
   /**
    * 类名
    */

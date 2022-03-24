@@ -2,7 +2,6 @@ import React, { Children } from 'react';
 import './index.scss';
 
 interface ScrollbarProps {
-  children?: React.ReactNode;
 }
 
 const Scrollbar: React.FC<ScrollbarProps> = (props) => {

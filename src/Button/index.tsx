@@ -9,10 +9,6 @@ export interface ButtonProps {
    */
   active?: boolean;
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;

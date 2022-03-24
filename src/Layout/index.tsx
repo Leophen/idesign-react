@@ -4,10 +4,6 @@ import './index.scss';
 
 export interface UsualProps {
   /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
    * 组件自定义类名
    */
   className?: string;
@@ -28,10 +24,6 @@ export interface HeaderProps extends UsualProps {
 }
 
 export interface AsideProps extends UsualProps {
-  /**
-   * 文本内容
-   */
-  children?: React.ReactNode;
   /**
    * 侧边栏宽度。样式表（class）中定义的默认宽度为：232px
    * @default ''

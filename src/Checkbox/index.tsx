@@ -4,10 +4,6 @@ import './index.scss';
 
 export interface CheckboxGroupProps {
   /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
-  /**
    * 类名
    */
   className?: string;
@@ -38,10 +34,6 @@ export interface CheckboxGroupProps {
 }
 
 export interface CheckboxProps {
-  /**
-   * 按钮内容
-   */
-  children?: React.ReactNode;
   /**
    * 类名
    */
