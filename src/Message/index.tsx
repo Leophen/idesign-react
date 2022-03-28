@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import Icon from '../Icon';
@@ -34,7 +34,7 @@ const Message: React.FC<MessageProps> & {
   warning?: any
   error?: any
   info?: any
-  closeAll?: () => void
+  closeAll?: any
 } = (props) => {
   const {
     type = 'info',
@@ -78,7 +78,7 @@ const MessageContainer: React.FC<MessageContainerProps> = (props) => {
             animation={`slide-in-${placement}`}
             key={key}
           >
-            <Message key={key} type={type} content={content} />
+            <Message type={type} content={content} />
           </Transition>
         ))
       }
@@ -143,15 +143,20 @@ const openMessage = (
   }, 'add')
 }
 
-const closeMessage = () => {
-  updateMessageContainer({}, 'del')
+const closeMessage = (
+  content: string | MessageConfig,
+  placement = 'top'
+) => {
+  updateMessageContainer({
+    placement: typeof content === 'object' ? content?.placement || 'top' : placement
+  }, 'del')
 }
 
 Message.info = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('info', content, duration, placement)
 Message.success = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('success', content, duration, placement)
 Message.warning = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('warning', content, duration, placement)
 Message.error = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('error', content, duration, placement)
-Message.closeAll = closeMessage
+Message.closeAll = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => closeMessage(content, placement)
 
 Message.displayName = 'Message';
 

@@ -1,3 +1,9 @@
+$line_enter: transform 200ms ease-out, opacity 200ms ease-in-out;
+$line_exit: transform 300ms linear 100ms, opacity 300ms ease-in-out;
+$incline_enter: transform 300ms ease-out, opacity 300ms ease-in-out;
+$incline_exit: transform 300ms linear, opacity 600ms ease-in-out;
+
+// 从上到下渐进渐出
 .i-slide-in-top-enter {
   transform: translateY(-100%);
   opacity: 0;
@@ -6,7 +12,7 @@
 .i-slide-in-top-enter-active {
   transform: translate(0);
   opacity: 1;
-  transition: transform 200ms ease-out, opacity 200ms ease-in-out;
+  transition: $line_enter;
 }
 
 .i-slide-in-top-exit {
@@ -16,9 +22,10 @@
 .i-slide-in-top-exit-active {
   transform: translateY(-100%);
   opacity: 0;
-  transition: transform 300ms linear 100ms, opacity 300ms ease-in-out;
+  transition: $line_exit;
 }
 
+// 从下到上渐进渐出
 .i-slide-in-bottom-enter {
   transform: translateY(100%);
   opacity: 0;
@@ -27,7 +34,7 @@
 .i-slide-in-bottom-enter-active {
   transform: translate(0);
   opacity: 1;
-  transition: transform 200ms ease-out, opacity 200ms ease-in-out;
+  transition: $line_enter;
 }
 
 .i-slide-in-bottom-exit {
@@ -37,5 +44,137 @@
 .i-slide-in-bottom-exit-active {
   transform: translateY(100%);
   opacity: 0;
-  transition: transform 300ms linear 100ms, opacity 300ms ease-in-out;
+  transition: $line_exit;
+}
+
+// 从左到右渐进渐出
+.i-slide-in-left-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.i-slide-in-left-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $line_enter;
+}
+
+.i-slide-in-left-exit {
+  opacity: 1;
+}
+
+.i-slide-in-left-exit-active {
+  transform: translateX(-100%);
+  opacity: 0;
+  transition: $line_exit;
+}
+
+// 从右到左渐进渐出
+.i-slide-in-right-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.i-slide-in-right-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $line_enter;
+}
+
+.i-slide-in-right-exit {
+  opacity: 1;
+}
+
+.i-slide-in-right-exit-active {
+  transform: translateX(100%);
+  opacity: 0;
+  transition: $line_exit;
+}
+
+// 从左上渐进垂直渐出
+.i-slide-in-top-left-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.i-slide-in-top-left-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $incline_enter;
+}
+
+.i-slide-in-top-left-exit {
+  opacity: 1;
+}
+
+.i-slide-in-top-left-exit-active {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: $incline_exit;
+}
+
+// 从右上渐进垂直渐出
+.i-slide-in-top-right-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.i-slide-in-top-right-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $incline_enter;
+}
+
+.i-slide-in-top-right-exit {
+  opacity: 1;
+}
+
+.i-slide-in-top-right-exit-active {
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: $incline_exit;
+}
+
+// 从右下渐进垂直渐出
+.i-slide-in-bottom-right-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.i-slide-in-bottom-right-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $incline_enter;
+}
+
+.i-slide-in-bottom-right-exit {
+  opacity: 1;
+}
+
+.i-slide-in-bottom-right-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: $incline_exit;
+}
+
+// 从左下渐进垂直渐出
+.i-slide-in-bottom-left-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.i-slide-in-bottom-left-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $incline_enter;
+}
+
+.i-slide-in-bottom-left-exit {
+  opacity: 1;
+}
+
+.i-slide-in-bottom-left-exit-active {
+  transform: translateY(100%);
+  opacity: 0;
+  transition: $incline_exit;
 }

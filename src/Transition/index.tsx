@@ -3,10 +3,8 @@ import './index.scss'
 import { CSSTransition } from 'react-transition-group'
 import { CSSTransitionProps } from 'react-transition-group/CSSTransition'
 
-type AnimationName = 'slide-in-top' | 'slide-in-bottom'
-
 type TransitionProps = CSSTransitionProps & {
-  animation?: AnimationName
+  animation?: string
 }
 
 const Transition: React.FC<TransitionProps> = (props) => {
