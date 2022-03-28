@@ -40,7 +40,7 @@ const Icon: React.FC<IconProps> = (props) => {
     style,
     name = 'UserAvatar',
     size = 16,
-    color = '#606266',
+    color,
     disabled = false,
     onClick,
     ...others

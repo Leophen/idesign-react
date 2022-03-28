@@ -35,7 +35,7 @@ export interface ButtonProps {
    * 按钮类型，用于描述组件不同的应用场景
    * @default primary
    */
-  type?: 'info' | 'primary' | 'danger' | 'warning' | 'success';
+  type?: 'info' | 'primary' | 'error' | 'warning' | 'success';
   /**
    * 按钮形式
    * @default base

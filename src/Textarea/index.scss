@@ -4,7 +4,7 @@ $success: #67c23a;
 
 $warning: #e69e31;
 
-$danger: #f16262;
+$error: #f16262;
 
 @mixin settingStatus($color) {
   &,
@@ -68,7 +68,7 @@ $danger: #f16262;
     @include settingStatus($warning);
   }
   &.i-textarea__inner--status-error {
-    @include settingStatus($danger);
+    @include settingStatus($error);
   }
 }
 
@@ -97,6 +97,6 @@ $danger: #f16262;
     color: $warning;
   }
   &.i-textarea__tips--status-error {
-    color: $danger;
+    color: $error;
   }
 }

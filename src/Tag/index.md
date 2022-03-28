@@ -42,7 +42,7 @@ export default App;
 
 ## 不同样式的标签
 
-Tag 组件提供了五种不同的颜色类型：`default`（默认）、`primary`、`success`、`warning` 和 `danger`。
+Tag 组件提供了五种不同的颜色类型：`default`（默认）、`primary`、`success`、`warning` 和 `error`。
 
 除此之外，可以通过 `theme` 属性来改变主题：`light`（默认）、`dark`。
 
@@ -58,7 +58,7 @@ const App = () => {
         <Tag type="primary">标签二</Tag>
         <Tag type="success">标签三</Tag>
         <Tag type="warning">标签四</Tag>
-        <Tag type="danger">标签五</Tag>
+        <Tag type="error">标签五</Tag>
       </div>
       <div className="idesign-demo-block-row">
         <Tag type="default" theme="dark">
@@ -73,7 +73,7 @@ const App = () => {
         <Tag type="warning" theme="dark">
           标签四
         </Tag>
-        <Tag type="danger" theme="dark">
+        <Tag type="error" theme="dark">
           标签五
         </Tag>
       </div>

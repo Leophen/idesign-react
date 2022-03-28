@@ -19,10 +19,10 @@ $warning_hover: #f5aa3a;
 $warning_active: #c98a2b;
 $warning_disabled: #f3d19e;
 
-$danger: #f16262;
-$danger_hover: #fc7b7b;
-$danger_active: #d35050;
-$danger_disabled: #fab6b6;
+$error: #f16262;
+$error_hover: #fc7b7b;
+$error_active: #d35050;
+$error_disabled: #fab6b6;
 
 $null_bg: transparent;
 
@@ -205,6 +205,6 @@ $null_bg: transparent;
   @include injectColor($warning, $warning_hover, $warning_active, $warning_disabled);
 }
 
-.i-button--type-danger {
-  @include injectColor($danger, $danger_hover, $danger_active, $danger_disabled);
+.i-button--type-error {
+  @include injectColor($error, $error_hover, $error_active, $error_disabled);
 }

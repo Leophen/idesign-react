@@ -14,9 +14,9 @@ $warning: #e6a23c;
 $warning_border: #f5dab1;
 $warning_border_opacity: rgba(245, 218, 177, 0.2);
 
-$danger: #f56c6c;
-$danger_border: #fbc4c4;
-$danger_border_opacity: rgba(251, 196, 196, 0.2);
+$error: #f56c6c;
+$error_border: #fbc4c4;
+$error_border_opacity: rgba(251, 196, 196, 0.2);
 
 .i-tag {
   display: inline-flex;
@@ -135,8 +135,8 @@ a .i-tag {
   @include injectColor($warning, $warning_border, $warning_border_opacity);
 }
 
-.i-tag--type-danger {
-  @include injectColor($danger, $danger_border, $danger_border_opacity);
+.i-tag--type-error {
+  @include injectColor($error, $error_border, $error_border_opacity);
 }
 
 .i-tag--ellipsis {

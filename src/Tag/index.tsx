@@ -34,7 +34,7 @@ export interface TagProps {
    * 标签类型，用于描述组件不同的应用场景
    * @default default
    */
-  type?: 'default' | 'primary' | 'warning' | 'danger' | 'success';
+  type?: 'default' | 'primary' | 'warning' | 'error' | 'success';
   /**
    * 点击标签触发事件
    */

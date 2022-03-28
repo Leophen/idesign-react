@@ -1,0 +1,60 @@
+$primary: #3a3cf5;
+$primary_hover: #5d5ff3;
+$primary_active: #2e31d5;
+
+$info: #909399;
+$info_background: #f4f4f5;
+
+$success: #67c23a;
+$success_background: #f0f9eb;
+
+$warning: #e6a23c;
+$warning_background: #fdf6ec;
+
+$error: #f56c6c;
+$error_background: #fef0f0;
+
+.i-message {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  width: fit-content;
+  padding: 10px 16px;
+  color: #262626;
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 6px;
+  outline: 0;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px,
+    rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
+  transform: translateX(0);
+  .i-icon {
+    margin-right: 8px;
+  }
+  .icon-TipInfo {
+    color: $primary;
+  }
+  .icon-TipCheckFill {
+    color: $success;
+  }
+  .icon-TipWarningFill {
+    color: $warning;
+  }
+  .icon-TipCloseFill {
+    color: $error;
+  }
+}
+
+.message-wrapper {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  z-index: 5000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: translateX(-50%);
+  .i-message:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}

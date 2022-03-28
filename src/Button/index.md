@@ -75,16 +75,16 @@ const App = () => {
           文字按钮
         </Button>
       </div>
-      {/* 红色 danger */}
+      {/* 红色 error */}
       <div className="idesign-demo-block-row">
-        <Button type="danger">填充按钮</Button>
-        <Button type="danger" variant="outline">
+        <Button type="error">填充按钮</Button>
+        <Button type="error" variant="outline">
           描边按钮
         </Button>
-        <Button type="danger" variant="dashed">
+        <Button type="error" variant="dashed">
           虚框按钮
         </Button>
-        <Button type="danger" variant="text">
+        <Button type="error" variant="text">
           文字按钮
         </Button>
       </div>
@@ -120,8 +120,8 @@ const App = () => {
         <Button type="warning" active>
           Warning
         </Button>
-        <Button type="danger" active>
-          Danger
+        <Button type="error" active>
+          Error
         </Button>
       </div>
       {/* 描边按钮 */}
@@ -138,8 +138,8 @@ const App = () => {
         <Button type="warning" variant="outline" active>
           Warning
         </Button>
-        <Button type="danger" variant="outline" active>
-          Danger
+        <Button type="error" variant="outline" active>
+          Error
         </Button>
       </div>
       {/* 虚框按钮 */}
@@ -156,8 +156,8 @@ const App = () => {
         <Button type="warning" variant="dashed" active>
           Warning
         </Button>
-        <Button type="danger" variant="dashed" active>
-          Danger
+        <Button type="error" variant="dashed" active>
+          Error
         </Button>
       </div>
       {/* 文字按钮 */}
@@ -174,8 +174,8 @@ const App = () => {
         <Button type="warning" variant="text" active>
           Warning
         </Button>
-        <Button type="danger" variant="text" active>
-          Danger
+        <Button type="error" variant="text" active>
+          Error
         </Button>
       </div>
     </div>
@@ -210,8 +210,8 @@ const App = () => {
         <Button type="warning" disabled>
           Warning
         </Button>
-        <Button type="danger" disabled>
-          Danger
+        <Button type="error" disabled>
+          Error
         </Button>
       </div>
       {/* 描边按钮 */}
@@ -228,8 +228,8 @@ const App = () => {
         <Button type="warning" variant="outline" disabled>
           Warning
         </Button>
-        <Button type="danger" variant="outline" disabled>
-          Danger
+        <Button type="error" variant="outline" disabled>
+          Error
         </Button>
       </div>
       {/* 虚框按钮 */}
@@ -246,8 +246,8 @@ const App = () => {
         <Button type="warning" variant="dashed" disabled>
           Warning
         </Button>
-        <Button type="danger" variant="dashed" disabled>
-          Danger
+        <Button type="error" variant="dashed" disabled>
+          Error
         </Button>
       </div>
       {/* 文字按钮 */}
@@ -264,8 +264,8 @@ const App = () => {
         <Button type="warning" variant="text" disabled>
           Warning
         </Button>
-        <Button type="danger" variant="text" disabled>
-          Danger
+        <Button type="error" variant="text" disabled>
+          Error
         </Button>
       </div>
     </div>
