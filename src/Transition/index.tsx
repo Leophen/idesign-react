@@ -3,31 +3,29 @@ import './index.scss'
 import { CSSTransition } from 'react-transition-group'
 import { CSSTransitionProps } from 'react-transition-group/CSSTransition'
 
-type AnimationName = 'zoom-in-top' | 'zoom-in-left' | 'zoom-in-bottom' | 'zoom-in-right' | 'slide-in-top'
+type AnimationName = 'slide-in-top' | 'slide-in-bottom'
 
 type TransitionProps = CSSTransitionProps & {
-  animation?: AnimationName,
-  wrapper?: boolean,
+  animation?: AnimationName
 }
 
 const Transition: React.FC<TransitionProps> = (props) => {
   const {
     children,
-    classNames,
     animation,
-    wrapper,
     ...restProps
   } = props
 
   return (
     <CSSTransition
-      classNames={classNames ? classNames : animation}
+      classNames={`i-${animation}`}
       {...restProps}
     >
-      {wrapper ? <div>{children}</div> : children}
+      {children}
     </CSSTransition>
   )
 }
+
 Transition.defaultProps = {
   unmountOnExit: true,
   appear: true,

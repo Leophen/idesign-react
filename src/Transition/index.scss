@@ -1,20 +1,41 @@
-.slide-in-top-enter {
+.i-slide-in-top-enter {
   transform: translateY(-100%);
   opacity: 0;
 }
 
-.slide-in-top-enter-active {
+.i-slide-in-top-enter-active {
   transform: translate(0);
   opacity: 1;
   transition: transform 200ms ease-out, opacity 200ms ease-in-out;
 }
 
-.slide-in-top-exit {
+.i-slide-in-top-exit {
   opacity: 1;
 }
 
-.slide-in-top-exit-active {
+.i-slide-in-top-exit-active {
   transform: translateY(-100%);
+  opacity: 0;
+  transition: transform 300ms linear 100ms, opacity 300ms ease-in-out;
+}
+
+.i-slide-in-bottom-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.i-slide-in-bottom-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: transform 200ms ease-out, opacity 200ms ease-in-out;
+}
+
+.i-slide-in-bottom-exit {
+  opacity: 1;
+}
+
+.i-slide-in-bottom-exit-active {
+  transform: translateY(100%);
   opacity: 0;
   transition: transform 300ms linear 100ms, opacity 300ms ease-in-out;
 }

@@ -20,6 +20,11 @@ export interface MessageProps {
    * @default 3
    */
   duration?: number;
+  /**
+  * 全局提示位置
+  * @default top
+  */
+  placement?: 'top' | 'bottom';
 }
 
 export interface MessageConfig extends MessageProps { }
@@ -57,19 +62,20 @@ const Message: React.FC<MessageProps> & {
 };
 
 interface MessageContainerProps {
-  messageList: any[]
+  messageListData: any[]
+  placement?: 'top' | 'bottom';
 }
 
 const MessageContainer: React.FC<MessageContainerProps> = (props) => {
-  const { messageList } = props
+  const { messageListData, placement = 'top' } = props
   return (
     <TransitionGroup>
       {
-        messageList.map(({ key, type, content }) => (
+        messageListData.map(({ key, type, content }) => (
           <Transition
             timeout={200}
             in
-            animation="slide-in-top"
+            animation={`slide-in-${placement}`}
             key={key}
           >
             <Message key={key} type={type} content={content} />
@@ -80,58 +86,71 @@ const MessageContainer: React.FC<MessageContainerProps> = (props) => {
   )
 }
 
-let el = document.querySelector('#message-wrapper')
-if (!el) {
-  el = document.createElement('div')
-  el.className = 'message-wrapper'
-  el.id = 'message-wrapper'
-  document.body.append(el)
+const messageList: any = {
+  'top': [],
+  'bottom': []
 }
 
-let messageList: any[] = []
-ReactDOM.render(<MessageContainer messageList={messageList} />, el)
+const createMessageWrapper = (placement: 'top' | 'bottom') => {
+  const idName = `message-wrapper__${placement}`
+  let el = document.querySelector(`#${idName}`)
+  if (!el) {
+    el = document.createElement('div')
+    el.className = `message-wrapper ${idName}`
+    el.id = idName
+    document.body.append(el)
+  }
+  ReactDOM.render(<MessageContainer placement={placement} messageListData={messageList[placement]} />, el)
+}
+
+createMessageWrapper('top')
+createMessageWrapper('bottom')
 
 const updateMessageContainer = (config: any, mode = 'add') => {
-  if (mode === 'add') {
-    messageList.push(config)
+  const location = config.placement
+  let el = document.querySelector(`#message-wrapper__${location}`)
+  if (mode === 'add') { // 添加模式
+    location === 'top' ? messageList[location].push(config) : messageList[location].unshift(config)
+    // 延迟更新 DOM
     if (config.duration > 0) {
       setTimeout(() => {
-        messageList.map((item, index) => {
+        messageList[location].map((item: any, index: number) => {
           if (item.key === config.key) {
-            messageList.splice(index, 1)
+            messageList[location].splice(index, 1)
           }
         })
-        ReactDOM.render(<MessageContainer messageList={messageList} />, el)
+        ReactDOM.render(<MessageContainer placement={location} messageListData={messageList[location]} />, el)
       }, config.duration * 1000)
     }
-  } else {
-    messageList = []
+  } else { // 删除模式
+    messageList[location] = []
   }
-
-  ReactDOM.render(<MessageContainer messageList={messageList} />, el)
+  ReactDOM.render(<MessageContainer placement={location} messageListData={messageList[location]} />, el)
 }
 
 const openMessage = (
   type: 'info' | 'success' | 'warning' | 'error',
   content: string | MessageConfig,
-  duration = 3
+  duration = 3,
+  placement = 'top'
 ) => {
   updateMessageContainer({
     key: Date.now(),
     type,
     content: typeof content === 'object' ? content?.content : content,
-    duration: typeof content === 'object' ? content?.duration || 3 : duration
-  })
+    duration: typeof content === 'object' ? content?.duration || 3 : duration,
+    placement: typeof content === 'object' ? content?.placement || 'top' : placement
+  }, 'add')
 }
 
 const closeMessage = () => {
   updateMessageContainer({}, 'del')
 }
 
-Message.info = (content: string | MessageConfig, duration: number) => openMessage('info', content, duration)
-Message.success = (content: string | MessageConfig, duration: number) => openMessage('success', content, duration)
-Message.warning = (content: string | MessageConfig, duration: number) => openMessage('warning', content, duration)
-Message.error = (content: string | MessageConfig, duration: number) => openMessage('error', content, duration)
+Message.info = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('info', content, duration, placement)
+Message.success = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('success', content, duration, placement)
+Message.warning = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('warning', content, duration, placement)
+Message.error = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('error', content, duration, placement)
 Message.closeAll = closeMessage
 
 Message.displayName = 'Message';

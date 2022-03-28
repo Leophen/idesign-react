@@ -57,4 +57,8 @@ $error_background: #fef0f0;
   .i-message:not(:last-of-type) {
     margin-bottom: 16px;
   }
+  &.message-wrapper__bottom {
+    top: unset;
+    bottom: 20px;
+  }
 }

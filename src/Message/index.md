@@ -66,7 +66,7 @@ export default App;
 
 ## 设置提示持续时间
 
-可通过第二个参数来设置提示持续的时间，当设为 `0` 时保持提示不关闭。
+可通过第二个参数来设置提示持续的时间，默认为 `3`，当设为 `0` 时保持提示不关闭。
 
 ```tsx
 import React from 'react';
@@ -96,6 +96,40 @@ const App = () => {
           }}
         >
           提示 10 秒后关闭
+        </Button>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## 设置提示展示位置
+
+可通过第三个参数来设置提示出现的位置，默认为 `top`。
+
+```tsx
+import React from 'react';
+import { Button, Message } from 'idesign-react';
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-column">
+      <div className="idesign-demo-block-row">
+        <Button
+          onClick={() => {
+            Message.info("这是一条不关闭的提示", 3);
+          }}
+        >
+          展示在顶部的提示
+        </Button>
+        <Button
+          onClick={() => {
+            Message.info("这是一条不关闭的提示", 3, "bottom");
+          }}
+        >
+          展示在底部的提示
         </Button>
       </div>
     </div>
@@ -171,7 +205,8 @@ const App = () => {
           onClick={() => {
             Message.info({
               content: "这是一条持续 10 秒的提示",
-              duration: 10
+              duration: 10,
+              placement: 'bottom'
             });
           }}
         >
