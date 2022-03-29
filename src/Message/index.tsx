@@ -92,11 +92,11 @@ const messageList: any = {
 }
 
 const createMessageWrapper = (placement: 'top' | 'bottom') => {
-  const idName = `message-wrapper__${placement}`
+  const idName = `i-message-wrapper__${placement}`
   let el = document.querySelector(`#${idName}`)
   if (!el) {
     el = document.createElement('div')
-    el.className = `message-wrapper ${idName}`
+    el.className = `i-message-wrapper ${idName}`
     el.id = idName
     document.body.append(el)
   }
@@ -108,7 +108,7 @@ createMessageWrapper('bottom')
 
 const updateMessageContainer = (config: any, mode = 'add') => {
   const location = config.placement
-  let el = document.querySelector(`#message-wrapper__${location}`)
+  let el = document.querySelector(`#i-message-wrapper__${location}`)
   if (mode === 'add') { // 添加模式
     location === 'top' ? messageList[location].push(config) : messageList[location].unshift(config)
     // 延迟更新 DOM

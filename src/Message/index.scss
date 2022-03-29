@@ -34,7 +34,7 @@ $error: #f56c6c;
   }
 }
 
-.message-wrapper {
+.i-message-wrapper {
   position: fixed;
   top: 20px;
   left: 50%;
@@ -46,7 +46,7 @@ $error: #f56c6c;
   .i-message:not(:last-of-type) {
     margin-bottom: 16px;
   }
-  &.message-wrapper__bottom {
+  &.i-message-wrapper__bottom {
     top: unset;
     bottom: 20px;
   }

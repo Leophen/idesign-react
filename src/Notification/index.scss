@@ -65,7 +65,7 @@ $error: #f56c6c;
   line-height: 22px;
 }
 
-.notification-wrapper {
+.i-notification-wrapper {
   position: fixed;
   top: 24px;
   right: 24px;
@@ -76,15 +76,15 @@ $error: #f56c6c;
   .i-notification:not(:last-of-type) {
     margin-bottom: 16px;
   }
-  &.notification-wrapper__bottom-right {
+  &.i-notification-wrapper__bottom-right {
     top: unset;
     bottom: 24px;
   }
-  &.notification-wrapper__top-left {
+  &.i-notification-wrapper__top-left {
     right: unset;
     left: 24px;
   }
-  &.notification-wrapper__bottom-left {
+  &.i-notification-wrapper__bottom-left {
     top: unset;
     right: unset;
     bottom: 24px;

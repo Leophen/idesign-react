@@ -98,7 +98,7 @@ const NotificationContainer: React.FC<NotificationContainerProps> = (props) => {
   const { notificationListData, placement = 'top-right' } = props
   const onclose = (index: number) => {
     notificationList[placement].splice(index, 1)
-    let el = document.querySelector(`#notification-wrapper__${placement}`)
+    let el = document.querySelector(`#i-notification-wrapper__${placement}`)
     ReactDOM.render(<NotificationContainer placement={placement} notificationListData={notificationList[placement]} />, el)
   }
   return (
@@ -127,11 +127,11 @@ const notificationList: any = {
 }
 
 const createNotificationWrapper = (placement: NotificationPlacement) => {
-  const idName = `notification-wrapper__${placement}`
+  const idName = `i-notification-wrapper__${placement}`
   let el = document.querySelector(`#${idName}`)
   if (!el) {
     el = document.createElement('div')
-    el.className = `notification-wrapper ${idName}`
+    el.className = `i-notification-wrapper ${idName}`
     el.id = idName
     document.body.append(el)
   }
@@ -145,7 +145,7 @@ createNotificationWrapper('bottom-right')
 
 const updateNotificationContainer = (config: any, mode = 'add') => {
   const location = config.placement
-  let el = document.querySelector(`#notification-wrapper__${location}`)
+  let el = document.querySelector(`#i-notification-wrapper__${location}`)
   if (mode === 'add') { // 添加模式
     location.split('-')[0] === 'top' ? notificationList[location].push(config) : notificationList[location].unshift(config)
     // 延迟更新 DOM
