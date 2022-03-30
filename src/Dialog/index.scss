@@ -1,0 +1,111 @@
+$primary: #3a3cf5;
+$success: #67c23a;
+$warning: #e6a23c;
+$error: #f56c6c;
+
+.i-dialog-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2500;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.i-dialog__mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2500;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
+
+@keyframes iDialogOpen {
+  0% {
+    transform: scale(0.2) translate(-50%, -50%);
+  }
+  100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+.i-dialog {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2501;
+  box-sizing: border-box;
+  width: 520px;
+  max-height: 100%;
+  overflow: auto;
+  color: #000000d9;
+  font-size: 14px;
+  background: #fff;
+  border: 1px solid rgb(231, 231, 231);
+  border-radius: 6px;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+  animation: iDialogOpen 0.2s ease-out forwards;
+  pointer-events: auto;
+}
+
+.i-dialog__close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+  .i-icon {
+    margin: 0;
+  }
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
+.i-dialog__header,
+.i-dialog__body,
+.i-dialog__footer {
+  padding: 16px;
+}
+
+.i-dialog__header {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 16px;
+  word-break: break-word;
+  .i-icon {
+    margin-right: 8px;
+    font-size: 20px;
+  }
+  .icon-TipInfo {
+    color: $primary;
+  }
+  .icon-TipCheckFill {
+    color: $success;
+  }
+  .icon-TipWarningFill {
+    color: $warning;
+  }
+  .icon-TipCloseFill {
+    color: $error;
+  }
+}
+
+.i-dialog__footer {
+  width: calc(100% - 32px);
+  text-align: right;
+  .i-button + .i-button {
+    margin-left: 10px;
+  }
+}

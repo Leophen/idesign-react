@@ -41,6 +41,10 @@ export interface ButtonProps {
    * @default base
    */
   variant?: 'base' | 'outline' | 'dashed' | 'text';
+  /**
+   * 点击按钮触发事件
+   */
+  onClick?: React.MouseEventHandler;
 }
 
 /**
@@ -57,6 +61,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     style,
     type = 'primary',
     variant = 'base',
+    onClick = () => { },
     ...buttonProps
   } = props;
   return (
@@ -73,6 +78,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       )}
       style={{ ...style }}
       disabled={disabled}
+      onClick={onClick}
       {...buttonProps}
     >
       {children}

@@ -178,3 +178,22 @@ $incline_exit: transform 300ms linear, opacity 600ms ease-in-out;
   opacity: 0;
   transition: $incline_exit;
 }
+
+// 显示隐藏渐变
+.i-fade-in-enter {
+  opacity: 0;
+}
+
+.i-fade-in-enter-active {
+  opacity: 1;
+  transition: opacity 200ms ease-out;
+}
+
+.i-fade-in-exit {
+  opacity: 1;
+}
+
+.i-fade-in-exit-active {
+  opacity: 0;
+  transition: opacity 200ms ease-in;
+}

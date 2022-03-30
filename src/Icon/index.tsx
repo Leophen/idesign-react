@@ -39,7 +39,7 @@ const Icon: React.FC<IconProps> = (props) => {
     className,
     style,
     name = 'UserAvatar',
-    size = 16,
+    size,
     color,
     disabled = false,
     onClick,
@@ -48,7 +48,7 @@ const Icon: React.FC<IconProps> = (props) => {
 
   const iconStyles = {
     color,
-    fontSize: parseInt(size.toString()),
+    fontSize: size && parseInt(size.toString()),
     ...style,
   };
 

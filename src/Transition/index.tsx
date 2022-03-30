@@ -11,12 +11,14 @@ const Transition: React.FC<TransitionProps> = (props) => {
   const {
     children,
     animation,
+    nodeRef,
     ...restProps
   } = props
 
   return (
     <CSSTransition
       classNames={`i-${animation}`}
+      nodeRef={nodeRef}
       {...restProps}
     >
       {children}
