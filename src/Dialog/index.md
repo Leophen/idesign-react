@@ -17,42 +17,38 @@ order: 4
 可通过 `visible` 属性控制对话框显示隐藏。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog } from 'idesign-react';
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
         <Button type="primary" onClick={() => setVisible(true)}>
           打开对话框
         </Button>
-        <Dialog
-          header="对话框标题"
-          visible={visible}
-          onClose={() => setVisible(false)}
-        >
+        <Dialog header="对话框标题" visible={visible} onClose={() => setVisible(false)}>
           <span>对话框内容</span>
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## 禁用退出键关闭功能
 
-可通过 `closeOnEsc` 属性控制打开对话框时按下 ESC 退出键是否触发关闭事件，默认为 `true`。
+可通过 `closeOnEsc` 属性控制打开对话框时按下 ESC 退出键是否触发关闭事件，默认为 `true`，表示 ESC 退出键触发 `onClose` 关闭事件。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog } from 'idesign-react';
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
@@ -69,10 +65,10 @@ const App = () => {
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## 隐藏遮罩层
@@ -80,11 +76,11 @@ export default App
 可通过 `showMask` 属性控制打开对话框时是否显示遮罩层，默认为 `true`。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog } from 'idesign-react';
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
@@ -101,10 +97,10 @@ const App = () => {
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## 自定义对话框宽度
@@ -112,31 +108,26 @@ export default App
 可通过 `width` 属性控制对话框宽度。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog } from 'idesign-react';
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
         <Button type="primary" onClick={() => setVisible(true)}>
           自定义宽度
         </Button>
-        <Dialog
-          header="对话框标题"
-          visible={visible}
-          width={800}
-          onClose={() => setVisible(false)}
-        >
+        <Dialog header="对话框标题" visible={visible} width={800} onClose={() => setVisible(false)}>
           <span>对话框内容</span>
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## 自定义对话框头部
@@ -144,37 +135,33 @@ export default App
 可通过 `header` 属性控制对话框头部内容。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog, Icon } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog, Icon } from 'idesign-react';
 
 const header = (
   <>
     <Icon name="TipWarningFill" />
     <span>这是一个自定义标题</span>
   </>
-)
+);
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
         <Button type="primary" onClick={() => setVisible(true)}>
           自定义头部
         </Button>
-        <Dialog
-          header={header}
-          visible={visible}
-          onClose={() => setVisible(false)}
-        >
+        <Dialog header={header} visible={visible} onClose={() => setVisible(false)}>
           <span>对话框内容</span>
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 ## 自定义对话框底部
@@ -182,18 +169,20 @@ export default App
 可通过 `footer` 属性控制对话框底部内容。
 
 ```tsx
-import React, { useState } from 'react'
-import { Button, Dialog, Icon } from 'idesign-react'
+import React, { useState } from 'react';
+import { Button, Dialog, Icon } from 'idesign-react';
 
 const App = () => {
-  const [visible, setVisible] = useState(false)
+  const [visible, setVisible] = useState(false);
 
   const footer = (
     <>
-      <Button variant="outline" onClick={() => setVisible(false)}>我再想想</Button>
+      <Button variant="outline" onClick={() => setVisible(false)}>
+        我再想想
+      </Button>
       <Button>去意已决</Button>
     </>
-  )
+  );
 
   return (
     <div className="idesign-demo-block-column">
@@ -202,7 +191,7 @@ const App = () => {
           自定义底部
         </Button>
         <Dialog
-          header='对话框标题'
+          header="对话框标题"
           footer={footer}
           visible={visible}
           onClose={() => setVisible(false)}
@@ -211,10 +200,10 @@ const App = () => {
         </Dialog>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default App
+export default App;
 ```
 
 <API src="./index.tsx"></API>
