@@ -10,7 +10,11 @@ order: 4
 
 # Dialog 对话框
 
+模态对话框。
+
 ## 基本用法
+
+可通过 `visible` 属性控制对话框显示隐藏。
 
 ```tsx
 import React, { useState } from 'react'
@@ -41,6 +45,8 @@ export default App
 
 ## 自定义对话框宽度
 
+可通过 `width` 属性控制对话框宽度。
+
 ```tsx
 import React, { useState } from 'react'
 import { Button, Dialog } from 'idesign-react'
@@ -70,6 +76,8 @@ export default App
 ```
 
 ## 自定义对话框头部
+
+可通过 `header` 属性控制对话框头部内容。
 
 ```tsx
 import React, { useState } from 'react'
@@ -106,6 +114,8 @@ export default App
 ```
 
 ## 自定义对话框底部
+
+可通过 `footer` 属性控制对话框底部内容。
 
 ```tsx
 import React, { useState } from 'react'

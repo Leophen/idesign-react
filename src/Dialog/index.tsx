@@ -88,6 +88,13 @@ const Dialog: React.FC<DialogProps> = (props) => {
   const bodyOverflow = useRef<string>(document.body.style.overflow);
 
   useEffect(() => {
+    if (visible) {
+      // 打开对话框时禁止背景滚动
+      document.body.style.overflow = 'hidden';
+    } else {
+      // 关闭对话框时恢复背景滚动
+      document.body.style.overflow = bodyOverflow.current;
+    }
     setCurrentVisible(visible)
   }, [visible])
 

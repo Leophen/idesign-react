@@ -75,6 +75,7 @@ $error: #f56c6c;
 .i-dialog__header,
 .i-dialog__body,
 .i-dialog__footer {
+  box-sizing: border-box;
   padding: 16px;
 }
 
@@ -103,7 +104,7 @@ $error: #f56c6c;
 }
 
 .i-dialog__footer {
-  width: calc(100% - 32px);
+  width: 100%;
   text-align: right;
   .i-button + .i-button {
     margin-left: 10px;
