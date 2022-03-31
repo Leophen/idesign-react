@@ -16,14 +16,24 @@ export interface DialogProps {
    */
   style?: React.CSSProperties;
   /**
-   * 对话框宽度
-   */
-  width?: number;
-  /**
    * 控制对话框显示隐藏
    * @default false
    */
   visible?: boolean;
+  /**
+   * 按下退出键是否触发关闭事件
+   * @default true
+   */
+  closeOnEsc?: boolean;
+  /**
+   * 是否显示遮罩层
+   * @default true
+   */
+  showMask?: boolean;
+  /**
+   * 对话框宽度
+   */
+  width?: number;
   /**
    * 对话框头部内容
    */
@@ -35,12 +45,14 @@ export interface DialogProps {
   /**
    * 对话框关闭时触发事件
    */
-  onClose?: (visible: boolean) => void;
+  onClose?: () => void;
 }
 
 // 获取触发对话框打开的 DOM 节点原位置
+let clickOpenTarget: EventTarget | null;
 let mousePosition: { x: number; y: number } | null;
 const getClickPosition = (e: MouseEvent) => {
+  clickOpenTarget = e.target
   mousePosition = {
     x: e.clientX,
     y: e.clientY,
@@ -67,19 +79,43 @@ const Dialog: React.FC<DialogProps> = (props) => {
     children = '',
     className,
     style,
-    width,
     visible = false,
+    closeOnEsc = true,
+    showMask = true,
+    width,
     header,
     footer,
     onClose = () => { },
     ...others
   } = props;
 
-  const [currentVisible, setCurrentVisible] = useState(visible)
+  const handleKeyDown = (e: any) => {
+    if (e.key === 'Escape') {
+      onClose?.()
+    }
+  };
 
   const closeDialog = () => {
-    setCurrentVisible(false)
-    onClose?.(currentVisible)
+    onClose?.()
+    closeOnEsc && document.removeEventListener('keydown', handleKeyDown)
+  }
+
+  // 判断点击节点是否父元素内
+  const hasParent = (node: any, parent: HTMLElement) => {
+    while (node) {
+      if (node === parent) {
+        return true;
+      }
+      node = node.parentNode
+    }
+    return false;
+  };
+
+  const handleClick = (e: any) => {
+    if (!hasParent(e.target, dialog.current) && e.target !== clickOpenTarget) {
+      closeDialog()
+      document.removeEventListener('click', handleClick, true)
+    }
   }
 
   const dialog = useRef<any>(null);
@@ -91,41 +127,35 @@ const Dialog: React.FC<DialogProps> = (props) => {
     if (visible) {
       // 打开对话框时禁止背景滚动
       document.body.style.overflow = 'hidden';
-    } else {
-      // 关闭对话框时恢复背景滚动
-      document.body.style.overflow = bodyOverflow.current;
-    }
-    setCurrentVisible(visible)
-  }, [visible])
-
-  useEffect(() => {
-    if (currentVisible) {
-      // 打开对话框时禁止背景滚动
-      document.body.style.overflow = 'hidden';
+      // 退出键功能
+      closeOnEsc && document.addEventListener('keydown', handleKeyDown)
+      // 展开动画出发点
       if (mousePosition && dialog.current) {
         dialog.current.style.transformOrigin = `${mousePosition.x - dialog.current.offsetLeft}px ${mousePosition.y - dialog.current.offsetTop
           }px`;
       }
+      // 无遮罩层时点击关闭功能
+      !showMask && document.addEventListener('click', handleClick, true)
     } else {
       // 关闭对话框时恢复背景滚动
       document.body.style.overflow = bodyOverflow.current;
     }
-  }, [currentVisible])
+  }, [visible])
 
   const dialogNode = (
     <>
-      <Transition
+      {showMask && <Transition
         timeout={200}
-        in={currentVisible}
+        in={visible}
         animation='fade-in'
         key='i-dialog__mask'
       >
         <div className="i-dialog__mask" onClick={closeDialog} onScroll={() => { return }}></div>
-      </Transition>
+      </Transition>}
 
       <Transition
         timeout={200}
-        in={currentVisible}
+        in={visible}
         animation='fade-in'
         key='i-dialog'
       >

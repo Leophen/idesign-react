@@ -43,6 +43,70 @@ const App = () => {
 export default App
 ```
 
+## 禁用退出键关闭功能
+
+可通过 `closeOnEsc` 属性控制打开对话框时按下 ESC 退出键是否触发关闭事件，默认为 `true`。
+
+```tsx
+import React, { useState } from 'react'
+import { Button, Dialog } from 'idesign-react'
+
+const App = () => {
+  const [visible, setVisible] = useState(false)
+  return (
+    <div className="idesign-demo-block-column">
+      <div className="idesign-demo-block-row">
+        <Button type="primary" onClick={() => setVisible(true)}>
+          禁用对话框退出键功能
+        </Button>
+        <Dialog
+          header="对话框标题"
+          visible={visible}
+          closeOnEsc={false}
+          onClose={() => setVisible(false)}
+        >
+          <span>对话框内容</span>
+        </Dialog>
+      </div>
+    </div>
+  )
+}
+
+export default App
+```
+
+## 隐藏遮罩层
+
+可通过 `showMask` 属性控制打开对话框时是否显示遮罩层，默认为 `true`。
+
+```tsx
+import React, { useState } from 'react'
+import { Button, Dialog } from 'idesign-react'
+
+const App = () => {
+  const [visible, setVisible] = useState(false)
+  return (
+    <div className="idesign-demo-block-column">
+      <div className="idesign-demo-block-row">
+        <Button type="primary" onClick={() => setVisible(true)}>
+          隐藏遮罩层
+        </Button>
+        <Dialog
+          header="对话框标题"
+          visible={visible}
+          showMask={false}
+          onClose={() => setVisible(false)}
+        >
+          <span>对话框内容</span>
+        </Dialog>
+      </div>
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 自定义对话框宽度
 
 可通过 `width` 属性控制对话框宽度。

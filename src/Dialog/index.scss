@@ -79,6 +79,11 @@ $error: #f56c6c;
   padding: 16px;
 }
 
+.i-dialog__body {
+  overflow: overlay;
+  overflow: auto;
+}
+
 .i-dialog__header {
   display: flex;
   align-items: center;
