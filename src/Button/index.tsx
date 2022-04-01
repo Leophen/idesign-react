@@ -69,9 +69,9 @@ const Button: React.FC<ButtonProps> = (props) => {
       className={classNames(
         'i-button',
         `i-button--type-${type}`,
-        `i-button--variant-${variant}`,
-        `i-button--size-${size}`,
-        `i-button--shape-${shape}`,
+        variant !== 'base' && `i-button--variant-${variant}`,
+        size !== 'medium' && `i-button--size-${size}`,
+        shape !== 'round' && `i-button--shape-${shape}`,
         active && 'i-button-active',
         disabled && 'i-button-disabled',
         className,

@@ -142,7 +142,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
     }
   }, [visible])
 
-  const dialogNode = (
+  const DialogNode = (
     <>
       {showMask && <Transition
         timeout={200}
@@ -187,7 +187,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
   )
 
   return (
-    ReactDOM.createPortal(dialogNode, dialogWrapper as HTMLElement)
+    ReactDOM.createPortal(DialogNode, dialogWrapper as HTMLElement)
   )
 };
 

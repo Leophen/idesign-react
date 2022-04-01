@@ -14,13 +14,15 @@ order: 6
 
 ```tsx
 import React from 'react';
-import { Popup } from 'idesign-react';
+import { Button, Popup } from 'idesign-react';
 
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
       <div className="idesign-demo-block-row">
-        <Popup>填充按钮</Popup>
+        <Popup content="提示内容">
+          <Button>悬浮提示</Button>
+        </Popup>
       </div>
     </div>
   );
