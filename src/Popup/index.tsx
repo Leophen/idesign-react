@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import ReactDOM from 'react-dom';
+import Transition from '../Transition';
 
 type placementType =
   'top' |
@@ -123,6 +124,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       data-popper-placement={placement}
       style={styles}
     >
+      <div className="i-popup__arrow" data-popper-placement={placement} />
       {content}
     </div>
   )
@@ -158,22 +160,38 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const [visible, setVisible] = useState(false)
 
+  const popupReferenceRef = useRef<any>(null)
+  const hasParent = (node: any, parent: HTMLElement) => {
+    while (node) {
+      if (node === parent) {
+        return true;
+      }
+      node = node.parentNode
+    }
+    return false;
+  };
+  const ifHandleInReference = (e: any) => {
+    if (hasParent(e.target, popupReferenceRef.current)) {
+      return true
+    } return false
+  }
+
   // 打开 popup 后的全局点击监听，用于关闭其它气泡提示
-  const currentTarget = useRef<any>(null)
+  const firstHandleTarget = useRef<any>(null)
   const ifClickCurrentTarget = (e: any) => {
-    if (e.target !== currentTarget.current) {
+    if (e.target !== firstHandleTarget.current) {
       setVisible(false)
     }
     document.removeEventListener('click', ifClickCurrentTarget)
   }
 
   const handleClick = (e: React.MouseEvent) => {
-    if (trigger === 'click') {
+    if (trigger === 'click' && ifHandleInReference(e)) {
       e.persist();
       setTargetLocation((e.target as HTMLElement))
       setVisible(!visible)
       // 判断二次点击是否为原 trigger，不是则关闭 popup
-      currentTarget.current = e.target
+      firstHandleTarget.current = e.target
       document.addEventListener('click', ifClickCurrentTarget)
     } return
   }
@@ -186,12 +204,12 @@ const Popup: React.FC<PopupProps> = (props) => {
   }
 
   const handleContextMenu = (e: React.MouseEvent) => {
-    if (trigger === 'context-menu') {
+    if (trigger === 'context-menu' && ifHandleInReference(e)) {
       e.persist();
       setTargetLocation((e.target as HTMLElement))
       setVisible(!visible)
       // 判断二次点击是否为原 trigger，不是则关闭 popup
-      currentTarget.current = e.target
+      firstHandleTarget.current = e.target
       document.addEventListener('click', closePopup)
       document.addEventListener('contextmenu', closePopup)
     } return
@@ -210,31 +228,32 @@ const Popup: React.FC<PopupProps> = (props) => {
   }
 
   const handleDown = (e: React.MouseEvent) => {
-    if (trigger === 'focus') {
+    if (trigger === 'focus' && ifHandleInReference(e)) {
       handleVisible(e)
     } return
   }
 
   const handleUp = (e: React.MouseEvent) => {
-    if (trigger === 'focus') {
+    if (trigger === 'focus' && ifHandleInReference(e)) {
       handleHide(e)
     } return
   }
 
   const handleEnter = (e: React.MouseEvent) => {
-    if (trigger === 'hover') {
+    if (trigger === 'hover' && ifHandleInReference(e)) {
       handleVisible(e)
     } return
   }
 
   const handleLeave = (e: React.MouseEvent) => {
-    if (trigger === 'hover') {
+    if (trigger === 'hover' && ifHandleInReference(e)) {
       handleHide(e)
     } return
   }
 
   return (
     <div
+      ref={popupReferenceRef}
       className={classNames(
         'i-popup__reference',
         className
@@ -249,7 +268,12 @@ const Popup: React.FC<PopupProps> = (props) => {
       {...others}
     >
       {children}
-      {visible &&
+      <Transition
+        timeout={200}
+        in={visible}
+        animation='fade-in'
+        key='i-popup'
+      >
         <Portal
           visible={visible}
           content={content}
@@ -258,7 +282,8 @@ const Popup: React.FC<PopupProps> = (props) => {
           left={left}
           width={width}
           height={height}
-        />}
+        />
+      </Transition>
     </div>
   );
 };
