@@ -39,6 +39,7 @@ type placementType =
 
 export interface PortalProps {
   visible?: boolean
+  content?: React.ReactNode
   placement?: placementType
   top: number
   bottom: number
@@ -60,6 +61,7 @@ if (!popupWrapper) {
 const Portal: React.FC<PortalProps> = (props) => {
   const {
     visible = false,
+    content = '',
     placement = 'top',
     ...tProps
   } = props
@@ -118,7 +120,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       data-popper-placement={placement}
       style={styles}
     >
-      popup
+      {content}
     </div>
   )
 
@@ -132,6 +134,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     children = '',
     className,
     style,
+    content,
     placement = 'top',
     ...others
   } = props;
@@ -155,10 +158,22 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const [visible, setVisible] = useState(false)
 
-  const handleSwitch = (e: React.MouseEvent) => {
+  // 打开 popup 后的全局点击监听
+  const currentTarget = useRef<any>(null)
+  const ifClickCurrentTarget = (e: any) => {
+    if (e.target !== currentTarget.current) {
+      setVisible(false)
+    }
+    document.removeEventListener('click', ifClickCurrentTarget)
+  }
+
+  const handleClick = (e: React.MouseEvent) => {
     e.persist();
     setTargetLocation((e.target as HTMLElement))
     setVisible(!visible)
+    // 判断二次点击是否为原 trigger，不是则关闭 popup
+    currentTarget.current = e.target
+    document.addEventListener('click', ifClickCurrentTarget)
   }
 
   // const handleDisplay = () => {
@@ -176,13 +191,14 @@ const Popup: React.FC<PopupProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      onClick={handleSwitch}
+      onClick={handleClick}
       {...others}
     >
       {children}
       {visible &&
         <Portal
           visible={visible}
+          content={content}
           placement={placement}
           top={top}
           bottom={bottom}
