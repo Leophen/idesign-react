@@ -1,8 +1,16 @@
 .i-popup {
   position: absolute;
-  // transform: translate(-50%, -50%);
   z-index: 5500;
-  background-color: aquamarine;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  color: #262626;
+  font-size: 14px;
+  background-color: #fff;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px,
+    rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
   &[data-popper-placement^='top'],
   &[data-popper-placement^='bottom'] {
     margin: 16px 0;

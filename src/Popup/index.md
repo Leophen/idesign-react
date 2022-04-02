@@ -31,7 +31,37 @@ const App = () => {
 export default App;
 ```
 
-## 基本用法
+## 不同触发方式
+
+```tsx
+import React from 'react';
+import { Button, Popup } from 'idesign-react';
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-column">
+      <div className="idesign-demo-block-row">
+        <Popup content="提示内容">
+          <Button>悬浮提示</Button>
+        </Popup>
+        <Popup content="提示内容" trigger="click">
+          <Button>点击提示</Button>
+        </Popup>
+        <Popup content="提示内容" trigger="focus">
+          <Button>聚焦提示</Button>
+        </Popup>
+        <Popup content="提示内容" trigger="context-menu">
+          <Button>右击提示</Button>
+        </Popup>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## 不同触发方向
 
 ```tsx
 import React from 'react'
