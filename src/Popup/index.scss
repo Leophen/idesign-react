@@ -1,0 +1,14 @@
+.i-popup {
+  position: absolute;
+  // transform: translate(-50%, -50%);
+  z-index: 5500;
+  background-color: aquamarine;
+  &[data-popper-placement^='top'],
+  &[data-popper-placement^='bottom'] {
+    margin: 16px 0;
+  }
+  &[data-popper-placement^='left'],
+  &[data-popper-placement^='right'] {
+    margin: 0 16px;
+  }
+}

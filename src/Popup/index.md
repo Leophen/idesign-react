@@ -30,3 +30,55 @@ const App = () => {
 
 export default App;
 ```
+
+## 基本用法
+
+```tsx
+import React from 'react'
+import { Button, Popup } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-popup">
+      <Popup content="Popup 内容 top" placement="top">
+        <Button className="Top">top</Button>
+      </Popup>
+      <Popup content="Popup 内容 top-left" placement="top-left">
+        <Button className="TopLeft">top-left</Button>
+      </Popup>
+      <Popup content="Popup 内容 top-right" placement="top-right">
+        <Button className="TopRight">top-right</Button>
+      </Popup>
+      <Popup content="Popup 内容 bottom" placement="bottom">
+        <Button className="Bottom">bottom</Button>
+      </Popup>
+      <Popup content="Popup 内容 bottom-left" placement="bottom-left">
+        <Button className="BottomLeft">bottom-left</Button>
+      </Popup>
+      <Popup content="Popup 内容 bottom-right" placement="bottom-right">
+        <Button className="BottomRight">bottom-right</Button>
+      </Popup>
+      <Popup content="Popup 内容 left" placement="left">
+        <Button className="Left">left</Button>
+      </Popup>
+      <Popup content="Popup 内容 left-top" placement="left-top">
+        <Button className="LeftTop">left-top</Button>
+      </Popup>
+      <Popup content="Popup 内容 left-bottom" placement="left-bottom">
+        <Button className="LeftBottom">left-bottom</Button>
+      </Popup>
+      <Popup content="Popup 内容 right" placement="right">
+        <Button className="Right">right</Button>
+      </Popup>
+      <Popup content="Popup 内容 right-top" placement="right-top">
+        <Button className="RightTop">right-top</Button>
+      </Popup>
+      <Popup content="Popup 内容 right-bottom" placement="right-bottom">
+        <Button className="RightBottom">right-bottom</Button>
+      </Popup>
+    </div>
+  )
+}
+
+export default App
+```

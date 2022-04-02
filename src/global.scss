@@ -256,6 +256,69 @@ ul[role='slug-list'] li > a.active {
   row-gap: 16px;
 }
 
+.idesign-demo-block-popup {
+  position: relative;
+  width: 560px;
+  height: 260px;
+  margin: 0 auto;
+  .i-button {
+    position: absolute;
+    width: 100px;
+  }
+  .Top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .TopLeft {
+    top: 0;
+    left: 100px;
+  }
+  .TopRight {
+    top: 0;
+    right: 100px;
+  }
+  .Bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .BottomLeft {
+    bottom: 0;
+    left: 100px;
+  }
+  .BottomRight {
+    right: 100px;
+    bottom: 0;
+  }
+  .Left {
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  .LeftTop {
+    top: 55px;
+    left: 0;
+  }
+  .LeftBottom {
+    bottom: 55px;
+    left: 0;
+  }
+  .Right {
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+  .RightTop {
+    top: 55px;
+    right: 0;
+  }
+  .RightBottom {
+    right: 0;
+    bottom: 55px;
+  }
+}
+
 .i-design-demo-icon-list {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
