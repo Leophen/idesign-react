@@ -20,11 +20,11 @@ type placementType =
 
 export interface PopupProps {
   /**
-   * 类名
+   * 气泡类名
    */
   className?: string;
   /**
-   * 自定义样式
+   * 气泡样式
    */
   style?: React.CSSProperties;
   /**
@@ -44,6 +44,8 @@ export interface PopupProps {
 }
 
 export interface PortalProps {
+  className?: string
+  style?: React.CSSProperties
   visible?: boolean
   content?: React.ReactNode
   placement?: placementType
@@ -64,67 +66,119 @@ if (!popupWrapper) {
 
 const Portal: React.FC<PortalProps> = (props) => {
   const {
+    className,
+    style,
     visible = false,
     content = '',
     placement = 'top',
     ...tProps
   } = props
 
-  const [styles, setStyles] = useState({})
-
   const getLocationStyle = (placement: placementType, trigger: PortalProps, popup: PortalProps) => {
+    let popupWidth = style?.width ? Number(style?.width) : popup.width
+    let popupHeight = style?.height ? Number(style?.height) : popup.height
     const xMap = {
-      'top': trigger.left + ((trigger.width - popup.width) / 2),
+      'top': trigger.left + ((trigger.width - popupWidth) / 2),
       'top-left': trigger.left,
-      'top-right': trigger.left + (trigger.width - popup.width),
-      'bottom': trigger.left + ((trigger.width - popup.width) / 2),
+      'top-right': trigger.left + (trigger.width - popupWidth),
+      'bottom': trigger.left + ((trigger.width - popupWidth) / 2),
       'bottom-left': trigger.left,
-      'bottom-right': trigger.left + (trigger.width - popup.width),
-      'left': trigger.left - popup.width - 32,
-      'left-top': trigger.left - popup.width - 32,
-      'left-bottom': trigger.left - popup.width - 32,
+      'bottom-right': trigger.left + (trigger.width - popupWidth),
+      'left': trigger.left - popupWidth - 32,
+      'left-top': trigger.left - popupWidth - 32,
+      'left-bottom': trigger.left - popupWidth - 32,
       'right': trigger.left + trigger.width,
       'right-top': trigger.left + trigger.width,
       'right-bottom': trigger.left + trigger.width,
     }
     const yMap = {
-      'top': trigger.top - popup.height - 32,
-      'top-left': trigger.top - popup.height - 32,
-      'top-right': trigger.top - popup.height - 32,
+      'top': trigger.top - popupHeight - 32,
+      'top-left': trigger.top - popupHeight - 32,
+      'top-right': trigger.top - popupHeight - 32,
       'bottom': trigger.top + trigger.height,
       'bottom-left': trigger.top + trigger.height,
       'bottom-right': trigger.top + trigger.height,
-      'left': trigger.top + ((trigger.height - popup.height) / 2),
+      'left': trigger.top + ((trigger.height - popupHeight) / 2),
       'left-top': trigger.top,
-      'left-bottom': trigger.top + (trigger.height - popup.height),
-      'right': trigger.top + ((trigger.height - popup.height) / 2),
+      'left-bottom': trigger.top + (trigger.height - popupHeight),
+      'right': trigger.top + ((trigger.height - popupHeight) / 2),
       'right-top': trigger.top,
-      'right-bottom': trigger.top + (trigger.height - popup.height),
+      'right-bottom': trigger.top + (trigger.height - popupHeight),
     }
     const result = {
       left: xMap[placement],
-      top: yMap[placement]
+      top: yMap[placement],
+      ...style
     }
     return result
   }
 
   const popupRef: any = useRef(null)
 
+  // 计算气泡方向方法
+  const resetPlacement = (placement: placementType, popup: PortalProps) => {
+    const winWidth = window.innerWidth
+    const winHeight = window.innerHeight
+    const direction = placement.split('-')[0]
+    const directionWith = placement.split('-')[1] ? '-' + placement.split('-')[1] : ''
+
+    let result: string = placement
+    if (direction === 'top' && popup.top < 0) {
+      result = 'bottom' + directionWith
+    }
+    if (direction === 'bottom' && (winHeight - popup.height - popup.top < 0)) {
+      result = 'top' + directionWith
+    }
+    if (direction === 'left' && popup.left < 0) {
+      result = 'right' + directionWith
+    }
+    if (direction === 'right' && (winWidth - popup.width - popup.left < 0)) {
+      result = 'left' + directionWith
+    }
+    setCurrentPlacement(result)
+  }
+
+  // 更新气泡方向，返回气泡方向
+  const updatePlacement = (placement: placementType) => {
+    if (popupRef.current) {
+      const rect = popupRef.current.getBoundingClientRect()
+      const width = rect.width
+      const height = rect.height
+      const top = rect.top - document.documentElement.scrollTop
+      const left = rect.left - document.documentElement.scrollLeft
+      const popupData = {
+        width,
+        height,
+        top,
+        left
+      }
+      resetPlacement(placement, popupData)
+    }
+  }
+
+  const [styles, setStyles] = useState({})
+  const [currentPlacement, setCurrentPlacement] = useState<any>(placement)
+
+  useEffect(() => {
+    updatePlacement(currentPlacement)
+  })
+
   useEffect(() => {
     const rect = popupRef.current.getBoundingClientRect()
-    setStyles(getLocationStyle(placement, { ...tProps }, rect))
-  }, [visible])
+    setStyles(getLocationStyle(currentPlacement, { ...tProps }, rect))
+  }, [visible, currentPlacement])
 
   const PopupNode = (
     <div
       ref={popupRef}
       className={classNames(
-        'i-popup'
+        'i-popup',
+        className
       )}
-      data-popper-placement={placement}
-      style={styles}
+      data-popper-placement={currentPlacement}
+      style={{ ...styles, width: style?.width, height: style?.height }}
     >
-      <div className="i-popup__arrow" data-popper-placement={placement} />
+      <div className="i-popup__arrow" data-popper-placement={currentPlacement} />
       {content}
     </div>
   )
@@ -160,6 +214,7 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const [visible, setVisible] = useState(false)
 
+  // 保证触发点为包裹层中的组件
   const popupReferenceRef = useRef<any>(null)
   const hasParent = (node: any, parent: HTMLElement) => {
     while (node) {
@@ -254,11 +309,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   return (
     <div
       ref={popupReferenceRef}
-      className={classNames(
-        'i-popup__reference',
-        className
-      )}
-      style={{ ...style }}
+      className='i-popup__reference'
       onClick={handleClick}
       onMouseDown={handleDown}
       onMouseUp={handleUp}
@@ -275,6 +326,8 @@ const Popup: React.FC<PopupProps> = (props) => {
         key='i-popup'
       >
         <Portal
+          style={{ ...style }}
+          className={className}
           visible={visible}
           content={content}
           placement={placement}
