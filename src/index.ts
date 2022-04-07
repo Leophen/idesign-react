@@ -6,6 +6,7 @@ export { default as Grid } from './Grid';
 export { default as Layout } from './Layout';
 export { default as Scrollbar } from './Scrollbar';
 // 导航
+export { default as Dropdown } from './Dropdown';
 export { default as Menu } from './Menu';
 export { default as Tabs } from './Tabs';
 export { default as Breadcrumb } from './Breadcrumb';

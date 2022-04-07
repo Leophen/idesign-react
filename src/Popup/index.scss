@@ -6,7 +6,6 @@
   justify-content: center;
   box-sizing: border-box;
   width: fit-content;
-  padding: 4px 8px;
   color: #262626;
   font-size: 14px;
   background-color: #fff;
@@ -135,4 +134,12 @@
   &[data-popper-placement='right-bottom'] {
     top: calc(100% - 14px);
   }
+}
+
+.i-popup__text {
+  padding: 4px 8px;
+}
+
+.i-popup__reference > div {
+  width: fit-content;
 }

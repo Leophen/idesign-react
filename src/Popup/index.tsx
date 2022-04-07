@@ -35,12 +35,33 @@ export interface PopupProps {
    * 气泡提示位置
    * @default top
    */
-  placement?: placementType;
+  placement?:
+  | 'top'
+  | 'left'
+  | 'right'
+  | 'bottom'
+  | 'top-left'
+  | 'top-right'
+  | 'bottom-left'
+  | 'bottom-right'
+  | 'left-top'
+  | 'left-bottom'
+  | 'right-top'
+  | 'right-bottom';
   /**
-   * 触发浮层出现的方式
+   * 触发气泡出现的方式
    * @default hover
    */
   trigger?: 'hover' | 'click' | 'context-menu';
+  /**
+   * 手动显示气泡
+   * @default false
+   */
+  visible?: boolean;
+  /**
+   * 触发气泡操作时触发
+   */
+  onTrigger?: (visible: boolean) => void;
 }
 
 export interface PortalProps {
@@ -132,7 +153,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       const popupLeft = rect.left
 
       let result: string = currentPlacement
-      if (popupTop < winHeight && popupLeft < winWidth) {
+      if (popupTop - popupHeight < winHeight && popupLeft - popupWidth < winWidth) {
         if (direction === 'top' && popupTop < 0) {
           result = 'bottom' + directionWith
         }
@@ -174,7 +195,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       style={{ ...styles, width: style?.width, height: style?.height }}
     >
       <div className="i-popup__arrow" data-popper-placement={currentPlacement} />
-      {content}
+      {typeof content === 'object' ? content : <div className="i-popup__text">{content}</div>}
     </div>
   )
 
@@ -191,7 +212,8 @@ const Popup: React.FC<PopupProps> = (props) => {
     content,
     placement = 'top',
     trigger = 'hover',
-    ...others
+    visible = false,
+    onTrigger = () => { }
   } = props;
 
   const [top, setTop] = useState(0)
@@ -207,7 +229,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     setHeight(rect.height)
   }
 
-  const [visible, setVisible] = useState(false)
+  const [innerVisible, setInnerVisible] = useState(false)
 
   // 触发节点是否在指定包裹层中
   const hasParent = (node: any, parent: HTMLElement) => {
@@ -220,20 +242,34 @@ const Popup: React.FC<PopupProps> = (props) => {
     return false;
   };
 
+  // 打开气泡通用方法
+  const openPopup = (e?: React.MouseEvent) => {
+    if (e) {
+      e.persist();
+      setTargetLocation((e.target as HTMLElement))
+    }
+    setInnerVisible(true)
+    onTrigger?.(true)
+  }
+
+  // 关闭气泡通用方法
+  const closePopup = () => {
+    setInnerVisible(false)
+    onTrigger?.(false)
+  }
+
   // 判断点击节点是否在气泡内
   const ifClickInPopup = (e: any) => {
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      setVisible(false)
+      closePopup()
       window.removeEventListener('click', ifClickInPopup)
     }
   }
 
   const handleClick = (e: React.MouseEvent) => {
-    if (trigger === 'click' && !visible) {
-      e.persist();
-      setTargetLocation((e.target as HTMLElement))
-      setVisible(true)
+    if (trigger === 'click' && !innerVisible) {
+      openPopup(e)
       setTimeout(() => {
         window.addEventListener('click', ifClickInPopup)
       })
@@ -245,18 +281,16 @@ const Popup: React.FC<PopupProps> = (props) => {
     e.preventDefault();
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      setVisible(false)
+      closePopup()
       window.removeEventListener('click', ifHandleInPopup)
       window.removeEventListener('contextmenu', ifHandleInPopup)
     }
   }
 
   const handleContextMenu = (e: React.MouseEvent) => {
-    if (trigger === 'context-menu' && !visible) {
+    if (trigger === 'context-menu' && !innerVisible) {
       e.preventDefault();
-      e.persist();
-      setTargetLocation((e.target as HTMLElement))
-      setVisible(true)
+      openPopup(e)
       setTimeout(() => {
         window.addEventListener('click', ifHandleInPopup)
         window.addEventListener('contextmenu', ifHandleInPopup)
@@ -269,16 +303,14 @@ const Popup: React.FC<PopupProps> = (props) => {
     e.preventDefault();
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      setVisible(false)
+      closePopup()
       window.removeEventListener('mouseover', ifHoverInPopup)
     }
   }
 
   const handleEnter = (e: React.MouseEvent) => {
-    if (trigger === 'hover' && !visible) {
-      e.persist();
-      setTargetLocation((e.target as HTMLElement))
-      setVisible(true)
+    if (trigger === 'hover' && !innerVisible) {
+      openPopup(e)
       setTimeout(() => {
         window.addEventListener('mouseover', ifHoverInPopup)
       })
@@ -297,14 +329,14 @@ const Popup: React.FC<PopupProps> = (props) => {
 
       <Transition
         timeout={200}
-        in={visible}
+        in={innerVisible}
         animation='fade-in'
         key='i-popup'
       >
         <Portal
           style={{ ...style }}
           className={className}
-          visible={visible}
+          visible={innerVisible}
           content={content}
           placement={placement}
           top={top}
