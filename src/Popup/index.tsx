@@ -40,7 +40,7 @@ export interface PopupProps {
    * 触发浮层出现的方式
    * @default hover
    */
-  trigger?: 'hover' | 'click' | 'focus' | 'context-menu';
+  trigger?: 'hover' | 'click' | 'context-menu';
 }
 
 export interface PortalProps {
@@ -84,20 +84,20 @@ const Portal: React.FC<PortalProps> = (props) => {
       'bottom': trigger.left + ((trigger.width - popupWidth) / 2),
       'bottom-left': trigger.left,
       'bottom-right': trigger.left + (trigger.width - popupWidth),
-      'left': trigger.left - popupWidth - 32,
-      'left-top': trigger.left - popupWidth - 32,
-      'left-bottom': trigger.left - popupWidth - 32,
-      'right': trigger.left + trigger.width,
-      'right-top': trigger.left + trigger.width,
-      'right-bottom': trigger.left + trigger.width,
+      'left': trigger.left - popupWidth - 16,
+      'left-top': trigger.left - popupWidth - 16,
+      'left-bottom': trigger.left - popupWidth - 16,
+      'right': trigger.left + trigger.width + 16,
+      'right-top': trigger.left + trigger.width + 16,
+      'right-bottom': trigger.left + trigger.width + 16,
     }
     const yMap = {
-      'top': trigger.top - popupHeight - 32,
-      'top-left': trigger.top - popupHeight - 32,
-      'top-right': trigger.top - popupHeight - 32,
-      'bottom': trigger.top + trigger.height,
-      'bottom-left': trigger.top + trigger.height,
-      'bottom-right': trigger.top + trigger.height,
+      'top': trigger.top - popupHeight - 16,
+      'top-left': trigger.top - popupHeight - 16,
+      'top-right': trigger.top - popupHeight - 16,
+      'bottom': trigger.top + trigger.height + 16,
+      'bottom-left': trigger.top + trigger.height + 16,
+      'bottom-right': trigger.top + trigger.height + 16,
       'left': trigger.top + ((trigger.height - popupHeight) / 2),
       'left-top': trigger.top,
       'left-bottom': trigger.top + (trigger.height - popupHeight),
@@ -115,44 +115,39 @@ const Portal: React.FC<PortalProps> = (props) => {
 
   const popupRef: any = useRef(null)
 
-  // 计算气泡方向方法
-  const resetPlacement = (placement: placementType, popup: PortalProps) => {
-    const winWidth = window.innerWidth
-    const winHeight = window.innerHeight
-    const direction = placement.split('-')[0]
-    const directionWith = placement.split('-')[1] ? '-' + placement.split('-')[1] : ''
-
-    let result: string = placement
-    if (direction === 'top' && popup.top < 0) {
-      result = 'bottom' + directionWith
-    }
-    if (direction === 'bottom' && (winHeight - popup.height - popup.top < 0)) {
-      result = 'top' + directionWith
-    }
-    if (direction === 'left' && popup.left < 0) {
-      result = 'right' + directionWith
-    }
-    if (direction === 'right' && (winWidth - popup.width - popup.left < 0)) {
-      result = 'left' + directionWith
-    }
-    setCurrentPlacement(result)
-  }
-
-  // 更新气泡方向，返回气泡方向
-  const updatePlacement = (placement: placementType) => {
+  // 更新气泡方向
+  const updatePlacement = (currentPlacement: placementType) => {
     if (popupRef.current) {
+      // 原触发方向
+      const direction = currentPlacement.split('-')[0]
+      const directionWith = currentPlacement.split('-')[1] ? '-' + currentPlacement.split('-')[1] : ''
+      // 窗口
+      const winWidth = window.innerWidth
+      const winHeight = window.innerHeight
+      // 气泡
       const rect = popupRef.current.getBoundingClientRect()
-      const width = rect.width
-      const height = rect.height
-      const top = rect.top - document.documentElement.scrollTop
-      const left = rect.left - document.documentElement.scrollLeft
-      const popupData = {
-        width,
-        height,
-        top,
-        left
+      const popupWidth = rect.width
+      const popupHeight = rect.height
+      const popupTop = rect.top
+      const popupLeft = rect.left
+
+      let result: string = currentPlacement
+      if (popupTop < winHeight && popupLeft < winWidth) {
+        if (direction === 'top' && popupTop < 0) {
+          result = 'bottom' + directionWith
+        }
+        if (direction === 'bottom' && (winHeight - popupHeight - popupTop < 0)) {
+          result = 'top' + directionWith
+        }
+        if (direction === 'left' && popupLeft < 0) {
+          result = 'right' + directionWith
+        }
+        if (direction === 'right' && (winWidth - popupWidth - popupLeft < 0)) {
+          result = 'left' + directionWith
+        }
       }
-      resetPlacement(placement, popupData)
+
+      setCurrentPlacement(result)
     }
   }
 
@@ -206,16 +201,15 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   const setTargetLocation = (target: HTMLElement) => {
     const rect = target.getBoundingClientRect()
-    setTop(rect.top + document.documentElement.scrollTop)
-    setLeft(rect.left + document.documentElement.scrollLeft)
+    setTop(rect.top + window.scrollY)
+    setLeft(rect.left + window.scrollX)
     setWidth(rect.width)
     setHeight(rect.height)
   }
 
   const [visible, setVisible] = useState(false)
 
-  // 保证触发点为包裹层中的组件
-  const popupReferenceRef = useRef<any>(null)
+  // 触发节点是否在指定包裹层中
   const hasParent = (node: any, parent: HTMLElement) => {
     while (node) {
       if (node === parent) {
@@ -225,100 +219,82 @@ const Popup: React.FC<PopupProps> = (props) => {
     }
     return false;
   };
-  const ifHandleInReference = (e: any) => {
-    if (hasParent(e.target, popupReferenceRef.current)) {
-      return true
-    } return false
-  }
 
-  // 打开 popup 后的全局点击监听，用于关闭其它气泡提示
-  const firstHandleTarget = useRef<any>(null)
-  const ifClickCurrentTarget = (e: any) => {
-    if (e.target !== firstHandleTarget.current) {
+  // 判断点击节点是否在气泡内
+  const ifClickInPopup = (e: any) => {
+    const popupNode = document.querySelector('.i-popup')
+    if (!hasParent(e.target, popupNode as HTMLElement)) {
       setVisible(false)
+      window.removeEventListener('click', ifClickInPopup)
     }
-    document.removeEventListener('click', ifClickCurrentTarget)
   }
 
   const handleClick = (e: React.MouseEvent) => {
-    if (trigger === 'click' && ifHandleInReference(e)) {
+    if (trigger === 'click' && !visible) {
       e.persist();
       setTargetLocation((e.target as HTMLElement))
-      setVisible(!visible)
-      // 判断二次点击是否为原 trigger，不是则关闭 popup
-      firstHandleTarget.current = e.target
-      document.addEventListener('click', ifClickCurrentTarget)
+      setVisible(true)
+      setTimeout(() => {
+        window.addEventListener('click', ifClickInPopup)
+      })
     } return
   }
 
-  const closePopup = (e: any) => {
+  // 判断点击和右击节点是否在气泡内
+  const ifHandleInPopup = (e: any) => {
     e.preventDefault();
-    setVisible(false)
-    document.removeEventListener('click', closePopup)
-    document.removeEventListener('contextmenu', closePopup)
+    const popupNode = document.querySelector('.i-popup')
+    if (!hasParent(e.target, popupNode as HTMLElement)) {
+      setVisible(false)
+      window.removeEventListener('click', ifHandleInPopup)
+      window.removeEventListener('contextmenu', ifHandleInPopup)
+    }
   }
 
   const handleContextMenu = (e: React.MouseEvent) => {
-    if (trigger === 'context-menu' && ifHandleInReference(e)) {
+    if (trigger === 'context-menu' && !visible) {
+      e.preventDefault();
       e.persist();
       setTargetLocation((e.target as HTMLElement))
-      setVisible(!visible)
-      // 判断二次点击是否为原 trigger，不是则关闭 popup
-      firstHandleTarget.current = e.target
-      document.addEventListener('click', closePopup)
-      document.addEventListener('contextmenu', closePopup)
+      setVisible(true)
+      setTimeout(() => {
+        window.addEventListener('click', ifHandleInPopup)
+        window.addEventListener('contextmenu', ifHandleInPopup)
+      })
     } return
   }
 
-  const handleVisible = (e: React.MouseEvent) => {
-    e.persist();
-    setTargetLocation((e.target as HTMLElement))
-    setVisible(true)
-  }
-
-  const handleHide = (e: React.MouseEvent) => {
-    e.persist();
-    setTargetLocation((e.target as HTMLElement))
-    setVisible(false)
-  }
-
-  const handleDown = (e: React.MouseEvent) => {
-    if (trigger === 'focus' && ifHandleInReference(e)) {
-      handleVisible(e)
-    } return
-  }
-
-  const handleUp = (e: React.MouseEvent) => {
-    if (trigger === 'focus' && ifHandleInReference(e)) {
-      handleHide(e)
-    } return
+  // 判断悬浮节点是否在气泡内
+  const ifHoverInPopup = (e: any) => {
+    e.preventDefault();
+    const popupNode = document.querySelector('.i-popup')
+    if (!hasParent(e.target, popupNode as HTMLElement)) {
+      setVisible(false)
+      window.removeEventListener('mouseover', ifHoverInPopup)
+    }
   }
 
   const handleEnter = (e: React.MouseEvent) => {
-    if (trigger === 'hover' && ifHandleInReference(e)) {
-      handleVisible(e)
-    } return
-  }
-
-  const handleLeave = (e: React.MouseEvent) => {
-    if (trigger === 'hover' && ifHandleInReference(e)) {
-      handleHide(e)
+    if (trigger === 'hover' && !visible) {
+      e.persist();
+      setTargetLocation((e.target as HTMLElement))
+      setVisible(true)
+      setTimeout(() => {
+        window.addEventListener('mouseover', ifHoverInPopup)
+      })
     } return
   }
 
   return (
-    <div
-      ref={popupReferenceRef}
-      className='i-popup__reference'
-      onClick={handleClick}
-      onMouseDown={handleDown}
-      onMouseUp={handleUp}
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
-      onContextMenu={handleContextMenu}
-      {...others}
-    >
-      {children}
+    <div className='i-popup__reference'>
+      <div
+        onClick={handleClick}
+        onMouseEnter={handleEnter}
+        onContextMenu={handleContextMenu}
+      >
+        {children}
+      </div>
+
       <Transition
         timeout={200}
         in={visible}

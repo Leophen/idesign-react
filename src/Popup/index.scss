@@ -16,12 +16,35 @@
     rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
 
   &[data-popper-placement^='top'],
-  &[data-popper-placement^='bottom'] {
-    margin: 16px 0;
-  }
+  &[data-popper-placement^='bottom'],
   &[data-popper-placement^='left'],
   &[data-popper-placement^='right'] {
-    margin: 0 16px;
+    &::before {
+      position: absolute;
+      width: 100%;
+      height: 16px;
+      content: '';
+    }
+  }
+  &[data-popper-placement^='top'] {
+    &::before {
+      bottom: -16px;
+    }
+  }
+  &[data-popper-placement^='bottom'] {
+    &::before {
+      top: -16px;
+    }
+  }
+  &[data-popper-placement^='left'] {
+    &::before {
+      right: -16px;
+    }
+  }
+  &[data-popper-placement^='right'] {
+    &::before {
+      left: -16px;
+    }
   }
 }
 

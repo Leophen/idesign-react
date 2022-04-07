@@ -8,7 +8,7 @@ group:
 order: 6
 ---
 
-# Popup 气泡提示（开发中）
+# Popup 气泡提示
 
 ## 基本用法
 
@@ -46,9 +46,6 @@ const App = () => {
         </Popup>
         <Popup content="提示内容" trigger="click">
           <Button>点击提示</Button>
-        </Popup>
-        <Popup content="提示内容" trigger="focus">
-          <Button>聚焦提示</Button>
         </Popup>
         <Popup content="提示内容" trigger="context-menu">
           <Button>右击提示</Button>
