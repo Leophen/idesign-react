@@ -92,12 +92,11 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
   const [popupVisible, setPopupVisible] = useState(false)
 
   const switchPopup = (visible: boolean) => {
-    console.log(visible, 'drop')
     setPopupVisible(visible)
   }
 
   const handleItemClick = (item: DropdownOption, event: React.MouseEvent) => {
-    // onClick?.(item, event)
+    onClick?.(item, event)
     setPopupVisible(false)
   }
 

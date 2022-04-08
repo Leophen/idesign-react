@@ -229,7 +229,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     setHeight(rect.height)
   }
 
-  const [innerVisible, setInnerVisible] = useState(false)
+  const [innerVisible, setInnerVisible] = useState(visible)
 
   // 触发节点是否在指定包裹层中
   const hasParent = (node: any, parent: HTMLElement) => {
@@ -243,36 +243,55 @@ const Popup: React.FC<PopupProps> = (props) => {
   };
 
   // 打开气泡通用方法
-  const openPopup = (e?: React.MouseEvent) => {
-    if (e) {
+  const switchPopup = (e: React.MouseEvent, show: boolean) => {
+    // 设置气泡位置
+    if (show) {
       e.persist();
       setTargetLocation((e.target as HTMLElement))
     }
-    setInnerVisible(true)
-    onTrigger?.(true)
+    // 切换触发事件
+    onTrigger?.(show)
+    // 设置气泡显示隐藏
+    setInnerVisible(show)
   }
 
   // 关闭气泡通用方法
   const closePopup = () => {
-    setInnerVisible(false)
     onTrigger?.(false)
+    setInnerVisible(false)
   }
 
-  // 判断点击节点是否在气泡内
+  useEffect(() => {
+    setInnerVisible(visible)
+  }, [visible])
+
+  // 气泡包裹层节点
+  const triggerNode = useRef(null)
+
+  // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
   const ifClickInPopup = (e: any) => {
     const popupNode = document.querySelector('.i-popup')
+    // 点击位置在气泡外
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      closePopup()
+      // 点击位置既在气泡外 又在按钮外
+      if (e.target.parentNode !== triggerNode.current) {
+        onTrigger?.(false)
+        setInnerVisible(false)
+      }
       window.removeEventListener('click', ifClickInPopup)
     }
   }
 
+  // 点击触发节点
   const handleClick = (e: React.MouseEvent) => {
-    if (trigger === 'click' && !innerVisible) {
-      openPopup(e)
-      setTimeout(() => {
-        window.addEventListener('click', ifClickInPopup)
-      })
+    if (trigger === 'click') {
+      switchPopup(e, !innerVisible)
+      // 气泡在关闭状态下点击 则监听下一次全局点击事件
+      if (!innerVisible) {
+        setTimeout(() => {
+          window.addEventListener('click', ifClickInPopup)
+        })
+      }
     } return
   }
 
@@ -281,16 +300,20 @@ const Popup: React.FC<PopupProps> = (props) => {
     e.preventDefault();
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      closePopup()
+      if (e.target.parentNode !== triggerNode.current) {
+        onTrigger?.(false)
+        setInnerVisible(false)
+      }
       window.removeEventListener('click', ifHandleInPopup)
       window.removeEventListener('contextmenu', ifHandleInPopup)
     }
   }
 
+  // 右击触发节点
   const handleContextMenu = (e: React.MouseEvent) => {
-    if (trigger === 'context-menu' && !innerVisible) {
+    if (trigger === 'context-menu') {
       e.preventDefault();
-      openPopup(e)
+      switchPopup(e, !innerVisible)
       setTimeout(() => {
         window.addEventListener('click', ifHandleInPopup)
         window.addEventListener('contextmenu', ifHandleInPopup)
@@ -303,14 +326,18 @@ const Popup: React.FC<PopupProps> = (props) => {
     e.preventDefault();
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      closePopup()
+      if (e.target.parentNode !== triggerNode.current) {
+        onTrigger?.(false)
+        setInnerVisible(false)
+      }
       window.removeEventListener('mouseover', ifHoverInPopup)
     }
   }
 
+  // 悬浮触发节点
   const handleEnter = (e: React.MouseEvent) => {
-    if (trigger === 'hover' && !innerVisible) {
-      openPopup(e)
+    if (trigger === 'hover') {
+      switchPopup(e, !innerVisible)
       setTimeout(() => {
         window.addEventListener('mouseover', ifHoverInPopup)
       })
@@ -323,6 +350,7 @@ const Popup: React.FC<PopupProps> = (props) => {
         onClick={handleClick}
         onMouseEnter={handleEnter}
         onContextMenu={handleContextMenu}
+        ref={triggerNode}
       >
         {children}
       </div>
