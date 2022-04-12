@@ -59,6 +59,11 @@ export interface PopupProps {
    */
   visible?: boolean;
   /**
+   * 是否禁用气泡
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * 触发气泡操作时触发
    */
   onTrigger?: (visible: boolean) => void;
@@ -153,7 +158,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       const popupLeft = rect.left
 
       let result: string = currentPlacement
-      if (popupTop - popupHeight < winHeight && popupLeft - popupWidth < winWidth) {
+      if (popupTop < winHeight && popupLeft < winWidth) {
         if (direction === 'top' && popupTop < 0) {
           result = 'bottom' + directionWith
         }
@@ -213,6 +218,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     placement = 'top',
     trigger = 'hover',
     visible = false,
+    disabled = false,
     onTrigger = () => { }
   } = props;
 
@@ -275,8 +281,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     if (!hasParent(e.target, popupNode as HTMLElement)) {
       // 点击位置既在气泡外 又在按钮外
       if (e.target.parentNode !== triggerNode.current) {
-        onTrigger?.(false)
-        setInnerVisible(false)
+        closePopup()
       }
       window.removeEventListener('click', ifClickInPopup)
     }
@@ -301,8 +306,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
       if (e.target.parentNode !== triggerNode.current) {
-        onTrigger?.(false)
-        setInnerVisible(false)
+        closePopup()
       }
       window.removeEventListener('click', ifHandleInPopup)
       window.removeEventListener('contextmenu', ifHandleInPopup)
@@ -327,8 +331,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
       if (e.target.parentNode !== triggerNode.current) {
-        onTrigger?.(false)
-        setInnerVisible(false)
+        closePopup()
       }
       window.removeEventListener('mouseover', ifHoverInPopup)
     }
@@ -357,14 +360,14 @@ const Popup: React.FC<PopupProps> = (props) => {
 
       <Transition
         timeout={200}
-        in={innerVisible}
+        in={innerVisible && !disabled}
         animation='fade-in'
         key='i-popup'
       >
         <Portal
           style={{ ...style }}
           className={className}
-          visible={innerVisible}
+          visible={innerVisible && !disabled}
           content={content}
           placement={placement}
           top={top}

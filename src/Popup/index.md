@@ -10,7 +10,11 @@ order: 6
 
 # Popup 气泡提示
 
+基于指定节点的通用气泡提示框。
+
 ## 基本用法
+
+通过 `content` 属性指定气泡内容。
 
 ```tsx
 import React from 'react';
@@ -31,7 +35,32 @@ const App = () => {
 export default App;
 ```
 
+## 禁用状态
+
+通过 `disabled` 属性控制气泡禁用。
+
+```tsx
+import React from 'react';
+import { Button, Popup } from 'idesign-react';
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-column">
+      <div className="idesign-demo-block-row">
+        <Popup content="提示内容" disabled={true}>
+          <Button>禁用气泡</Button>
+        </Popup>
+      </div>
+    </div>
+  );
+};
+
+export default App;
+```
+
 ## 不同触发方式
+
+可通过 `trigger` 属性指定触发方式，默认为 `hover`。
 
 ```tsx
 import React from 'react';
@@ -59,6 +88,8 @@ export default App;
 ```
 
 ## 不同触发方向
+
+可通过 `placement` 属性指定气泡触发方向，默认为 `top`。
 
 ```tsx
 import React from 'react'
