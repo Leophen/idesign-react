@@ -8,7 +8,7 @@ group:
 order: 0
 ---
 
-# Dropdown 下拉菜单
+# Dropdown 下拉菜单（wait scrollbar）
 
 基于指定节点的折叠下拉菜单。
 
@@ -43,6 +43,34 @@ const App = () => {
   return (
     <Dropdown options={options} onClick={handleSelect}>
       <Button>更多</Button>
+    </Dropdown>
+  )
+}
+
+export default App
+```
+
+## 限制最大高度
+
+可通过 `maxHeight` 属性指定下拉列表最大高度，注意最外层设最大高度后无法使用级联（待滚动条组件后解决）。
+
+```tsx
+import React from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = Array(24).fill({
+    content: '操作项',
+    value: Math.random()
+  })
+
+  const handleSelect = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <Dropdown options={options} maxHeight={300} onClick={handleSelect}>
+      <Button>限制最大高度</Button>
     </Dropdown>
   )
 }
@@ -355,6 +383,49 @@ const App = () => {
         </Dropdown>
       </div>
     </div>
+  )
+}
+
+export default App
+```
+
+## 限制级联子项最大高度
+
+可通过 `maxHeight` 属性指定级联子项的最大高度，注意只能给最里层设最大高度（待滚动条组件后解决）。
+
+```tsx
+import React from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = [
+    {
+      content: '操作 1',
+      value: 1
+    },
+    {
+      content: '操作 2',
+      value: 2,
+      maxHeight: 300,
+      children: Array(24).fill({
+        content: '操作项',
+        value: Math.random()
+      })
+    },
+    {
+      content: '操作 3',
+      value: 3
+    }
+  ]
+
+  const handleSelect = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <Dropdown options={options} onClick={handleSelect}>
+      <Button>限制级联子项高度</Button>
+    </Dropdown>
   )
 }
 
