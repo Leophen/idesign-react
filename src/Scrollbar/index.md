@@ -15,35 +15,13 @@ group:
 
 ```tsx
 import React from 'react';
-import { Scrollbar } from 'idesign-react';
+import { Alert, Scrollbar } from 'idesign-react';
 
 const App = () => {
+  const data = Array(36).fill('item')
   return (
     <Scrollbar height={300}>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
-      <li>123</li>
+      {data.map(item => <Alert message={item} key={Math.random()} />)}
     </Scrollbar>
   );
 };
