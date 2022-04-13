@@ -8,7 +8,7 @@ group:
 order: 0
 ---
 
-# Dropdown 下拉菜单（开发中）
+# Dropdown 下拉菜单
 
 基于指定节点的折叠下拉菜单。
 
@@ -290,7 +290,7 @@ export default App
 
 ## 级联下拉菜单
 
-可通过 `children` 属性指定级联菜单，可通过 'direction' 控制展开方向。
+可通过 `children` 属性指定级联菜单，可通过 `cascaderDirection` 控制展开方向。
 
 ```tsx
 import React from 'react'
@@ -350,7 +350,7 @@ const App = () => {
         <Dropdown options={options} onClick={handleSelect}>
           <Button>级联菜单</Button>
         </Dropdown>
-        <Dropdown direction="left" options={options} onClick={handleSelect}>
+        <Dropdown cascaderDirection="left" options={options} onClick={handleSelect}>
           <Button>向左展开的级联菜单</Button>
         </Dropdown>
       </div>
@@ -361,4 +361,17 @@ const App = () => {
 export default App
 ```
 
+## Dropdown API
 
+<API hideTitle />
+
+## DropdownItem API
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| content | 下拉操作项内容 | `ReactNode` | `--` |
+| value | 下拉操作项唯一标识 | `string〡number` | `--` |
+| active | 是否高亮当前操作项 | `boolean` | `false` |
+| disabled | 单项是否禁用 | `boolean` | `false` |
+| divider | 是否显示操作项之后的分隔线 | `boolean` | `false` |
+| onClick | 点击时触发 | `(dropdownItem: DropdownOption, event: React.MouseEvent) => void` | `--` |

@@ -45,11 +45,11 @@ export interface DropdownMenuProps {
    * 级联子层级展开方向
    * @default right
    */
-  direction?: 'left' | 'right';
+  cascaderDirection?: 'left' | 'right';
   /**
    * 点击菜单项触发事件
    */
-  clickItem?: (dropdownItem?: DropdownOption, event?: React.MouseEvent) => void;
+  clickItem?: (dropdownItem: DropdownOption, event: React.MouseEvent) => void;
 }
 
 export type DropdownOption = { children?: Array<DropdownItemProps> } & DropdownItemProps & Record<string, any>;
@@ -94,7 +94,7 @@ export interface DropdownProps {
    * 级联子层级展开方向
    * @default right
    */
-  direction?: 'left' | 'right';
+  cascaderDirection?: 'left' | 'right';
   /**
    * 是否全局禁用
    * @default false
@@ -109,7 +109,7 @@ export interface DropdownProps {
 const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
   const {
     options = [],
-    direction = 'right',
+    cascaderDirection = 'right',
     clickItem = () => { }
   } = props
 
@@ -118,42 +118,44 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     item.onClick?.(item, event)
   }
 
+  const clickCascaderItem = (item: DropdownOption, event: React.MouseEvent) => {
+    clickItem?.(item, event)
+    item.onClick?.(item, event)
+  }
+
   return (
-    <>
-      <ul
-        className={classNames(
-          'i-dropdown__menu',
-          direction === 'left' && 'i-dropdown__menu-left'
-        )}
-      >
-        {
-          options.map((item) => {
-            return (
-              <li
-                className={classNames(
-                  'i-dropdown__item',
-                  item.disabled && 'i-dropdown__item-is-disabled',
-                  item.divider && 'i-dropdown__item-has-divider',
-                  item.active && 'i-dropdown__item-is-active'
-                )}
-                data-direction={direction}
-                onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
-                key={item.value}
-              >
-                {item.children && item.children?.length > 0 && direction === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
-                <div className='i-dropdown__item-txt'>
-                  {item.content}
-                </div>
-                {item.children && item.children?.length > 0 && direction === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
-                {item.children && item.children?.length > 0 &&
-                  <DropdownMenu options={item.children} direction={direction} clickItem={() => clickItem?.()} />
-                }
-              </li>
-            )
-          })
-        }
-      </ul>
-    </>
+    <ul
+      className={classNames(
+        'i-dropdown__menu',
+        cascaderDirection === 'left' && 'i-dropdown__menu-left'
+      )}
+    >
+      {options.map((item) => {
+        return (
+          <li
+            className={classNames(
+              'i-dropdown__item',
+              item.disabled && 'i-dropdown__item-is-disabled',
+              item.divider && 'i-dropdown__item-has-divider',
+              item.active && 'i-dropdown__item-is-active'
+            )}
+            data-direction={cascaderDirection}
+            data-disabled={item.disabled}
+            onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
+            key={item.value}
+          >
+            {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
+            <div className='i-dropdown__item-txt'>
+              {item.content}
+            </div>
+            {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
+            {item.children && item.children?.length > 0 &&
+              <DropdownMenu options={item.children} cascaderDirection={cascaderDirection} clickItem={!item.disabled ? clickCascaderItem : () => { }} />
+            }
+          </li>
+        )
+      })}
+    </ul>
   )
 }
 
@@ -165,14 +167,20 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     options = [],
     placement = 'bottom',
     trigger = 'click',
-    direction = 'right',
-    disabled = false
+    cascaderDirection = 'right',
+    disabled = false,
+    onClick = () => { }
   } = props;
 
   const [popupVisible, setPopupVisible] = useState(false)
 
   const switchPopup = (visible: boolean) => {
     setPopupVisible(visible)
+  }
+
+  const handleClickItem = (item: DropdownOption, event: React.MouseEvent) => {
+    onClick?.(item, event)
+    setPopupVisible(false)
   }
 
   const DropdownContent = (
@@ -183,7 +191,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       )}
       style={style}
     >
-      <DropdownMenu options={options} direction={direction} clickItem={() => setPopupVisible(false)} />
+      <DropdownMenu options={options} cascaderDirection={cascaderDirection} clickItem={handleClickItem} />
     </div>
   )
 
