@@ -7,7 +7,7 @@ group:
   order: 1
 ---
 
-# Scrollbar 滚动条（开发中）
+# Scrollbar 滚动条
 
 用于替换浏览器原生滚动条。
 
@@ -63,7 +63,7 @@ export default App
 
 ## 滚动触发事件
 
-可通过传入 `onScroll` 滚动触发事件，参数分别为水平和垂直方向上的滚动比例。
+可通过传入 `onScrollX` 和 `onScrollY` 分别控制水平和垂直滚动触发事件，参数均为该方向上的滚动比例。
 
 ```tsx
 import React from 'react'
@@ -71,19 +71,19 @@ import { Scrollbar } from 'idesign-react'
 
 const App = () => {
   const data = Array(36).fill('item')
-  const handleScroll = (x, y) => {
-    console.log(x, y)
+  const handleScroll = (val) => {
+    console.log(val)
   }
   return (
     <>
-      <Scrollbar height={360} onScroll={handleScroll}>
+      <Scrollbar height={360} onScrollY={handleScroll}>
         {data.map((item) => (
           <div className="idesign-demo-itemy" key={Math.random()}>
             {item}
           </div>
         ))}
       </Scrollbar>
-      <Scrollbar width="100%" onScroll={handleScroll}>
+      <Scrollbar width="100%" onScrollX={handleScroll}>
         <div className="idesign-demo-itemx-wrap">
           {data.map((item) => (
             <div className="idesign-demo-itemx" key={Math.random()}>

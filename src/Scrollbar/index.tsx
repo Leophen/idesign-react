@@ -12,9 +12,13 @@ interface ScrollbarProps {
    */
   width?: number | string;
   /**
-   * 滚动触发事件
+   * 水平滚动触发事件
    */
-  onScroll?: (x: number, y: number) => void;
+  onScrollX?: (x: number) => void;
+  /**
+   * 垂直滚动触发事件
+   */
+  onScrollY?: (y: number) => void;
 }
 
 const Scrollbar: React.FC<ScrollbarProps> = (props) => {
@@ -22,7 +26,8 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     children,
     height,
     width,
-    onScroll
+    onScrollX,
+    onScrollY
   } = props;
 
   // 滚动条显示隐藏
@@ -71,13 +76,19 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     }
   }, [height])
 
+  // 滚动触发事件及原比例备份
   const xProportionBackup = useRef(0)
   const yProportionBackup = useRef(0)
-  const emitScroll = (xpr: number, ypr: number) => {
-    if (xProportionBackup.current !== Number(xpr.toFixed(4)) || yProportionBackup.current !== Number(ypr.toFixed(4))) {
-      onScroll?.(Number(xpr.toFixed(4)) || 0, Number(ypr.toFixed(4)) || 0)
+  const emitScrollX = (xpr: number) => {
+    if (xProportionBackup.current !== Number(xpr.toFixed(4))) {
+      onScrollX?.(Number(xpr.toFixed(4)) || 0)
     }
     xProportionBackup.current = Number(xpr.toFixed(4))
+  }
+  const emitScrollY = (ypr: number) => {
+    if (yProportionBackup.current !== Number(ypr.toFixed(4))) {
+      onScrollY?.(Number(ypr.toFixed(4)) || 0)
+    }
     yProportionBackup.current = Number(ypr.toFixed(4))
   }
 
@@ -89,7 +100,8 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
       const scrollXProportion = (e.target.scrollLeft / viewWidth) || 0
       const scrollYProportion = (e.target.scrollTop / viewHeight) || 0
 
-      emitScroll(scrollXProportion, scrollYProportion)
+      emitScrollX(scrollXProportion)
+      emitScrollY(scrollYProportion)
 
       setThumbLeft(scrollXProportion * scaleX * thumbWidth)
       setThumbTop(scrollYProportion * scaleY * thumbHeight)
@@ -100,6 +112,7 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
   const startX = useRef(0)
   const startY = useRef(0)
 
+  // 滚动条聚焦控制
   const handleThumbMove = (e: any) => {
     const maxX = viewCurrentWidth - thumbWidth - 4
     startX.current += e.movementX;
@@ -117,7 +130,8 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     const scrollXProportion = ((scrollWrap.current?.scrollLeft || 0) / viewWidth) || 0
     const scrollYProportion = ((scrollWrap.current?.scrollTop || 0) / viewHeight) || 0
 
-    emitScroll(scrollXProportion, scrollYProportion)
+    emitScrollX(scrollXProportion)
+    emitScrollY(scrollYProportion)
 
     scrollWrap.current?.scrollTo({
       left: (startX.current + thumbWidth * scrollXProportion) * scaleX,
@@ -140,6 +154,40 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     window.addEventListener('mousemove', handleThumbMove);
   }
 
+  // 滚动条点击控制
+  const handleClickBarX = (e: React.MouseEvent) => {
+    e.persist();
+    const relativeLeft = e.clientX - (e.target as HTMLElement).getBoundingClientRect().left
+    setThumbLeft(relativeLeft)
+
+    // 滚动占比
+    xProportionBackup.current = 0
+    setTimeout(() => {
+      const scrollXProportion = ((scrollWrap.current?.scrollLeft || 0) / viewWidth) || 0
+      emitScrollX(scrollXProportion)
+    })
+
+    scrollWrap.current?.scrollTo({
+      left: (relativeLeft) * scaleX
+    });
+  }
+  const handleClickBarY = (e: React.MouseEvent) => {
+    e.persist();
+    const relativeTop = e.clientY - (e.target as HTMLElement).getBoundingClientRect().top
+    setThumbTop(relativeTop)
+
+    // 滚动占比
+    yProportionBackup.current = 0
+    setTimeout(() => {
+      const scrollYProportion = ((scrollWrap.current?.scrollTop || 0) / viewHeight) || 0
+      emitScrollY(scrollYProportion)
+    })
+
+    scrollWrap.current?.scrollTo({
+      top: (relativeTop) * scaleY
+    });
+  }
+
   return (
     <div
       className="i-scrollbar"
@@ -158,7 +206,7 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
       >
         {children}
       </div>
-      {height && <div className="i-scrollbar__barY">
+      {height && <div className="i-scrollbar__barY" onClick={handleClickBarY}>
         <Transition
           timeout={200}
           in={hoverShowThumb || downShowThumb}
@@ -175,7 +223,7 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
           />
         </Transition>
       </div>}
-      {width && <div className="i-scrollbar__barX">
+      {width && <div className="i-scrollbar__barX" onClick={handleClickBarX}>
         <Transition
           timeout={200}
           in={hoverShowThumb || downShowThumb}
