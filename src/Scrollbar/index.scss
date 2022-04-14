@@ -9,25 +9,46 @@
   }
 }
 
-.i-scrollbar__bar {
+.i-scrollbar__barX,
+.i-scrollbar__barY {
   position: absolute;
+  z-index: 1;
+}
+
+.i-scrollbar__barX {
+  bottom: 2px;
+  left: 2px;
+  width: 100%;
+  height: 6px;
+}
+
+.i-scrollbar__barY {
   top: 2px;
   right: 2px;
-  z-index: 1;
   width: 6px;
   height: 100%;
 }
 
-.i-scrollbar__thumb {
+.i-scrollbar__thumbX,
+.i-scrollbar__thumbY {
   position: relative;
-  width: 100%;
-  height: 100px;
   background-color: rgba(144, 147, 153, 0.3);
   border-radius: 4px;
-  transform: translateY(0%);
   cursor: pointer;
   transition: background-color 0.2s ease-out;
   &:hover {
     background-color: rgba(144, 147, 153, 0.5);
   }
+}
+
+.i-scrollbar__thumbX {
+  width: 100px;
+  height: 100%;
+  transform: translateX(0%);
+}
+
+.i-scrollbar__thumbY {
+  width: 100%;
+  height: 100px;
+  transform: translateY(0%);
 }
