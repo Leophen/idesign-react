@@ -64,17 +64,13 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     setViewWidth(viewWidth)
     setViewHeight(viewHeight)
     // 设置滚动条宽高及视图与滚动条比值
-    if (viewWidth > currentWidth) {
-      const currentBarWidth = (currentWidth - 4) ** 2 / (scrollWrap.current?.scrollWidth || 1)
-      setThumbWidth(currentBarWidth)
-      setScaleX((currentWidth - currentBarWidth - 4) / currentBarWidth)
-    }
-    if (viewHeight > currentHeight) {
-      const currentBarHeight = (currentHeight - 4) ** 2 / (scrollWrap.current?.scrollHeight || 1)
-      setThumbHeight(currentBarHeight)
-      setScaleY((currentHeight - currentBarHeight - 4) / currentBarHeight)
-    }
-  }, [height])
+    const currentBarWidth = (currentWidth - 4) ** 2 / (scrollWrap.current?.scrollWidth || 1)
+    setThumbWidth(currentBarWidth)
+    setScaleX((currentWidth - currentBarWidth - 4) / currentBarWidth)
+    const currentBarHeight = (currentHeight - 4) ** 2 / (scrollWrap.current?.scrollHeight || 1)
+    setThumbHeight(currentBarHeight)
+    setScaleY((currentHeight - currentBarHeight - 4) / currentBarHeight)
+  }, [width, height])
 
   // 滚动触发事件及原比例备份
   const xProportionBackup = useRef(0)

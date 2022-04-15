@@ -1,3 +1,5 @@
+$primary: #3a3cf5;
+
 .i-dropdown__menu {
   position: relative;
   box-sizing: border-box;
@@ -64,7 +66,7 @@
     }
   }
   &:hover {
-    background-color: #f3f3f3;
+    background-color: rgb(240, 242, 240);
     & > .i-dropdown__menu {
       display: block;
     }
@@ -97,7 +99,11 @@
     }
   }
   &.i-dropdown__item-is-active {
-    background-color: #f3f3f3;
+    background-color: #ecf0fe;
+    .i-dropdown__item-txt {
+      color: $primary;
+      font-weight: bold;
+    }
   }
   &.i-dropdown__item-is-disabled {
     color: #00000042;

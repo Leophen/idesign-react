@@ -90,6 +90,14 @@ export interface InputProps {
    */
   suffixIcon?: string;
   /**
+   * 组件前置图标类名
+   */
+  prefixIconClass?: string;
+  /**
+   * 组件后置图标类名
+   */
+  suffixIconClass?: string;
+  /**
    * 输入框值发生变化时触发
    */
   onChange?: (
@@ -244,6 +252,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     step = 1,
     prefixIcon,
     suffixIcon,
+    prefixIconClass,
+    suffixIconClass,
     onChange,
     onFocus,
     onBlur,
@@ -559,14 +569,14 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   };
   const renderPrefixIcon = (
     <Icon
-      className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor')}
+      className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor',prefixIconClass)}
       name={prefixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('pre', e)}
     />
   );
   const renderSuffixIcon = (
     <Icon
-      className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor')}
+      className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor',suffixIconClass)}
       name={suffixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('suf', e)}
     />

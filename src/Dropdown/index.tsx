@@ -15,6 +15,10 @@ export interface DropdownItemProps {
    */
   value?: string | number;
   /**
+   * 级联子项宽度
+   */
+  width?: number;
+  /**
    * 级联子项最大高度
    */
   maxHeight?: number;
@@ -51,6 +55,10 @@ export interface DropdownMenuProps {
    */
   cascaderDirection?: 'left' | 'right';
   /**
+   * 下拉列表宽度
+   */
+  width?: number;
+  /**
    * 级联子项最大高度
    */
   maxHeight?: number;
@@ -71,6 +79,10 @@ export interface DropdownProps {
    * 自定义样式
    */
   style?: React.CSSProperties;
+  /**
+   * 下拉列表宽度
+   */
+  width?: number;
   /**
    * 列表项最大高度
    */
@@ -116,12 +128,17 @@ export interface DropdownProps {
    * 点击菜单项触发事件
    */
   onClick?: (dropdownItem: DropdownOption, event: React.MouseEvent) => void;
+  /**
+   * 切换下拉操作时触发
+   */
+  onTrigger?: (visible: boolean) => void;
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
   const {
     options = [],
     cascaderDirection = 'right',
+    width,
     maxHeight,
     clickItem = () => { }
   } = props
@@ -142,9 +159,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
         'i-dropdown__menu',
         cascaderDirection === 'left' && 'i-dropdown__menu-left'
       )}
-      style={{ maxHeight, overflowY: maxHeight ? 'auto' : 'unset' }}
+      style={{ width: width ? width : 'auto', maxHeight, overflowY: maxHeight ? 'auto' : 'unset' }}
     >
-      {options.map((item) => {
+      {options.map((item, index) => {
         return (
           <li
             className={classNames(
@@ -156,7 +173,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
             data-direction={cascaderDirection}
             data-disabled={item.disabled}
             onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
-            key={item.value}
+            key={`${item.value}${index}}`}
           >
             {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
             <div className='i-dropdown__item-txt'>
@@ -164,7 +181,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
             </div>
             {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
             {item.children && item.children?.length > 0 &&
-              <DropdownMenu options={item.children} cascaderDirection={cascaderDirection} maxHeight={item.maxHeight} clickItem={!item.disabled ? clickCascaderItem : () => { }} />
+              <DropdownMenu options={item.children} cascaderDirection={cascaderDirection} width={item.width} maxHeight={item.maxHeight} clickItem={!item.disabled ? clickCascaderItem : () => { }} />
             }
           </li>
         )
@@ -178,24 +195,28 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     children = '',
     className,
     style,
+    width,
     maxHeight,
     options = [],
     placement = 'bottom',
     trigger = 'click',
     cascaderDirection = 'right',
     disabled = false,
-    onClick = () => { }
+    onClick = () => { },
+    onTrigger = () => { }
   } = props;
 
   const [popupVisible, setPopupVisible] = useState(false)
 
   const switchPopup = (visible: boolean) => {
     setPopupVisible(visible)
+    onTrigger?.(visible)
   }
 
   const handleClickItem = (item: DropdownOption, event: React.MouseEvent) => {
     onClick?.(item, event)
     setPopupVisible(false)
+    onTrigger?.(false)
   }
 
   const DropdownContent = (
@@ -204,7 +225,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         'i-dropdown',
         className
       )}
-      style={{ ...(style || {}), ...{ maxHeight, overflowY: maxHeight ? 'auto' : 'unset' } }}
+      style={{ ...(style || {}), ...{ width: width ? width : 'auto', maxHeight, overflowY: maxHeight ? 'auto' : 'unset' } }}
     >
       <DropdownMenu options={options} cascaderDirection={cascaderDirection} clickItem={handleClickItem} />
     </div>

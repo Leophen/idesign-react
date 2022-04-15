@@ -228,17 +228,21 @@ const Popup: React.FC<PopupProps> = (props) => {
   const [height, setHeight] = useState(0)
 
   const setTargetLocation = (target: HTMLElement) => {
-    const rect = target.getBoundingClientRect()
-    setTop(rect.top + window.scrollY)
-    setLeft(rect.left + window.scrollX)
-    setWidth(rect.width)
-    setHeight(rect.height)
+    let currentTriggerNode = target.parentNode
+    while (currentTriggerNode?.parentNode === triggerNode.current) {
+      currentTriggerNode = currentTriggerNode?.parentNode
+    }
+    const rect = (currentTriggerNode as HTMLElement)?.children[0].getBoundingClientRect()
+    setTop((rect?.top || 0) + window.scrollY)
+    setLeft((rect?.left || 0) + window.scrollX)
+    setWidth((rect?.width || 0))
+    setHeight((rect?.height || 0))
   }
 
   const [innerVisible, setInnerVisible] = useState(visible)
 
   // 触发节点是否在指定包裹层中
-  const hasParent = (node: any, parent: HTMLElement) => {
+  const hasParent = (node: any, parent: HTMLElement | null) => {
     while (node) {
       if (node === parent) {
         return true;
@@ -272,15 +276,15 @@ const Popup: React.FC<PopupProps> = (props) => {
   }, [visible])
 
   // 气泡包裹层节点
-  const triggerNode = useRef(null)
+  const triggerNode = useRef<HTMLElement>(null)
 
   // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
   const ifClickInPopup = (e: any) => {
     const popupNode = document.querySelector('.i-popup')
     // 点击位置在气泡外
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      // 点击位置既在气泡外 又在按钮外
-      if (e.target.parentNode !== triggerNode.current) {
+      // 点击位置既在气泡外 又在触发节点外
+      if (!hasParent(e.target, triggerNode.current)) {
         closePopup()
       }
       window.removeEventListener('click', ifClickInPopup)
@@ -349,14 +353,14 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   return (
     <div className='i-popup__reference'>
-      <div
+      <section
         onClick={handleClick}
         onMouseEnter={handleEnter}
         onContextMenu={handleContextMenu}
         ref={triggerNode}
       >
         {children}
-      </div>
+      </section>
 
       <Transition
         timeout={200}

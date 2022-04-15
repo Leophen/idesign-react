@@ -13,18 +13,24 @@ order: 5
 ## 基本用法
 
 ```tsx
-import React from 'react';
-import { Select } from 'idesign-react';
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
 
 const App = () => {
+  const [value, setValue] = useState('item1')
+  const onChange = (item) => {
+    setValue(item.value)
+  }
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Select>填充按钮</Select>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Select value={value} onChange={onChange}>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
     </div>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```
