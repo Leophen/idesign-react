@@ -228,11 +228,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   const [height, setHeight] = useState(0)
 
   const setTargetLocation = (target: HTMLElement) => {
-    let currentTriggerNode = target.parentNode
-    while (currentTriggerNode?.parentNode === triggerNode.current) {
-      currentTriggerNode = currentTriggerNode?.parentNode
-    }
-    const rect = (currentTriggerNode as HTMLElement)?.children[0].getBoundingClientRect()
+    const rect = target.getBoundingClientRect()
     setTop((rect?.top || 0) + window.scrollY)
     setLeft((rect?.left || 0) + window.scrollX)
     setWidth((rect?.width || 0))
@@ -255,9 +251,13 @@ const Popup: React.FC<PopupProps> = (props) => {
   // 打开气泡通用方法
   const switchPopup = (e: React.MouseEvent, show: boolean) => {
     // 设置气泡位置
+    let currentTriggerNode: any = e.target
+    while (currentTriggerNode?.parentNode !== triggerNode.current) {
+      currentTriggerNode = currentTriggerNode?.parentNode
+    }
     if (show) {
       e.persist();
-      setTargetLocation((e.target as HTMLElement))
+      setTargetLocation((currentTriggerNode))
     }
     // 切换触发事件
     onTrigger?.(show)

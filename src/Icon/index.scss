@@ -13,16 +13,17 @@
   font-size: 16px;
   font-family: 'idesignicon' !important;
   font-style: normal;
+  pointer-events: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-ViewHide:before {
-  content: "\e6bc";
+  content: '\e6bc';
 }
 
 .icon-View:before {
-  content: "\e6bd";
+  content: '\e6bd';
 }
 
 .icon-TagPrice:before {
