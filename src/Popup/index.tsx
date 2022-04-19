@@ -187,7 +187,7 @@ const Portal: React.FC<PortalProps> = (props) => {
   useEffect(() => {
     const rect = popupRef.current.getBoundingClientRect()
     setStyles(getLocationStyle(currentPlacement, { ...tProps }, rect))
-  }, [visible, currentPlacement])
+  }, [visible, currentPlacement, tProps.width, tProps.height])
 
   const PopupNode = (
     <div
@@ -276,7 +276,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   }, [visible])
 
   // 气泡包裹层节点
-  const triggerNode = useRef<HTMLElement>(null)
+  const triggerNode = useRef(null)
 
   // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
   const ifClickInPopup = (e: any) => {
@@ -350,6 +350,15 @@ const Popup: React.FC<PopupProps> = (props) => {
       })
     } return
   }
+
+  // 触发节点宽高变化时重定位
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver(entries => {
+      setWidth((entries[0].contentRect.width || 0))
+      setHeight((entries[0].contentRect.height || 0))
+    });
+    resizeObserver.observe((triggerNode.current as any))
+  }, [])
 
   return (
     <div className='i-popup__reference'>
