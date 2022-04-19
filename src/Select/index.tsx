@@ -131,6 +131,12 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     setDropdownShow(visible)
   }
 
+  // 删除多选项
+  const handleDelItem = (e: React.MouseEvent, item: DropdownItemProps) => {
+    e.stopPropagation()
+    console.log(multiList,singleList)
+  }
+
   return (
     <div
       ref={selectNode}
@@ -162,7 +168,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
                   <Tag
                     theme="dark"
                     size="small"
-                    onClose={() => { }}
+                    onClose={(e: React.MouseEvent) => handleDelItem(e, item)}
                     key={item.value}
                   >
                     {item.content}

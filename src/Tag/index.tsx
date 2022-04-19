@@ -38,15 +38,15 @@ export interface TagProps {
   /**
    * 点击标签触发事件
    */
-  onClick?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
+  onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
   /**
    * 添加标签触发事件，设置后会自动带上添加按钮
    */
-  onAdd?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
+  onAdd?: (e: React.MouseEvent<HTMLDivElement>) => void;
   /**
    * 删除标签触发事件，设置后会自动带上删除按钮
    */
-  onClose?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
+  onClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const Tag: React.FC<TagProps> = (props) => {
@@ -60,16 +60,16 @@ const Tag: React.FC<TagProps> = (props) => {
     theme,
     type = 'default',
     onAdd,
-    onClick = () => {},
+    onClick = () => { },
     onClose,
     ...others
   } = props;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (onAdd) {
-      onAdd({ e });
+      onAdd(e);
     }
-    onClick({ e });
+    onClick(e);
   };
 
   return (
@@ -91,7 +91,7 @@ const Tag: React.FC<TagProps> = (props) => {
       {icon && <Icon name={icon} size={size && { small: 12, medium: 14, large: 16 }[size]} />}
       {children}
       {onClose && (
-        <div className="i-tag--close-btn" onClick={(e) => onClose({ e })}>
+        <div className="i-tag--close-btn" onClick={(e) => onClose(e)}>
           <Icon name="Close" size={size === 'large' ? 16 : 12} />
         </div>
       )}
