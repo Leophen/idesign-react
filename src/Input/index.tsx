@@ -234,6 +234,7 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
 const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const {
     className,
+    children,
     placeholder = '请输入',
     style,
     value,
@@ -597,6 +598,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         style={{ ...style }}
         onClick={focusInputNode}
       >
+        {children}
         {prefixIcon && renderPrefixIcon}
         {renderInput}
         {maxLength && (

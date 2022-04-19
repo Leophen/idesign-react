@@ -140,6 +140,11 @@
   padding: 4px 8px;
 }
 
-.i-popup__reference > div {
-  width: fit-content;
+.i-popup__reference {
+  & > div {
+    width: fit-content;
+  }
+  & > section {
+    position: relative;
+  }
 }

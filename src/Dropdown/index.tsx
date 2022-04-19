@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
+import _ from 'lodash';
 import './index.scss';
 import Popup from '../Popup';
 import Icon from '../Icon';
@@ -50,11 +51,6 @@ export interface DropdownMenuProps {
    */
   options?: Array<DropdownOption>;
   /**
-   * 级联子层级展开方向
-   * @default right
-   */
-  cascaderDirection?: 'left' | 'right';
-  /**
    * 下拉列表宽度
    */
   width?: number;
@@ -62,6 +58,16 @@ export interface DropdownMenuProps {
    * 级联子项最大高度
    */
   maxHeight?: number;
+  /**
+   * 级联子层级展开方向
+   * @default right
+   */
+  cascaderDirection?: 'left' | 'right';
+  /**
+   * 是否可多选
+   * @default false
+   */
+  multiple?: boolean;
   /**
    * 点击菜单项触发事件
    */
@@ -115,6 +121,11 @@ export interface DropdownProps {
    */
   trigger?: 'hover' | 'click' | 'context-menu';
   /**
+   * 是否可多选
+   * @default false
+   */
+  multiple?: boolean;
+  /**
    * 级联子层级展开方向
    * @default right
    */
@@ -137,9 +148,10 @@ export interface DropdownProps {
 const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
   const {
     options = [],
-    cascaderDirection = 'right',
     width,
     maxHeight,
+    cascaderDirection = 'right',
+    multiple = false,
     clickItem = () => { }
   } = props
 
@@ -168,7 +180,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               'i-dropdown__item',
               item.disabled && 'i-dropdown__item-is-disabled',
               item.divider && 'i-dropdown__item-has-divider',
-              item.active && 'i-dropdown__item-is-active'
+              item.active && 'i-dropdown__item-is-active',
+              multiple && 'i-dropdown__item-multiple'
             )}
             data-direction={cascaderDirection}
             data-disabled={item.disabled}
@@ -181,7 +194,19 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
             </div>
             {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
             {item.children && item.children?.length > 0 &&
-              <DropdownMenu options={item.children} cascaderDirection={cascaderDirection} width={item.width} maxHeight={item.maxHeight} clickItem={!item.disabled ? clickCascaderItem : () => { }} />
+              <DropdownMenu
+                options={item.children}
+                width={item.width}
+                maxHeight={item.maxHeight}
+                cascaderDirection={cascaderDirection}
+                multiple={multiple}
+                clickItem={!item.disabled ? clickCascaderItem : () => { }}
+              />
+            }
+            {multiple &&
+              <div className="i-dropdown__item-check">
+                {item.active && <Icon name="Check" size={14} />}
+              </div>
             }
           </li>
         )
@@ -201,6 +226,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     placement = 'bottom',
     trigger = 'click',
     cascaderDirection = 'right',
+    multiple = false,
     disabled = false,
     onClick = () => { },
     onTrigger = () => { }
@@ -213,10 +239,42 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     onTrigger?.(visible)
   }
 
+  const [innerOptions, setInnerOptions] = useState(options)
+  useEffect(() => {
+    setInnerOptions(options)
+  }, [options])
+
+  const [selectedList, setSelectedList] = useState<DropdownOption[]>([])
+  const setItemStyle = (selectedArr: DropdownOption[]) => {
+    const newOptions = _.cloneDeep(innerOptions)
+    newOptions.map(item => {
+      let itemSelected = false
+      selectedArr.map(selectedItem => item.value === selectedItem.value && (itemSelected = true))
+      item.active = itemSelected
+    })
+    setInnerOptions(newOptions)
+  }
   const handleClickItem = (item: DropdownOption, event: React.MouseEvent) => {
-    onClick?.(item, event)
-    setPopupVisible(false)
-    onTrigger?.(false)
+    if (!multiple) {
+      // 单选模式
+      onClick?.(item, event)
+      setPopupVisible(false)
+      onTrigger?.(false)
+    } else {
+      // 多选模式
+      const newSelectedList = _.cloneDeep(selectedList)
+      let ifIncludeItem = false
+      newSelectedList.map((it, index) => {
+        if (it.value === item.value) {
+          newSelectedList.splice(index, 1)
+          ifIncludeItem = true
+        }
+      })
+      !ifIncludeItem && newSelectedList.push(item)
+      setSelectedList(newSelectedList)
+      setItemStyle(newSelectedList)
+      onClick?.(newSelectedList, event)
+    }
   }
 
   const DropdownContent = (
@@ -227,7 +285,12 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       )}
       style={{ ...(style || {}), ...{ width: width ? width : 'auto', maxHeight, overflowY: maxHeight ? 'auto' : 'unset' } }}
     >
-      <DropdownMenu options={options} cascaderDirection={cascaderDirection} clickItem={handleClickItem} />
+      <DropdownMenu
+        multiple={multiple}
+        options={innerOptions}
+        cascaderDirection={cascaderDirection}
+        clickItem={handleClickItem}
+      />
     </div>
   )
 

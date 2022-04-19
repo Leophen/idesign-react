@@ -316,6 +316,44 @@ const App = () => {
 export default App
 ```
 
+## 多选下拉菜单
+
+可通过 `multiple` 属性指定下拉菜单为多选模式。
+
+```tsx
+import React from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = [
+    {
+      content: '操作一',
+      value: 1
+    },
+    {
+      content: '操作二',
+      value: 2
+    },
+    {
+      content: '操作三',
+      value: 3
+    }
+  ]
+
+  const handleSelect = (data) => {
+    console.log(data)
+  }
+
+  return (
+    <Dropdown options={options} multiple={true} onClick={handleSelect}>
+      <Button>多选菜单</Button>
+    </Dropdown>
+  )
+}
+
+export default App
+```
+
 ## 级联下拉菜单
 
 可通过 `children` 属性指定级联菜单，可通过 `cascaderDirection` 控制展开方向。

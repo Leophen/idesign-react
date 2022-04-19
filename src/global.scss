@@ -289,6 +289,9 @@ ul[role='slug-list'] li > a.active {
   box-sizing: border-box;
   column-gap: 16px;
   row-gap: 16px;
+  .i-select {
+    width: 200px;
+  }
 }
 
 .idesign-demo-block-popup {

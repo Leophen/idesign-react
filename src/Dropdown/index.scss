@@ -102,7 +102,6 @@ $primary: #3a3cf5;
     background-color: #ecf0fe;
     .i-dropdown__item-txt {
       color: $primary;
-      font-weight: bold;
     }
   }
   &.i-dropdown__item-is-disabled {
@@ -112,6 +111,26 @@ $primary: #3a3cf5;
     &:hover {
       background-color: unset;
     }
+  }
+}
+
+.i-dropdown__item-multiple {
+  &.i-dropdown__item-is-active {
+    background-color: unset;
+  }
+  &:hover {
+    background-color: rgb(240, 242, 240);
+  }
+}
+
+.i-dropdown__item-check {
+  display: flex;
+  align-items: center;
+  width: 14px;
+  height: 14px;
+  margin-left: 12px;
+  .icon-Check {
+    color: $primary;
   }
 }
 

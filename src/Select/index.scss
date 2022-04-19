@@ -1,3 +1,23 @@
+.i-select {
+  width: 100%;
+  .i-popup__reference section > .i-input {
+    height: auto;
+  }
+}
+
 .i-select-arrow__show {
   transform: rotate(180deg);
+}
+
+.i-select__multiple-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+  width: 100%;
+  margin: 6px 0;
+  overflow: hidden;
+  .i-tag {
+    border-radius: 2px;
+  }
 }

@@ -3,8 +3,9 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import './index.scss';
 import Dropdown from '../Dropdown';
-import { DropdownItemProps } from '../Dropdown'
+import { DropdownOption, DropdownItemProps } from '../Dropdown'
 import Input from '../Input';
+import Tag from '../Tag';
 
 export interface SelectProps {
   /**
@@ -16,6 +17,11 @@ export interface SelectProps {
    */
   style?: React.CSSProperties;
   /**
+   * 选择器宽度
+   * @default 100%
+   */
+  width?: string | number;
+  /**
    * 选中值
    */
   value?: string | number;
@@ -24,6 +30,16 @@ export interface SelectProps {
    * @default 请选择
    */
   placeholder?: string;
+  /**
+   * 下拉操作项
+   * @default []
+   */
+  options?: Array<DropdownOption>;
+  /**
+   * 是否可多选
+   * @default false
+   */
+  multiple?: boolean;
   /**
    * 选中值变化时触发
    */
@@ -43,55 +59,64 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     children,
     className,
     style,
+    width,
     value,
     placeholder = '请选择',
+    options = [],
+    multiple = false,
     onChange = () => { },
     ...others
   } = props;
 
-  const [innerValue, setInnerValue] = useState(value)
+  const [inputValue, setInputValue] = useState(value)
+  const [multipleSelected, setMultipleSelected] = useState<DropdownOption[]>([])
 
   const [dropdownWidth, setDropdownWidth] = useState(0)
   const selectNode = useRef<HTMLDivElement>(null)
 
-  // 子元素转 options
-  const [options, setOptions] = useState([])
+  const [innerOptions, setInnerOptions] = useState(options)
   useEffect(() => {
-    // 更新下拉数据
-    let result: any = []
-    React.Children.map(children, (child) => {
-      if (!React.isValidElement(child)) {
-        return null;
-      }
-      let currentActive = false
-      if (innerValue === child.props.value) {
-        currentActive = true
-      }
-      result.push({
-        content: child.props.children,
-        value: child.props.value,
-        active: child.props.active || currentActive,
+    // Select.Item 模式 -> 更新下拉数据
+    if (children) {
+      let selectData: any = []
+      React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) {
+          return null;
+        }
+        let currentActive = false
+        if (inputValue === child.props.value) {
+          currentActive = true
+        }
+        selectData.push({
+          content: child.props.children,
+          value: child.props.value,
+          active: child.props.active || currentActive,
+        })
       })
-    })
-    setOptions(result)
+      setInnerOptions(selectData)
+    }
     // 更新下拉宽度
     const currentWidth = selectNode.current?.getBoundingClientRect().width || 0
     setDropdownWidth(currentWidth)
   }, [])
 
-  const handleSelect = (item: DropdownItemProps) => {
-    setInnerValue(item.value)
-    const newOptions = _.cloneDeep(options)
-    newOptions.map((it: DropdownItemProps) => {
-      it.value === item.value ? (it.active = true) : (it.active = false)
-    })
-    setOptions(newOptions)
+  const handleSelect = (item: any) => {
+    if (!multiple) {
+      setInputValue(item.value)
+      const newOptions = _.cloneDeep(innerOptions)
+      newOptions.map((it: DropdownItemProps) => {
+        it.value === item.value ? (it.active = true) : (it.active = false)
+      })
+      setInnerOptions(newOptions)
+    } else {
+      setMultipleSelected(item)
+    }
     onChange?.(item)
   }
 
   const getItemContent = (value: string | number | undefined) => {
     let result: string | number = ''
-    const currentItem: DropdownItemProps = options.find((it: DropdownItemProps) => {
+    const currentItem: DropdownItemProps = innerOptions.find((it: DropdownItemProps) => {
       return it.value === value
     }) || {}
     if (typeof currentItem.content === 'string' || typeof currentItem.content === 'number') {
@@ -113,22 +138,40 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         'i-select',
         className
       )}
-      style={{ ...style }}
+      style={{ ...(style || {}), ...{ width } }}
       {...others}
     >
       <Dropdown
         width={dropdownWidth}
-        options={options}
+        options={innerOptions}
         onClick={handleSelect}
         onTrigger={handleTrigger}
+        multiple={multiple}
       >
         <Input
-          value={getItemContent(innerValue)}
-          placeholder={placeholder}
+          value={!multiple ? getItemContent(inputValue) : undefined}
+          placeholder={(!multiple || multipleSelected.length === 0) ? placeholder : ''}
           readonly
           suffixIcon="ArrowDown"
           suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
-        />
+        >
+          {multiple && multipleSelected.length > 0 && (
+            <div className='i-select__multiple-wrap'>
+              {
+                multipleSelected.map(item => (
+                  <Tag
+                    theme="dark"
+                    size="small"
+                    onClose={() => { }}
+                    key={item.value}
+                  >
+                    {item.content}
+                  </Tag>
+                ))
+              }
+            </div>
+          )}
+        </Input>
       </Dropdown>
     </div>
   );
