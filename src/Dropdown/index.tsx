@@ -14,7 +14,7 @@ export interface DropdownItemProps {
   /**
    * 下拉操作项唯一标识
    */
-  value?: string | number;
+  value: string | number;
   /**
    * 级联子项宽度
    */
@@ -23,11 +23,6 @@ export interface DropdownItemProps {
    * 级联子项最大高度
    */
   maxHeight?: number;
-  /**
-   * 是否高亮当前操作项
-   * @default false
-   */
-  active?: boolean;
   /**
    * 单项是否禁用
    * @default false
@@ -64,6 +59,11 @@ export interface DropdownMenuProps {
    */
   cascaderDirection?: 'left' | 'right';
   /**
+   * 单项可选中模式
+   * @default false
+   */
+  selected?: boolean;
+  /**
    * 是否可多选
    * @default false
    */
@@ -71,7 +71,7 @@ export interface DropdownMenuProps {
   /**
    * 是否可多选
    */
-  multiSelected?: multiSelectedType;
+  selectedValue?: string | number | Array<string | number>;
   /**
    * 点击菜单项触发事件
    */
@@ -79,7 +79,6 @@ export interface DropdownMenuProps {
 }
 
 export type DropdownOption = { children?: Array<DropdownItemProps> } & DropdownItemProps & Record<string, any>;
-export type multiSelectedType = Array<string | number | undefined>;
 
 export interface DropdownProps {
   /**
@@ -98,6 +97,10 @@ export interface DropdownProps {
    * 列表项最大高度
    */
   maxHeight?: number;
+  /**
+   * 下拉选中项
+   */
+  value?: string | number | Array<string | number>;
   /**
    * 下拉操作项
    * @default []
@@ -126,6 +129,11 @@ export interface DropdownProps {
    */
   trigger?: 'hover' | 'click' | 'context-menu';
   /**
+   * 单项可选中模式
+   * @default false
+   */
+  selected?: boolean;
+  /**
    * 是否可多选
    * @default false
    */
@@ -143,7 +151,7 @@ export interface DropdownProps {
   /**
    * 点击菜单项触发事件
    */
-  onClick?: (dropdownItem: DropdownOption, event: React.MouseEvent) => void;
+  onClick?: (value: string | number | Array<string | number>, event: React.MouseEvent) => void;
   /**
    * 切换下拉操作时触发
    */
@@ -156,8 +164,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     width,
     maxHeight,
     cascaderDirection = 'right',
+    selected = false,
     multiple = false,
-    multiSelected = [],
+    selectedValue = [],
     clickItem = () => { }
   } = props
 
@@ -186,7 +195,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               'i-dropdown__item',
               item.disabled && 'i-dropdown__item-is-disabled',
               item.divider && 'i-dropdown__item-has-divider',
-              item.active && 'i-dropdown__item-is-active',
+              selected && item.value === selectedValue && 'i-dropdown__item-is-active',
               multiple && 'i-dropdown__item-multiple'
             )}
             data-direction={cascaderDirection}
@@ -206,13 +215,15 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
                 maxHeight={item.maxHeight}
                 cascaderDirection={cascaderDirection}
                 multiple={multiple}
-                multiSelected={multiSelected}
+                selectedValue={selectedValue}
                 clickItem={!item.disabled ? clickCascaderItem : () => { }}
               />
             }
             {multiple &&
               <div className="i-dropdown__item-check">
-                {multiSelected.includes(item.value) && <Icon name="Check" size={14} />}
+                {Array.isArray(selectedValue) && selectedValue.includes(item.value) &&
+                  <Icon name="Check" size={14} />
+                }
               </div>
             }
           </li>
@@ -229,10 +240,12 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     style,
     width,
     maxHeight,
+    value = [],
     options = [],
     placement = 'bottom',
     trigger = 'click',
     cascaderDirection = 'right',
+    selected = false,
     multiple = false,
     disabled = false,
     onClick = () => { },
@@ -251,28 +264,30 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     setDropdownOptions(options)
   }, [options])
 
-  const [multiSelected, setMultiSelected] = useState<multiSelectedType>([])
+  // 下拉选中项
+  const [innerValue, setInnerValue] = useState(value)
+
+  // const [multiSelected, setMultiSelected] = useState<multiSelectedType>([])
   const [multiHandleKey, setMultiHandleKey] = useState(0)
   const handleClickItem = (item: DropdownOption, event: React.MouseEvent) => {
     if (!multiple) {
       // 单选模式
-      onClick?.(item, event)
+      onClick?.(item.value, event)
+      item.value && setInnerValue(item.value)
       setPopupVisible(false)
       onTrigger?.(false)
     } else {
       // 多选模式
-      const curMultiSelected = multiSelected
-      let includeItem = false
+      const curMultiSelected: any = innerValue
       let delIndex = 0
-      curMultiSelected.map((it, index) => {
+      curMultiSelected.map((it: string | number, index: number) => {
         if (it === item.value) {
-          includeItem = true
           delIndex = index
         }
       })
-      includeItem ? curMultiSelected.splice(delIndex, 1) : curMultiSelected.push(item.value)
-      setMultiSelected(curMultiSelected)
-      setMultiHandleKey(new Date().getTime())
+      curMultiSelected.includes(item.value) ? curMultiSelected.splice(delIndex, 1) : curMultiSelected.push(item.value)
+      setInnerValue(curMultiSelected)
+      setMultiHandleKey(new Date().getTime()) // 更新下拉内容
       onClick?.(curMultiSelected, event)
     }
   }
@@ -288,8 +303,9 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       <DropdownMenu
         options={dropdownOptions}
         cascaderDirection={cascaderDirection}
+        selected={selected}
         multiple={multiple}
-        multiSelected={multiSelected}
+        selectedValue={innerValue}
         clickItem={handleClickItem}
       />
     </div>

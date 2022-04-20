@@ -36,14 +36,64 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
     <Dropdown options={options} onClick={handleSelect}>
       <Button>更多</Button>
     </Dropdown>
+  )
+}
+
+export default App
+```
+
+## 可选中状态
+
+可以通过 `selected` 属性控制下拉菜单为可选中的模式，可传入 `value` 来控制某一项为默认选中。
+
+```tsx
+import React, { useState } from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = [
+    {
+      content: '操作一',
+      value: 1
+    },
+    {
+      content: '操作二',
+      value: 2
+    },
+    {
+      content: '操作三',
+      value: 3
+    }
+  ]
+
+  const [value, setValue] = useState(2)
+  const handleSelect = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Dropdown selected={true} options={options}>
+        <Button>无默认值的可选中模式</Button>
+      </Dropdown>
+      <Dropdown
+        selected={true}
+        value={value}
+        options={options}
+        onClick={handleSelect}
+      >
+        <Button>有默认值的可选中模式</Button>
+      </Dropdown>
+    </div>
   )
 }
 
@@ -64,52 +114,13 @@ const App = () => {
     value: Math.random()
   })
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
     <Dropdown options={options} maxHeight={300} onClick={handleSelect}>
       <Button>限制最大高度</Button>
-    </Dropdown>
-  )
-}
-
-export default App
-```
-
-## 单项选中状态
-
-也可在 `options` 属性中设置 `active` 控制单项选中聚焦。
-
-```tsx
-import React from 'react'
-import { Dropdown, Button } from 'idesign-react'
-
-const App = () => {
-  const options = [
-    {
-      content: '操作一',
-      value: 1
-    },
-    {
-      content: '操作二',
-      value: 2,
-      active: true
-    },
-    {
-      content: '操作三',
-      value: 3
-    }
-  ]
-
-  const handleSelect = (data) => {
-    console.log(data)
-  }
-
-  return (
-    <Dropdown options={options} onClick={handleSelect}>
-      <Button>选中操作二</Button>
     </Dropdown>
   )
 }
@@ -141,8 +152,8 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
@@ -180,8 +191,8 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
@@ -219,8 +230,8 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
@@ -292,23 +303,21 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Dropdown trigger="click" options={options} onClick={handleSelect}>
-          <Button>点击触发</Button>
-        </Dropdown>
-        <Dropdown trigger="hover" options={options} onClick={handleSelect}>
-          <Button>悬浮触发</Button>
-        </Dropdown>
-        <Dropdown trigger="context-menu" options={options} onClick={handleSelect}>
-          <Button>右击触发</Button>
-        </Dropdown>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Dropdown trigger="click" options={options} onClick={handleSelect}>
+        <Button>点击触发</Button>
+      </Dropdown>
+      <Dropdown trigger="hover" options={options} onClick={handleSelect}>
+        <Button>悬浮触发</Button>
+      </Dropdown>
+      <Dropdown trigger="context-menu" options={options} onClick={handleSelect}>
+        <Button>右击触发</Button>
+      </Dropdown>
     </div>
   )
 }
@@ -340,8 +349,8 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
@@ -406,20 +415,18 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Dropdown options={options} onClick={handleSelect}>
-          <Button>级联菜单</Button>
-        </Dropdown>
-        <Dropdown cascaderDirection="left" options={options} onClick={handleSelect}>
-          <Button>向左展开的级联菜单</Button>
-        </Dropdown>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Dropdown options={options} onClick={handleSelect}>
+        <Button>级联菜单</Button>
+      </Dropdown>
+      <Dropdown cascaderDirection="left" options={options} onClick={handleSelect}>
+        <Button>向左展开的级联菜单</Button>
+      </Dropdown>
     </div>
   )
 }
@@ -429,7 +436,7 @@ export default App
 
 ## 限制级联子项最大高度
 
-可通过 `maxHeight` 属性指定级联子项的最大高度，注意只能给最里层设最大高度（待滚动条组件后解决）。
+可通过 `maxHeight` 属性指定级联子项的最大高度，注意只能给最里层设最大高度。
 
 ```tsx
 import React from 'react'
@@ -456,8 +463,8 @@ const App = () => {
     }
   ]
 
-  const handleSelect = (data) => {
-    console.log(data)
+  const handleSelect = (val) => {
+    console.log(val)
   }
 
   return (
