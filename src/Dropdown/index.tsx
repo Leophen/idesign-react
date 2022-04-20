@@ -204,7 +204,13 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
             key={`${item.value}${index}}`}
           >
             {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
-            <div className='i-dropdown__item-txt'>
+            <div
+              className={classNames(
+                'i-dropdown__item-txt',
+                ((selected && item.value === selectedValue) || (multiple && Array.isArray(selectedValue) && selectedValue.includes(item.value)))
+                && 'i-dropdown__item-txt-is-active'
+              )}
+            >
               {item.content}
             </div>
             {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}

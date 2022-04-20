@@ -100,9 +100,6 @@ $primary: #3a3cf5;
   }
   &.i-dropdown__item-is-active {
     background-color: #ecf0fe;
-    .i-dropdown__item-txt {
-      color: $primary;
-    }
   }
   &.i-dropdown__item-is-disabled {
     color: #00000042;
@@ -121,6 +118,11 @@ $primary: #3a3cf5;
   &:hover {
     background-color: rgb(240, 242, 240);
   }
+}
+
+
+.i-dropdown__item-txt-is-active {
+  color: $primary;
 }
 
 .i-dropdown__item-check {

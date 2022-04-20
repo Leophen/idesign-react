@@ -255,6 +255,9 @@ const Popup: React.FC<PopupProps> = (props) => {
     while (currentTriggerNode?.parentNode === (triggerNode.current as unknown as HTMLElement).children[0]) {
       currentTriggerNode = currentTriggerNode?.parentNode
     }
+    if (currentTriggerNode === triggerNode.current) {
+      currentTriggerNode = currentTriggerNode.children[0]
+    }
     if (show) {
       e.persist();
       setTargetLocation((currentTriggerNode))
