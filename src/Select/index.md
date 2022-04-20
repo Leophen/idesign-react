@@ -38,9 +38,9 @@ const App = () => {
     }
   ]
 
-  const onChange = (item) => {
-    console.log(item)
-    setValue(item.value)
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
   }
 
   return (
@@ -67,7 +67,7 @@ import React, { useState } from 'react'
 import { Select } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('item1')
+  const [value, setValue] = useState([])
 
   const options = [
     {

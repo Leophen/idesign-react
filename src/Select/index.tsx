@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import './index.scss';
 import Dropdown from '../Dropdown';
-import { DropdownOption, DropdownItemProps } from '../Dropdown'
+import { DropdownOption } from '../Dropdown'
 import Input from '../Input';
 import Tag from '../Tag';
 
@@ -24,7 +24,7 @@ export interface SelectProps {
   /**
    * 选中值
    */
-  value?: string | number;
+  value?: string | number | Array<string | number>;
   /**
    * 占位符
    * @default 请选择
@@ -43,7 +43,7 @@ export interface SelectProps {
   /**
    * 选中值变化时触发
    */
-  onChange?: (value: DropdownItemProps) => void;
+  onChange?: (value: string | number | Array<string | number>) => void;
 }
 
 
@@ -60,7 +60,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     className,
     style,
     width,
-    value,
+    value = [],
     placeholder = '请选择',
     options = [],
     multiple = false,
@@ -68,13 +68,10 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     ...others
   } = props;
 
-  const [inputValue, setInputValue] = useState(value)
-  const [multipleSelected, setMultipleSelected] = useState<DropdownOption[]>([])
-
-  const [dropdownWidth, setDropdownWidth] = useState(0)
+  // 转换下拉数据及更新下拉框宽度
   const selectNode = useRef<HTMLDivElement>(null)
-
   const [innerOptions, setInnerOptions] = useState(options)
+  const [dropdownWidth, setDropdownWidth] = useState(0)
   useEffect(() => {
     // Select.Item 模式 -> 更新下拉数据
     if (children) {
@@ -84,7 +81,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
           return null;
         }
         let currentActive = false
-        if (inputValue === child.props.value) {
+        if (innerValue === child.props.value) {
           currentActive = true
         }
         selectData.push({
@@ -100,29 +97,24 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     setDropdownWidth(currentWidth)
   }, [])
 
-  const handleSelect = (item: any) => {
-    if (!multiple) {
-      setInputValue(item.value)
-      const newOptions = _.cloneDeep(innerOptions)
-      newOptions.map((it: DropdownItemProps) => {
-        it.value === item.value ? (it.active = true) : (it.active = false)
-      })
-      setInnerOptions(newOptions)
-    } else {
-      setMultipleSelected(item)
-    }
-    onChange?.(item)
+  // 更新下拉数据
+  const [updateKey, setUpdateKey] = useState(0)
+  const [innerValue, setInnerValue] = useState(value)
+
+  const handleSelect = (val: string | number | Array<string | number>) => {
+    setInnerValue(val)
+    setUpdateKey(new Date().getTime())
+    onChange?.(val)
   }
 
-  const getItemContent = (value: string | number | undefined) => {
-    let result: string | number = ''
-    const currentItem: DropdownItemProps = innerOptions.find((it: DropdownItemProps) => {
-      return it.value === value
-    }) || {}
-    if (typeof currentItem.content === 'string' || typeof currentItem.content === 'number') {
-      result = currentItem?.content
-    }
-    return result
+  const getItemContent = (val: string | number | Array<string | number>) => {
+    let content = ''
+    innerOptions.map(item => {
+      if (item.value === val && item.content) {
+        content = item.content.toString()
+      }
+    })
+    return content
   }
 
   // 选择器显示隐藏操作
@@ -132,9 +124,16 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   }
 
   // 删除多选项
-  const handleDelItem = (e: React.MouseEvent, item: DropdownItemProps) => {
+  const handleDelItem = (e: React.MouseEvent, val: string | number) => {
     e.stopPropagation()
-    console.log(multiList,singleList)
+    if (Array.isArray(innerValue)) {
+      const curInnerValue = innerValue
+      let delIndex = 0
+      curInnerValue.map((item, index) => item === val && (delIndex === index))
+      curInnerValue.splice(delIndex, 1)
+      setUpdateKey(new Date().getTime())
+      setInnerValue(curInnerValue)
+    }
   }
 
   return (
@@ -152,26 +151,28 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         options={innerOptions}
         onClick={handleSelect}
         onTrigger={handleTrigger}
+        value={innerValue}
+        selected={true}
         multiple={multiple}
       >
         <Input
-          value={!multiple ? getItemContent(inputValue) : undefined}
-          placeholder={(!multiple || multipleSelected.length === 0) ? placeholder : ''}
+          value={!multiple ? getItemContent(innerValue) : undefined}
+          placeholder={(!multiple || (Array.isArray(innerValue) && innerValue.length) === 0) ? placeholder : ''}
           readonly
           suffixIcon="ArrowDown"
           suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
         >
-          {multiple && multipleSelected.length > 0 && (
+          {multiple && Array.isArray(innerValue) && innerValue.length > 0 && (
             <div className='i-select__multiple-wrap'>
               {
-                multipleSelected.map(item => (
+                innerValue.map(val => (
                   <Tag
                     theme="dark"
                     size="small"
-                    onClose={(e: React.MouseEvent) => handleDelItem(e, item)}
-                    key={item.value}
+                    onClose={(e: React.MouseEvent) => handleDelItem(e, val)}
+                    key={val}
                   >
-                    {item.content}
+                    {getItemContent(val)}
                   </Tag>
                 ))
               }

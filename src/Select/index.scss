@@ -1,7 +1,10 @@
 .i-select {
   width: 100%;
-  .i-popup__reference section > .i-input {
-    height: auto;
+  .i-popup__reference section {
+    width: 100%;
+    & > .i-input {
+      height: auto;
+    }
   }
 }
 
