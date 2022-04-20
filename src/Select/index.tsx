@@ -101,7 +101,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   const [updateKey, setUpdateKey] = useState(0)
   const [innerValue, setInnerValue] = useState(value)
 
-  const handleSelect = (val: string | number | Array<string | number>) => {
+  const updateValue = (val: string | number | Array<string | number>) => {
     setInnerValue(val)
     setUpdateKey(new Date().getTime())
     onChange?.(val)
@@ -127,12 +127,8 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   const handleDelItem = (e: React.MouseEvent, val: string | number) => {
     e.stopPropagation()
     if (Array.isArray(innerValue)) {
-      const curInnerValue = innerValue
-      let delIndex = 0
-      curInnerValue.map((item, index) => item === val && (delIndex === index))
-      curInnerValue.splice(delIndex, 1)
-      setUpdateKey(new Date().getTime())
-      setInnerValue(curInnerValue)
+      const curInnerValue = _.pull(innerValue, val);
+      updateValue(curInnerValue)
     }
   }
 
@@ -149,7 +145,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
       <Dropdown
         width={dropdownWidth}
         options={innerOptions}
-        onClick={handleSelect}
+        onClick={updateValue}
         onTrigger={handleTrigger}
         value={innerValue}
         selected={true}
