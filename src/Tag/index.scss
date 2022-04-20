@@ -1,4 +1,4 @@
-$default: #909399;
+$default: #b3b6bd;
 $default_border: #d3d4d6;
 $default_border_opacity: rgba(211, 212, 214, 0.2);
 
@@ -58,16 +58,6 @@ a .i-tag {
     .i-icon {
       color: #fff !important;
     }
-    .i-tag--close-btn {
-      &:hover {
-        .icon-Close {
-          color: $color !important;
-        }
-        &::after {
-          background-color: rgba(255, 255, 255, 0.8);
-        }
-      }
-    }
     &.i-tag--add-btn {
       &:hover {
         background-color: $color;
@@ -109,12 +99,7 @@ a .i-tag {
       content: '';
     }
     &:hover {
-      .icon-Close {
-        color: #fff !important;
-      }
-      &::after {
-        background-color: $color;
-      }
+      opacity: 0.8;
     }
   }
 }
