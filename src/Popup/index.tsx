@@ -252,7 +252,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   const switchPopup = (e: React.MouseEvent, show: boolean) => {
     // 设置气泡位置
     let currentTriggerNode: any = e.target
-    while (currentTriggerNode?.parentNode !== triggerNode.current) {
+    while (currentTriggerNode?.parentNode === (triggerNode.current as unknown as HTMLElement).children[0]) {
       currentTriggerNode = currentTriggerNode?.parentNode
     }
     if (show) {
