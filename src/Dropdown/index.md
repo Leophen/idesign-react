@@ -489,7 +489,6 @@ export default App
 | value | 下拉操作项唯一标识 | `string〡number` | `--` |
 | width | 宽度 | `number` | `--` |
 | maxHeight | 最大高度 | `number` | `--` |
-| active | 是否高亮当前操作项 | `boolean` | `false` |
 | disabled | 单项是否禁用 | `boolean` | `false` |
 | divider | 是否显示操作项之后的分隔线 | `boolean` | `false` |
 | onClick | 点击时触发 | `(dropdownItem: DropdownOption, event: React.MouseEvent) => void` | `--` |
