@@ -282,6 +282,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   const triggerNode = useRef(null)
 
   // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
+  const [listenClick, setListenClick] = useState(false)
   const ifClickInPopup = (e: any) => {
     const popupNode = document.querySelector('.i-popup')
     // 点击位置在气泡外
@@ -290,45 +291,57 @@ const Popup: React.FC<PopupProps> = (props) => {
       if (!hasParent(e.target, triggerNode.current)) {
         closePopup()
       }
+      setListenClick(false)
       window.removeEventListener('click', ifClickInPopup)
     }
   }
-
+  useEffect(() => {
+    if (listenClick) {
+      window.addEventListener('click', ifClickInPopup)
+      return () => window.removeEventListener('click', ifClickInPopup)
+    }
+  }, [listenClick])
   // 点击触发节点
   const handleClick = (e: React.MouseEvent) => {
     if (trigger === 'click') {
       switchPopup(e, !innerVisible)
       // 气泡在关闭状态下点击 则监听下一次全局点击事件
       if (!innerVisible) {
-        setTimeout(() => {
-          window.addEventListener('click', ifClickInPopup)
-        })
+        setTimeout(() => setListenClick(true))
       }
     } return
   }
 
   // 判断点击和右击节点是否在气泡内
+  const [listenContextMenu, setListenContextMenu] = useState(false)
   const ifHandleInPopup = (e: any) => {
     e.preventDefault();
     const popupNode = document.querySelector('.i-popup')
     if (!hasParent(e.target, popupNode as HTMLElement)) {
-      if (e.target.parentNode !== triggerNode.current) {
-        closePopup()
-      }
+      closePopup()
+      setListenContextMenu(false)
       window.removeEventListener('click', ifHandleInPopup)
       window.removeEventListener('contextmenu', ifHandleInPopup)
     }
   }
-
+  useEffect(() => {
+    if (listenContextMenu) {
+      window.addEventListener('click', ifHandleInPopup)
+      window.addEventListener('contextmenu', ifHandleInPopup)
+      return () => {
+        window.removeEventListener('click', ifHandleInPopup)
+        window.removeEventListener('contextmenu', ifHandleInPopup)
+      }
+    }
+  }, [listenContextMenu])
   // 右击触发节点
   const handleContextMenu = (e: React.MouseEvent) => {
     if (trigger === 'context-menu') {
       e.preventDefault();
       switchPopup(e, !innerVisible)
-      setTimeout(() => {
-        window.addEventListener('click', ifHandleInPopup)
-        window.addEventListener('contextmenu', ifHandleInPopup)
-      })
+      if (!innerVisible) {
+        setTimeout(() => setListenContextMenu(true))
+      }
     } return
   }
 
