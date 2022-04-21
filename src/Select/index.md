@@ -14,7 +14,7 @@ order: 5
 
 ## 基本用法
 
-可通过包裹 `<Select.Item>` 或传入 `options` 参数来实现选择器。
+可通过包裹 `<Select.Item>` 或传入 `options` 参数来实现选择器，可将 `clearable` 设为 `false` 关闭一键清空功能。
 
 ```tsx
 import React, { useState } from 'react'
@@ -50,7 +50,12 @@ const App = () => {
         <Select.Item value="item2">选项二</Select.Item>
         <Select.Item value="item3">选项三</Select.Item>
       </Select>
-      <Select value={value} options={options} onChange={onChange} />
+      <Select
+        value={value}
+        options={options}
+        clearable={false}
+        onChange={onChange}
+      />
     </div>
   )
 }

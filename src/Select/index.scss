@@ -11,11 +11,22 @@
       }
     }
   }
-  &[data-size="small"]{
+  &[data-size='small'] {
     width: 160px;
   }
-  &[data-size="large"]{
+  &[data-size='large'] {
     width: 240px;
+  }
+  .i-input__hide-clear {
+    & > .icon-TipCloseFill {
+      display: none !important;
+    }
+  }
+  .i-input > .icon-TipCloseFill {
+    cursor: pointer;
+  }
+  .i-tag--close-btn .i-icon {
+    cursor: pointer;
   }
 }
 

@@ -41,6 +41,11 @@ export interface SelectProps {
    */
   size?: "small" | "medium" | "large";
   /**
+   * 是否可一键清空
+   * @default true
+   */
+  clearable?: boolean;
+  /**
    * 是否可多选
    * @default false
    */
@@ -74,6 +79,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     placeholder = '请选择',
     options = [],
     size,
+    clearable = true,
     multiple = false,
     disabled = false,
     onChange = () => { },
@@ -132,6 +138,19 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     return content
   }
 
+  const getInputValue = (val: string | number | Array<string | number>) => {
+    if (!multiple) {
+      return getItemContent(val)
+    }
+    if (Array.isArray(innerValue)) {
+      if (innerValue.length > 0) {
+        return 'i'
+      } else {
+        return ''
+      }
+    }
+  }
+
   // 选择器显示隐藏操作
   const [dropdownShow, setDropdownShow] = useState(false)
   const handleTrigger = (visible: boolean) => {
@@ -145,6 +164,16 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
       const curInnerValue = _.pull(innerValue, val);
       onChange?.(_.cloneDeep(curInnerValue))
     }
+  }
+
+  const handleClear = (e: any) => {
+    e.stopPropagation()
+    let nullVal: '' | [] = ''
+    if (multiple) {
+      nullVal = []
+    }
+    setInnerValue(nullVal)
+    onChange?.(nullVal)
   }
 
   return (
@@ -169,13 +198,18 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         size={size}
       >
         <Input
-          value={!multiple ? getItemContent(innerValue) : undefined}
+          className={classNames(
+            !clearable && 'i-input__hide-clear'
+          )}
+          value={getInputValue(innerValue)}
           placeholder={(!multiple || (Array.isArray(innerValue) && innerValue.length) === 0) ? placeholder : ''}
           readonly={!disabled}
           disabled={disabled}
           size={size}
           suffixIcon="ArrowDown"
           suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
+          clearable
+          onClear={handleClear}
         >
           {multiple && Array.isArray(innerValue) && innerValue.length > 0 && (
             <div className='i-select__multiple-wrap'>
