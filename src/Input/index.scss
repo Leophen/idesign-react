@@ -117,6 +117,9 @@ $error: #f16262;
   }
   &.i-input-is-disabled {
     background-color: #f5f7fa;
+    .i-input__inner {
+      color: rgb(168, 171, 178);
+    }
     &,
     * {
       cursor: not-allowed;

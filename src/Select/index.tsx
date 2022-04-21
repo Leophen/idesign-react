@@ -41,6 +41,11 @@ export interface SelectProps {
    */
   multiple?: boolean;
   /**
+   * 是否禁用选择器
+   * @default false
+   */
+  disabled?: boolean;
+  /**
    * 选中值变化时触发
    */
   onChange?: (value: string | number | Array<string | number>) => void;
@@ -64,6 +69,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     placeholder = '请选择',
     options = [],
     multiple = false,
+    disabled = false,
     onChange = () => { },
     ...others
   } = props;
@@ -80,14 +86,10 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         if (!React.isValidElement(child)) {
           return null;
         }
-        let currentActive = false
-        if (innerValue === child.props.value) {
-          currentActive = true
-        }
         selectData.push({
           content: child.props.children,
           value: child.props.value,
-          active: child.props.active || currentActive,
+          disabled: child.props.disabled,
         })
       })
       setInnerOptions(selectData)
@@ -100,6 +102,10 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   // 更新下拉数据
   const [updateKey, setUpdateKey] = useState(0)
   const [innerValue, setInnerValue] = useState(value)
+
+  useEffect(() => {
+    setInnerValue(value)
+  }, [value])
 
   const updateValue = (val: string | number | Array<string | number>) => {
     setInnerValue(val)
@@ -120,7 +126,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   // 选择器显示隐藏操作
   const [dropdownShow, setDropdownShow] = useState(false)
   const handleTrigger = (visible: boolean) => {
-    setDropdownShow(visible)
+    !disabled && setDropdownShow(visible)
   }
 
   // 删除多选项
@@ -150,11 +156,13 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         value={innerValue}
         selected={true}
         multiple={multiple}
+        disabled={disabled}
       >
         <Input
           value={!multiple ? getItemContent(innerValue) : undefined}
           placeholder={(!multiple || (Array.isArray(innerValue) && innerValue.length) === 0) ? placeholder : ''}
-          readonly
+          readonly={!disabled}
+          disabled={disabled}
           suffixIcon="ArrowDown"
           suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
         >

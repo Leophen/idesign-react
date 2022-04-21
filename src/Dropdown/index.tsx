@@ -59,11 +59,6 @@ export interface DropdownMenuProps {
    */
   cascaderDirection?: 'left' | 'right';
   /**
-   * 单项可选中模式
-   * @default false
-   */
-  selected?: boolean;
-  /**
    * 是否可多选
    * @default false
    */
@@ -129,11 +124,6 @@ export interface DropdownProps {
    */
   trigger?: 'hover' | 'click' | 'context-menu';
   /**
-   * 单项可选中模式
-   * @default false
-   */
-  selected?: boolean;
-  /**
    * 是否可多选
    * @default false
    */
@@ -164,7 +154,6 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     width,
     maxHeight,
     cascaderDirection = 'right',
-    selected = false,
     multiple = false,
     selectedValue = [],
     clickItem = () => { }
@@ -195,7 +184,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               'i-dropdown__item',
               item.disabled && 'i-dropdown__item-is-disabled',
               item.divider && 'i-dropdown__item-has-divider',
-              selected && item.value === selectedValue && 'i-dropdown__item-is-active',
+              item.value === selectedValue && 'i-dropdown__item-is-active',
               multiple && 'i-dropdown__item-multiple'
             )}
             data-direction={cascaderDirection}
@@ -207,7 +196,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
             <div
               className={classNames(
                 'i-dropdown__item-txt',
-                ((selected && item.value === selectedValue) || (multiple && Array.isArray(selectedValue) && selectedValue.includes(item.value)))
+                ((!multiple && item.value === selectedValue) || (multiple && Array.isArray(selectedValue) && selectedValue.includes(item.value)))
                 && 'i-dropdown__item-txt-is-active'
               )}
             >
@@ -246,12 +235,11 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     style,
     width,
     maxHeight,
-    value = [],
+    value,
     options = [],
     placement = 'bottom',
     trigger = 'click',
     cascaderDirection = 'right',
-    selected = false,
     multiple = false,
     disabled = false,
     onClick = () => { },
@@ -272,27 +260,30 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
   // 下拉选中项
   const [innerValue, setInnerValue] = useState(value)
+  useEffect(() => {
+    if (value !== innerValue) {
+      setInnerValue(value)
+    }
+  }, [value])
 
-  // const [multiSelected, setMultiSelected] = useState<multiSelectedType>([])
   const [multiHandleKey, setMultiHandleKey] = useState(0)
   const handleClickItem = (item: DropdownOption, event: React.MouseEvent) => {
     if (!multiple) {
       // 单选模式
       onClick?.(item.value, event)
-      item.value && setInnerValue(item.value)
       setPopupVisible(false)
       onTrigger?.(false)
     } else {
       // 多选模式
-      const curMultiSelected: any = innerValue
       let delIndex = 0
+      let curMultiSelected: any = innerValue
+      !Array.isArray(curMultiSelected) && (curMultiSelected = [])
       curMultiSelected.map((it: string | number, index: number) => {
         if (it === item.value) {
           delIndex = index
         }
       })
       curMultiSelected.includes(item.value) ? curMultiSelected.splice(delIndex, 1) : curMultiSelected.push(item.value)
-      setInnerValue(curMultiSelected)
       setMultiHandleKey(new Date().getTime()) // 更新下拉内容
       onClick?.(curMultiSelected, event)
     }
@@ -309,7 +300,6 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       <DropdownMenu
         options={dropdownOptions}
         cascaderDirection={cascaderDirection}
-        selected={selected}
         multiple={multiple}
         selectedValue={innerValue}
         clickItem={handleClickItem}
