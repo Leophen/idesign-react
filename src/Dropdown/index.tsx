@@ -34,6 +34,10 @@ export interface DropdownItemProps {
    */
   divider?: boolean;
   /**
+   * 该下拉项上方组标题
+   */
+  title?: string;
+  /**
    * 点击时触发
    */
   onClick?: (dropdownItem: DropdownOption, event: React.MouseEvent) => void;
@@ -190,51 +194,54 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     >
       {options.map((item, index) => {
         return (
-          <li
-            className={classNames(
-              'i-dropdown__item',
-              size && `i-dropdown__item--size-${size}`,
-              item.disabled && 'i-dropdown__item-is-disabled',
-              item.divider && 'i-dropdown__item-has-divider',
-              item.value === selectedValue && 'i-dropdown__item-is-active',
-              multiple && 'i-dropdown__item-multiple'
-            )}
-            data-direction={cascaderDirection}
-            data-disabled={item.disabled}
-            onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
-            key={`${item.value}${index}}`}
-          >
-            {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
-            <div
+          <>
+            {item.title && <li className="i-dropdown__item-header">{item.title}</li>}
+            <li
               className={classNames(
-                'i-dropdown__item-txt',
-                ((!multiple && item.value === selectedValue) || (multiple && Array.isArray(selectedValue) && selectedValue.includes(item.value)))
-                && 'i-dropdown__item-txt-is-active'
+                'i-dropdown__item',
+                size && `i-dropdown__item--size-${size}`,
+                item.disabled && 'i-dropdown__item-is-disabled',
+                item.divider && 'i-dropdown__item-has-divider',
+                item.value === selectedValue && 'i-dropdown__item-is-active',
+                multiple && 'i-dropdown__item-multiple'
               )}
+              data-direction={cascaderDirection}
+              data-disabled={item.disabled}
+              onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
+              key={`${item.value}${index}}`}
             >
-              {item.content}
-            </div>
-            {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
-            {item.children && item.children?.length > 0 &&
-              <DropdownMenu
-                options={item.children}
-                width={item.width}
-                maxHeight={item.maxHeight}
-                size={size}
-                cascaderDirection={cascaderDirection}
-                multiple={multiple}
-                selectedValue={selectedValue}
-                clickItem={!item.disabled ? clickCascaderItem : () => { }}
-              />
-            }
-            {multiple &&
-              <div className="i-dropdown__item-check">
-                {Array.isArray(selectedValue) && selectedValue.includes(item.value) &&
-                  <Icon name="Check" size={14} />
-                }
+              {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
+              <div
+                className={classNames(
+                  'i-dropdown__item-txt',
+                  ((!multiple && item.value === selectedValue) || (multiple && Array.isArray(selectedValue) && selectedValue.includes(item.value)))
+                  && 'i-dropdown__item-txt-is-active'
+                )}
+              >
+                {item.content}
               </div>
-            }
-          </li>
+              {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
+              {item.children && item.children?.length > 0 &&
+                <DropdownMenu
+                  options={item.children}
+                  width={item.width}
+                  maxHeight={item.maxHeight}
+                  size={size}
+                  cascaderDirection={cascaderDirection}
+                  multiple={multiple}
+                  selectedValue={selectedValue}
+                  clickItem={!item.disabled ? clickCascaderItem : () => { }}
+                />
+              }
+              {multiple &&
+                <div className="i-dropdown__item-check">
+                  {Array.isArray(selectedValue) && selectedValue.includes(item.value) &&
+                    <Icon name="Check" size={14} />
+                  }
+                </div>
+              }
+            </li>
+          </>
         )
       })}
     </ul>

@@ -58,6 +58,64 @@ const App = () => {
 export default App
 ```
 
+## 不同尺寸
+
+可通过 `size` 属性来指定不同尺寸的选择器，默认为 `medium`。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1'
+    },
+    {
+      content: '选项二',
+      value: 'item2'
+    },
+    {
+      content: '选项三',
+      value: 'item3'
+    }
+  ]
+
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Select
+        value={value}
+        options={options}
+        size="small"
+        onChange={onChange}
+      />
+      <Select
+        value={value}
+        options={options}
+        size="medium"
+        onChange={onChange}
+      />
+      <Select
+        value={value}
+        options={options}
+        size="large"
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 禁用选择器
 
 可通过 `disabled` 属性来禁用选择器。
@@ -155,9 +213,9 @@ const App = () => {
 export default App
 ```
 
-## 不同尺寸
+## 单项带分割线
 
-可通过 `size` 属性来指定不同尺寸的选择器，默认为 `medium`。
+可在 `<Select.Item>` 使用 `divider` 属性来控制单项禁用，也可在 `<Select>` 的 `divider` 属性中设置 `disabled` 控制单项禁用。
 
 ```tsx
 import React, { useState } from 'react'
@@ -173,7 +231,8 @@ const App = () => {
     },
     {
       content: '选项二',
-      value: 'item2'
+      value: 'item2',
+      divider: true
     },
     {
       content: '选项三',
@@ -188,22 +247,67 @@ const App = () => {
 
   return (
     <div className="idesign-demo-block-row">
+      <Select value={value} onChange={onChange}>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2" divider>选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
       <Select
         value={value}
         options={options}
-        size="small"
         onChange={onChange}
       />
+    </div>
+  )
+}
+
+export default App
+```
+
+## 单项带分组标题
+
+可在 `<Select.Item>` 使用 `title` 属性来控制单项禁用，也可在 `<Select>` 的 `title` 属性中设置 `disabled` 控制单项禁用。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1',
+      title: '分组 1'
+    },
+    {
+      content: '选项二',
+      value: 'item2',
+      divider: true
+    },
+    {
+      content: '选项三',
+      value: 'item3',
+      title: '分组 2'
+    }
+  ]
+
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Select value={value} onChange={onChange}>
+        <Select.Item value="item1" title="分组 1">选项一</Select.Item>
+        <Select.Item value="item2" divider>选项二</Select.Item>
+        <Select.Item value="item3" title="分组 2">选项三</Select.Item>
+      </Select>
       <Select
         value={value}
         options={options}
-        size="medium"
-        onChange={onChange}
-      />
-      <Select
-        value={value}
-        options={options}
-        size="large"
         onChange={onChange}
       />
     </div>

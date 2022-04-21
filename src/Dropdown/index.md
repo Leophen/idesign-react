@@ -240,6 +240,47 @@ const App = () => {
 export default App
 ```
 
+## 带分组标题的下拉项
+
+可在 `options` 属性中设置 `title` 控制该项上方展示组标题。
+
+```tsx
+import React from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = [
+    {
+      content: '操作一',
+      value: 1,
+      title: '分组 1'
+    },
+    {
+      content: '操作二',
+      value: 2,
+      divider: true
+    },
+    {
+      content: '操作三',
+      value: 3,
+      title: '分组 2'
+    }
+  ]
+
+  const handleSelect = (val) => {
+    console.log(val)
+  }
+
+  return (
+    <Dropdown options={options} onClick={handleSelect}>
+      <Button>带分组标题的下拉项</Button>
+    </Dropdown>
+  )
+}
+
+export default App
+```
+
 ## 单项点击事件
 
 可在 `options` 属性中设置 `onClick` 控制该项点击触发事件。

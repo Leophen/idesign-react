@@ -96,6 +96,8 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
           content: child.props.children,
           value: child.props.value,
           disabled: child.props.disabled,
+          divider: child.props.divider,
+          title: child.props.title,
         })
       })
       setInnerOptions(selectData)
@@ -140,7 +142,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     e.stopPropagation()
     if (Array.isArray(innerValue)) {
       const curInnerValue = _.pull(innerValue, val);
-      onChange?.(curInnerValue)
+      onChange?.(_.cloneDeep(curInnerValue))
     }
   }
 

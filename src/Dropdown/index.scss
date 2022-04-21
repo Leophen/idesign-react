@@ -13,6 +13,16 @@ $primary: #3a3cf5;
   outline: none;
 }
 
+.i-dropdown__item-header {
+  margin: 0;
+  padding: 5px 16px;
+  color: #909399;
+  font-size: 12px;
+  line-height: 22px;
+  list-style: none;
+  cursor: default;
+}
+
 .i-dropdown__item {
   position: relative;
   display: flex;
@@ -20,7 +30,7 @@ $primary: #3a3cf5;
   box-sizing: border-box;
   margin: 0;
   padding: 5px 16px;
-  color: rgb(48, 49, 51);
+  color: #606266;
   font-size: 14px;
   line-height: 22px;
   direction: ltr;
@@ -126,7 +136,6 @@ $primary: #3a3cf5;
     background-color: rgb(240, 242, 240);
   }
 }
-
 
 .i-dropdown__item-txt-is-active {
   color: $primary;
