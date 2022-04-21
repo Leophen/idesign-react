@@ -361,6 +361,7 @@ const Popup: React.FC<PopupProps> = (props) => {
       setHeight((entries[0].contentRect.height || 0))
     });
     resizeObserver.observe((triggerNode.current as any))
+    return () => resizeObserver.disconnect()
   }, [])
 
   return (
