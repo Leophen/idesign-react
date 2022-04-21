@@ -194,9 +194,9 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     >
       {options.map((item, index) => {
         return (
-          <>
-            {item.title && <li className="i-dropdown__item-header">{item.title}</li>}
-            <li
+          <li key={`${item.value}${index}}`}>
+            {item.title && <header className="i-dropdown__item-header">{item.title}</header>}
+            <div
               className={classNames(
                 'i-dropdown__item',
                 size && `i-dropdown__item--size-${size}`,
@@ -208,7 +208,6 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               data-direction={cascaderDirection}
               data-disabled={item.disabled}
               onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
-              key={`${item.value}${index}}`}
             >
               {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
               <div
@@ -240,8 +239,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
                   }
                 </div>
               }
-            </li>
-          </>
+            </div>
+          </li>
         )
       })}
     </ul>

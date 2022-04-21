@@ -98,6 +98,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
           disabled: child.props.disabled,
           divider: child.props.divider,
           title: child.props.title,
+          onClick: child.props.onClick,
         })
       })
       setInnerOptions(selectData)

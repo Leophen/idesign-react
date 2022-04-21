@@ -598,4 +598,5 @@ export default App
 | maxHeight | 最大高度 | `number` | `--` |
 | disabled | 单项是否禁用 | `boolean` | `false` |
 | divider | 是否显示操作项之后的分隔线 | `boolean` | `false` |
+| title | 该下拉项上方组标题 | `string` | `--` |
 | onClick | 点击时触发 | `(dropdownItem: DropdownOption, event: React.MouseEvent) => void` | `--` |

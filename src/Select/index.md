@@ -368,3 +368,18 @@ const App = () => {
 
 export default App
 ```
+
+## Select API
+
+<API hideTitle />
+
+## SelectItem API
+
+| 属性 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| content | 下拉操作项内容 | `ReactNode` | `--` |
+| value | 下拉操作项唯一标识 | `string〡number` | `--` |
+| disabled | 单项是否禁用 | `boolean` | `false` |
+| divider | 是否显示操作项之后的分隔线 | `boolean` | `false` |
+| title | 该下拉项上方组标题 | `string` | `--` |
+| onClick | 点击时触发 | `(dropdownItem: DropdownOption, event: React.MouseEvent) => void` | `--` |
