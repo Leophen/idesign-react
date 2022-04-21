@@ -291,6 +291,12 @@ ul[role='slug-list'] li > a.active {
   row-gap: 16px;
   .i-select {
     width: 200px;
+    &[data-size="small"]{
+      width: 160px;
+    }
+    &[data-size="large"]{
+      width: 240px;
+    }
   }
 }
 

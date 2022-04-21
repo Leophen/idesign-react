@@ -54,6 +54,11 @@ export interface DropdownMenuProps {
    */
   maxHeight?: number;
   /**
+   * 下拉项高度
+   * @default medium
+   */
+  size?: "small" | "medium" | "large";
+  /**
    * 级联子层级展开方向
    * @default right
    */
@@ -92,6 +97,11 @@ export interface DropdownProps {
    * 列表项最大高度
    */
   maxHeight?: number;
+  /**
+   * 下拉项高度
+   * @default medium
+   */
+  size?: "small" | "medium" | "large";
   /**
    * 下拉选中项
    */
@@ -141,7 +151,7 @@ export interface DropdownProps {
   /**
    * 点击菜单项触发事件
    */
-  onClick?: (value: string | number | Array<string | number>, event: React.MouseEvent) => void;
+  onClick?: (value: string | number | Array<string | number>, event?: React.MouseEvent) => void;
   /**
    * 切换下拉操作时触发
    */
@@ -153,6 +163,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     options = [],
     width,
     maxHeight,
+    size,
     cascaderDirection = 'right',
     multiple = false,
     selectedValue = [],
@@ -182,6 +193,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
           <li
             className={classNames(
               'i-dropdown__item',
+              size && `i-dropdown__item--size-${size}`,
               item.disabled && 'i-dropdown__item-is-disabled',
               item.divider && 'i-dropdown__item-has-divider',
               item.value === selectedValue && 'i-dropdown__item-is-active',
@@ -208,6 +220,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
                 options={item.children}
                 width={item.width}
                 maxHeight={item.maxHeight}
+                size={size}
                 cascaderDirection={cascaderDirection}
                 multiple={multiple}
                 selectedValue={selectedValue}
@@ -235,6 +248,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     style,
     width,
     maxHeight,
+    size,
     value,
     options = [],
     placement = 'bottom',
@@ -298,6 +312,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       style={{ ...(style || {}), ...{ width: width ? width : 'auto', maxHeight, overflowY: maxHeight ? 'auto' : 'unset' } }}
     >
       <DropdownMenu
+        size={size}
         options={dropdownOptions}
         cascaderDirection={cascaderDirection}
         multiple={multiple}

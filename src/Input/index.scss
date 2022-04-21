@@ -68,6 +68,9 @@ $error: #f16262;
     padding: 0 6px;
     font-size: 12px;
     line-height: 24px;
+    .i-input__inner {
+      height: 24px;
+    }
     .i-icon {
       margin-left: 5px;
     }
@@ -89,6 +92,9 @@ $error: #f16262;
     padding: 0 10px;
     font-size: 16px;
     line-height: 40px;
+    .i-input__inner {
+      height: 40px;
+    }
     .i-icon {
       margin-left: 7px;
     }

@@ -79,7 +79,7 @@ export default App;
 
 ## 不同尺寸
 
-通过 `size` 属性指定不同尺寸的输入框。
+通过 `size` 属性指定不同尺寸的输入框，默认为 `medium`。
 
 ```tsx
 import React from 'react';

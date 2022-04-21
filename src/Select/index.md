@@ -155,6 +155,64 @@ const App = () => {
 export default App
 ```
 
+## 不同尺寸
+
+可通过 `size` 属性来指定不同尺寸的选择器，默认为 `medium`。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1'
+    },
+    {
+      content: '选项二',
+      value: 'item2'
+    },
+    {
+      content: '选项三',
+      value: 'item3'
+    }
+  ]
+
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Select
+        value={value}
+        options={options}
+        size="small"
+        onChange={onChange}
+      />
+      <Select
+        value={value}
+        options={options}
+        size="medium"
+        onChange={onChange}
+      />
+      <Select
+        value={value}
+        options={options}
+        size="large"
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 多选选择器
 
 可通过 `multiple` 属性设为多选选择器。
@@ -181,13 +239,19 @@ const App = () => {
     }
   ]
 
-  const onChange = (item) => {
-    console.log(item)
-    setValue(item.value)
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
+      <Select
+        value={value}
+        options={options}
+        multiple={true}
+        onChange={onChange}
+      />
       <Select
         value={value}
         options={options}

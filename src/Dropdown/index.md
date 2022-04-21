@@ -50,6 +50,52 @@ const App = () => {
 export default App
 ```
 
+## 单项不同高度
+
+可通过 `size` 属性指定下拉菜单单项的高度，默认为 `medium`。
+
+```tsx
+import React from 'react'
+import { Dropdown, Button } from 'idesign-react'
+
+const App = () => {
+  const options = [
+    {
+      content: '操作一',
+      value: 1
+    },
+    {
+      content: '操作二',
+      value: 2
+    },
+    {
+      content: '操作三',
+      value: 3
+    }
+  ]
+
+  const handleSelect = (val) => {
+    console.log(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Dropdown size="small" options={options} onClick={handleSelect}>
+        <Button>small</Button>
+      </Dropdown>
+      <Dropdown size="medium" options={options} onClick={handleSelect}>
+        <Button>medium</Button>
+      </Dropdown>
+      <Dropdown size="large" options={options} onClick={handleSelect}>
+        <Button>large</Button>
+      </Dropdown>
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 限制最大高度
 
 可通过 `maxHeight` 属性指定下拉列表最大高度，注意最外层设最大高度后无法使用级联（待滚动条组件后解决）。

@@ -36,6 +36,11 @@ export interface SelectProps {
    */
   options?: Array<DropdownOption>;
   /**
+   * 选择器尺寸
+   * @default medium
+   */
+  size?: "small" | "medium" | "large";
+  /**
    * 是否可多选
    * @default false
    */
@@ -68,6 +73,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     value = [],
     placeholder = '请选择',
     options = [],
+    size,
     multiple = false,
     disabled = false,
     onChange = () => { },
@@ -100,17 +106,17 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   }, [])
 
   // 更新下拉数据
-  const [updateKey, setUpdateKey] = useState(0)
   const [innerValue, setInnerValue] = useState(value)
 
   useEffect(() => {
-    setInnerValue(value)
+    if (value !== innerValue) {
+      setInnerValue(value)
+    }
   }, [value])
 
   const updateValue = (val: string | number | Array<string | number>) => {
-    setInnerValue(val)
-    setUpdateKey(new Date().getTime())
-    onChange?.(val)
+    const newVal = _.cloneDeep(val)
+    onChange?.(newVal)
   }
 
   const getItemContent = (val: string | number | Array<string | number>) => {
@@ -134,7 +140,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     e.stopPropagation()
     if (Array.isArray(innerValue)) {
       const curInnerValue = _.pull(innerValue, val);
-      updateValue(curInnerValue)
+      onChange?.(curInnerValue)
     }
   }
 
@@ -146,6 +152,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         className
       )}
       style={{ ...(style || {}), ...{ width } }}
+      data-size={size}
       {...others}
     >
       <Dropdown
@@ -154,15 +161,16 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         onClick={updateValue}
         onTrigger={handleTrigger}
         value={innerValue}
-        selected={true}
         multiple={multiple}
         disabled={disabled}
+        size={size}
       >
         <Input
           value={!multiple ? getItemContent(innerValue) : undefined}
           placeholder={(!multiple || (Array.isArray(innerValue) && innerValue.length) === 0) ? placeholder : ''}
           readonly={!disabled}
           disabled={disabled}
+          size={size}
           suffixIcon="ArrowDown"
           suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
         >

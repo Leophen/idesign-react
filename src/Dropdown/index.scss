@@ -30,6 +30,13 @@ $primary: #3a3cf5;
   outline: none;
   cursor: pointer;
   transition: all 0.2s ease-out;
+  &.i-dropdown__item--size-small {
+    padding: 1px 16px;
+    font-size: 12px;
+  }
+  &.i-dropdown__item--size-large {
+    padding: 7px 16px;
+  }
   &[data-direction='left'] {
     .icon-ArrowLeft {
       margin-right: 8px;
