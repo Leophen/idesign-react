@@ -475,7 +475,7 @@ export default App
 可通过 `children` 属性指定级联菜单，可通过 `cascaderDirection` 控制展开方向。
 
 ```tsx
-import React from 'react'
+import React, { useState } from 'react'
 import { Dropdown, Button } from 'idesign-react'
 
 const App = () => {
@@ -522,17 +522,43 @@ const App = () => {
     }
   ]
 
+  const [value, setValue] = useState([])
   const handleSelect = (val) => {
     console.log(val)
+    setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
-      <Dropdown options={options} onClick={handleSelect}>
+      <Dropdown
+        options={options}
+        onClick={handleSelect}
+      >
         <Button>级联菜单</Button>
       </Dropdown>
-      <Dropdown cascaderDirection="left" options={options} onClick={handleSelect}>
+      <Dropdown
+        options={options}
+        value={value}
+        multiple={true}
+        onClick={handleSelect}
+      >
+        <Button>级联多选菜单</Button>
+      </Dropdown>
+      <Dropdown
+        options={options}
+        cascaderDirection="left"
+        onClick={handleSelect}
+      >
         <Button>向左展开的级联菜单</Button>
+      </Dropdown>
+      <Dropdown
+        options={options}
+        value={value}
+        cascaderDirection="left"
+        multiple={true}
+        onClick={handleSelect}
+      >
+        <Button>向左展开的级联多选菜单</Button>
       </Dropdown>
     </div>
   )

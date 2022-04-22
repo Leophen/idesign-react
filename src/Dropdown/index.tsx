@@ -235,7 +235,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               {multiple &&
                 <div className="i-dropdown__item-check">
                   {Array.isArray(selectedValue) && selectedValue.includes(item.value) &&
-                    <Icon name="Check" size={14} />
+                    <Icon name="Check" size={12} />
                   }
                 </div>
               }
