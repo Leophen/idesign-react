@@ -167,7 +167,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   }
 
   const handleClear = (e: any) => {
-    e.stopPropagation()
+    !dropdownShow && e.stopPropagation()
     let nullVal: '' | [] = ''
     if (multiple) {
       nullVal = []
