@@ -91,7 +91,7 @@ import classNames from 'classnames';
 const App = () => {
   const [iconArr, setIconArr] = useState([]);
   const api =
-    'https://at.alicdn.com/t/font_3161433_e9j1oj7xi5i.json?spm=a313x.7781069.1998910419.85&file=font_3161433_e9j1oj7xi5i.json';
+    'https://at.alicdn.com/t/font_3161433_orz5zivetdq.json?spm=a313x.7781069.1998910419.80&file=font_3161433_orz5zivetdq.json';
 
   useEffect(() => {
     let isUnmounted = false;

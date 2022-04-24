@@ -25,6 +25,7 @@ export default defineConfig({
     //   ],
     // },
   ],
+  fastRefresh: {},
   cssModulesTypescriptLoader: {
     mode: 'emit',
   },
