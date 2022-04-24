@@ -25,6 +25,7 @@ export default defineConfig({
     //   ],
     // },
   ],
+  mfsu: {},
   cssModulesTypescriptLoader: {
     mode: 'emit',
   },
