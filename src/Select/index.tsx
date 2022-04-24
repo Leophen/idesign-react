@@ -46,6 +46,22 @@ export interface SelectProps {
    */
   clearable?: boolean;
   /**
+   * 选择框前置图标名
+   */
+  prefixIcon?: string;
+  /**
+   * 选择框后置图标名
+   */
+  suffixIcon?: string;
+  /**
+   * 选择框前置图标类名
+   */
+  prefixIconClass?: string;
+  /**
+   * 选择框后置图标类名
+   */
+  suffixIconClass?: string;
+  /**
    * 级联子层级展开方向
    * @default right
    */
@@ -60,6 +76,11 @@ export interface SelectProps {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * 是否可搜索
+   * @default false
+   */
+  searchable?: boolean;
   /**
    * 选中值变化时触发
    */
@@ -85,9 +106,14 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     options = [],
     size,
     clearable = true,
+    prefixIcon,
+    suffixIcon,
+    prefixIconClass = '',
+    suffixIconClass = '',
     cascaderDirection = 'right',
     multiple = false,
     disabled = false,
+    searchable = false,
     onChange = () => { },
     ...others
   } = props;
@@ -206,6 +232,34 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     onChange?.(nullVal)
   }
 
+  const getSuffixIcon = () => {
+    if (suffixIcon) {
+      return suffixIcon
+    } else {
+      if (searchable) {
+        return "Search"
+      } else {
+        return "ArrowDown"
+      }
+    }
+  }
+  const getSuffixIconClass = () => {
+    if (suffixIcon || searchable) {
+      return suffixIconClass
+    } else {
+      if (dropdownShow) {
+        return "i-select-arrow__show"
+      } else {
+        return ''
+      }
+    }
+  }
+
+  const [searchInput, setSearchInput] = useState<string | number>('')
+  const handleChangeInput = (val: string | number) => {
+    searchable && setSearchInput(val)
+  }
+
   return (
     <div
       ref={selectNode}
@@ -232,15 +286,18 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
           className={classNames(
             !clearable && 'i-input__hide-clear'
           )}
-          value={getInputValue(innerValue)}
+          value={!searchable ? getInputValue(innerValue) : searchInput}
           placeholder={placeholder}
-          readonly={!disabled}
+          readonly={!disabled && !searchable}
           disabled={disabled}
           size={size}
-          suffixIcon="ArrowDown"
-          suffixIconClass={dropdownShow ? "i-select-arrow__show" : ""}
+          prefixIcon={prefixIcon}
+          prefixIconClass={prefixIconClass}
+          suffixIcon={getSuffixIcon()}
+          suffixIconClass={getSuffixIconClass()}
           clearable
           onClear={handleClear}
+          onChange={handleChangeInput}
         >
           {multiple && Array.isArray(innerValue) && innerValue.length > 0 && (
             <div className='i-select__multiple-wrap'>

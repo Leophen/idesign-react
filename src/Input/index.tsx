@@ -598,8 +598,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         style={{ ...style }}
         onClick={focusInputNode}
       >
-        {children}
         {prefixIcon && renderPrefixIcon}
+        {children}
         {renderInput}
         {maxLength && (
           <div className="i-input--limit">

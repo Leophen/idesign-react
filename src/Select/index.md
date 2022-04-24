@@ -470,6 +470,104 @@ const App = () => {
 export default App
 ```
 
+## 带前后缀图标
+
+可通过 `<Select>` 的 `prefixIcon` 和 `suffixIcon` 属性设置选择框前后缀图标。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1'
+    },
+    {
+      content: '选项二',
+      value: 'item2'
+    },
+    {
+      content: '选项三',
+      value: 'item3'
+    }
+  ]
+
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Select
+        value={value}
+        options={options}
+        prefixIcon="Search"
+        onChange={onChange}
+      />
+      <Select
+        value={value}
+        options={options}
+        suffixIcon="Search"
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
+export default App
+```
+
+## 可搜索选项的选择器
+
+可通过 `<Select>` 的 `searchable` 属性控制选择器为可搜索的模式。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1'
+    },
+    {
+      content: '选项二',
+      value: 'item2'
+    },
+    {
+      content: '选项三',
+      value: 'item3'
+    }
+  ]
+
+  const onChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Select
+        value={value}
+        options={options}
+        searchable={true}
+        onChange={onChange}
+      />
+    </div>
+  )
+}
+
+export default App
+```
+
 ## Select API
 
 <API hideTitle />

@@ -20,7 +20,6 @@ export { default as Switch } from './Switch';
 export { default as Input } from './Input';
 export { default as Textarea } from './Textarea';
 export { default as Select } from './Select';
-export { default as Cascader } from './Cascader';
 export { default as TimePicker } from './TimePicker';
 export { default as DatePicker } from './DatePicker';
 export { default as ColorPicker } from './ColorPicker';
