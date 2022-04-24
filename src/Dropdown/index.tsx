@@ -203,6 +203,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
                 item.disabled && 'i-dropdown__item-is-disabled',
                 item.divider && 'i-dropdown__item-has-divider',
                 item.value === selectedValue && 'i-dropdown__item-is-active',
+                item.children && item.children?.length > 0 && 'i-dropdown__item-cascader',
                 multiple && 'i-dropdown__item-multiple'
               )}
               data-direction={cascaderDirection}

@@ -64,11 +64,15 @@ $primary: #3a3cf5;
     .i-dropdown__item-txt {
       text-align: start;
     }
+    &.i-dropdown__item-cascader {
+      padding-right: 32px;
+    }
   }
   .i-dropdown__menu {
     position: absolute;
     top: 0;
     left: calc(100% - 6px);
+    z-index: 1;
     display: none;
     border: 1px solid rgb(228, 231, 237);
     border-radius: 4px;

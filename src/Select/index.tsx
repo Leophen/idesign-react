@@ -46,6 +46,11 @@ export interface SelectProps {
    */
   clearable?: boolean;
   /**
+   * 级联子层级展开方向
+   * @default right
+   */
+  cascaderDirection?: 'left' | 'right';
+  /**
    * 是否可多选
    * @default false
    */
@@ -80,6 +85,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     options = [],
     size,
     clearable = true,
+    cascaderDirection = 'right',
     multiple = false,
     disabled = false,
     onChange = () => { },
@@ -128,23 +134,47 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     onChange?.(newVal)
   }
 
-  const getItemContent = (val: string | number | Array<string | number>) => {
-    let content = ''
-    innerOptions.map(item => {
-      if (item.value === val && item.content) {
-        content = item.content.toString()
+  // 根据 options 的 value 获得对应的 content
+  const valToContent = (options: Array<DropdownOption>, val: string | number) => {
+    let content: React.ReactNode = ''
+    options.map(item => {
+      if (item.children && item.children.length > 0) {
+        // 级联项
+        if (content === '') {
+          content = valToContent(item.children, val)
+        }
+      } else {
+        // 单项
+        if (item.value === val && item.content && content === '') {
+          content = item.content
+        }
       }
     })
     return content
   }
 
+  // 选择器输入框文本内容
   const getInputValue = (val: string | number | Array<string | number>) => {
     if (!multiple) {
-      return getItemContent(val)
-    }
-    if (Array.isArray(innerValue)) {
-      if (innerValue.length > 0) {
-        return 'i'
+      // 单选
+      if (!Array.isArray(val)) {
+        const content = valToContent(innerOptions, val)
+        if (typeof content === 'string' || typeof content === 'number') {
+          return content
+        } else {
+          return ''
+        }
+      } else {
+        return ''
+      }
+    } else {
+      // 多选
+      if (Array.isArray(innerValue)) {
+        if (innerValue.length > 0) {
+          return 'i'
+        } else {
+          return ''
+        }
       } else {
         return ''
       }
@@ -193,6 +223,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         onClick={updateValue}
         onTrigger={handleTrigger}
         value={innerValue}
+        cascaderDirection={cascaderDirection}
         multiple={multiple}
         disabled={disabled}
         size={size}
@@ -202,7 +233,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
             !clearable && 'i-input__hide-clear'
           )}
           value={getInputValue(innerValue)}
-          placeholder={(!multiple || (Array.isArray(innerValue) && innerValue.length) === 0) ? placeholder : ''}
+          placeholder={placeholder}
           readonly={!disabled}
           disabled={disabled}
           size={size}
@@ -221,7 +252,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
                     onClose={(e: React.MouseEvent) => handleDelItem(e, val)}
                     key={val}
                   >
-                    {getItemContent(val)}
+                    {valToContent(innerOptions, val)}
                   </Tag>
                 ))
               }

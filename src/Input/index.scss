@@ -43,7 +43,7 @@ $error: #f16262;
     }
   }
   .icon-TipCloseFill {
-    display: none;
+    // display: none;
     opacity: 0;
   }
   .i-input-prefix-icon,
@@ -114,7 +114,7 @@ $error: #f16262;
   &:hover {
     border-color: #c0c4cc;
     .icon-TipCloseFill {
-      display: block;
+      // display: block;
       opacity: 1;
     }
   }
