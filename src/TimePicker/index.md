@@ -10,21 +10,27 @@ order: 7
 
 # TimePicker 时间选择器（开发中）
 
+用于选择指定时间。
+
 ## 基本用法
 
 ```tsx
-import React from 'react';
-import { TimePicker } from 'idesign-react';
+import React, { useState } from 'react'
+import { TimePicker } from 'idesign-react'
 
 const App = () => {
-  return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <TimePicker>填充按钮</TimePicker>
-      </div>
-    </div>
-  );
-};
+  const [value, setValue] = useState(null)
 
-export default App;
+  const handleChange = (val) => {
+    setValue(val)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <TimePicker value={value} onChange={handleChange} />
+    </div>
+  )
+}
+
+export default App
 ```

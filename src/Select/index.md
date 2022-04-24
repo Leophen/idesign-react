@@ -8,7 +8,7 @@ group:
 order: 5
 ---
 
-# Select 选择器（开发中）
+# Select 选择器
 
 下拉选择器。
 
