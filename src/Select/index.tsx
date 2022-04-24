@@ -77,11 +77,6 @@ export interface SelectProps {
    */
   disabled?: boolean;
   /**
-   * 是否可搜索
-   * @default false
-   */
-  searchable?: boolean;
-  /**
    * 选中值变化时触发
    */
   onChange?: (value: string | number | Array<string | number>) => void;
@@ -113,7 +108,6 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     cascaderDirection = 'right',
     multiple = false,
     disabled = false,
-    searchable = false,
     onChange = () => { },
     ...others
   } = props;
@@ -232,34 +226,6 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     onChange?.(nullVal)
   }
 
-  const getSuffixIcon = () => {
-    if (suffixIcon) {
-      return suffixIcon
-    } else {
-      if (searchable) {
-        return "Search"
-      } else {
-        return "ArrowDown"
-      }
-    }
-  }
-  const getSuffixIconClass = () => {
-    if (suffixIcon || searchable) {
-      return suffixIconClass
-    } else {
-      if (dropdownShow) {
-        return "i-select-arrow__show"
-      } else {
-        return ''
-      }
-    }
-  }
-
-  const [searchInput, setSearchInput] = useState<string | number>('')
-  const handleChangeInput = (val: string | number) => {
-    searchable && setSearchInput(val)
-  }
-
   return (
     <div
       ref={selectNode}
@@ -286,18 +252,17 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
           className={classNames(
             !clearable && 'i-input__hide-clear'
           )}
-          value={!searchable ? getInputValue(innerValue) : searchInput}
+          value={getInputValue(innerValue)}
           placeholder={placeholder}
-          readonly={!disabled && !searchable}
+          readonly={!disabled}
           disabled={disabled}
           size={size}
           prefixIcon={prefixIcon}
           prefixIconClass={prefixIconClass}
-          suffixIcon={getSuffixIcon()}
-          suffixIconClass={getSuffixIconClass()}
+          suffixIcon={suffixIcon ? suffixIcon : "ArrowDown"}
+          suffixIconClass={dropdownShow && !suffixIcon ? "i-select-arrow__show" : suffixIconClass}
           clearable
           onClear={handleClear}
-          onChange={handleChangeInput}
         >
           {multiple && Array.isArray(innerValue) && innerValue.length > 0 && (
             <div className='i-select__multiple-wrap'>
