@@ -67,7 +67,6 @@ export interface ColorBlockProps {
   onClick?: (val: string) => void;
 }
 
-
 const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
   const {
     x = 0,
@@ -160,8 +159,7 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
       style={{
         ...(style || {}),
         ...{
-          left: cursorX,
-          top: cursorY,
+          transform: `translate(${cursorX}px, ${cursorY}px)`,
           background: color
         }
       }}
@@ -287,13 +285,30 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   }
 
   const panelBlock = useRef(null)
-  const handleClickPanel = (e: React.MouseEvent) => {
+  const rgbBar = useRef(null)
+  const aBar = useRef(null)
+  const handleClickPanel = (e: React.MouseEvent, type: 'panel' | 'rgb' | 'a') => {
     e.persist();
-    const rect = (panelBlock.current as any).getBoundingClientRect()
+    let dom: any
+    if (type === 'panel') {
+      dom = panelBlock.current
+    } else if (type === 'rgb') {
+      dom = rgbBar.current
+    } else if (type === 'a') {
+      dom = aBar.current
+    }
+    const rect = dom.getBoundingClientRect()
     const pointerX = e.clientX - rect.left
     const pointerY = e.clientY - rect.top
-    handleDragPanel(pointerX / rect.width, pointerY / rect.height)
+    if (type === 'panel') {
+      handleDragPanel(pointerX / rect.width, pointerY / rect.height)
+    } else if (type === 'rgb') {
+      handleDragRgb(pointerX / rect.width)
+    } else {
+      handleDragA(pointerX / rect.width)
+    }
   }
+
 
   useEffect(() => {
     const color = tinycolor(innerValue)
@@ -337,7 +352,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           <div
             className="i-color-panel-block__black"
             ref={panelBlock}
-            onClick={handleClickPanel}
+            onMouseDown={(e) => handleClickPanel(e, 'panel')}
           />
           <ColorPickerCursor
             x={sValue}
@@ -348,22 +363,33 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
         </section>
 
         <section className="i-color-panel-controls">
-          <div className="i-color-panel-controls__rgb">
+          <div
+            className="i-color-panel-bar__rgb"
+            ref={rgbBar}
+            onMouseDown={(e) => handleClickPanel(e, 'rgb')}
+          >
             <ColorPickerCursor
               x={hValue / 360}
               mode="x"
               onDragX={handleDragRgb}
             />
           </div>
-          <div className="i-color-panel-controls__a">
+          <div
+            className="i-color-panel-bar__a"
+            ref={aBar}
+            onMouseDown={(e) => handleClickPanel(e, 'a')}
+          >
             <ColorPickerCursor
               mode="x"
               x={aValue}
-              style={{ background: 'rgba(0,0,0,0.4)' }}
+              style={{ background: 'rgba(0, 0, 0, 0.4)' }}
               onDragX={handleDragA}
             />
-            <section className="i-color-panel-controls__a-color"></section>
-            <section className="i-color-panel-controls__a-bg"></section>
+            <section
+              className="i-color-panel-bar__a-color"
+              style={{ background: `linear-gradient(90deg, rgba(255, 0, 0, 0) 0%, hsl(${hValue}, 100%, 50%) 100%)` }}
+            />
+            <section className="i-color-panel-bar__a-bg"></section>
           </div>
         </section>
 
