@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import tinycolor from 'tinycolor2'
 
 export interface ColorPickerProps {
   /**
@@ -11,6 +12,10 @@ export interface ColorPickerProps {
    * 自定义样式
    */
   style?: React.CSSProperties;
+  /**
+   * 颜色值
+   */
+  value?: string;
 }
 
 export interface ColorPickerCursorProps {
@@ -92,12 +97,18 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
     // 限制边界值
     const parentWidth = (cursor.current as any).parentNode.clientWidth
     const parentHeight = (cursor.current as any).parentNode.clientHeight
-    setMaxX(parentWidth)
-    setMaxY(parentHeight)
+    maxX !== parentWidth && setMaxX(parentWidth)
+    maxY !== parentHeight && setMaxY(parentHeight)
     // 初始位置
-    setCursorX(x * parentWidth)
-    setCursorY(y * parentWidth)
-  }, [])
+    if (mode !== 'y') {
+      setCursorX(x * (parentWidth - 12))
+      moveX.current = x * (parentWidth - 12)
+    }
+    if (mode !== 'x') {
+      setCursorY(y * (parentHeight - 12))
+      moveY.current = y * (parentHeight - 12)
+    }
+  }, [x, y])
 
   // 滑块位置监听
   const handleCursorMove = (e: any) => {
@@ -232,136 +243,70 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     children = '',
     className,
     style,
+    value = '#265CF0',
     ...others
   } = props;
 
-  const [color, setColor] = useState('#265CF0')
-  const [panelColor, setPanelColor] = useState('#265CF0')
+  const [innerValue, setInnerValue] = useState(value)
 
-  const [rValue, setRValue] = useState(0)
-  const [gValue, setGValue] = useState(0)
-  const [bValue, setBValue] = useState(0)
+  const [rValue, setRValue] = useState(tinycolor(value).toRgb().r)
+  const [gValue, setGValue] = useState(tinycolor(value).toRgb().g)
+  const [bValue, setBValue] = useState(tinycolor(value).toRgb().b)
 
-  const [hValue, setHValue] = useState(0)
-  const [sValue, setSValue] = useState(0)
-  const [vValue, setVValue] = useState(0)
+  const [hValue, setHValue] = useState(tinycolor(value).toHsv().h)
+  const [sValue, setSValue] = useState(tinycolor(value).toHsv().s)
+  const [vValue, setVValue] = useState(tinycolor(value).toHsv().v)
 
-  const [opacity, setOpacity] = useState(1)
-
-  const rgbToHsv = (r: number, g: number, b: number) => {
-    r = r / 255;
-    g = g / 255;
-    b = b / 255;
-    let h = 0, s = 0, v = 0;
-    const min = Math.min(r, g, b);
-    const max = v = Math.max(r, g, b);
-    const l = (min + max) / 2;
-    const difference = max - min;
-
-    if (max == min) {
-      h = 0;
-    } else {
-      switch (max) {
-        case r: h = (g - b) / difference + (g < b ? 6 : 0); break;
-        case g: h = 2.0 + (b - r) / difference; break;
-        case b: h = 4.0 + (r - g) / difference; break;
-      }
-      h = Math.round(h * 60);
-    }
-    if (max == 0) {
-      s = 0;
-    } else {
-      s = 1 - min / max;
-    }
-    s = Math.round(s * 100);
-    v = Math.round(v * 100);
-    setHValue(h)
-    setSValue(s)
-    setVValue(v)
-    return [h, s, v];
-  }
-
-  const hsvToRgba = (h: number, s: number, v: number, a: number) => {
-    s = s;
-    v = v;
-    let r = 0, g = 0, b = 0;
-    const i = parseInt(((h / 60) % 6).toString());
-    const f = h / 60 - i;
-    const p = v * (1 - s);
-    const q = v * (1 - f * s);
-    const t = v * (1 - (1 - f) * s);
-    switch (i) {
-      case 0:
-        r = v; g = t; b = p;
-        break;
-      case 1:
-        r = q; g = v; b = p;
-        break;
-      case 2:
-        r = p; g = v; b = t;
-        break;
-      case 3:
-        r = p; g = q; b = v;
-        break;
-      case 4:
-        r = t; g = p; b = v;
-        break;
-      case 5:
-        r = v; g = p; b = q;
-        break;
-      default:
-        break;
-    }
-    r = parseInt((r * 255.0).toString())
-    g = parseInt((g * 255.0).toString())
-    b = parseInt((b * 255.0).toString())
-    setRValue(r)
-    setGValue(g)
-    setBValue(b)
-    return `rgba(${r}, ${g}, ${b}, ${a})`
-  }
+  const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
   const handleDragPanel = (x: number, y: number) => {
-    console.log(x, y)
-    setSValue(x)
-    setVValue(1 - y)
-    setColor(hsvToRgba(hValue, x, 1 - y, opacity))
+    const currentColor = tinycolor(`hsv(${hValue}, ${x}, ${1 - y})`)
+    currentColor.setAlpha(aValue)
+    setInnerValue(currentColor.toRgbString())
   }
 
   const handleDragRgb = (x: number) => {
     let currentX = x
     currentX === 1 && (currentX = 0)
     let currentHue = Math.round((currentX) * 360 * 100) / 100
-    setHValue(currentHue)
-    setPanelColor(`hsl(${currentHue}, 100%, 50%)`)
-    setColor(hsvToRgba(currentHue, sValue, vValue, opacity))
+    const currentColor = tinycolor(`hsv(${currentHue}, ${sValue}, ${vValue})`)
+    currentColor.setAlpha(aValue)
+    setInnerValue(currentColor.toRgbString())
   }
 
   const handleDragA = (x: number) => {
     let currentX = Number(x.toFixed(2))
-    console.log(currentX)
-    setOpacity(currentX)
-    setColor(hsvToRgba(hValue, sValue, vValue, currentX))
+    const currentColor = tinycolor(innerValue)
+    currentColor.setAlpha(currentX)
+    setInnerValue(currentColor.toRgbString())
   }
 
-  const handleSelectColor = (val: string) => {
-    const r = Number(val.split('(')[1].split(',')[0])
-    const g = Number(val.split('(')[1].split(', ')[1])
-    const b = Number(val.split(', ')[2].split(')')[0])
-
-    setRValue(r)
-    setGValue(g)
-    setBValue(b)
-
-    setColor(`rgba(${r}, ${g}, ${b}, ${opacity})`)
+  const clickColorItem = (val: string) => {
+    const currentColor = tinycolor(val)
+    setInnerValue(currentColor.toRgbString())
   }
 
   const panelBlock = useRef(null)
   const handleClickPanel = (e: React.MouseEvent) => {
     e.persist();
     const rect = (panelBlock.current as any).getBoundingClientRect()
-    console.log(e.clientX, rect)
+    const pointerX = e.clientX - rect.left
+    const pointerY = e.clientY - rect.top
+    handleDragPanel(pointerX / rect.width, pointerY / rect.height)
   }
+
+  useEffect(() => {
+    const color = tinycolor(innerValue)
+    setRValue(color.toRgb().r)
+    setGValue(color.toRgb().g)
+    setBValue(color.toRgb().b)
+
+    setHValue(color.toHsv().h)
+    setSValue(color.toHsv().s)
+    setVValue(color.toHsv().v)
+
+    setAValue(color.getAlpha())
+  }, [innerValue])
 
   return (
     <div
@@ -372,7 +317,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       style={{ ...style }}
       {...others}
     >
-      <div className="i-color" style={{ width: 50, height: 50, background: color }}></div>
+      <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
       <div className="i-color-panel">
 
         <header className="i-color-panel-header">
@@ -386,7 +331,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
         <section
           className="i-color-panel-block"
-          style={{ background: panelColor }}
+          style={{ background: `hsl(${hValue}, 100%, 50%)` }}
         >
           <div className="i-color-panel-block__white" />
           <div
@@ -395,7 +340,9 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             onClick={handleClickPanel}
           />
           <ColorPickerCursor
-            color={color}
+            x={sValue}
+            y={1 - vValue}
+            color={innerValue}
             onDrag={handleDragPanel}
           />
         </section>
@@ -403,6 +350,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
         <section className="i-color-panel-controls">
           <div className="i-color-panel-controls__rgb">
             <ColorPickerCursor
+              x={hValue / 360}
               mode="x"
               onDragX={handleDragRgb}
             />
@@ -410,7 +358,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           <div className="i-color-panel-controls__a">
             <ColorPickerCursor
               mode="x"
-              // x={opacity}
+              x={aValue}
               style={{ background: 'rgba(0,0,0,0.4)' }}
               onDragX={handleDragA}
             />
@@ -423,12 +371,12 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           <input readOnly value={rValue} type="text" className="i-color-panel-input" placeholder="R" />
           <input readOnly value={gValue} type="text" className="i-color-panel-input" placeholder="G" />
           <input readOnly value={bValue} type="text" className="i-color-panel-input" placeholder="B" />
-          <input readOnly value={opacity} type="text" className="i-color-panel-input" placeholder="A" />
+          <input readOnly value={aValue} type="text" className="i-color-panel-input" placeholder="A" />
         </section>
 
         <footer className="i-color-panel-footer">
           {defaultColor.map(item =>
-            <ColorBlock color={item.value} key={item.value} onClick={() => handleSelectColor(item.value)} />
+            <ColorBlock color={item.value} key={item.value} onClick={() => clickColorItem(item.value)} />
           )}
         </footer>
       </div>

@@ -38,7 +38,8 @@
     "lodash": "^4.17.21",
     "react": "^16.12.0 || ^17.0.0",
     "react-router-dom": "6",
-    "react-transition-group": "^4.4.2"
+    "react-transition-group": "^4.4.2",
+    "tinycolor2": "^1.4.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -46,6 +47,7 @@
     "@types/jest": "^27.0.3",
     "@types/lodash": "^4.14.178",
     "@types/react-transition-group": "^4.4.4",
+    "@types/tinycolor2": "^1.4.3",
     "@umijs/fabric": "^2.8.1",
     "@umijs/test": "^3.5.23",
     "dumi": "^1.1.0",
