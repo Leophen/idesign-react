@@ -56,6 +56,8 @@
   border-radius: 6px;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 0px 0.6px;
   user-select: none;
+  -webkit-user-drag: none;
+  pointer-events: none;
 }
 
 .i-color-panel-controls {

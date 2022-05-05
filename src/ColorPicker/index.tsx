@@ -41,18 +41,6 @@ export interface ColorPickerCursorProps {
    * @default #265CF0
    */
   color?: string;
-  /**
-   * 拖拽时触发事件，传入 x 和 y 方向上的拖拽比例
-   */
-  onDrag?: (x: number, y: number, auto: boolean) => void;
-  /**
-   * 水平拖拽时触发事件，传入 x 方向上的拖拽比例
-   */
-  onDragX?: (x: number) => void;
-  /**
-   * 垂直拖拽时触发事件，传入 x 方向上的拖拽比例
-   */
-  onDragY?: (y: number) => void;
 }
 
 export interface ColorBlockProps {
@@ -73,92 +61,36 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
     y = 0,
     mode = 'xy',
     color,
-    style,
-    onDrag,
-    onDragX,
-    onDragY
+    style
   } = props
 
-  const cursor = useRef<HTMLDivElement>(null)
+  const cursor = useRef<any>(null)
 
   const [translate, setTranslate] = useState({
     x: 0,
     y: 0
   })
-  const [maxX, setMaxX] = useState(0)
-  const [maxY, setMaxY] = useState(0)
-
-  // 滑块初始位置及移动距离
-  const startX = useRef(0)
-  const startY = useRef(0)
-  const moveX = useRef(0)
-  const moveY = useRef(0)
 
   useEffect(() => {
     // 限制边界值
-    const parentWidth = (cursor.current as any).parentNode.clientWidth
-    const parentHeight = (cursor.current as any).parentNode.clientHeight
-    maxX !== parentWidth && setMaxX(parentWidth)
-    maxY !== parentHeight && setMaxY(parentHeight)
+    const parentWidth = cursor.current.parentNode.clientWidth
+    const parentHeight = cursor.current.parentNode.clientHeight
+
     // 初始位置
-    if (mode !== 'y') {
+    if (mode === 'x') {
       translate.x = x * (parentWidth - 12)
-      moveX.current = x * (parentWidth - 12)
-    }
-    if (mode !== 'x') {
+    } else if (mode === 'y') {
       translate.y = y * (parentHeight - 12)
-      moveY.current = y * (parentHeight - 12)
+    } else {
+      translate.x = (x * parentWidth) - 6
+      translate.y = (y * parentHeight) - 6
     }
     setTranslate({ ...translate })
   }, [x, y])
 
-  // 滑块位置监听
-  const handleCursorMove = (e: any) => {
-    const minX = 0
-    const minY = 0
-
-    moveX.current = e.clientX - startX.current
-    moveY.current = e.clientY - startY.current
-
-    if (mode === 'x') {
-      moveX.current < (minX) && (moveX.current = (minX))
-      moveX.current > (maxX - 12) && (moveX.current = (maxX - 12))
-      translate.x = moveX.current
-      onDragX?.(moveX.current / (maxX - 12)) // 坐标 + 最大值
-    } else if (mode === 'y') {
-      moveY.current < (minY) && (moveY.current = (minY))
-      moveY.current > (maxY - 12) && (moveY.current = (maxY - 12))
-      translate.y = moveY.current
-      onDragY?.(moveY.current / (maxY - 12)) // 坐标 + 最大值
-    } else {
-      moveX.current < (minX - 6) && (moveX.current = (minX - 6))
-      moveX.current > (maxX - 6) && (moveX.current = (maxX - 6))
-      moveY.current < (minY - 6) && (moveY.current = (minY - 6))
-      moveY.current > (maxY - 6) && (moveY.current = (maxY - 6))
-      translate.x = moveX.current
-      translate.y = moveY.current
-      onDrag?.((moveX.current + 6) / maxX, (moveY.current + 6) / maxY, false)
-    }
-    setTranslate({ ...translate })
-  };
-
-  const handleCursorUp = () => {
-    window.removeEventListener('mousemove', handleCursorMove);
-    window.removeEventListener('mouseup', handleCursorUp);
-  };
-
-  const handleCursorDown = (e: React.MouseEvent) => {
-    startX.current = e.clientX - moveX.current;
-    startY.current = e.clientY - moveY.current;
-
-    window.addEventListener('mousemove', handleCursorMove);
-    window.addEventListener('mouseup', handleCursorUp);
-  }
-
   return (
     <div
       className="i-color-picker__cursor"
-      onMouseDown={handleCursorDown}
       ref={cursor}
       style={{
         ...(style || {}),
@@ -238,6 +170,15 @@ const defaultColor = [
   {
     value: 'rgb(210, 90, 182)'
   },
+  {
+    value: 'rgb(0, 0, 0)'
+  },
+  {
+    value: 'rgba(255, 255, 255, 0.5)'
+  },
+  {
+    value: 'rgb(255, 0, 0)'
+  },
 ]
 
 const ColorPicker: React.FC<ColorPickerProps> = (props) => {
@@ -250,100 +191,226 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   } = props;
 
   const [innerValue, setInnerValue] = useState(value)
-  const [cursorAuto, setCursorAuto] = useState(true)
-  const [cursor, setCursor] = useState({
-    x: 0, y: 0
+
+  // 是否为移动状态
+  const [handleStatus, setHandleStatus] = useState(false)
+  useEffect(() => {
+    if (handleStatus) {
+      document.body.style.userSelect = 'none'
+    } else {
+      document.body.style.userSelect = ''
+    }
+  }, [handleStatus])
+
+  // 调色板、色阶柱、透明度柱 节点宽高位置
+  const [rect, setRect] = useState({
+    panel: {
+      width: 0,
+      height: 0,
+      left: 0,
+      top: 0
+    },
+    rgb: {
+      width: 0,
+      left: 0
+    },
+    a: {
+      width: 0,
+      left: 0
+    },
+  })
+  const panelNode = useRef<HTMLDivElement>(null)
+  const rgbBarNode = useRef<HTMLDivElement>(null)
+  const aBarNode = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    // 初始化给各节点宽高及位置参数赋值
+    const panelRect = panelNode.current?.getBoundingClientRect()
+    rect.panel.width = panelRect?.width || 0
+    rect.panel.height = panelRect?.height || 0
+    rect.panel.left = panelRect?.left || 0
+    rect.panel.top = panelRect?.top || 0
+    const rgbRect = rgbBarNode.current?.getBoundingClientRect()
+    rect.rgb.width = rgbRect?.width || 0
+    rect.rgb.left = rgbRect?.left || 0
+    const aRect = aBarNode.current?.getBoundingClientRect()
+    rect.a.width = aRect?.width || 0
+    rect.a.left = aRect?.left || 0
+    setRect({ ...rect })
+    // 设置初始滑块位置
+    const currentColor = tinycolor(innerValue)
+    location.panel.x = currentColor.toHsv().s
+    location.panel.y = 1 - currentColor.toHsv().v
+    location.rgb.x = currentColor.toHsv().h / 360
+    location.a.x = currentColor.getAlpha()
+    setLocation({ ...location })
+  }, [])
+
+  // 调色板、色阶柱、透明度柱 坐标值
+  const [location, setLocation] = useState({
+    panel: {
+      x: 0,
+      y: 0
+    },
+    rgb: {
+      x: 0
+    },
+    a: {
+      x: 0
+    }
   })
 
+  // 颜色值
   const [rgbVal, setRgbVal] = useState({
     r: tinycolor(value).toRgb().r,
     g: tinycolor(value).toRgb().g,
     b: tinycolor(value).toRgb().b
   })
-
   const [hsvVal, setHsvVal] = useState({
     h: tinycolor(value).toHsv().h,
     s: tinycolor(value).toHsv().s,
     v: tinycolor(value).toHsv().v
   })
-
   const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
-  const handleDragPanel = (x: number, y: number, auto: boolean) => {
-    setCursorAuto(auto)
-    cursor.x = x
-    cursor.y = y
-    setCursor({ ...cursor })
-
-    const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
-    const currentColor = tinycolor(hsv)
-    currentColor.setAlpha(aValue)
-    setInnerValue(currentColor.toRgbString())
-  }
-
-  const handleDragRgb = (x: number) => {
-    let currentX = x
-    currentX === 1 && (currentX = 0)
-    let currentHue = Math.round((currentX) * 360 * 100) / 100
-    const currentColor = tinycolor(`hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`)
-    currentColor.setAlpha(aValue)
-    setInnerValue(currentColor.toRgbString())
-  }
-
-  const handleDragA = (x: number) => {
-    let currentX = Number(x.toFixed(2))
-    const currentColor = tinycolor(innerValue)
-    currentColor.setAlpha(currentX)
-    setInnerValue(currentColor.toRgbString())
-  }
-
-  const clickColorItem = (val: string) => {
-    setCursorAuto(true)
-    const currentColor = tinycolor(val)
-    setInnerValue(currentColor.toRgbString())
-  }
-
-  const panelBlock = useRef(null)
-  const rgbBar = useRef(null)
-  const aBar = useRef(null)
-  const handleClickPanel = (e: React.MouseEvent, type: 'panel' | 'rgb' | 'a') => {
-    e.persist();
-    let dom: any
-    if (type === 'panel') {
-      dom = panelBlock.current
-    } else if (type === 'rgb') {
-      dom = rgbBar.current
-    } else if (type === 'a') {
-      dom = aBar.current
-    }
-    const rect = dom.getBoundingClientRect()
-    const pointerX = e.clientX - rect.left
-    const pointerY = e.clientY - rect.top
-    if (type === 'panel') {
-      handleDragPanel(pointerX / rect.width, pointerY / rect.height, true)
-    } else if (type === 'rgb') {
-      handleDragRgb(pointerX / rect.width)
-    } else {
-      handleDragA(pointerX / rect.width)
-    }
-  }
-
-
-  useEffect(() => {
-    const color = tinycolor(innerValue)
-
-    rgbVal.r = color.toRgb().r
-    rgbVal.g = color.toRgb().g
-    rgbVal.b = color.toRgb().b
+  // 传入一种颜色值 -> 更新全部颜色值
+  const updateColor = (color: string, alpha: number) => {
+    const currentColor = tinycolor(color)
+    rgbVal.r = currentColor.toRgb().r
+    rgbVal.g = currentColor.toRgb().g
+    rgbVal.b = currentColor.toRgb().b
     setRgbVal({ ...rgbVal })
 
-    hsvVal.h = color.toHsv().h
-    hsvVal.s = color.toHsv().s
-    hsvVal.v = color.toHsv().v
+    hsvVal.h = currentColor.toHsv().h
+    hsvVal.s = currentColor.toHsv().s
+    hsvVal.v = currentColor.toHsv().v
     setHsvVal({ ...hsvVal })
 
-    setAValue(color.getAlpha())
-  }, [innerValue])
+    currentColor.setAlpha(alpha)
+    setAValue(alpha)
+
+    setInnerValue(currentColor.toRgbString())
+  }
+
+  // 传入调色板坐标 -> 更新颜色
+  const updatePanelColor = (x: number, y: number) => {
+    const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
+    updateColor(hsv, aValue)
+    // 更新位置
+    location.panel.x = x
+    location.panel.y = y
+    setLocation({ ...location })
+  }
+  // 传入色阶柱坐标 -> 更新颜色
+  const updateRgbColor = (x: number) => {
+    let currentX = x
+    currentX === 1 && (currentX = 0)  // 左右极限值去重
+    const currentHue = Math.round((currentX) * 360 * 100) / 100
+    const hsv = `hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`
+    updateColor(hsv, aValue)
+    // 更新位置
+    location.rgb.x = x
+    setLocation({ ...location })
+  }
+  // 传入透明度柱坐标 -> 更新颜色
+  const updateAColor = (x: number) => {
+    let currentX = Number(x.toFixed(2))
+    updateColor(innerValue, currentX)
+    // 更新位置
+    location.a.x = x
+    setLocation({ ...location })
+  }
+
+  // 移动调色板
+  const handlePanelMove = (e: any) => {
+    let moveX = e.clientX - rect.panel.left
+    let moveY = e.clientY - rect.panel.top
+    const maxX = rect.panel.width
+    const maxY = rect.panel.height
+    const minX = 0
+    const minY = 0
+    moveX < (minX) && (moveX = (minX))
+    moveX > (maxX) && (moveX = (maxX))
+    moveY < (minY) && (moveY = (minY))
+    moveY > (maxY) && (moveY = (maxY))
+    updatePanelColor(moveX / maxX, moveY / maxY)
+  }
+  const handlePanelUp = () => {
+    setHandleStatus(false)
+    window.removeEventListener('mousemove', handlePanelMove);
+    window.removeEventListener('mouseup', handlePanelUp);
+  };
+
+  // 移动色阶柱
+  const handleRgbMove = (e: any) => {
+    let moveX = e.clientX - rect.rgb.left
+    const maxX = rect.rgb.width
+    const minX = 0
+    moveX < (minX) && (moveX = (minX))
+    moveX > (maxX) && (moveX = (maxX))
+    updateRgbColor(moveX / maxX)
+  }
+  const handleRgbUp = () => {
+    setHandleStatus(false)
+    window.removeEventListener('mousemove', handleRgbMove);
+    window.removeEventListener('mouseup', handleRgbUp);
+  };
+
+  // 移动透明度柱
+  const handleAMove = (e: any) => {
+    let moveX = e.clientX - rect.a.left
+    const maxX = rect.a.width
+    const minX = 0
+    moveX < (minX) && (moveX = (minX))
+    moveX > (maxX) && (moveX = (maxX))
+    updateAColor(moveX / maxX)
+  }
+  const handleAUp = () => {
+    setHandleStatus(false)
+    window.removeEventListener('mousemove', handleAMove);
+    window.removeEventListener('mouseup', handleAUp);
+  };
+
+  const handleUsualDown = (e: React.MouseEvent, type: 'panel' | 'rgb' | 'a') => {
+    e.persist();
+    let downX = 0
+    let downY = 0
+    setHandleStatus(true)
+    if (type === 'panel') {
+      // 点击调色板 -> 更新颜色
+      downX = e.clientX - rect.panel.left
+      downY = e.clientY - rect.panel.top
+      updatePanelColor(downX / rect.panel.width, downY / rect.panel.height)
+      // 移动调色板 -> 更新颜色
+      window.addEventListener('mousemove', handlePanelMove);
+      window.addEventListener('mouseup', handlePanelUp);
+    } else if (type === 'rgb') {
+      // 点击色阶柱 -> 更新颜色
+      downX = e.clientX - rect.rgb.left
+      updateRgbColor(downX / rect.rgb.width)
+      // 移动色阶柱 -> 更新颜色
+      window.addEventListener('mousemove', handleRgbMove);
+      window.addEventListener('mouseup', handleRgbUp);
+    } else {
+      // 点击透明度柱 -> 更新颜色
+      downX = e.clientX - rect.a.left
+      updateAColor(downX / rect.a.width)
+      // 移动透明度柱 -> 更新颜色
+      window.addEventListener('mousemove', handleAMove);
+      window.addEventListener('mouseup', handleAUp);
+    }
+  }
+
+  // 点击颜色块 -> 更新颜色
+  const clickColorItem = (val: string) => {
+    const currentColor = tinycolor(val)
+    updateColor(val, currentColor.getAlpha())
+    // 更新位置
+    location.panel.x = currentColor.toHsv().s
+    location.panel.y = 1 - currentColor.toHsv().v
+    location.rgb.x = currentColor.toHsv().h / 360
+    location.a.x = currentColor.getAlpha()
+    setLocation({ ...location })
+  }
 
   return (
     <div
@@ -373,39 +440,36 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           <div className="i-color-panel-block__white" />
           <div
             className="i-color-panel-block__black"
-            ref={panelBlock}
-            onMouseDown={(e) => handleClickPanel(e, 'panel')}
+            ref={panelNode}
+            onMouseDown={(e) => handleUsualDown(e, 'panel')}
           />
           <ColorPickerCursor
-            x={cursorAuto ? hsvVal.s : cursor.x}
-            y={cursorAuto ? 1 - hsvVal.v : cursor.y}
+            x={location.panel.x}
+            y={location.panel.y}
             color={innerValue}
-            onDrag={handleDragPanel}
           />
         </section>
 
         <section className="i-color-panel-controls">
           <div
             className="i-color-panel-bar__rgb"
-            ref={rgbBar}
-            onMouseDown={(e) => handleClickPanel(e, 'rgb')}
+            ref={rgbBarNode}
+            onMouseDown={(e) => handleUsualDown(e, 'rgb')}
           >
             <ColorPickerCursor
-              x={hsvVal.h / 360}
+              x={location.rgb.x}
               mode="x"
-              onDragX={handleDragRgb}
             />
           </div>
           <div
             className="i-color-panel-bar__a"
-            ref={aBar}
-            onMouseDown={(e) => handleClickPanel(e, 'a')}
+            ref={aBarNode}
+            onMouseDown={(e) => handleUsualDown(e, 'a')}
           >
             <ColorPickerCursor
               mode="x"
-              x={aValue}
+              x={location.a.x}
               style={{ background: 'rgba(0, 0, 0, 0.4)' }}
-              onDragX={handleDragA}
             />
             <section
               className="i-color-panel-bar__a-color"
