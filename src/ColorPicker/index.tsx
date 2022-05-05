@@ -190,7 +190,21 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     ...others
   } = props;
 
+  // 颜色值
   const [innerValue, setInnerValue] = useState(value)
+
+  // 颜色值详细参数
+  const [rgbVal, setRgbVal] = useState({
+    r: tinycolor(value).toRgb().r,
+    g: tinycolor(value).toRgb().g,
+    b: tinycolor(value).toRgb().b
+  })
+  const [hsvVal, setHsvVal] = useState({
+    h: tinycolor(value).toHsv().h,
+    s: tinycolor(value).toHsv().s,
+    v: tinycolor(value).toHsv().v
+  })
+  const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
   // 是否为移动状态
   const [handleStatus, setHandleStatus] = useState(false)
@@ -259,19 +273,6 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     }
   })
 
-  // 颜色值
-  const [rgbVal, setRgbVal] = useState({
-    r: tinycolor(value).toRgb().r,
-    g: tinycolor(value).toRgb().g,
-    b: tinycolor(value).toRgb().b
-  })
-  const [hsvVal, setHsvVal] = useState({
-    h: tinycolor(value).toHsv().h,
-    s: tinycolor(value).toHsv().s,
-    v: tinycolor(value).toHsv().v
-  })
-  const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
-
   // 传入一种颜色值 -> 更新全部颜色值
   const updateColor = (color: string, alpha: number) => {
     const currentColor = tinycolor(color)
@@ -293,13 +294,13 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   // 传入调色板坐标 -> 更新颜色
   const updatePanelColor = (x: number, y: number) => {
     const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
-    console.log(hsvVal.h.toFixed(0))
     updateColor(hsv, aValue)
-    // 更新位置
+    // 更新滑块位置
     location.panel.x = x
     location.panel.y = y
     setLocation({ ...location })
   }
+
   // 传入色阶柱坐标 -> 更新颜色
   const updateRgbColor = (x: number) => {
     let currentX = x
@@ -311,15 +312,16 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     // 更新全部颜色
     const hsv = `hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`
     updateColor(hsv, aValue)
-    // 更新位置
+    // 更新滑块位置
     location.rgb.x = x
     setLocation({ ...location })
   }
+
   // 传入透明度柱坐标 -> 更新颜色
   const updateAColor = (x: number) => {
     let currentX = Number(x.toFixed(2))
     updateColor(innerValue, currentX)
-    // 更新位置
+    // 更新滑块位置
     location.a.x = x
     setLocation({ ...location })
   }
@@ -411,7 +413,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     // 单独更新色阶
     hsvVal.h = currentColor.toHsv().h
     setHsvVal({ ...hsvVal })
-    // 更新位置
+    // 更新滑块位置
     location.panel.x = currentColor.toHsv().s
     location.panel.y = 1 - currentColor.toHsv().v
     location.rgb.x = currentColor.toHsv().h / 360
