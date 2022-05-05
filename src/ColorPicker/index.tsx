@@ -280,7 +280,6 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     rgbVal.b = currentColor.toRgb().b
     setRgbVal({ ...rgbVal })
 
-    hsvVal.h = currentColor.toHsv().h
     hsvVal.s = currentColor.toHsv().s
     hsvVal.v = currentColor.toHsv().v
     setHsvVal({ ...hsvVal })
@@ -294,6 +293,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   // 传入调色板坐标 -> 更新颜色
   const updatePanelColor = (x: number, y: number) => {
     const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
+    console.log(hsvVal.h.toFixed(0))
     updateColor(hsv, aValue)
     // 更新位置
     location.panel.x = x
@@ -305,6 +305,10 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     let currentX = x
     currentX === 1 && (currentX = 0)  // 左右极限值去重
     const currentHue = Math.round((currentX) * 360 * 100) / 100
+    // 单独更新色阶
+    hsvVal.h = currentHue
+    setHsvVal({ ...hsvVal })
+    // 更新全部颜色
     const hsv = `hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`
     updateColor(hsv, aValue)
     // 更新位置
@@ -404,6 +408,9 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const clickColorItem = (val: string) => {
     const currentColor = tinycolor(val)
     updateColor(val, currentColor.getAlpha())
+    // 单独更新色阶
+    hsvVal.h = currentColor.toHsv().h
+    setHsvVal({ ...hsvVal })
     // 更新位置
     location.panel.x = currentColor.toHsv().s
     location.panel.y = 1 - currentColor.toHsv().v
