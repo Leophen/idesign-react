@@ -255,13 +255,17 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     x: 0, y: 0
   })
 
-  const [rValue, setRValue] = useState(tinycolor(value).toRgb().r)
-  const [gValue, setGValue] = useState(tinycolor(value).toRgb().g)
-  const [bValue, setBValue] = useState(tinycolor(value).toRgb().b)
+  const [rgbVal, setRgbVal] = useState({
+    r: tinycolor(value).toRgb().r,
+    g: tinycolor(value).toRgb().g,
+    b: tinycolor(value).toRgb().b
+  })
 
-  const [hValue, setHValue] = useState(tinycolor(value).toHsv().h)
-  const [sValue, setSValue] = useState(tinycolor(value).toHsv().s)
-  const [vValue, setVValue] = useState(tinycolor(value).toHsv().v)
+  const [hsvVal, setHsvVal] = useState({
+    h: tinycolor(value).toHsv().h,
+    s: tinycolor(value).toHsv().s,
+    v: tinycolor(value).toHsv().v
+  })
 
   const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
@@ -271,7 +275,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     cursor.y = y
     setCursor({ ...cursor })
 
-    const hsv = `hsv(${hValue.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
+    const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
     const currentColor = tinycolor(hsv)
     currentColor.setAlpha(aValue)
     setInnerValue(currentColor.toRgbString())
@@ -281,7 +285,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     let currentX = x
     currentX === 1 && (currentX = 0)
     let currentHue = Math.round((currentX) * 360 * 100) / 100
-    const currentColor = tinycolor(`hsv(${currentHue}, ${sValue}, ${vValue})`)
+    const currentColor = tinycolor(`hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`)
     currentColor.setAlpha(aValue)
     setInnerValue(currentColor.toRgbString())
   }
@@ -294,6 +298,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   }
 
   const clickColorItem = (val: string) => {
+    setCursorAuto(true)
     const currentColor = tinycolor(val)
     setInnerValue(currentColor.toRgbString())
   }
@@ -326,13 +331,16 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   useEffect(() => {
     const color = tinycolor(innerValue)
-    setRValue(color.toRgb().r)
-    setGValue(color.toRgb().g)
-    setBValue(color.toRgb().b)
 
-    setHValue(color.toHsv().h)
-    setSValue(color.toHsv().s)
-    setVValue(color.toHsv().v)
+    rgbVal.r = color.toRgb().r
+    rgbVal.g = color.toRgb().g
+    rgbVal.b = color.toRgb().b
+    setRgbVal({ ...rgbVal })
+
+    hsvVal.h = color.toHsv().h
+    hsvVal.s = color.toHsv().s
+    hsvVal.v = color.toHsv().v
+    setHsvVal({ ...hsvVal })
 
     setAValue(color.getAlpha())
   }, [innerValue])
@@ -360,7 +368,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
         <section
           className="i-color-panel-block"
-          style={{ background: `hsl(${hValue}, 100%, 50%)` }}
+          style={{ background: `hsl(${hsvVal.h}, 100%, 50%)` }}
         >
           <div className="i-color-panel-block__white" />
           <div
@@ -369,8 +377,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             onMouseDown={(e) => handleClickPanel(e, 'panel')}
           />
           <ColorPickerCursor
-            x={cursorAuto ? sValue : cursor.x}
-            y={cursorAuto ? 1 - vValue : cursor.y}
+            x={cursorAuto ? hsvVal.s : cursor.x}
+            y={cursorAuto ? 1 - hsvVal.v : cursor.y}
             color={innerValue}
             onDrag={handleDragPanel}
           />
@@ -383,7 +391,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             onMouseDown={(e) => handleClickPanel(e, 'rgb')}
           >
             <ColorPickerCursor
-              x={hValue / 360}
+              x={hsvVal.h / 360}
               mode="x"
               onDragX={handleDragRgb}
             />
@@ -401,16 +409,16 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             />
             <section
               className="i-color-panel-bar__a-color"
-              style={{ background: `linear-gradient(90deg, rgba(255, 0, 0, 0) 0%, hsl(${hValue}, 100%, 50%) 100%)` }}
+              style={{ background: `linear-gradient(90deg, rgba(255, 0, 0, 0) 0%, hsl(${hsvVal.h}, 100%, 50%) 100%)` }}
             />
             <section className="i-color-panel-bar__a-bg"></section>
           </div>
         </section>
 
         <section className="i-color-panel-input-container">
-          <input readOnly value={rValue} type="text" className="i-color-panel-input" placeholder="R" />
-          <input readOnly value={gValue} type="text" className="i-color-panel-input" placeholder="G" />
-          <input readOnly value={bValue} type="text" className="i-color-panel-input" placeholder="B" />
+          <input readOnly value={rgbVal.r} type="text" className="i-color-panel-input" placeholder="R" />
+          <input readOnly value={rgbVal.g} type="text" className="i-color-panel-input" placeholder="G" />
+          <input readOnly value={rgbVal.b} type="text" className="i-color-panel-input" placeholder="B" />
           <input readOnly value={aValue} type="text" className="i-color-panel-input" placeholder="A" />
         </section>
 
