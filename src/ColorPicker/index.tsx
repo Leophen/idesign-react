@@ -44,7 +44,7 @@ export interface ColorPickerCursorProps {
   /**
    * 拖拽时触发事件，传入 x 和 y 方向上的拖拽比例
    */
-  onDrag?: (x: number, y: number) => void;
+  onDrag?: (x: number, y: number, auto: boolean) => void;
   /**
    * 水平拖拽时触发事件，传入 x 方向上的拖拽比例
    */
@@ -81,8 +81,10 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
 
   const cursor = useRef<HTMLDivElement>(null)
 
-  const [cursorX, setCursorX] = useState(0)
-  const [cursorY, setCursorY] = useState(0)
+  const [translate, setTranslate] = useState({
+    x: 0,
+    y: 0
+  })
   const [maxX, setMaxX] = useState(0)
   const [maxY, setMaxY] = useState(0)
 
@@ -100,13 +102,14 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
     maxY !== parentHeight && setMaxY(parentHeight)
     // 初始位置
     if (mode !== 'y') {
-      setCursorX(x * (parentWidth - 12))
+      translate.x = x * (parentWidth - 12)
       moveX.current = x * (parentWidth - 12)
     }
     if (mode !== 'x') {
-      setCursorY(y * (parentHeight - 12))
+      translate.y = y * (parentHeight - 12)
       moveY.current = y * (parentHeight - 12)
     }
+    setTranslate({ ...translate })
   }, [x, y])
 
   // 滑块位置监听
@@ -120,22 +123,23 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
     if (mode === 'x') {
       moveX.current < (minX) && (moveX.current = (minX))
       moveX.current > (maxX - 12) && (moveX.current = (maxX - 12))
-      setCursorX(moveX.current) // 滑块位置
+      translate.x = moveX.current
       onDragX?.(moveX.current / (maxX - 12)) // 坐标 + 最大值
     } else if (mode === 'y') {
       moveY.current < (minY) && (moveY.current = (minY))
       moveY.current > (maxY - 12) && (moveY.current = (maxY - 12))
-      setCursorY(moveY.current) // 滑块位置
+      translate.y = moveY.current
       onDragY?.(moveY.current / (maxY - 12)) // 坐标 + 最大值
     } else {
       moveX.current < (minX - 6) && (moveX.current = (minX - 6))
       moveX.current > (maxX - 6) && (moveX.current = (maxX - 6))
-      setCursorX(moveX.current) // 滑块位置
       moveY.current < (minY - 6) && (moveY.current = (minY - 6))
       moveY.current > (maxY - 6) && (moveY.current = (maxY - 6))
-      setCursorY(moveY.current) // 滑块位置
-      onDrag?.((moveX.current + 6) / maxX, (moveY.current + 6) / maxY)
+      translate.x = moveX.current
+      translate.y = moveY.current
+      onDrag?.((moveX.current + 6) / maxX, (moveY.current + 6) / maxY, false)
     }
+    setTranslate({ ...translate })
   };
 
   const handleCursorUp = () => {
@@ -159,7 +163,7 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
       style={{
         ...(style || {}),
         ...{
-          transform: `translate(${cursorX}px, ${cursorY}px)`,
+          transform: `translate(${translate.x}px, ${translate.y}px)`,
           background: color
         }
       }}
@@ -246,6 +250,10 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   } = props;
 
   const [innerValue, setInnerValue] = useState(value)
+  const [cursorAuto, setCursorAuto] = useState(true)
+  const [cursor, setCursor] = useState({
+    x: 0, y: 0
+  })
 
   const [rValue, setRValue] = useState(tinycolor(value).toRgb().r)
   const [gValue, setGValue] = useState(tinycolor(value).toRgb().g)
@@ -257,8 +265,14 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
-  const handleDragPanel = (x: number, y: number) => {
-    const currentColor = tinycolor(`hsv(${hValue}, ${x}, ${1 - y})`)
+  const handleDragPanel = (x: number, y: number, auto: boolean) => {
+    setCursorAuto(auto)
+    cursor.x = x
+    cursor.y = y
+    setCursor({ ...cursor })
+
+    const hsv = `hsv(${hValue.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
+    const currentColor = tinycolor(hsv)
     currentColor.setAlpha(aValue)
     setInnerValue(currentColor.toRgbString())
   }
@@ -301,7 +315,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     const pointerX = e.clientX - rect.left
     const pointerY = e.clientY - rect.top
     if (type === 'panel') {
-      handleDragPanel(pointerX / rect.width, pointerY / rect.height)
+      handleDragPanel(pointerX / rect.width, pointerY / rect.height, true)
     } else if (type === 'rgb') {
       handleDragRgb(pointerX / rect.width)
     } else {
@@ -355,8 +369,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             onMouseDown={(e) => handleClickPanel(e, 'panel')}
           />
           <ColorPickerCursor
-            x={sValue}
-            y={1 - vValue}
+            x={cursorAuto ? sValue : cursor.x}
+            y={cursorAuto ? 1 - vValue : cursor.y}
             color={innerValue}
             onDrag={handleDragPanel}
           />
