@@ -328,8 +328,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   // 移动调色板
   const handlePanelMove = (e: any) => {
-    let moveX = e.clientX - rect.panel.left
-    let moveY = e.clientY - rect.panel.top
+    let moveX = e.clientX - rect.panel.left + window.scrollX
+    let moveY = e.clientY - rect.panel.top + window.scrollY
     const maxX = rect.panel.width
     const maxY = rect.panel.height
     const minX = 0
@@ -348,7 +348,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   // 移动色阶柱
   const handleRgbMove = (e: any) => {
-    let moveX = e.clientX - rect.rgb.left
+    let moveX = e.clientX - rect.rgb.left + window.scrollX
     const maxX = rect.rgb.width
     const minX = 0
     moveX < (minX) && (moveX = (minX))
@@ -363,7 +363,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   // 移动透明度柱
   const handleAMove = (e: any) => {
-    let moveX = e.clientX - rect.a.left
+    let moveX = e.clientX - rect.a.left + window.scrollX
     const maxX = rect.a.width
     const minX = 0
     moveX < (minX) && (moveX = (minX))
@@ -383,8 +383,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     setHandleStatus(true)
     if (type === 'panel') {
       // 点击调色板 -> 更新颜色
-      downX = e.clientX - rect.panel.left
-      downY = e.clientY - rect.panel.top
+      downX = e.clientX - rect.panel.left + window.scrollX
+      downY = e.clientY - rect.panel.top + window.scrollY
       updatePanelColor(downX / rect.panel.width, downY / rect.panel.height)
       // 移动调色板 -> 更新颜色
       window.addEventListener('mousemove', handlePanelMove);
