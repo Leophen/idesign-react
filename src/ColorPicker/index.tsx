@@ -4,6 +4,11 @@ import './index.scss';
 import tinycolor from 'tinycolor2'
 import Select from '../Select';
 import Input from '../Input';
+import Icon from '../Icon';
+
+export interface colorListType {
+  value: string
+}
 
 export interface ColorPickerProps {
   /**
@@ -18,9 +23,24 @@ export interface ColorPickerProps {
    * 颜色值
    */
   value?: string;
+  /**
+   * 默认可选值
+   */
+  colorList?: colorListType[]
+  /**
+   * 修改颜色值时触发
+   */
+  onChange?: (val: string) => void
 }
 
-export interface ColorPickerCursorProps {
+export interface ColorPanelProps extends ColorPickerProps {
+  /**
+   * 点击关闭按钮时触发
+   */
+  onClose?: () => void
+}
+
+export interface ColorCursorProps {
   /**
    * 自定义样式
    */
@@ -45,7 +65,7 @@ export interface ColorPickerCursorProps {
   color?: string;
 }
 
-export interface ColorBlockProps {
+export interface ColorItemProps {
   /**
    * 颜色
    * @default #265CF0
@@ -103,18 +123,9 @@ const defaultColor = [
   {
     value: 'rgb(210, 90, 182)'
   },
-  {
-    value: 'rgb(0, 0, 0)'
-  },
-  {
-    value: 'rgba(255, 255, 255, 0.5)'
-  },
-  {
-    value: 'rgb(255, 0, 0)'
-  },
 ]
 
-const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
+const ColorCursor: React.FC<ColorCursorProps> = (props) => {
   const {
     x = 0,
     y = 0,
@@ -162,7 +173,7 @@ const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
   )
 }
 
-const ColorBlock: React.FC<ColorBlockProps> = (props) => {
+const ColorItem: React.FC<ColorItemProps> = (props) => {
   const {
     color = '#265CF0',
     onClick
@@ -183,13 +194,11 @@ const ColorBlock: React.FC<ColorBlockProps> = (props) => {
   )
 }
 
-const ColorPicker: React.FC<ColorPickerProps> = (props) => {
+const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const {
-    children = '',
-    className,
-    style,
     value = '#265CF0',
-    ...others
+    colorList,
+    onChange
   } = props;
 
   // 颜色值
@@ -304,6 +313,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     setAValue(alpha)
 
     setInnerValue(currentColor.toRgbString())
+    onChange?.(currentColor.toRgbString())
   }
 
   // 传入调色板坐标 -> 更新颜色
@@ -421,8 +431,8 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     }
   }
 
-  // 点击颜色块 -> 更新颜色
-  const clickColorItem = (val: string) => {
+  // 通过更新颜色函数
+  const handleUsualUpdate = (val: string) => {
     const currentColor = tinycolor(val)
     updateColor(val, currentColor.getAlpha())
     // 单独更新色阶
@@ -441,26 +451,19 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   // RGBA 输入框变化时触发
   const inputChange = (val: string, type: 'r' | 'g' | 'b') => {
     let currentVal = Number(val)
-    let currentColor = ''
+    let color = ''
     if (type === 'r') {
       rgbVal.r = currentVal
-      currentColor = `rgba(${val}, ${rgbVal.g}, ${rgbVal.b}, ${aValue})`
+      color = `rgba(${val}, ${rgbVal.g}, ${rgbVal.b}, ${aValue})`
     } else if (type === 'g') {
       rgbVal.g = currentVal
-      currentColor = `rgba(${rgbVal.r}, ${val}, ${rgbVal.b}, ${aValue})`
+      color = `rgba(${rgbVal.r}, ${val}, ${rgbVal.b}, ${aValue})`
     } else {
       rgbVal.b = currentVal
-      currentColor = `rgba(${rgbVal.r}, ${rgbVal.g}, ${val}, ${aValue})`
+      color = `rgba(${rgbVal.r}, ${rgbVal.g}, ${val}, ${aValue})`
     }
     setRgbVal({ ...rgbVal })
-
-    const newColor = tinycolor(currentColor)
-    updateColor(currentColor, newColor.getAlpha())
-    // 单独更新色阶
-    hsvVal.h = newColor.toHsv().h
-    setHsvVal({ ...hsvVal })
-    // 更新滑块位置
-    updateCursorLocation(newColor)
+    handleUsualUpdate(color)
   }
   const inputChangeR = (val: string) => {
     inputChange(val, 'r')
@@ -499,51 +502,61 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     }
   }
 
+  // 取色
+  const handleClickDropper = async () => {
+    // @ts-ignore
+    const eyeDropper = new EyeDropper();
+    const result = await eyeDropper.open();
+    const color = result.sRGBHex
+
+    handleUsualUpdate(color)
+  }
+
   return (
-    <div
-      className={classNames(
-        'i-color-picker',
-        className
-      )}
-      style={{ ...style }}
-      {...others}
-    >
-      <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
-      <div className="i-color-panel">
+    <div className="i-color-panel">
+      <header className="i-color-panel-header">
+        <div className="i-color-panel-header-txt">
+          颜色选择器
+        </div>
+        <div className="i-color-panel-header-icon">
+          X
+        </div>
+      </header>
 
-        <header className="i-color-panel-header">
-          <div className="i-color-panel-header-txt">
-            颜色选择器
-          </div>
-          <div className="i-color-panel-header-icon">
-            X
-          </div>
-        </header>
+      <section
+        className="i-color-panel-block"
+        style={{ background: `hsl(${hsvVal.h}, 100%, 50%)` }}
+      >
+        <div className="i-color-panel-block__white" />
+        <div
+          className="i-color-panel-block__black"
+          ref={panelNode}
+          onMouseDown={(e) => handleUsualDown(e, 'panel')}
+        />
+        <ColorCursor
+          x={location.panel.x}
+          y={location.panel.y}
+          color={innerValue}
+        />
+      </section>
 
-        <section
-          className="i-color-panel-block"
-          style={{ background: `hsl(${hsvVal.h}, 100%, 50%)` }}
-        >
-          <div className="i-color-panel-block__white" />
+      <section className="i-color-panel-controls">
+        {/* @ts-ignore */}
+        {!!window.EyeDropper &&
           <div
-            className="i-color-panel-block__black"
-            ref={panelNode}
-            onMouseDown={(e) => handleUsualDown(e, 'panel')}
-          />
-          <ColorPickerCursor
-            x={location.panel.x}
-            y={location.panel.y}
-            color={innerValue}
-          />
-        </section>
-
-        <section className="i-color-panel-controls">
+            className="i-color-panel-controls__dropper"
+            onClick={handleClickDropper}
+          >
+            <Icon name="Dropper" color="#333" />
+          </div>
+        }
+        <div className="i-color-panel-controls__bar">
           <div
             className="i-color-panel-bar__rgb"
             ref={rgbBarNode}
             onMouseDown={(e) => handleUsualDown(e, 'rgb')}
           >
-            <ColorPickerCursor
+            <ColorCursor
               x={location.rgb.x}
               mode="x"
             />
@@ -553,7 +566,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             ref={aBarNode}
             onMouseDown={(e) => handleUsualDown(e, 'a')}
           >
-            <ColorPickerCursor
+            <ColorCursor
               mode="x"
               x={location.a.x}
               style={{ background: 'rgba(0, 0, 0, 0.4)' }}
@@ -564,86 +577,125 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             />
             <section className="i-color-panel-bar__a-bg"></section>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <section className="i-color-panel-values">
-          <Select
-            width={60}
-            value={colorType}
-            size="small"
-            clearable={false}
-            onChange={handleSelect}
-          >
-            <Select.Item value="hex">Hex</Select.Item>
-            <Select.Item value="rgb">RGB</Select.Item>
-          </Select>
-          <div className="i-color-panel-input__wrapper">
-            <div className="i-color-panel-input__class">
-              {colorType === 'hex' ?
-                <Input
-                  value={hexVal}
-                  size="small"
-                  onFocus={inputFocusHex}
-                  onChange={inputChangeHex}
-                  onBlur={inputBlurHex}
-                /> : <>
-                  <Input
-                    value={rgbVal.r.toFixed(0)}
-                    type="number"
-                    size="small"
-                    maxNumber={255}
-                    minNumber={0}
-                    selectAll
-                    hideNumberBtn
-                    onChange={inputChangeR}
-                  />
-                  <Input
-                    value={rgbVal.g.toFixed(0)}
-                    type="number"
-                    size="small"
-                    maxNumber={255}
-                    minNumber={0}
-                    selectAll
-                    hideNumberBtn
-                    onChange={inputChangeG}
-                  />
-                  <Input
-                    value={rgbVal.b.toFixed(0)}
-                    type="number"
-                    size="small"
-                    maxNumber={255}
-                    minNumber={0}
-                    selectAll
-                    hideNumberBtn
-                    onChange={inputChangeB}
-                  />
-                </>
-              }
-            </div>
-            <div className="i-color-panel-input__alpha">
+      <section className="i-color-panel-values">
+        <Select
+          width={60}
+          value={colorType}
+          size="small"
+          clearable={false}
+          onChange={handleSelect}
+        >
+          <Select.Item value="hex">Hex</Select.Item>
+          <Select.Item value="rgb">RGB</Select.Item>
+        </Select>
+        <div className="i-color-panel-input__wrapper">
+          <div className="i-color-panel-input__class">
+            {colorType === 'hex' ?
               <Input
-                value={(aValue * 100).toFixed(0)}
-                type="number"
+                value={hexVal}
                 size="small"
-                maxNumber={100}
-                minNumber={0}
-                selectAll
-                hideNumberBtn
-                onChange={inputChangeA}
-              />
-            </div>
+                onFocus={inputFocusHex}
+                onChange={inputChangeHex}
+                onBlur={inputBlurHex}
+              /> : <>
+                <Input
+                  value={rgbVal.r.toFixed(0)}
+                  type="number"
+                  size="small"
+                  maxNumber={255}
+                  minNumber={0}
+                  selectAll
+                  hideNumberBtn
+                  onChange={inputChangeR}
+                />
+                <Input
+                  value={rgbVal.g.toFixed(0)}
+                  type="number"
+                  size="small"
+                  maxNumber={255}
+                  minNumber={0}
+                  selectAll
+                  hideNumberBtn
+                  onChange={inputChangeG}
+                />
+                <Input
+                  value={rgbVal.b.toFixed(0)}
+                  type="number"
+                  size="small"
+                  maxNumber={255}
+                  minNumber={0}
+                  selectAll
+                  hideNumberBtn
+                  onChange={inputChangeB}
+                />
+              </>
+            }
           </div>
-        </section>
+          <div className="i-color-panel-input__alpha">
+            <Input
+              value={(aValue * 100).toFixed(0)}
+              type="number"
+              size="small"
+              maxNumber={100}
+              minNumber={0}
+              selectAll
+              hideNumberBtn
+              onChange={inputChangeA}
+            />
+          </div>
+        </div>
+      </section>
 
-        <footer className="i-color-panel-footer">
-          {defaultColor.map(item =>
-            <ColorBlock color={item.value} key={item.value} onClick={() => clickColorItem(item.value)} />
-          )}
-        </footer>
-      </div>
+      <footer className="i-color-panel-footer">
+        {defaultColor.map(item =>
+          <ColorItem color={item.value} key={item.value} onClick={() => handleUsualUpdate(item.value)} />
+        )}
+      </footer>
     </div>
   );
 };
+
+const ColorPicker: React.FC<ColorPickerProps> = (props) => {
+  const {
+    className,
+    style,
+    value = '#265CF0',
+    colorList = defaultColor,
+    onChange,
+    ...others
+  } = props
+
+  const [innerValue, setInnerValue] = useState(value)
+
+  const [visible, setVisible] = useState(false)
+  const onVisibleChange = setVisible
+
+  const handleChange = (val: string) => {
+    setInnerValue(val)
+    onChange?.(val)
+  }
+
+  const handleClose = () => {
+    setVisible(false)
+  }
+
+  return (
+    <div
+      className={classNames(
+        'i-color-picker',
+        className
+      )}
+      style={{ ...style }}
+      {...others}
+    >
+      <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
+      <ColorPanel value={value} onChange={handleChange} />
+    </div>
+  )
+}
 
 ColorPicker.displayName = 'ColorPicker';
 
