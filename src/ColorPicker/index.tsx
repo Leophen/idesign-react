@@ -196,6 +196,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const [innerValue, setInnerValue] = useState(value)
 
   // 颜色值详细参数
+  const [hexVal, setHexVal] = useState(tinycolor(value).toHexString())
   const [rgbVal, setRgbVal] = useState({
     r: tinycolor(value).toRgb().r,
     g: tinycolor(value).toRgb().g,
@@ -275,9 +276,21 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     }
   })
 
+  // 通用更新滑块位置函数
+  const updateCursorLocation = (colorObj: any) => {
+    location.panel.x = colorObj.toHsv().s
+    location.panel.y = 1 - colorObj.toHsv().v
+    location.rgb.x = colorObj.toHsv().h / 360
+    location.a.x = colorObj.getAlpha()
+    setLocation({ ...location })
+  }
+
   // 传入一种颜色值 -> 更新全部颜色值
   const updateColor = (color: string, alpha: number) => {
     const currentColor = tinycolor(color)
+
+    setHexVal(currentColor.toHexString())
+
     rgbVal.r = currentColor.toRgb().r
     rgbVal.g = currentColor.toRgb().g
     rgbVal.b = currentColor.toRgb().b
@@ -416,11 +429,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     hsvVal.h = currentColor.toHsv().h
     setHsvVal({ ...hsvVal })
     // 更新滑块位置
-    location.panel.x = currentColor.toHsv().s
-    location.panel.y = 1 - currentColor.toHsv().v
-    location.rgb.x = currentColor.toHsv().h / 360
-    location.a.x = currentColor.getAlpha()
-    setLocation({ ...location })
+    updateCursorLocation(currentColor)
   }
 
   // 选择颜色值类型
@@ -451,11 +460,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     hsvVal.h = newColor.toHsv().h
     setHsvVal({ ...hsvVal })
     // 更新滑块位置
-    location.panel.x = newColor.toHsv().s
-    location.panel.y = 1 - newColor.toHsv().v
-    location.rgb.x = newColor.toHsv().h / 360
-    location.a.x = newColor.getAlpha()
-    setLocation({ ...location })
+    updateCursorLocation(newColor)
   }
   const inputChangeR = (val: string) => {
     inputChange(val, 'r')
@@ -470,6 +475,28 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     let currentVal = Number(val) / 100
     setAValue(currentVal)
     updateAColor(currentVal)
+  }
+
+  const hexBackup = useRef('')
+  const inputFocusHex = (val: string) => {
+    hexBackup.current = val
+  }
+  const inputChangeHex = (val: string) => {
+    setHexVal(val)
+  }
+  const inputBlurHex = (val: string) => {
+    const currentColor = tinycolor(val)
+    currentColor.setAlpha(aValue)
+    if (currentColor.isValid()) {
+      updateColor(val, aValue)
+      // 单独更新色阶
+      hsvVal.h = currentColor.toHsv().h
+      setHsvVal({ ...hsvVal })
+      // 更新滑块位置
+      updateCursorLocation(currentColor)
+    } else {
+      setHexVal(hexBackup.current)
+    }
   }
 
   return (
@@ -551,46 +578,60 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
             <Select.Item value="rgb">RGB</Select.Item>
           </Select>
           <div className="i-color-panel-input__wrapper">
-            <Input
-              value={rgbVal.r.toFixed(0)}
-              type="number"
-              size="small"
-              maxNumber={255}
-              minNumber={0}
-              selectAll
-              hideNumberBtn
-              onChange={inputChangeR}
-            />
-            <Input
-              value={rgbVal.g.toFixed(0)}
-              type="number"
-              size="small"
-              maxNumber={255}
-              minNumber={0}
-              selectAll
-              hideNumberBtn
-              onChange={inputChangeG}
-            />
-            <Input
-              value={rgbVal.b.toFixed(0)}
-              type="number"
-              size="small"
-              maxNumber={255}
-              minNumber={0}
-              selectAll
-              hideNumberBtn
-              onChange={inputChangeB}
-            />
-            <Input
-              value={(aValue * 100).toFixed(0)}
-              type="number"
-              size="small"
-              maxNumber={100}
-              minNumber={0}
-              selectAll
-              hideNumberBtn
-              onChange={inputChangeA}
-            />
+            <div className="i-color-panel-input__class">
+              {colorType === 'hex' ?
+                <Input
+                  value={hexVal}
+                  size="small"
+                  onFocus={inputFocusHex}
+                  onChange={inputChangeHex}
+                  onBlur={inputBlurHex}
+                /> : <>
+                  <Input
+                    value={rgbVal.r.toFixed(0)}
+                    type="number"
+                    size="small"
+                    maxNumber={255}
+                    minNumber={0}
+                    selectAll
+                    hideNumberBtn
+                    onChange={inputChangeR}
+                  />
+                  <Input
+                    value={rgbVal.g.toFixed(0)}
+                    type="number"
+                    size="small"
+                    maxNumber={255}
+                    minNumber={0}
+                    selectAll
+                    hideNumberBtn
+                    onChange={inputChangeG}
+                  />
+                  <Input
+                    value={rgbVal.b.toFixed(0)}
+                    type="number"
+                    size="small"
+                    maxNumber={255}
+                    minNumber={0}
+                    selectAll
+                    hideNumberBtn
+                    onChange={inputChangeB}
+                  />
+                </>
+              }
+            </div>
+            <div className="i-color-panel-input__alpha">
+              <Input
+                value={(aValue * 100).toFixed(0)}
+                type="number"
+                size="small"
+                maxNumber={100}
+                minNumber={0}
+                selectAll
+                hideNumberBtn
+                onChange={inputChangeA}
+              />
+            </div>
           </div>
         </section>
 

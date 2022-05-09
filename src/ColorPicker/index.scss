@@ -138,10 +138,8 @@
     border: none;
     border-right: 1px solid #e5e7eb;
     border-radius: 0;
-    &:last-of-type {
-      border-right: none;
-    }
-    &:hover {
+    &:hover,
+    &:focus-within {
       background-color: rgba(38, 92, 240, 0.06);
     }
   }
@@ -155,6 +153,19 @@
         background: #b4d7fe;
       }
     }
+  }
+}
+
+.i-color-panel-input__class {
+  display: flex;
+  flex: 75%;
+  align-items: center;
+}
+
+.i-color-panel-input__alpha {
+  flex: 25%;
+  .i-input {
+    border-right: none;
   }
 }
 

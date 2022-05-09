@@ -117,26 +117,26 @@ export interface InputProps {
   /**
    * 输入框聚焦时触发
    */
-  onFocus?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
+  onFocus?: (value: string, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
   /**
    * 输入框失焦时触发
    */
-  onBlur?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
+  onBlur?: (value: string, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
   /**
    * 键盘按下时触发
    */
   onKeyDown?: (
-    value: string | number,
+    value: string,
     context: { e: React.KeyboardEvent<HTMLInputElement> },
   ) => void;
   /**
    * 键盘按下回车键时触发
    */
-  onEnter?: (value: string | number, context: { e: React.KeyboardEvent<HTMLInputElement> }) => void;
+  onEnter?: (value: string, context: { e: React.KeyboardEvent<HTMLInputElement> }) => void;
   /**
    * 释放键盘时触发
    */
-  onKeyUp?: (value: string | number, context: { e: React.KeyboardEvent<HTMLDivElement> }) => void;
+  onKeyUp?: (value: string, context: { e: React.KeyboardEvent<HTMLDivElement> }) => void;
   /**
    * 清空按钮点击时触发
    */
