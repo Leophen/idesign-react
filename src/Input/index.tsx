@@ -32,6 +32,16 @@ export interface InputProps {
    */
   readonly?: boolean;
   /**
+   * 是否隐藏数字输入框后缀按钮
+   * @default false
+   */
+  hideNumberBtn?: boolean;
+  /**
+   * 是否聚焦时全选
+   * @default false
+   */
+  selectAll?: boolean;
+  /**
    * 输入框尺寸
    * @default medium
    */
@@ -101,7 +111,7 @@ export interface InputProps {
    * 输入框值发生变化时触发
    */
   onChange?: (
-    value: string | number,
+    value: string,
     context?: { e?: React.ChangeEvent<HTMLInputElement> },
   ) => void;
   /**
@@ -245,6 +255,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     tips,
     maxLength,
     clearable = false,
+    hideNumberBtn = false,
+    selectAll = false,
     type,
     speed = 'default',
     maxNumber = Number.MAX_VALUE,
@@ -316,6 +328,9 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     e.persist();
     if (eventType === 'focus') {
       onFocus?.(e.target.value, e);
+      if (selectAll) {
+        (inputNode.current as unknown as HTMLInputElement).select()
+      }
     }
     if (eventType === 'blur') {
       if (type === 'number' && e.target.value) {
@@ -570,14 +585,14 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   };
   const renderPrefixIcon = (
     <Icon
-      className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor',prefixIconClass)}
+      className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor', prefixIconClass)}
       name={prefixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('pre', e)}
     />
   );
   const renderSuffixIcon = (
     <Icon
-      className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor',suffixIconClass)}
+      className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor', suffixIconClass)}
       name={suffixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('suf', e)}
     />
@@ -618,7 +633,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
           />
         )}
         {suffixIcon && renderSuffixIcon}
-        {!disabled && type === 'number' && renderNumberBtn}
+        {!disabled && type === 'number' && !hideNumberBtn && renderNumberBtn}
         {!disabled && type === 'number' && renderNumberSlider}
       </div>
       {tips && <div

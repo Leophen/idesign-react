@@ -290,13 +290,7 @@ ul[role='slug-list'] li > a.active {
   column-gap: 16px !important;
   row-gap: 16px !important;
   .i-select {
-    width: 200px !important;
-    &[data-size='small'] {
-      width: 160px !important;
-    }
-    &[data-size='large'] {
-      width: 240px !important;
-    }
+    width: 200px;
   }
 }
 

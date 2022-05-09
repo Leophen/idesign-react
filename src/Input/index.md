@@ -77,6 +77,21 @@ const App = () => {
 export default App;
 ```
 
+## 聚焦全选
+
+通过 `selectAll` 属性指定聚焦状态时自动全选。
+
+```tsx
+import React from 'react';
+import { Input } from 'idesign-react';
+
+const App = () => {
+  return <Input selectAll />;
+};
+
+export default App;
+```
+
 ## 不同尺寸
 
 通过 `size` 属性指定不同尺寸的输入框，默认为 `medium`。
@@ -176,7 +191,7 @@ export default App;
 
 通过将 `type` 属性指定为 `number` 切换为数字滑块输入框：右侧显示数控按钮、悬浮左边缘出现鼠标数控滑块、可通过键盘上下键微调数值。
 
-另外，可通过 `speed` 属性值设置滑块移动数值变化速率，通过 `step` 设置数值变化间隔，通过 `precision` 设置数值保留几位有效数字。
+另外，可通过 `speed` 属性值设置滑块移动数值变化速率，通过 `step` 设置数值变化间隔，通过 `precision` 设置数值保留几位有效数字，通过 `hideNumberBtn` 设置隐藏数字输入框后缀按钮。
 
 ```tsx
 import React from 'react';
@@ -186,6 +201,8 @@ const App = () => {
   return (
     <>
       <Input type="number" />
+      <br />
+      <Input type="number" hideNumberBtn />
       <br />
       <Input
         placeholder="speed 设为 slow + 最大值 100"

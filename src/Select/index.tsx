@@ -233,7 +233,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
         'i-select',
         className
       )}
-      style={{ ...(style || {}), ...{ width } }}
+      style={{ ...(style || {}), ...{ width, minWidth: width } }}
       data-size={size}
       {...others}
     >

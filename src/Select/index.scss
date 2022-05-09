@@ -22,8 +22,13 @@
       display: none !important;
     }
   }
-  .i-input > .icon-TipCloseFill {
-    cursor: pointer;
+  .i-input {
+    & > .icon-TipCloseFill {
+      cursor: pointer;
+    }
+    & > .icon-ArrowDown {
+      pointer-events: none;
+    }
   }
   .i-tag--close-btn .i-icon {
     cursor: pointer;

@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import tinycolor from 'tinycolor2'
+import Select from '../Select';
+import Input from '../Input';
 
 export interface ColorPickerProps {
   /**
@@ -54,6 +56,63 @@ export interface ColorBlockProps {
    */
   onClick?: (val: string) => void;
 }
+
+const defaultColor = [
+  {
+    value: 'rgb(206, 55, 46)'
+  },
+  {
+    value: 'rgb(237, 149, 160)'
+  },
+  {
+    value: 'rgb(252, 238, 239)'
+  },
+  {
+    value: 'rgb(232, 109, 44)'
+  },
+  {
+    value: 'rgb(245, 192, 66)'
+  },
+  {
+    value: 'rgb(238, 209, 103)'
+  },
+  {
+    value: 'rgb(127, 225, 89)'
+  },
+  {
+    value: 'rgb(114, 212, 183)'
+  },
+  {
+    value: 'rgb(135, 214, 230)'
+  },
+  {
+    value: 'rgb(216, 238, 242)'
+  },
+  {
+    value: 'rgb(86, 116, 245)'
+  },
+  {
+    value: 'rgb(103, 98, 192)'
+  },
+  {
+    value: 'rgb(223, 221, 252)'
+  },
+  {
+    value: 'rgb(92, 192, 131)'
+  },
+  {
+    value: 'rgb(210, 90, 182)'
+  },
+  {
+    value: 'rgb(0, 0, 0)'
+  },
+  {
+    value: 'rgba(255, 255, 255, 0.5)'
+  },
+  {
+    value: 'rgb(255, 0, 0)'
+  },
+]
 
 const ColorPickerCursor: React.FC<ColorPickerCursorProps> = (props) => {
   const {
@@ -123,63 +182,6 @@ const ColorBlock: React.FC<ColorBlockProps> = (props) => {
     />
   )
 }
-
-const defaultColor = [
-  {
-    value: 'rgb(206, 55, 46)'
-  },
-  {
-    value: 'rgb(237, 149, 160)'
-  },
-  {
-    value: 'rgb(252, 238, 239)'
-  },
-  {
-    value: 'rgb(232, 109, 44)'
-  },
-  {
-    value: 'rgb(245, 192, 66)'
-  },
-  {
-    value: 'rgb(238, 209, 103)'
-  },
-  {
-    value: 'rgb(127, 225, 89)'
-  },
-  {
-    value: 'rgb(114, 212, 183)'
-  },
-  {
-    value: 'rgb(135, 214, 230)'
-  },
-  {
-    value: 'rgb(216, 238, 242)'
-  },
-  {
-    value: 'rgb(86, 116, 245)'
-  },
-  {
-    value: 'rgb(103, 98, 192)'
-  },
-  {
-    value: 'rgb(223, 221, 252)'
-  },
-  {
-    value: 'rgb(92, 192, 131)'
-  },
-  {
-    value: 'rgb(210, 90, 182)'
-  },
-  {
-    value: 'rgb(0, 0, 0)'
-  },
-  {
-    value: 'rgba(255, 255, 255, 0.5)'
-  },
-  {
-    value: 'rgb(255, 0, 0)'
-  },
-]
 
 const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const {
@@ -391,14 +393,14 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       window.addEventListener('mouseup', handlePanelUp);
     } else if (type === 'rgb') {
       // 点击色阶柱 -> 更新颜色
-      downX = e.clientX - rect.rgb.left
+      downX = e.clientX - rect.rgb.left + window.scrollX
       updateRgbColor(downX / rect.rgb.width)
       // 移动色阶柱 -> 更新颜色
       window.addEventListener('mousemove', handleRgbMove);
       window.addEventListener('mouseup', handleRgbUp);
     } else {
       // 点击透明度柱 -> 更新颜色
-      downX = e.clientX - rect.a.left
+      downX = e.clientX - rect.a.left + window.scrollX
       updateAColor(downX / rect.a.width)
       // 移动透明度柱 -> 更新颜色
       window.addEventListener('mousemove', handleAMove);
@@ -419,6 +421,55 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     location.rgb.x = currentColor.toHsv().h / 360
     location.a.x = currentColor.getAlpha()
     setLocation({ ...location })
+  }
+
+  // 选择颜色值类型
+  const [colorType, setColorType] = useState('hex')
+  const handleSelect = (val: any) => {
+    setColorType(val)
+  }
+
+  // RGBA 输入框变化时触发
+  const inputChange = (val: string, type: 'r' | 'g' | 'b') => {
+    let currentVal = Number(val)
+    let currentColor = ''
+    if (type === 'r') {
+      rgbVal.r = currentVal
+      currentColor = `rgba(${val}, ${rgbVal.g}, ${rgbVal.b}, ${aValue})`
+    } else if (type === 'g') {
+      rgbVal.g = currentVal
+      currentColor = `rgba(${rgbVal.r}, ${val}, ${rgbVal.b}, ${aValue})`
+    } else {
+      rgbVal.b = currentVal
+      currentColor = `rgba(${rgbVal.r}, ${rgbVal.g}, ${val}, ${aValue})`
+    }
+    setRgbVal({ ...rgbVal })
+
+    const newColor = tinycolor(currentColor)
+    updateColor(currentColor, newColor.getAlpha())
+    // 单独更新色阶
+    hsvVal.h = newColor.toHsv().h
+    setHsvVal({ ...hsvVal })
+    // 更新滑块位置
+    location.panel.x = newColor.toHsv().s
+    location.panel.y = 1 - newColor.toHsv().v
+    location.rgb.x = newColor.toHsv().h / 360
+    location.a.x = newColor.getAlpha()
+    setLocation({ ...location })
+  }
+  const inputChangeR = (val: string) => {
+    inputChange(val, 'r')
+  }
+  const inputChangeG = (val: string) => {
+    inputChange(val, 'g')
+  }
+  const inputChangeB = (val: string) => {
+    inputChange(val, 'b')
+  }
+  const inputChangeA = (val: string) => {
+    let currentVal = Number(val) / 100
+    setAValue(currentVal)
+    updateAColor(currentVal)
   }
 
   return (
@@ -488,11 +539,59 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
           </div>
         </section>
 
-        <section className="i-color-panel-input-container">
-          <input readOnly value={rgbVal.r} type="text" className="i-color-panel-input" placeholder="R" />
-          <input readOnly value={rgbVal.g} type="text" className="i-color-panel-input" placeholder="G" />
-          <input readOnly value={rgbVal.b} type="text" className="i-color-panel-input" placeholder="B" />
-          <input readOnly value={aValue} type="text" className="i-color-panel-input" placeholder="A" />
+        <section className="i-color-panel-values">
+          <Select
+            width={60}
+            value={colorType}
+            size="small"
+            clearable={false}
+            onChange={handleSelect}
+          >
+            <Select.Item value="hex">Hex</Select.Item>
+            <Select.Item value="rgb">RGB</Select.Item>
+          </Select>
+          <div className="i-color-panel-input__wrapper">
+            <Input
+              value={rgbVal.r.toFixed(0)}
+              type="number"
+              size="small"
+              maxNumber={255}
+              minNumber={0}
+              selectAll
+              hideNumberBtn
+              onChange={inputChangeR}
+            />
+            <Input
+              value={rgbVal.g.toFixed(0)}
+              type="number"
+              size="small"
+              maxNumber={255}
+              minNumber={0}
+              selectAll
+              hideNumberBtn
+              onChange={inputChangeG}
+            />
+            <Input
+              value={rgbVal.b.toFixed(0)}
+              type="number"
+              size="small"
+              maxNumber={255}
+              minNumber={0}
+              selectAll
+              hideNumberBtn
+              onChange={inputChangeB}
+            />
+            <Input
+              value={(aValue * 100).toFixed(0)}
+              type="number"
+              size="small"
+              maxNumber={100}
+              minNumber={0}
+              selectAll
+              hideNumberBtn
+              onChange={inputChangeA}
+            />
+          </div>
         </section>
 
         <footer className="i-color-panel-footer">
