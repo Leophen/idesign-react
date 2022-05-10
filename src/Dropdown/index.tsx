@@ -175,6 +175,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
   } = props
 
   const handleItemClick = (item: DropdownOption, event: React.MouseEvent) => {
+    event.stopPropagation()
     !(item.children && item.children?.length > 0) && clickItem?.(item, event)
     item.onClick?.(item, event)
   }

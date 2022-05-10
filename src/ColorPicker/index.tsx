@@ -5,6 +5,7 @@ import tinycolor from 'tinycolor2'
 import Select from '../Select';
 import Input from '../Input';
 import Icon from '../Icon';
+import Popup from '../Popup';
 
 export interface colorListType {
   value: string
@@ -249,19 +250,21 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const rgbBarNode = useRef<HTMLDivElement>(null)
   const aBarNode = useRef<HTMLDivElement>(null)
   useEffect(() => {
-    // 初始化给各节点宽高及位置参数赋值
-    const panelRect = panelNode.current?.getBoundingClientRect()
-    rect.panel.width = panelRect?.width || 0
-    rect.panel.height = panelRect?.height || 0
-    rect.panel.left = panelRect?.left || 0
-    rect.panel.top = panelRect?.top || 0
-    const rgbRect = rgbBarNode.current?.getBoundingClientRect()
-    rect.rgb.width = rgbRect?.width || 0
-    rect.rgb.left = rgbRect?.left || 0
-    const aRect = aBarNode.current?.getBoundingClientRect()
-    rect.a.width = aRect?.width || 0
-    rect.a.left = aRect?.left || 0
-    setRect({ ...rect })
+    // 初始化给各节点宽高及位置参数赋值（popup 打开后再执行）
+    setTimeout(() => {
+      const panelRect = panelNode.current?.getBoundingClientRect()
+      rect.panel.width = panelRect?.width || 0
+      rect.panel.height = panelRect?.height || 0
+      rect.panel.left = panelRect?.left || 0
+      rect.panel.top = panelRect?.top || 0
+      const rgbRect = rgbBarNode.current?.getBoundingClientRect()
+      rect.rgb.width = rgbRect?.width || 0
+      rect.rgb.left = rgbRect?.left || 0
+      const aRect = aBarNode.current?.getBoundingClientRect()
+      rect.a.width = aRect?.width || 0
+      rect.a.left = aRect?.left || 0
+      setRect({ ...rect })
+    })
     // 设置初始滑块位置
     const currentColor = tinycolor(innerValue)
     location.panel.x = currentColor.toHsv().s
@@ -410,6 +413,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       // 点击调色板 -> 更新颜色
       downX = e.clientX - rect.panel.left + window.scrollX
       downY = e.clientY - rect.panel.top + window.scrollY
+      console.log(downX, downY, rect.panel)
       updatePanelColor(downX / rect.panel.width, downY / rect.panel.height)
       // 移动调色板 -> 更新颜色
       window.addEventListener('mousemove', handlePanelMove);
@@ -691,8 +695,13 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       style={{ ...style }}
       {...others}
     >
-      <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
-      <ColorPanel value={value} onChange={handleChange} />
+      <Popup
+        content={<ColorPanel value={value} onChange={handleChange} />}
+        trigger="click"
+        placement='bottom-left'
+      >
+        <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
+      </Popup>
     </div>
   )
 }

@@ -79,6 +79,7 @@ export interface PortalProps {
   left: number
   width: number
   height: number
+  getRef?: (ref: React.Ref<HTMLDivElement>) => void
 }
 
 // 创建气泡提示容器
@@ -97,6 +98,7 @@ const Portal: React.FC<PortalProps> = (props) => {
     visible = false,
     content = '',
     placement = 'top',
+    getRef,
     ...tProps
   } = props
 
@@ -140,6 +142,10 @@ const Portal: React.FC<PortalProps> = (props) => {
   }
 
   const popupRef: any = useRef(null)
+
+  useEffect(() => {
+    getRef?.(popupRef)
+  }, [])
 
   // 更新气泡方向
   const updatePlacement = (currentPlacement: placementType) => {
@@ -284,9 +290,8 @@ const Popup: React.FC<PopupProps> = (props) => {
   // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
   const [listenClick, setListenClick] = useState(false)
   const ifClickInPopup = (e: any) => {
-    const popupNode = document.querySelector('.i-popup')
     // 点击位置在气泡外
-    if (!hasParent(e.target, popupNode as HTMLElement)) {
+    if (!hasParent(e.target, popupRef.current)) {
       // 点击位置既在气泡外 又在触发节点外
       if (!hasParent(e.target, triggerNode.current)) {
         closePopup()
@@ -312,12 +317,16 @@ const Popup: React.FC<PopupProps> = (props) => {
     } return
   }
 
+  const popupRef = useRef(null)
+  const getPopupRef = (ref: any) => {
+    popupRef.current = ref.current
+  }
+
   // 判断点击和右击节点是否在气泡内
   const [listenContextMenu, setListenContextMenu] = useState(false)
   const ifHandleInPopup = (e: any) => {
     e.preventDefault();
-    const popupNode = document.querySelector('.i-popup')
-    if (!hasParent(e.target, popupNode as HTMLElement)) {
+    if (!hasParent(e.target, popupRef.current as any)) {
       closePopup()
       setListenContextMenu(false)
       window.removeEventListener('click', ifHandleInPopup)
@@ -348,8 +357,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   // 判断悬浮节点是否在气泡内
   const ifHoverInPopup = (e: any) => {
     e.preventDefault();
-    const popupNode = document.querySelector('.i-popup')
-    if (!hasParent(e.target, popupNode as HTMLElement)) {
+    if (!hasParent(e.target, popupRef.current)) {
       if (e.target.parentNode !== triggerNode.current) {
         closePopup()
       }
@@ -404,6 +412,7 @@ const Popup: React.FC<PopupProps> = (props) => {
           left={left}
           width={width}
           height={height}
+          getRef={getPopupRef}
         />
       </Transition>
     </div>
