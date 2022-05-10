@@ -117,7 +117,6 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   const textareaRef = useRef(null)
   const resize = () => {
     if (autoSize && textareaRef.current) {
-      console.log((textareaRef.current as HTMLElement).scrollHeight);
       // 如果字数减少，重设高度
       (textareaRef.current as HTMLElement).style.height = 'auto';
       // 如果高度不够，重新设置

@@ -199,7 +199,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const {
     value = '#265CF0',
     colorList,
-    onChange
+    onChange,
+    onClose
   } = props;
 
   // 颜色值
@@ -413,7 +414,6 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       // 点击调色板 -> 更新颜色
       downX = e.clientX - rect.panel.left + window.scrollX
       downY = e.clientY - rect.panel.top + window.scrollY
-      console.log(downX, downY, rect.panel)
       updatePanelColor(downX / rect.panel.width, downY / rect.panel.height)
       // 移动调色板 -> 更新颜色
       window.addEventListener('mousemove', handlePanelMove);
@@ -522,8 +522,13 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
         <div className="i-color-panel-header-txt">
           颜色选择器
         </div>
-        <div className="i-color-panel-header-icon">
-          X
+        <div
+          className="i-color-panel-header-icon"
+          onClick={() => {
+            onClose?.()
+          }}
+        >
+          <Icon name="Close" />
         </div>
       </header>
 
@@ -673,13 +678,15 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   } = props
 
   const [innerValue, setInnerValue] = useState(value)
-
   const [visible, setVisible] = useState(false)
-  const onVisibleChange = setVisible
 
   const handleChange = (val: string) => {
     setInnerValue(val)
     onChange?.(val)
+  }
+
+  const popupChange = (val: boolean) => {
+    setVisible(val)
   }
 
   const handleClose = () => {
@@ -696,9 +703,17 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
       {...others}
     >
       <Popup
-        content={<ColorPanel value={value} onChange={handleChange} />}
+        visible={visible}
+        content={
+          <ColorPanel
+            value={value}
+            onChange={handleChange}
+            onClose={handleClose}
+          />
+        }
         trigger="click"
         placement='bottom-left'
+        onTrigger={popupChange}
       >
         <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
       </Popup>

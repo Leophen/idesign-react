@@ -16,6 +16,28 @@
   color: #333;
 }
 
+.i-color-panel-header-txt {
+  cursor: default;
+}
+
+.i-color-panel-header-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  margin-right: -8px;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+  .i-icon {
+    margin: 0;
+  }
+  &:hover {
+    background: #f3f3f3;
+  }
+}
+
 .i-color-panel-block {
   position: relative;
   width: 240px;
