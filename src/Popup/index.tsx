@@ -147,6 +147,9 @@ const Portal: React.FC<PortalProps> = (props) => {
     getRef?.(popupRef)
   }, [])
 
+  // 重置方向次数限制
+  const rePlaceNum = useRef(0)
+
   // 更新气泡方向
   const updatePlacement = (currentPlacement: placementType) => {
     if (popupRef.current) {
@@ -164,7 +167,7 @@ const Portal: React.FC<PortalProps> = (props) => {
       const popupLeft = rect.left
 
       let result: string = currentPlacement
-      if (popupTop < winHeight && popupLeft < winWidth) {
+      if (popupTop < winHeight && popupLeft < winWidth && rePlaceNum.current < 3) {
         if (direction === 'top' && popupTop < 0) {
           result = 'bottom' + directionWith
         }
@@ -177,6 +180,7 @@ const Portal: React.FC<PortalProps> = (props) => {
         if (direction === 'right' && (winWidth - popupWidth - popupLeft < 0)) {
           result = 'left' + directionWith
         }
+        rePlaceNum.current += 1
       }
 
       setCurrentPlacement(result)

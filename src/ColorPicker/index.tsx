@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import tinycolor from 'tinycolor2'
@@ -21,6 +21,19 @@ export interface ColorPickerProps {
    */
   style?: React.CSSProperties;
   /**
+   * 触发颜色块类名
+   */
+  triggerClassName?: string;
+  /**
+   * 触发颜色块样式
+   */
+  triggerStyle?: React.CSSProperties;
+  /**
+   * 触发颜色块尺寸
+   * @default medium
+   */
+  size?: 'small' | 'medium' | 'large';
+  /**
    * 颜色值
    */
   value?: string;
@@ -32,6 +45,10 @@ export interface ColorPickerProps {
    * 修改颜色值时触发
    */
   onChange?: (val: string) => void
+  /**
+   * 切换颜色面板时触发
+   */
+  onTrigger?: (val: string, visible: boolean) => void
 }
 
 export interface ColorPanelProps extends ColorPickerProps {
@@ -198,13 +215,13 @@ const ColorItem: React.FC<ColorItemProps> = (props) => {
 const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const {
     value = '#265CF0',
-    colorList,
+    colorList = defaultColor,
     onChange,
     onClose
   } = props;
 
   // 颜色值
-  const [innerValue, setInnerValue] = useState(value)
+  const [colorValue, setColorValue] = useState(value)
 
   // 颜色值详细参数
   const [hexVal, setHexVal] = useState(tinycolor(value).toHexString())
@@ -267,7 +284,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       setRect({ ...rect })
     })
     // 设置初始滑块位置
-    const currentColor = tinycolor(innerValue)
+    const currentColor = tinycolor(colorValue)
     location.panel.x = currentColor.toHsv().s
     location.panel.y = 1 - currentColor.toHsv().v
     location.rgb.x = currentColor.toHsv().h / 360
@@ -288,6 +305,14 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       x: 0
     }
   })
+
+  const emitColor = (colorObj: any) => {
+    if (colorType === 'hex') {
+      onChange?.(colorObj.toHexString())
+    } else {
+      onChange?.(colorObj.toRgbString())
+    }
+  }
 
   // 通用更新滑块位置函数
   const updateCursorLocation = (colorObj: any) => {
@@ -316,8 +341,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     currentColor.setAlpha(alpha)
     setAValue(alpha)
 
-    setInnerValue(currentColor.toRgbString())
-    onChange?.(currentColor.toRgbString())
+    setColorValue(currentColor.toRgbString())
+    emitColor(currentColor)
   }
 
   // 传入调色板坐标 -> 更新颜色
@@ -349,7 +374,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   // 传入透明度柱坐标 -> 更新颜色
   const updateAColor = (x: number) => {
     let currentX = Number(x.toFixed(2))
-    updateColor(innerValue, currentX)
+    updateColor(colorValue, currentX)
     // 更新滑块位置
     location.a.x = x
     setLocation({ ...location })
@@ -357,8 +382,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   // 移动调色板
   const handlePanelMove = (e: any) => {
-    let moveX = e.clientX - rect.panel.left + window.scrollX
-    let moveY = e.clientY - rect.panel.top + window.scrollY
+    let moveX = e.clientX - rect.panel.left
+    let moveY = e.clientY - rect.panel.top
     const maxX = rect.panel.width
     const maxY = rect.panel.height
     const minX = 0
@@ -377,7 +402,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   // 移动色阶柱
   const handleRgbMove = (e: any) => {
-    let moveX = e.clientX - rect.rgb.left + window.scrollX
+    let moveX = e.clientX - rect.rgb.left
     const maxX = rect.rgb.width
     const minX = 0
     moveX < (minX) && (moveX = (minX))
@@ -392,7 +417,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   // 移动透明度柱
   const handleAMove = (e: any) => {
-    let moveX = e.clientX - rect.a.left + window.scrollX
+    let moveX = e.clientX - rect.a.left
     const maxX = rect.a.width
     const minX = 0
     moveX < (minX) && (moveX = (minX))
@@ -412,22 +437,22 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     setHandleStatus(true)
     if (type === 'panel') {
       // 点击调色板 -> 更新颜色
-      downX = e.clientX - rect.panel.left + window.scrollX
-      downY = e.clientY - rect.panel.top + window.scrollY
+      downX = e.clientX - rect.panel.left
+      downY = e.clientY - rect.panel.top
       updatePanelColor(downX / rect.panel.width, downY / rect.panel.height)
       // 移动调色板 -> 更新颜色
       window.addEventListener('mousemove', handlePanelMove);
       window.addEventListener('mouseup', handlePanelUp);
     } else if (type === 'rgb') {
       // 点击色阶柱 -> 更新颜色
-      downX = e.clientX - rect.rgb.left + window.scrollX
+      downX = e.clientX - rect.rgb.left
       updateRgbColor(downX / rect.rgb.width)
       // 移动色阶柱 -> 更新颜色
       window.addEventListener('mousemove', handleRgbMove);
       window.addEventListener('mouseup', handleRgbUp);
     } else {
       // 点击透明度柱 -> 更新颜色
-      downX = e.clientX - rect.a.left + window.scrollX
+      downX = e.clientX - rect.a.left
       updateAColor(downX / rect.a.width)
       // 移动透明度柱 -> 更新颜色
       window.addEventListener('mousemove', handleAMove);
@@ -545,7 +570,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
         <ColorCursor
           x={location.panel.x}
           y={location.panel.y}
-          color={innerValue}
+          color={colorValue}
         />
       </section>
 
@@ -659,8 +684,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       </section>
 
       <footer className="i-color-panel-footer">
-        {defaultColor.map(item =>
-          <ColorItem color={item.value} key={item.value} onClick={() => handleUsualUpdate(item.value)} />
+        {colorList.map(item =>
+          <ColorItem color={item?.value} key={item?.value} onClick={() => handleUsualUpdate(item?.value)} />
         )}
       </footer>
     </div>
@@ -671,27 +696,52 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const {
     className,
     style,
+    triggerClassName,
+    triggerStyle,
+    size,
     value = '#265CF0',
     colorList = defaultColor,
     onChange,
+    onTrigger,
     ...others
   } = props
 
   const [innerValue, setInnerValue] = useState(value)
   const [visible, setVisible] = useState(false)
 
+  useEffect(() => {
+    setInnerValue(value)
+  }, [value])
+
+  const currentColor = useRef(innerValue)
   const handleChange = (val: string) => {
     setInnerValue(val)
+    currentColor.current = val
     onChange?.(val)
   }
 
   const popupChange = (val: boolean) => {
+    if (val) {
+      document.documentElement.style.overflowY = 'hidden';
+    } else {
+      document.documentElement.style.overflowY = '';
+    }
     setVisible(val)
+    onTrigger?.(currentColor.current, val)
   }
 
   const handleClose = () => {
     setVisible(false)
   }
+
+  const colorPanel = useMemo(() =>
+    <ColorPanel
+      value={innerValue}
+      colorList={colorList}
+      onChange={handleChange}
+      onClose={handleClose}
+    />, [visible]
+  )
 
   return (
     <div
@@ -704,18 +754,19 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     >
       <Popup
         visible={visible}
-        content={
-          <ColorPanel
-            value={value}
-            onChange={handleChange}
-            onClose={handleClose}
-          />
-        }
+        content={colorPanel}
         trigger="click"
         placement='bottom-left'
         onTrigger={popupChange}
       >
-        <div className="i-color" style={{ width: 50, height: 50, background: innerValue }}></div>
+        <div
+          className={classNames(
+            'i-color',
+            size && `i-color--size-${size}`,
+            triggerClassName
+          )}
+          style={{ ...triggerStyle, background: innerValue }}
+        ></div>
       </Popup>
     </div>
   )
