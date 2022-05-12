@@ -308,7 +308,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   const emitColor = (colorObj: any) => {
     if (colorType === 'hex') {
-      onChange?.(colorObj.toHexString())
+      onChange?.(colorObj.toHex8String())
     } else {
       onChange?.(colorObj.toRgbString())
     }
@@ -732,6 +732,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
 
   const handleClose = () => {
     setVisible(false)
+    onTrigger?.(currentColor.current, false)
   }
 
   const colorPanel = useMemo(() =>
