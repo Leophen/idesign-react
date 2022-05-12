@@ -159,19 +159,25 @@ const ColorCursor: React.FC<ColorCursorProps> = (props) => {
     y: 0
   })
 
-  useEffect(() => {
-    // 限制边界值
-    const parentWidth = cursor.current.parentNode.clientWidth
-    const parentHeight = cursor.current.parentNode.clientHeight
+  const [parent, setParent] = useState({
+    width: 0,
+    height: 0
+  })
 
-    // 初始位置
+  useEffect(() => {
+    parent.width = cursor.current.parentNode.clientWidth
+    parent.height = cursor.current.parentNode.clientHeight
+    setParent({ ...parent })
+  }, [])
+
+  useEffect(() => {
     if (mode === 'x') {
-      translate.x = x * (parentWidth - 12)
+      translate.x = x * (parent.width - 12)
     } else if (mode === 'y') {
-      translate.y = y * (parentHeight - 12)
+      translate.y = y * (parent.height - 12)
     } else {
-      translate.x = (x * parentWidth) - 6
-      translate.y = (y * parentHeight) - 6
+      translate.x = (x * parent.width) - 6
+      translate.y = (y * parent.height) - 6
     }
     setTranslate({ ...translate })
   }, [x, y])
@@ -221,31 +227,26 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   } = props;
 
   // 颜色值
-  const [colorValue, setColorValue] = useState(value)
-
-  // 颜色值详细参数
-  const [hexVal, setHexVal] = useState(tinycolor(value).toHexString())
-  const [rgbVal, setRgbVal] = useState({
+  const [colors, setColors] = useState({
+    rgbVal: tinycolor(value).toRgbString(),
+    hexVal: tinycolor(value).toHexString(),
     r: tinycolor(value).toRgb().r,
     g: tinycolor(value).toRgb().g,
-    b: tinycolor(value).toRgb().b
-  })
-  const [hsvVal, setHsvVal] = useState({
+    b: tinycolor(value).toRgb().b,
     h: tinycolor(value).toHsv().h,
     s: tinycolor(value).toHsv().s,
-    v: tinycolor(value).toHsv().v
+    v: tinycolor(value).toHsv().v,
+    a: tinycolor(value).getAlpha()
   })
-  const [aValue, setAValue] = useState(tinycolor(value).getAlpha())
 
   // 是否为移动状态
-  const [handleStatus, setHandleStatus] = useState(false)
-  useEffect(() => {
-    if (handleStatus) {
+  const handleMoving = (ifMoving: boolean) => {
+    if (ifMoving) {
       document.body.style.userSelect = 'none'
     } else {
       document.body.style.userSelect = ''
     }
-  }, [handleStatus])
+  }
 
   // 调色板、色阶柱、透明度柱 节点宽高位置
   const [rect, setRect] = useState({
@@ -284,7 +285,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       setRect({ ...rect })
     })
     // 设置初始滑块位置
-    const currentColor = tinycolor(colorValue)
+    const currentColor = tinycolor(colors.rgbVal)
     location.panel.x = currentColor.toHsv().s
     location.panel.y = 1 - currentColor.toHsv().v
     location.rgb.x = currentColor.toHsv().h / 360
@@ -306,49 +307,45 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     }
   })
 
-  const emitColor = (colorObj: any) => {
+  const emitColor = (tinyObj: any) => {
     if (colorType === 'hex') {
-      onChange?.(colorObj.toHex8String())
+      onChange?.(tinyObj.toHex8String())
     } else {
-      onChange?.(colorObj.toRgbString())
+      onChange?.(tinyObj.toRgbString())
     }
   }
 
   // 通用更新滑块位置函数
-  const updateCursorLocation = (colorObj: any) => {
-    location.panel.x = colorObj.toHsv().s
-    location.panel.y = 1 - colorObj.toHsv().v
-    location.rgb.x = colorObj.toHsv().h / 360
-    location.a.x = colorObj.getAlpha()
+  const updateCursorLocation = (tinyObj: any) => {
+    location.panel.x = tinyObj.toHsv().s
+    location.panel.y = 1 - tinyObj.toHsv().v
+    location.rgb.x = tinyObj.toHsv().h / 360
+    location.a.x = tinyObj.getAlpha()
     setLocation({ ...location })
   }
 
   // 传入一种颜色值 -> 更新全部颜色值
   const updateColor = (color: string, alpha: number) => {
-    const currentColor = tinycolor(color)
+    const tinyObj = tinycolor(color)
+    tinyObj.setAlpha(alpha)
 
-    setHexVal(currentColor.toHexString())
+    colors.rgbVal = tinyObj.toRgbString()
+    colors.hexVal = tinyObj.toHexString()
+    colors.r = tinyObj.toRgb().r
+    colors.g = tinyObj.toRgb().g
+    colors.b = tinyObj.toRgb().b
+    colors.s = tinyObj.toHsv().s
+    colors.v = tinyObj.toHsv().v
+    colors.a = alpha
 
-    rgbVal.r = currentColor.toRgb().r
-    rgbVal.g = currentColor.toRgb().g
-    rgbVal.b = currentColor.toRgb().b
-    setRgbVal({ ...rgbVal })
-
-    hsvVal.s = currentColor.toHsv().s
-    hsvVal.v = currentColor.toHsv().v
-    setHsvVal({ ...hsvVal })
-
-    currentColor.setAlpha(alpha)
-    setAValue(alpha)
-
-    setColorValue(currentColor.toRgbString())
-    emitColor(currentColor)
+    setColors({ ...colors })
+    emitColor(tinyObj)
   }
 
   // 传入调色板坐标 -> 更新颜色
   const updatePanelColor = (x: number, y: number) => {
-    const hsv = `hsv(${hsvVal.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
-    updateColor(hsv, aValue)
+    const hsv = `hsv(${colors.h.toFixed(0)}, ${(x * 100).toFixed(0)}%, ${((1 - y) * 100).toFixed(0)}%)`
+    updateColor(hsv, colors.a)
     // 更新滑块位置
     location.panel.x = x
     location.panel.y = y
@@ -361,11 +358,11 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     currentX === 1 && (currentX = 0)  // 左右极限值去重
     const currentHue = Math.round((currentX) * 360 * 100) / 100
     // 单独更新色阶
-    hsvVal.h = currentHue
-    setHsvVal({ ...hsvVal })
+    colors.h = currentHue
+    setColors({ ...colors })
     // 更新全部颜色
-    const hsv = `hsv(${currentHue}, ${hsvVal.s}, ${hsvVal.v})`
-    updateColor(hsv, aValue)
+    const hsv = `hsv(${currentHue}, ${colors.s}, ${colors.v})`
+    updateColor(hsv, colors.a)
     // 更新滑块位置
     location.rgb.x = x
     setLocation({ ...location })
@@ -374,7 +371,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   // 传入透明度柱坐标 -> 更新颜色
   const updateAColor = (x: number) => {
     let currentX = Number(x.toFixed(2))
-    updateColor(colorValue, currentX)
+    updateColor(colors.rgbVal, currentX)
     // 更新滑块位置
     location.a.x = x
     setLocation({ ...location })
@@ -395,7 +392,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     updatePanelColor(moveX / maxX, moveY / maxY)
   }
   const handlePanelUp = () => {
-    setHandleStatus(false)
+    handleMoving(false)
     window.removeEventListener('mousemove', handlePanelMove);
     window.removeEventListener('mouseup', handlePanelUp);
   };
@@ -410,7 +407,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     updateRgbColor(moveX / maxX)
   }
   const handleRgbUp = () => {
-    setHandleStatus(false)
+    handleMoving(false)
     window.removeEventListener('mousemove', handleRgbMove);
     window.removeEventListener('mouseup', handleRgbUp);
   };
@@ -425,7 +422,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     updateAColor(moveX / maxX)
   }
   const handleAUp = () => {
-    setHandleStatus(false)
+    handleMoving(false)
     window.removeEventListener('mousemove', handleAMove);
     window.removeEventListener('mouseup', handleAUp);
   };
@@ -434,7 +431,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     e.persist();
     let downX = 0
     let downY = 0
-    setHandleStatus(true)
+    handleMoving(true)
     if (type === 'panel') {
       // 点击调色板 -> 更新颜色
       downX = e.clientX - rect.panel.left
@@ -465,8 +462,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     const currentColor = tinycolor(val)
     updateColor(val, currentColor.getAlpha())
     // 单独更新色阶
-    hsvVal.h = currentColor.toHsv().h
-    setHsvVal({ ...hsvVal })
+    colors.h = currentColor.toHsv().h
+    setColors({ ...colors })
     // 更新滑块位置
     updateCursorLocation(currentColor)
   }
@@ -482,16 +479,16 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     let currentVal = Number(val)
     let color = ''
     if (type === 'r') {
-      rgbVal.r = currentVal
-      color = `rgba(${val}, ${rgbVal.g}, ${rgbVal.b}, ${aValue})`
+      colors.r = currentVal
+      color = `rgba(${val}, ${colors.g}, ${colors.b}, ${colors.a})`
     } else if (type === 'g') {
-      rgbVal.g = currentVal
-      color = `rgba(${rgbVal.r}, ${val}, ${rgbVal.b}, ${aValue})`
+      colors.g = currentVal
+      color = `rgba(${colors.r}, ${val}, ${colors.b}, ${colors.a})`
     } else {
-      rgbVal.b = currentVal
-      color = `rgba(${rgbVal.r}, ${rgbVal.g}, ${val}, ${aValue})`
+      colors.b = currentVal
+      color = `rgba(${colors.r}, ${colors.g}, ${val}, ${colors.a})`
     }
-    setRgbVal({ ...rgbVal })
+    setColors({ ...colors })
     handleUsualUpdate(color)
   }
   const inputChangeR = (val: string) => {
@@ -505,7 +502,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   }
   const inputChangeA = (val: string) => {
     let currentVal = Number(val) / 100
-    setAValue(currentVal)
+    colors.a = currentVal
+    setColors({ ...colors })
     updateAColor(currentVal)
   }
 
@@ -514,20 +512,22 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     hexBackup.current = val
   }
   const inputChangeHex = (val: string) => {
-    setHexVal(val)
+    colors.hexVal = val
+    setColors({ ...colors })
   }
   const inputBlurHex = (val: string) => {
     const currentColor = tinycolor(val)
-    currentColor.setAlpha(aValue)
+    currentColor.setAlpha(colors.a)
     if (currentColor.isValid()) {
-      updateColor(val, aValue)
+      updateColor(val, colors.a)
       // 单独更新色阶
-      hsvVal.h = currentColor.toHsv().h
-      setHsvVal({ ...hsvVal })
+      colors.h = currentColor.toHsv().h
+      setColors({ ...colors })
       // 更新滑块位置
       updateCursorLocation(currentColor)
     } else {
-      setHexVal(hexBackup.current)
+      colors.hexVal = hexBackup.current
+      setColors({ ...colors })
     }
   }
 
@@ -559,7 +559,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
       <section
         className="i-color-panel-block"
-        style={{ background: `hsl(${hsvVal.h}, 100%, 50%)` }}
+        style={{ background: `hsl(${colors.h}, 100%, 50%)` }}
       >
         <div className="i-color-panel-block__white" />
         <div
@@ -570,7 +570,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
         <ColorCursor
           x={location.panel.x}
           y={location.panel.y}
-          color={colorValue}
+          color={colors.rgbVal}
         />
       </section>
 
@@ -607,7 +607,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
             />
             <section
               className="i-color-panel-bar__a-color"
-              style={{ background: `linear-gradient(90deg, rgba(255, 0, 0, 0) 0%, hsl(${hsvVal.h}, 100%, 50%) 100%)` }}
+              style={{ background: `linear-gradient(90deg, rgba(255, 0, 0, 0) 0%, hsl(${colors.h}, 100%, 50%) 100%)` }}
             />
             <section className="i-color-panel-bar__a-bg"></section>
           </div>
@@ -629,14 +629,14 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
           <div className="i-color-panel-input__class">
             {colorType === 'hex' ?
               <Input
-                value={hexVal}
+                value={colors.hexVal}
                 size="small"
                 onFocus={inputFocusHex}
                 onChange={inputChangeHex}
                 onBlur={inputBlurHex}
               /> : <>
                 <Input
-                  value={rgbVal.r.toFixed(0)}
+                  value={colors.r.toFixed(0)}
                   type="number"
                   size="small"
                   maxNumber={255}
@@ -646,7 +646,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
                   onChange={inputChangeR}
                 />
                 <Input
-                  value={rgbVal.g.toFixed(0)}
+                  value={colors.g.toFixed(0)}
                   type="number"
                   size="small"
                   maxNumber={255}
@@ -656,7 +656,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
                   onChange={inputChangeG}
                 />
                 <Input
-                  value={rgbVal.b.toFixed(0)}
+                  value={colors.b.toFixed(0)}
                   type="number"
                   size="small"
                   maxNumber={255}
@@ -670,7 +670,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
           </div>
           <div className="i-color-panel-input__alpha">
             <Input
-              value={(aValue * 100).toFixed(0)}
+              value={(colors.a * 100).toFixed(0)}
               type="number"
               size="small"
               maxNumber={100}
