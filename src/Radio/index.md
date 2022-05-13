@@ -282,17 +282,7 @@ export default App;
 
 ## Radio API
 
-| 属性 | 说明 | 类型 | 默认值 |
-| --- | --- | --- | --- |
-| children | 按钮内容 | `ReactNode` | `--` |
-| className | 类名 | `string` | `--` |
-| style | 自定义样式 | `CSSProperties` | `--` |
-| type | 单选框类型 | `"radio"〡"radio-button"` | `"radio"` |
-| size | 按钮单选框尺寸 | `"small"〡"medium"〡"large"` | `"medium"` |
-| value | 单选框的值 | `string〡number` | `--` |
-| checked | 是否选中 | `boolean` | `false` |
-| disabled | 是否禁用组件 | `boolean` | `false` |
-| onChange | 值变化时触发 | `(checked: boolean, context: React.ChangeEvent<HTMLInputElement>) => void` | `--` |
+<API hideTitle />
 
 ## RadioGroup API
 

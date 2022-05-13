@@ -99,4 +99,4 @@ const App = () => {
 export default App
 ```
 
-<API src="./index.tsx"></API>
+<API />

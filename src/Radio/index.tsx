@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import useDefault from '../hooks/useDefault';
 
 export interface RadioGroupProps {
   /**
@@ -141,7 +142,15 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
   const context = useContext(RadioContext);
   const newProps = context ? context.inject(props) : props;
 
-  const { children = '', className, style, checked = false, value, onChange, ...others } = newProps;
+  const {
+    children = '',
+    className,
+    style,
+    checked = false,
+    value,
+    onChange,
+    ...others
+  } = newProps;
 
   const type = newProps.type || props.type || 'radio';
   const size = newProps.size || props.size;
