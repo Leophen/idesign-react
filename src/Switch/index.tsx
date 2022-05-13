@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import useDefault from '../hooks/useDefault';
 import Icon from '../Icon';
 
 export interface SwitchProps {
@@ -45,13 +46,17 @@ export interface SwitchProps {
   loading?: boolean;
   /**
    * 开关值
+   */
+  value?: boolean;
+  /**
+   * 开关默认值
    * @default false
    */
-  value?: string | number | boolean;
+  defaultValue?: boolean;
   /**
    * 切换开关时触发
    */
-  onChange?: (value: string | number | boolean) => void;
+  onChange?: (value: boolean) => void;
 }
 
 const Switch: React.FC<SwitchProps> = (props) => {
@@ -65,20 +70,18 @@ const Switch: React.FC<SwitchProps> = (props) => {
     activeColor,
     inactiveLabel,
     activeLabel,
-    value = false,
-    onChange,
+    value,
+    defaultValue = false,
+    onChange = () => { },
     ...others
   } = props;
 
-  const [innerChecked, setInnerChecked] = useState(value);
-
-  useEffect(() => {
-    setInnerChecked(value);
-  }, [value]);
+  const [innerChecked, setInnerChecked] = useDefault(value, defaultValue, onChange);
 
   const handleSwitch = () => {
     if (disabled || loading) return;
     const changedValue = !innerChecked;
+    setInnerChecked(changedValue)
     onChange?.(changedValue);
   };
 

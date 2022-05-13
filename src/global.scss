@@ -125,7 +125,7 @@ $theme_color2: #3998ff;
   font-size: 18px !important;
   h1,
   h2 {
-    color: #515151 !important;
+    color: #515151;
     font-weight: 700 !important;
     font-size: 32px !important;
   }
@@ -233,8 +233,9 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-demo {
   padding: 40px !important;
-  h3 {
-    color: #515151 !important;
+  h3,
+  h4 {
+    color: #515151;
     font-weight: 700 !important;
   }
 }

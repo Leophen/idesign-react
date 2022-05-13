@@ -31,6 +31,7 @@ const App = () => {
   return (
     <div className="idesign-demo-block-row">
       <Switch />
+      <Switch value={checked} />
       <Switch value={checked} onChange={handleChange} />
     </div>
   );
