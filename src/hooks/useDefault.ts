@@ -8,7 +8,7 @@ export interface ChangeHandler<T, P extends any[]> {
 export default function useDefault<T, P extends any[]>(
   value: T | undefined,
   defaultValue: T,
-  onChange: ChangeHandler<T, P>,
+  onChange: ChangeHandler<T, P> | any,
 ): [T, ChangeHandler<T, P>] {
   // 无论是否受控，都要 useState，因为 Hooks 是无条件的
   const [internalValue, setInternalValue] = useState(defaultValue);

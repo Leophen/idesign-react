@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, useMemo } from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import useDefault from '../hooks/useDefault';
 import tinycolor from 'tinycolor2'
 import Select from '../Select';
 import Input from '../Input';
@@ -37,6 +38,11 @@ export interface ColorPickerProps {
    * 颜色值
    */
   value?: string;
+  /**
+   * 默认颜色值
+   * @default #265CF0
+   */
+  defaultValue?: string;
   /**
    * 默认可选值
    */
@@ -699,19 +705,16 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     triggerClassName,
     triggerStyle,
     size,
-    value = '#265CF0',
+    value,
+    defaultValue = '#265CF0',
     colorList = defaultColor,
     onChange,
     onTrigger,
     ...others
   } = props
 
-  const [innerValue, setInnerValue] = useState(value)
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
   const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    setInnerValue(value)
-  }, [value])
 
   const currentColor = useRef(innerValue)
   const handleChange = (val: string) => {
