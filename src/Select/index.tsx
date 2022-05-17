@@ -13,6 +13,10 @@ export interface SelectProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 自定义样式
    */
   style?: React.CSSProperties;
@@ -82,8 +86,15 @@ export interface SelectProps {
   onChange?: (value: string | number | Array<string | number>) => void;
 }
 
+export interface SelectItemProps {
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
+}
 
-const SelectItem: React.FC = (props) => {
+
+const SelectItem: React.FC<SelectItemProps> = (props) => {
   const { children } = props;
   return (
     <>{children}</>

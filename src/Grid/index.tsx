@@ -13,6 +13,10 @@ export interface GridProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 栅格每一项间的间隔
    */
   gutter?: number;
@@ -36,6 +40,10 @@ export interface GridItemProps {
    * 类名
    */
   className?: string;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
   /**
    * 栅格每一项间的间隔
    */

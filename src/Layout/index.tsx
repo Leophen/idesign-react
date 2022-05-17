@@ -8,6 +8,10 @@ export interface UsualProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 组件自定义样式
    */
   style?: React.CSSProperties;

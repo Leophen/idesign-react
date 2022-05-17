@@ -13,6 +13,10 @@ export interface ButtonProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 是否禁用按钮
    * @default false
    */

@@ -9,6 +9,10 @@ export interface TagProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 自定义样式
    */
   style?: React.CSSProperties;

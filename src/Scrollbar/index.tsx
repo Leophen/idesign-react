@@ -4,6 +4,10 @@ import Transition from '../Transition';
 
 interface ScrollbarProps {
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 滚动容器高度
    */
   height?: number | string;

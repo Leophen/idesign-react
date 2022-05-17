@@ -9,6 +9,10 @@ export interface RadioGroupProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 自定义样式
    */
   style?: React.CSSProperties;
@@ -41,6 +45,10 @@ export interface RadioProps {
    * 类名
    */
   className?: string;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
   /**
    * 自定义样式
    */

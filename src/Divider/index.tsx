@@ -13,6 +13,10 @@ export interface DividerProps {
    */
   className?: string;
   /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
    * 是否为虚线
    * @default false
    */

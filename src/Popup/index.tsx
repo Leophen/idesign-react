@@ -20,9 +20,17 @@ type placementType =
 
 export interface PopupProps {
   /**
-   * 气泡类名
+   * 包裹层类名
    */
   className?: string;
+  /**
+   * 内容
+   */
+  children?: React.ReactNode;
+  /**
+   * 弹窗内容类名
+   */
+  portalClassName?: string;
   /**
    * 气泡样式
    */
@@ -223,6 +231,7 @@ const Popup: React.FC<PopupProps> = (props) => {
   const {
     children = '',
     className,
+    portalClassName = '',
     style,
     content,
     placement = 'top',
@@ -261,13 +270,15 @@ const Popup: React.FC<PopupProps> = (props) => {
   // 打开气泡通用方法
   const switchPopup = (e: React.MouseEvent, show: boolean) => {
     // 设置气泡位置
-    let currentTriggerNode: any = e.target
-    while (currentTriggerNode?.parentNode === (triggerNode.current as unknown as HTMLElement).children[0]) {
-      currentTriggerNode = currentTriggerNode?.parentNode
-    }
-    if (currentTriggerNode === triggerNode.current) {
-      currentTriggerNode = currentTriggerNode.children[0]
-    }
+    // let currentTriggerNode: any = e.target
+    // while (currentTriggerNode?.parentNode === (triggerNode.current as unknown as HTMLElement).children[0]) {
+    //   currentTriggerNode = currentTriggerNode?.parentNode
+    // }
+    // if (currentTriggerNode === triggerNode.current) {
+    //   currentTriggerNode = currentTriggerNode.children[0]
+    // }
+    // console.log(currentTriggerNode.parentNode,triggerNode.current.children[0])
+    const currentTriggerNode = (triggerNode.current as any).children[0]
     if (show) {
       e.persist();
       setTargetLocation((currentTriggerNode))
@@ -390,7 +401,12 @@ const Popup: React.FC<PopupProps> = (props) => {
   }, [])
 
   return (
-    <div className='i-popup__reference'>
+    <div
+      className={classNames(
+        'i-popup__reference',
+        className
+      )}
+    >
       <section
         onClick={handleClick}
         onMouseEnter={handleEnter}
@@ -408,7 +424,7 @@ const Popup: React.FC<PopupProps> = (props) => {
       >
         <Portal
           style={{ ...style }}
-          className={className}
+          className={portalClassName}
           visible={innerVisible && !disabled}
           content={content}
           placement={placement}
