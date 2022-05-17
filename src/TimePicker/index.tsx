@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import _ from 'lodash';
@@ -13,17 +13,17 @@ export interface TimePickerProps {
    */
   className?: string;
   /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
    * 自定义样式
    */
   style?: React.CSSProperties;
   /**
-   * 选中的时间值
+   * 时间值
    */
-  value?: string;
+  value?: {
+    hour: string;
+    minute: string;
+    second: string;
+  };
   /**
    * 菜单触发方式
    * @default click
@@ -37,7 +37,7 @@ export interface TimePickerProps {
   /**
    * 选中时间变化时触发
    */
-  onChange?: (value: string) => void;
+  onChange?: (value: TimesType) => void;
   /**
    * 切换时间面板时触发
    */
@@ -50,6 +50,25 @@ export interface TimePanelProps {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * 占位符
+   * @default ''
+   */
+  placeholder?: string;
+  /**
+   * 尺寸
+   * @default medium
+   */
+  size?: 'small' | 'medium' | 'large';
+  /**
+   * 选中值
+   */
+  value?: TimesType;
+  /**
+   * 时间间隔步数，数组排列 [小时, 分钟, 秒]，示例：[2, 1, 1] 或者 ['2', '1', '1']
+   * @default () => [1, 1, 1]
+   */
+  steps?: Array<string | number>;
   /**
    * 禁用时间项
    */
@@ -65,32 +84,21 @@ export interface TimePanelProps {
    */
   hideDisabledTime?: boolean;
   /**
-   * 占位符
-   * @default ''
+   * 点击此刻按钮时触发
    */
-  placeholder?: string;
-  /**
-   * 尺寸
-   * @default medium
-   */
-  size?: 'small' | 'medium' | 'large';
-  /**
-   * 时间间隔步数，数组排列 [小时, 分钟, 秒]，示例：[2, 1, 1] 或者 ['2', '1', '1']
-   * @default () => [1, 1, 1]
-   */
-  steps?: Array<string | number>;
-  /**
-   * 选中值
-   */
-  value?: TimesType;
+  onNow?: () => void;
   /**
    * 选中值发生变化时触发
    */
-  onChange?: (type: string, value: string, index: number) => void;
+  onChange?: (type: string, value: string) => void;
   /**
    * 面板关闭时触发
    */
   onClose?: (visible: boolean) => void;
+  /**
+   * 点击确认按钮时触发
+   */
+  onConfirm?: () => void;
 }
 
 export interface TimesType {
@@ -118,13 +126,15 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     steps = DEFAULT_STEPS,
     hideDisabledTime = true,
     disableTime,
+    onNow = () => { },
     onChange = () => { },
-    onClose = () => { }
+    onClose = () => { },
+    onConfirm = () => { }
   } = props
 
   const [cols, setCols] = useState<Array<EPickerCols>>([]);
 
-  // 渲染时间数据
+  // 初始化 -> 渲染时间数据
   useEffect(() => {
     const match = format.match(/(a\s+|A\s+)?(h+|H+)?:?(m+)?:?(s+)?(\s+a|\s+A)?/);
     const [, startCol, hourCol, minuteCol, secondCol, endCol] = match as any;
@@ -179,17 +189,45 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     [steps, format, hideDisabledTime, dayjsValue, disableTime],
   );
 
-  const [selectedItem, setSelectedItem] = useState<any>(value)
-
-  const clickItem = (e: React.MouseEvent, type: string, val: string, index: number) => {
-    const barNode = (e.target as HTMLElement).parentNode;
-    (barNode as HTMLElement).scrollTo({
-      top: 32 * index,
-      behavior: 'smooth'
+  // 同步滚动
+  const hourPanelRef = useRef<any>(null)
+  const minutePanelRef = useRef<any>(null)
+  const secondPanelRef = useRef<any>(null)
+  const getRef = (type: string) => {
+    let ref = secondPanelRef
+    type === 'hour' && (ref = hourPanelRef);
+    type === 'minute' && (ref = minutePanelRef);
+    return ref
+  }
+  const updateScroll = (mode?: string) => {
+    hourPanelRef.current && hourPanelRef.current.scrollTo({
+      top: 32 * Number(value.hour),
+      behavior: mode
     });
-    selectedItem[type] = index
-    setSelectedItem({ ...selectedItem })
-    onChange?.(type, val, index)
+    minutePanelRef.current && minutePanelRef.current.scrollTo({
+      top: 32 * Number(value.minute),
+      behavior: mode
+    });
+    secondPanelRef.current && secondPanelRef.current.scrollTo({
+      top: 32 * Number(value.second),
+      behavior: mode
+    });
+  }
+  useEffect(() => {
+    setTimeout(() => {
+      updateScroll()
+    })
+  }, []);
+  useEffect(() => {
+    updateScroll('smooth')
+  }, [value]);
+
+  const clickItem = (type: string, val: string) => {
+    onChange?.(type, val)
+  }
+
+  const handleNow = () => {
+    onNow?.()
   }
 
   const closePanel = () => {
@@ -198,28 +236,30 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
 
   const handleConfirm = () => {
     closePanel()
+    onConfirm?.()
   }
-
-  console.log(value,selectedItem)
 
   return (
     <div
       className="i-time-panel"
     >
-      <section className="i-time-panel-content">
+      <section
+        className="i-time-panel-content"
+      >
         {cols.map((col, index) => (
           <ul
             className="i-time-panel-item"
             key={col + index}
+            ref={getRef(col)}
           >
-            {getColList(col).map((item, idx) => (
+            {getColList(col).map(item => (
               <li
                 className={classNames(
                   'i-time-spinner-item',
-                  selectedItem[col] === idx && 'i-time-spinner-item__selected'
+                  Number((value as any)[col]) === Number(item) && 'i-time-spinner-item__selected'
                 )}
                 key={item}
-                onClick={(e) => clickItem(e, col, item, idx)}
+                onClick={(e) => clickItem(col, item)}
               >
                 {item}
               </li>
@@ -228,7 +268,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
         ))}
       </section>
       <footer className="i-time-panel-footer">
-        <Button size="small" variant="text">此刻</Button>
+        <Button size="small" variant="text" onClick={handleNow}>此刻</Button>
         <div className="i-time-panel-footer__handle">
           <Button size="small" variant="outline" onClick={closePanel}>取消</Button>
           <Button size="small" onClick={handleConfirm}>确认</Button>
@@ -240,7 +280,6 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
 
 const TimePicker: React.FC<TimePickerProps> = (props) => {
   const {
-    children = '',
     className,
     style,
     value,
@@ -250,39 +289,81 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     onTrigger = () => { }
   } = props;
 
-  const [innerValue, setInnerValue] = useState<any>({
-    hour: '00',
-    minute: '00',
-    second: '00'
+  const getCurrentTime = (type?: string) => {
+    let currentVal = new Date().getHours().toString()
+    type === 'minute' && (currentVal = new Date().getMinutes().toString());
+    type === 'second' && (currentVal = new Date().getSeconds().toString());
+    (currentVal.length === 1) && (currentVal = '0' + currentVal);
+    return currentVal
+  }
+
+  const [innerValue, setInnerValue] = useState<any>(value ? value : {
+    hour: getCurrentTime('hour'),
+    minute: getCurrentTime('minute'),
+    second: getCurrentTime('second')
   })
 
+  const updateValue = (val?: TimesType) => {
+    if (val) {
+      setInnerValue(val)
+      onChange?.(val)
+    } else {
+      setInnerValue({ ...innerValue })
+      onChange?.(innerValue)
+    }
+  }
+
   const inputChangeHour = (val: string) => {
+    (val.length === 1) && (val = '0' + val);
     innerValue.hour = val
-    setInnerValue({ ...innerValue })
+    updateValue()
   }
 
   const inputChangeMinute = (val: string) => {
+    (val.length === 1) && (val = '0' + val);
     innerValue.minute = val
-    setInnerValue({ ...innerValue })
+    updateValue()
   }
 
   const inputChangeSecond = (val: string) => {
+    (val.length === 1) && (val = '0' + val);
     innerValue.second = val
-    setInnerValue({ ...innerValue })
+    updateValue()
+  }
+
+  const selectTime = (type: string, val: string) => {
+    innerValue[type] = val
+    updateValue()
   }
 
   const [popupVisible, setPopupVisible] = useState(false)
-
   const switchPopup = (visible: boolean) => {
     setPopupVisible(visible)
     onTrigger?.(visible)
   }
 
-  const selectTime = (type: string, val: string, index: number) => {
-    innerValue[type] = val
-    setInnerValue({ ...innerValue })
-    console.log(innerValue, type, val, index)
+  const handleNow = () => {
+    updateValue({
+      hour: getCurrentTime('hour'),
+      minute: getCurrentTime('minute'),
+      second: getCurrentTime('second')
+    })
   }
+
+  const handleConfirm = () => {
+    switchPopup(false)
+    updateValue()
+  }
+
+  const timePanel = useMemo(() =>
+    <TimePanel
+      value={innerValue}
+      onNow={handleNow}
+      onClose={switchPopup}
+      onChange={selectTime}
+      onConfirm={handleConfirm}
+    />, [innerValue]
+  )
 
   return (
     <div
@@ -293,18 +374,12 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
       style={{ ...style }}
     >
       <Popup
-        content={
-          <TimePanel
-            value={innerValue}
-            onClose={switchPopup}
-            onChange={selectTime}
-          />
-        }
+        content={timePanel}
         placement="bottom"
         trigger={trigger}
         className="i-time-popup"
         visible={popupVisible}
-        // disabled={disabled}
+        disabled={disabled}
         onTrigger={switchPopup}
       >
         <Input
@@ -315,18 +390,30 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
         >
           <Input
             size="small"
+            type="number"
+            hideNumberBtn
+            minNumber={0}
+            maxNumber={23}
             placeholder=''
             value={innerValue.hour}
             onChange={inputChangeHour}
           />:
           <Input
             size="small"
+            type="number"
+            hideNumberBtn
+            minNumber={0}
+            maxNumber={59}
             placeholder=''
             value={innerValue.minute}
             onChange={inputChangeMinute}
           />:
           <Input
             size="small"
+            type="number"
+            hideNumberBtn
+            minNumber={0}
+            maxNumber={59}
             placeholder=''
             value={innerValue.second}
             onChange={inputChangeSecond}

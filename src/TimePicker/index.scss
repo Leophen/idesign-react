@@ -5,10 +5,12 @@
       padding: 0;
       border: none;
       .i-input__inner {
+        padding-right: 0;
         text-align: center;
       }
     }
-    & > .i-input__inner {
+    & > .i-input__inner,
+    .i-input-number-slider {
       display: none;
     }
     & > .i-input-suffix-icon {
@@ -37,6 +39,9 @@
   padding: 0;
   overflow: auto;
   overflow: overlay;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 .i-time-spinner-item {

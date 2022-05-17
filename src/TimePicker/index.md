@@ -22,6 +22,7 @@ const App = () => {
   const [value, setValue] = useState(null)
 
   const handleChange = (val) => {
+    console.log(val)
     setValue(val)
   }
 
@@ -34,3 +35,5 @@ const App = () => {
 
 export default App
 ```
+
+<API />
