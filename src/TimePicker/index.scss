@@ -1,8 +1,78 @@
-.i-time-picker__panel {
-
+.i-time-popup {
+  section > .i-input {
+    & > .i-input {
+      width: 20px;
+      padding: 0;
+      border: none;
+      .i-input__inner {
+        text-align: center;
+      }
+    }
+    & > .i-input__inner {
+      display: none;
+    }
+    & > .i-input-suffix-icon {
+      pointer-events: none;
+    }
+  }
 }
 
-.i-time-picker__panel-footer {
+.i-time-panel {
+  width: 200px;
+}
+
+.i-time-panel-content {
   display: flex;
+  align-items: center;
+  height: 200px;
+}
+
+.i-time-panel-item {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  overflow: overlay;
+}
+
+.i-time-spinner-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 32px;
+  font-size: 12px;
+  line-height: 32px;
+  list-style: none;
+  cursor: default;
+  &:hover {
+    background: #f5f7fa;
+  }
+  &.i-time-spinner-item__selected {
+    font-weight: bold;
+    background: #eef5fe;
+    &:hover {
+      background: #eef5fe;
+    }
+  }
+}
+
+.i-time-panel-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px;
+  border-top: 1px solid #e5e5e6;
+}
+
+.i-time-panel-footer__handle {
+  display: flex;
+  gap: 8px;
   align-items: center;
 }
