@@ -372,11 +372,13 @@ const Popup: React.FC<PopupProps> = (props) => {
   // 判断悬浮节点是否在气泡内
   const ifHoverInPopup = (e: any) => {
     e.preventDefault();
+    // 悬浮位置在气泡外
     if (!hasParent(e.target, popupRef.current)) {
-      if (e.target.parentNode !== triggerNode.current) {
+      // 悬浮位置既在气泡外 又在触发节点外
+      if (!hasParent(e.target, triggerNode.current)) {
         closePopup()
       }
-      window.removeEventListener('mouseover', ifHoverInPopup)
+      window.removeEventListener('click', ifClickInPopup)
     }
   }
 

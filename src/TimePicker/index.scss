@@ -19,6 +19,14 @@
   }
 }
 
+.i-time-colon {
+  margin-bottom: 2px;
+  color: #333;
+  &.i-time-colon__disabled {
+    color: rgb(168, 171, 178);
+  }
+}
+
 .i-time-panel {
   width: 200px;
 }

@@ -20,12 +20,12 @@ export interface TimePickerProps {
    * 时间值
    */
   value?: {
-    hour: string;
-    minute: string;
-    second: string;
+    hour?: string;
+    minute?: string;
+    second?: string;
   };
   /**
-   * 菜单触发方式
+   * 触发方式
    * @default click
    */
   trigger?: 'hover' | 'click' | 'context-menu';
@@ -35,6 +35,11 @@ export interface TimePickerProps {
    */
   disabled?: boolean;
   /**
+   * 用于格式化时间，[详细文档](https://day.js.org/docs/en/display/format)
+   * @default HH:mm:ss
+   */
+  format?: string;
+  /**
    * 选中时间变化时触发
    */
   onChange?: (value: TimesType) => void;
@@ -42,6 +47,27 @@ export interface TimePickerProps {
    * 切换时间面板时触发
    */
   onTrigger?: (visible: boolean) => void;
+}
+
+export interface TimeInputProps {
+  /**
+   * 时间值
+   */
+  value?: TimesType;
+  /**
+   * 是否禁用输入框
+   * @default false
+   */
+  disabled?: boolean;
+  /**
+   * 用于格式化时间，[详细文档](https://day.js.org/docs/en/display/format)
+   * @default HH:mm:ss
+   */
+  format?: string;
+  /**
+   * 输入时间变化时触发
+   */
+  onChange?: (value: TimesType) => void;
 }
 
 export interface TimePanelProps {
@@ -102,9 +128,9 @@ export interface TimePanelProps {
 }
 
 export interface TimesType {
-  hour: string;
-  minute: string;
-  second: string;
+  hour?: string;
+  minute?: string;
+  second?: string;
 }
 
 export enum EPickerCols {
@@ -278,6 +304,98 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
   )
 }
 
+const TimeInput: React.FC<TimeInputProps> = (props) => {
+  const {
+    value = { hour: '00', minute: '00', second: '00' },
+    disabled = false,
+    format = DEFAULT_FORMAT,
+    onChange = () => { }
+  } = props
+
+  const [innerValue, setInnerValue] = useState(value)
+
+  useEffect(() => {
+    let newHour = /^[H]/.test(format) ? value.hour : Number(value.hour) % 12
+    newHour = _.padStart(String(newHour), 2, '0');
+    value.hour = newHour
+    setInnerValue({ ...value })
+  }, [value])
+
+  const emitValue = (val?: TimesType) => {
+    setInnerValue({ ...innerValue })
+    onChange?.(innerValue)
+  }
+
+  const inputChangeHour = (val: string) => {
+    val = _.padStart(String(val), 2, '0');
+    innerValue.hour = val
+    emitValue()
+  }
+
+  const inputChangeMinute = (val: string) => {
+    val = _.padStart(String(val), 2, '0');
+    innerValue.minute = val
+    emitValue()
+  }
+
+  const inputChangeSecond = (val: string) => {
+    val = _.padStart(String(val), 2, '0');
+    innerValue.second = val
+    emitValue()
+  }
+
+  const timeColon = (
+    <div
+      className={classNames(
+        'i-time-colon',
+        disabled && 'i-time-colon__disabled'
+      )}
+    >
+      :
+    </div>
+  )
+
+  return (
+    <>
+      <Input
+        size="small"
+        type="number"
+        hideNumberBtn
+        minNumber={0}
+        maxNumber={23}
+        placeholder=''
+        disabled={disabled}
+        value={innerValue?.hour || ''}
+        onChange={inputChangeHour}
+      />
+      {timeColon}
+      <Input
+        size="small"
+        type="number"
+        hideNumberBtn
+        minNumber={0}
+        maxNumber={59}
+        placeholder=''
+        disabled={disabled}
+        value={innerValue?.minute || ''}
+        onChange={inputChangeMinute}
+      />
+      {timeColon}
+      <Input
+        size="small"
+        type="number"
+        hideNumberBtn
+        minNumber={0}
+        maxNumber={59}
+        placeholder=''
+        disabled={disabled}
+        value={innerValue?.second || ''}
+        onChange={inputChangeSecond}
+      />
+    </>
+  )
+}
+
 const TimePicker: React.FC<TimePickerProps> = (props) => {
   const {
     className,
@@ -285,6 +403,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     value,
     trigger = "click",
     disabled = false,
+    format = DEFAULT_FORMAT,
     onChange = () => { },
     onTrigger = () => { }
   } = props;
@@ -303,6 +422,15 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     second: getCurrentTime('second')
   })
 
+  useEffect(() => {
+    const newValue = {
+      hour: value?.hour || getCurrentTime('hour'),
+      minute: value?.minute || getCurrentTime('minute'),
+      second: value?.second || getCurrentTime('second')
+    }
+    setInnerValue(newValue)
+  }, [value])
+
   const updateValue = (val?: TimesType) => {
     if (val) {
       setInnerValue(val)
@@ -311,24 +439,6 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
       setInnerValue({ ...innerValue })
       onChange?.(innerValue)
     }
-  }
-
-  const inputChangeHour = (val: string) => {
-    (val.length === 1) && (val = '0' + val);
-    innerValue.hour = val
-    updateValue()
-  }
-
-  const inputChangeMinute = (val: string) => {
-    (val.length === 1) && (val = '0' + val);
-    innerValue.minute = val
-    updateValue()
-  }
-
-  const inputChangeSecond = (val: string) => {
-    (val.length === 1) && (val = '0' + val);
-    innerValue.second = val
-    updateValue()
   }
 
   const selectTime = (type: string, val: string) => {
@@ -355,16 +465,6 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     updateValue()
   }
 
-  const timePanel = useMemo(() =>
-    <TimePanel
-      value={innerValue}
-      onNow={handleNow}
-      onClose={switchPopup}
-      onChange={selectTime}
-      onConfirm={handleConfirm}
-    />, [innerValue]
-  )
-
   return (
     <div
       className={classNames(
@@ -374,7 +474,16 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
       style={{ ...style }}
     >
       <Popup
-        content={timePanel}
+        content={
+          <TimePanel
+            value={innerValue}
+            format={format}
+            onNow={handleNow}
+            onClose={switchPopup}
+            onChange={selectTime}
+            onConfirm={handleConfirm}
+          />
+        }
         placement="bottom"
         trigger={trigger}
         className="i-time-popup"
@@ -388,35 +497,11 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
           disabled={disabled}
           suffixIcon="Clock"
         >
-          <Input
-            size="small"
-            type="number"
-            hideNumberBtn
-            minNumber={0}
-            maxNumber={23}
-            placeholder=''
-            value={innerValue.hour}
-            onChange={inputChangeHour}
-          />:
-          <Input
-            size="small"
-            type="number"
-            hideNumberBtn
-            minNumber={0}
-            maxNumber={59}
-            placeholder=''
-            value={innerValue.minute}
-            onChange={inputChangeMinute}
-          />:
-          <Input
-            size="small"
-            type="number"
-            hideNumberBtn
-            minNumber={0}
-            maxNumber={59}
-            placeholder=''
-            value={innerValue.second}
-            onChange={inputChangeSecond}
+          <TimeInput
+            value={innerValue}
+            format={format}
+            disabled={disabled}
+            onChange={updateValue}
           />
         </Input>
       </Popup>
