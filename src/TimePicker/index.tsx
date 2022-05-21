@@ -19,11 +19,7 @@ export interface TimePickerProps {
   /**
    * 时间值
    */
-  value?: {
-    hour?: string;
-    minute?: string;
-    second?: string;
-  };
+  value?: string;
   /**
    * 触发方式
    * @default click
@@ -42,7 +38,7 @@ export interface TimePickerProps {
   /**
    * 选中时间变化时触发
    */
-  onChange?: (value: TimesType) => void;
+  onChange?: (value: string) => void;
   /**
    * 切换时间面板时触发
    */
@@ -245,6 +241,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     })
   }, []);
   useEffect(() => {
+    console.log(value, 'inner')
     updateScroll('smooth')
   }, [value]);
 
@@ -313,35 +310,50 @@ const TimeInput: React.FC<TimeInputProps> = (props) => {
   } = props
 
   const [innerValue, setInnerValue] = useState(value)
+  const [show, setShow] = useState({
+    hour: false,
+    minute: false,
+    second: false
+  })
 
   useEffect(() => {
+    const formatArr = format.split(':')
+    formatArr.map(item => {
+      /H|h/.test(item) && (show.hour = true);
+      /m/.test(item) && (show.minute = true);
+      /s/.test(item) && (show.second = true);
+    })
+    setShow({ ...show })
+
     let newHour = /^[H]/.test(format) ? value.hour : Number(value.hour) % 12
     newHour = _.padStart(String(newHour), 2, '0');
     value.hour = newHour
     setInnerValue({ ...value })
   }, [value])
 
-  const emitValue = (val?: TimesType) => {
-    setInnerValue({ ...innerValue })
-    onChange?.(innerValue)
-  }
-
   const inputChangeHour = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.hour = val
-    emitValue()
+    onChange?.(innerValue)
   }
 
   const inputChangeMinute = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.minute = val
-    emitValue()
+    onChange?.(innerValue)
   }
 
   const inputChangeSecond = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.second = val
-    emitValue()
+    onChange?.(innerValue)
+  }
+
+  const handleUsualBlur = () => {
+    innerValue.hour = _.padStart(String(innerValue.hour), 2, '0')
+    innerValue.minute = _.padStart(String(innerValue.minute), 2, '0')
+    innerValue.second = _.padStart(String(innerValue.second), 2, '0')
+    setInnerValue({ ...value })
   }
 
   const timeColon = (
@@ -356,43 +368,57 @@ const TimeInput: React.FC<TimeInputProps> = (props) => {
   )
 
   return (
-    <>
-      <Input
-        size="small"
-        type="number"
-        hideNumberBtn
-        minNumber={0}
-        maxNumber={23}
-        placeholder=''
-        disabled={disabled}
-        value={innerValue?.hour || ''}
-        onChange={inputChangeHour}
-      />
-      {timeColon}
-      <Input
-        size="small"
-        type="number"
-        hideNumberBtn
-        minNumber={0}
-        maxNumber={59}
-        placeholder=''
-        disabled={disabled}
-        value={innerValue?.minute || ''}
-        onChange={inputChangeMinute}
-      />
-      {timeColon}
-      <Input
-        size="small"
-        type="number"
-        hideNumberBtn
-        minNumber={0}
-        maxNumber={59}
-        placeholder=''
-        disabled={disabled}
-        value={innerValue?.second || ''}
-        onChange={inputChangeSecond}
-      />
-    </>
+    <Input
+      placeholder=""
+      readonly={!disabled}
+      disabled={disabled}
+      suffixIcon="Clock"
+    >
+      {show.hour && <>
+        <Input
+          size="small"
+          type="number"
+          hideNumberBtn
+          minNumber={0}
+          maxNumber={23}
+          placeholder=''
+          disabled={disabled}
+          value={innerValue?.hour || ''}
+          onChange={inputChangeHour}
+          onBlur={handleUsualBlur}
+        />
+        {timeColon}
+      </>}
+      {show.minute && <>
+        <Input
+          size="small"
+          type="number"
+          hideNumberBtn
+          minNumber={0}
+          maxNumber={59}
+          placeholder=''
+          disabled={disabled}
+          value={innerValue?.minute || ''}
+          onChange={inputChangeMinute}
+          onBlur={handleUsualBlur}
+        />
+      </>}
+      {show.second && <>
+        {timeColon}
+        <Input
+          size="small"
+          type="number"
+          hideNumberBtn
+          minNumber={0}
+          maxNumber={59}
+          placeholder=''
+          disabled={disabled}
+          value={innerValue?.second || ''}
+          onChange={inputChangeSecond}
+          onBlur={handleUsualBlur}
+        />
+      </>}
+    </Input>
   )
 }
 
@@ -400,7 +426,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   const {
     className,
     style,
-    value,
+    value = '00:00:00',
     trigger = "click",
     disabled = false,
     format = DEFAULT_FORMAT,
@@ -416,33 +442,54 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     return currentVal
   }
 
-  const [innerValue, setInnerValue] = useState<any>(value ? value : {
+  const [innerValue, setInnerValue] = useState(value)
+
+  const [timeValue, setTimeValue] = useState<any>({
     hour: getCurrentTime('hour'),
     minute: getCurrentTime('minute'),
     second: getCurrentTime('second')
   })
 
-  useEffect(() => {
-    const newValue = {
-      hour: value?.hour || getCurrentTime('hour'),
-      minute: value?.minute || getCurrentTime('minute'),
-      second: value?.second || getCurrentTime('second')
+  const valueToObj = (val: string) => {
+    const result = {
+      hour: getCurrentTime('hour'),
+      minute: getCurrentTime('minute'),
+      second: getCurrentTime('second')
     }
-    setInnerValue(newValue)
+    const timeArr = val.split(':')
+    const formatArr = format.split(':')
+    let ifHour = false
+    let ifMinute = false
+    let ifSecond = false
+    formatArr.map(item => {
+      /H|h/.test(item) && (ifHour = true);
+      /m/.test(item) && (ifMinute = true);
+      /s/.test(item) && (ifSecond = true);
+    })
+    ifHour && (result.hour = timeArr[0]);
+    ifHour && ifMinute && (result.minute = timeArr[1]);
+    !ifHour && ifMinute && (result.minute = timeArr[0]);
+    ifSecond && (result.second = timeArr[timeArr.length - 1]);
+    return result
+  }
+
+  useEffect(() => {
+    const newTimeVal = valueToObj(value)
+    setTimeValue({ ...newTimeVal })
   }, [value])
 
   const updateValue = (val?: TimesType) => {
     if (val) {
-      setInnerValue(val)
-      onChange?.(val)
+      const currentTime = dayjs(`2022-2-22 ${val.hour}:${val.minute}:${val.second}`).format(format)
+      onChange?.(currentTime)
     } else {
-      setInnerValue({ ...innerValue })
-      onChange?.(innerValue)
+      const currentTime = dayjs(`2022-2-22 ${timeValue.hour}:${timeValue.minute}:${timeValue.second}`).format(format)
+      onChange?.(currentTime)
     }
   }
 
   const selectTime = (type: string, val: string) => {
-    innerValue[type] = val
+    timeValue[type] = val
     updateValue()
   }
 
@@ -476,7 +523,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
       <Popup
         content={
           <TimePanel
-            value={innerValue}
+            value={timeValue}
             format={format}
             onNow={handleNow}
             onClose={switchPopup}
@@ -491,19 +538,12 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
         disabled={disabled}
         onTrigger={switchPopup}
       >
-        <Input
-          placeholder=""
-          readonly={!disabled}
+        <TimeInput
+          value={timeValue}
+          format={format}
           disabled={disabled}
-          suffixIcon="Clock"
-        >
-          <TimeInput
-            value={innerValue}
-            format={format}
-            disabled={disabled}
-            onChange={updateValue}
-          />
-        </Input>
+          onChange={updateValue}
+        />
       </Popup>
     </div>
   );

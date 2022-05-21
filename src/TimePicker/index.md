@@ -19,7 +19,7 @@ import React, { useState } from 'react'
 import { TimePicker } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState({})
+  const [value, setValue] = useState('12:34:56')
 
   const handleChange = (val) => {
     console.log(val)
@@ -84,7 +84,7 @@ import React, { useState } from 'react'
 import { TimePicker } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState({})
+  const [value, setValue] = useState('12:34:56')
 
   const handleChange = (val) => {
     console.log(val)
@@ -94,14 +94,15 @@ const App = () => {
   return (
     <>
       <h4>24小时制 - 时分秒选择器</h4>
-      <TimePicker format="HH:mm:ss" />
+      <TimePicker format="HH:mm:ss" value={value} onChange={handleChange} />
       <h4>24小时制 - 时分选择器</h4>
-      <TimePicker format="HH:mm" />
       <TimePicker format="HH:mm" value={value} onChange={handleChange} />
       <h4>12小时制 - 时分秒选择器</h4>
-      <TimePicker format="hh:mm:ss" />
+      <TimePicker format="hh:mm:ss" value={value} onChange={handleChange} />
       <h4>12小时制 - 时分选择器</h4>
-      <TimePicker format="hh:mm" />
+      <TimePicker format="hh:mm" value={value} onChange={handleChange} />
+      <h4>分秒选择器</h4>
+      <TimePicker format="mm:ss" value={value} onChange={handleChange} />
     </>
   )
 }
