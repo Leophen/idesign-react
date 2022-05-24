@@ -36,6 +36,11 @@ export interface TimePickerProps {
    */
   format?: string;
   /**
+   * [时, 分, 秒] 时间间隔步数
+   * @default () => [1, 1, 1]
+   */
+  steps?: Array<string | number>;
+  /**
    * 选中时间变化时触发
    */
   onChange?: (value: string) => void;
@@ -127,6 +132,7 @@ export interface TimesType {
   hour?: string;
   minute?: string;
   second?: string;
+  meridiem?: string;
 }
 
 export enum EPickerCols {
@@ -136,14 +142,14 @@ export enum EPickerCols {
   meridiem = 'meridiem',
 }
 
-export const MERIDIEM_LIST = ['am', 'pm'];
+export const MERIDIEM_LIST = ['AM', 'PM'];
 export const DEFAULT_STEPS = [1, 1, 1];
 export const DEFAULT_FORMAT = 'HH:mm:ss';
 const timeArr = [EPickerCols.hour, EPickerCols.minute, EPickerCols.second];
 
 const TimePanel: React.FC<TimePanelProps> = (props) => {
   const {
-    value = { hour: '00', minute: '00', second: '00' },
+    value = { hour: '00', minute: '00', second: '00', meridiem: '' },
     format = DEFAULT_FORMAT,
     steps = DEFAULT_STEPS,
     hideDisabledTime = true,
@@ -196,7 +202,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
           count = 59;
         }
         const colList =
-          _.range(Number(colStep) - 1, count + 1, Number(colStep)).map((v) => _.padStart(String(v), 2, '0')) || [];
+          _.range(0, count + 1, Number(colStep)).map((v) => _.padStart(String(v), 2, '0')) || [];
         return hideDisabledTime && !!disableTime
           ? colList.filter((t) => {
             const params: [number, number, number] = [dayjsValue.hour(), dayjsValue.minute(), dayjsValue.second()];
@@ -215,10 +221,12 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
   const hourPanelRef = useRef<any>(null)
   const minutePanelRef = useRef<any>(null)
   const secondPanelRef = useRef<any>(null)
+  const meridiemPanelRef = useRef<any>(null)
   const getRef = (type: string) => {
-    let ref = secondPanelRef
+    let ref = meridiemPanelRef
     type === 'hour' && (ref = hourPanelRef);
     type === 'minute' && (ref = minutePanelRef);
+    type === 'second' && (ref = secondPanelRef);
     return ref
   }
   const updateScroll = (mode?: string) => {
@@ -241,7 +249,6 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     })
   }, []);
   useEffect(() => {
-    console.log(value, 'inner')
     updateScroll('smooth')
   }, [value]);
 
@@ -275,14 +282,14 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
             key={col + index}
             ref={getRef(col)}
           >
-            {getColList(col).map(item => (
+            {getColList(col).map((item) => (
               <li
                 className={classNames(
                   'i-time-spinner-item',
-                  Number((value as any)[col]) === Number(item) && 'i-time-spinner-item__selected'
+                  (value as any)[col] === item && 'i-time-spinner-item__selected'
                 )}
                 key={item}
-                onClick={(e) => clickItem(col, item)}
+                onClick={() => clickItem(col, item)}
               >
                 {item}
               </li>
@@ -303,7 +310,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
 
 const TimeInput: React.FC<TimeInputProps> = (props) => {
   const {
-    value = { hour: '00', minute: '00', second: '00' },
+    value = { hour: '00', minute: '00', second: '00', meridiem: 'AM' },
     disabled = false,
     format = DEFAULT_FORMAT,
     onChange = () => { }
@@ -317,35 +324,35 @@ const TimeInput: React.FC<TimeInputProps> = (props) => {
   })
 
   useEffect(() => {
-    const formatArr = format.split(':')
-    formatArr.map(item => {
-      /H|h/.test(item) && (show.hour = true);
-      /m/.test(item) && (show.minute = true);
-      /s/.test(item) && (show.second = true);
-    })
+    /H|h/.test(format) && (show.hour = true);
+    /m/.test(format) && (show.minute = true);
+    /s/.test(format) && (show.second = true);
     setShow({ ...show })
 
     let newHour = /^[H]/.test(format) ? value.hour : Number(value.hour) % 12
     newHour = _.padStart(String(newHour), 2, '0');
     value.hour = newHour
     setInnerValue({ ...value })
-  }, [value])
+  }, [value, format])
 
   const inputChangeHour = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.hour = val
+    setInnerValue({ ...innerValue })
     onChange?.(innerValue)
   }
 
   const inputChangeMinute = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.minute = val
+    setInnerValue({ ...innerValue })
     onChange?.(innerValue)
   }
 
   const inputChangeSecond = (val: string) => {
     val = _.padStart(String(val), 2, '0');
     innerValue.second = val
+    setInnerValue({ ...innerValue })
     onChange?.(innerValue)
   }
 
@@ -380,7 +387,7 @@ const TimeInput: React.FC<TimeInputProps> = (props) => {
           type="number"
           hideNumberBtn
           minNumber={0}
-          maxNumber={23}
+          maxNumber={/^[H]/.test(format) ? 23 : 11}
           placeholder=''
           disabled={disabled}
           value={innerValue?.hour || ''}
@@ -430,46 +437,64 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     trigger = "click",
     disabled = false,
     format = DEFAULT_FORMAT,
+    steps = DEFAULT_STEPS,
     onChange = () => { },
     onTrigger = () => { }
   } = props;
 
   const getCurrentTime = (type?: string) => {
     let currentVal = new Date().getHours().toString()
-    type === 'minute' && (currentVal = new Date().getMinutes().toString());
-    type === 'second' && (currentVal = new Date().getSeconds().toString());
-    (currentVal.length === 1) && (currentVal = '0' + currentVal);
+    if (type === 'meridiem') {
+      /H|h/.test(format) && (currentVal = value.split(':')[0])
+      Number(currentVal) >= 12 ? (currentVal = 'PM') : (currentVal = 'AM')
+    } else {
+      type === 'minute' && (currentVal = new Date().getMinutes().toString());
+      type === 'second' && (currentVal = new Date().getSeconds().toString());
+      (currentVal.length === 1) && (currentVal = '0' + currentVal);
+    }
     return currentVal
   }
 
   const [innerValue, setInnerValue] = useState(value)
 
   const [timeValue, setTimeValue] = useState<any>({
-    hour: getCurrentTime('hour'),
-    minute: getCurrentTime('minute'),
-    second: getCurrentTime('second')
+    hour: '00',
+    minute: '00',
+    second: '00',
+    meridiem: ''
   })
 
   const valueToObj = (val: string) => {
     const result = {
-      hour: getCurrentTime('hour'),
-      minute: getCurrentTime('minute'),
-      second: getCurrentTime('second')
+      hour: '00',
+      minute: '00',
+      second: '00',
+      meridiem: ''
     }
+    let ifMeridiem = false;
+    /A/.test(format) && (ifMeridiem = true);
     const timeArr = val.split(':')
-    const formatArr = format.split(':')
-    let ifHour = false
-    let ifMinute = false
-    let ifSecond = false
-    formatArr.map(item => {
-      /H|h/.test(item) && (ifHour = true);
-      /m/.test(item) && (ifMinute = true);
-      /s/.test(item) && (ifSecond = true);
-    })
-    ifHour && (result.hour = timeArr[0]);
-    ifHour && ifMinute && (result.minute = timeArr[1]);
-    !ifHour && ifMinute && (result.minute = timeArr[0]);
-    ifSecond && (result.second = timeArr[timeArr.length - 1]);
+    if (!/H|h/.test(format) && timeArr.length === 2) {
+      timeArr.unshift('00')
+    }
+    result.hour = timeArr[0];
+    result.minute = timeArr[1];
+    result.second = String(timeArr[2]).split(' ')[0];
+    ifMeridiem && (result.meridiem = val.split(' ')[1] || getCurrentTime('meridiem'))
+    return result
+  }
+
+  const objToValue = (obj: TimesType) => {
+    let hourVal = `${obj.hour}:`
+    let minuteVal = `${obj.minute}`
+    let secondVal = `:${obj.second}`
+    let meridiemVal = ``
+
+    !/H|h/.test(format) && (hourVal = ``);
+    !/s/.test(format) && (secondVal = ``);
+    /A/.test(format) && (meridiemVal = ` ${timeValue.meridiem}`);
+
+    const result = `${hourVal}${minuteVal}${secondVal}${meridiemVal}`
     return result
   }
 
@@ -479,13 +504,9 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   }, [value])
 
   const updateValue = (val?: TimesType) => {
-    if (val) {
-      const currentTime = dayjs(`2022-2-22 ${val.hour}:${val.minute}:${val.second}`).format(format)
-      onChange?.(currentTime)
-    } else {
-      const currentTime = dayjs(`2022-2-22 ${timeValue.hour}:${timeValue.minute}:${timeValue.second}`).format(format)
-      onChange?.(currentTime)
-    }
+    let currentTime
+    val ? (currentTime = objToValue(val)) : (currentTime = objToValue(timeValue))
+    onChange?.(currentTime)
   }
 
   const selectTime = (type: string, val: string) => {
@@ -500,11 +521,8 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   }
 
   const handleNow = () => {
-    updateValue({
-      hour: getCurrentTime('hour'),
-      minute: getCurrentTime('minute'),
-      second: getCurrentTime('second')
-    })
+    const currentTime = dayjs().format(format)
+    onChange?.(currentTime)
   }
 
   const handleConfirm = () => {
@@ -525,6 +543,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
           <TimePanel
             value={timeValue}
             format={format}
+            steps={steps}
             onNow={handleNow}
             onClose={switchPopup}
             onChange={selectTime}

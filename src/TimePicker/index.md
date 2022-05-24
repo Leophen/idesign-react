@@ -98,12 +98,32 @@ const App = () => {
       <h4>24小时制 - 时分选择器</h4>
       <TimePicker format="HH:mm" value={value} onChange={handleChange} />
       <h4>12小时制 - 时分秒选择器</h4>
-      <TimePicker format="hh:mm:ss" value={value} onChange={handleChange} />
+      <TimePicker format="hh:mm:ss A" value={value} onChange={handleChange} />
       <h4>12小时制 - 时分选择器</h4>
       <TimePicker format="hh:mm" value={value} onChange={handleChange} />
       <h4>分秒选择器</h4>
       <TimePicker format="mm:ss" value={value} onChange={handleChange} />
     </>
+  )
+}
+
+export default App
+```
+
+## 自定义步长
+
+可通过 `steps` 属性指定时间面板选择步长，默认为 `[1, 1, 1]`。
+
+```tsx
+import React from 'react'
+import { TimePicker } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-row">
+      <TimePicker steps={[1, 1, 1]} />
+      <TimePicker steps={[1, 5, 5]} />
+    </div>
   )
 }
 
