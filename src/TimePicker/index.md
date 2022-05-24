@@ -8,7 +8,7 @@ group:
 order: 7
 ---
 
-# TimePicker 时间选择器（开发中）
+# TimePicker 时间选择器
 
 用于选择指定时间。
 
@@ -27,10 +27,19 @@ const App = () => {
   }
 
   return (
-    <div className="idesign-demo-block-row">
-      <TimePicker value={value} onChange={handleChange} />
-      <TimePicker value={value} onChange={handleChange} />
-    </div>
+    <>
+      <h4>无默认值</h4>
+      <TimePicker />
+      <h4>有默认值</h4>
+      <TimePicker defaultValue={value} />
+      <h4>有固定值</h4>
+      <TimePicker value={value} />
+      <h4>通用方法</h4>
+      <TimePicker
+        value={value}
+        onChange={handleChange}
+      />
+    </>
   )
 }
 
@@ -120,10 +129,12 @@ import { TimePicker } from 'idesign-react'
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-row">
+    <>
+      <h4>默认步长</h4>
       <TimePicker steps={[1, 1, 1]} />
+      <h4>分秒步长设为 5</h4>
       <TimePicker steps={[1, 5, 5]} />
-    </div>
+    </>
   )
 }
 

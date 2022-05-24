@@ -6,6 +6,7 @@ import dayjs from 'dayjs';
 import Popup from '../Popup';
 import Input from '../Input';
 import Button from '../Button';
+import useDefault from '../hooks/useDefault';
 
 export interface TimePickerProps {
   /**
@@ -20,6 +21,11 @@ export interface TimePickerProps {
    * 时间值
    */
   value?: string;
+  /**
+   * 默认时间值
+   * @default 00:00:00
+   */
+  defaultValue?: string;
   /**
    * 触发方式
    * @default click
@@ -231,15 +237,15 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
   }
   const updateScroll = (mode?: string) => {
     hourPanelRef.current && hourPanelRef.current.scrollTo({
-      top: 32 * Number(value.hour),
+      top: 32 * (Number(value.hour) / Number(steps[0])),
       behavior: mode
     });
     minutePanelRef.current && minutePanelRef.current.scrollTo({
-      top: 32 * Number(value.minute),
+      top: 32 * (Number(value.minute) / Number(steps[1])),
       behavior: mode
     });
     secondPanelRef.current && secondPanelRef.current.scrollTo({
-      top: 32 * Number(value.second),
+      top: 32 * (Number(value.second) / Number(steps[2])),
       behavior: mode
     });
   }
@@ -298,7 +304,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
         ))}
       </section>
       <footer className="i-time-panel-footer">
-        <Button size="small" variant="text" onClick={handleNow}>此刻</Button>
+        {!steps.filter((v) => v > 1).length && <Button size="small" variant="text" onClick={handleNow}>此刻</Button>}
         <div className="i-time-panel-footer__handle">
           <Button size="small" variant="outline" onClick={closePanel}>取消</Button>
           <Button size="small" onClick={handleConfirm}>确认</Button>
@@ -433,7 +439,8 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   const {
     className,
     style,
-    value = '00:00:00',
+    value,
+    defaultValue = '00:00:00',
     trigger = "click",
     disabled = false,
     format = DEFAULT_FORMAT,
@@ -445,7 +452,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   const getCurrentTime = (type?: string) => {
     let currentVal = new Date().getHours().toString()
     if (type === 'meridiem') {
-      /H|h/.test(format) && (currentVal = value.split(':')[0])
+      /H|h/.test(format) && (currentVal = innerValue.split(':')[0])
       Number(currentVal) >= 12 ? (currentVal = 'PM') : (currentVal = 'AM')
     } else {
       type === 'minute' && (currentVal = new Date().getMinutes().toString());
@@ -455,7 +462,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     return currentVal
   }
 
-  const [innerValue, setInnerValue] = useState(value)
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
 
   const [timeValue, setTimeValue] = useState<any>({
     hour: '00',
@@ -499,13 +506,14 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   }
 
   useEffect(() => {
-    const newTimeVal = valueToObj(value)
+    const newTimeVal = valueToObj(innerValue)
     setTimeValue({ ...newTimeVal })
-  }, [value])
+  }, [innerValue])
 
   const updateValue = (val?: TimesType) => {
     let currentTime
     val ? (currentTime = objToValue(val)) : (currentTime = objToValue(timeValue))
+    setInnerValue(currentTime)
     onChange?.(currentTime)
   }
 
@@ -522,6 +530,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
 
   const handleNow = () => {
     const currentTime = dayjs().format(format)
+    setInnerValue(currentTime)
     onChange?.(currentTime)
   }
 
