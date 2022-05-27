@@ -19,9 +19,7 @@ import { DatePicker } from 'idesign-react';
 const App = () => {
   return (
     <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <DatePicker>填充按钮</DatePicker>
-      </div>
+      <DatePicker />
     </div>
   );
 };
