@@ -13,13 +13,20 @@ order: 8
 ## 基本用法
 
 ```tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { DatePicker } from 'idesign-react';
 
 const App = () => {
+  const [value, setValue] = useState('2022-05-20')
+
+  const handleChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
   return (
     <div className="idesign-demo-block-column">
-      <DatePicker />
+      <DatePicker value={value} onChange={handleChange} />
     </div>
   );
 };

@@ -9,9 +9,6 @@ import Icon from '../Icon';
 import Button from '../Button';
 import useDefault from '../hooks/useDefault';
 
-export type DateValueType = string | string[]
-export type ValueToDateFC = (val: DateValueType) => [number, number, Function, Function, Function]
-
 export interface DatePickerProps {
   /**
    * 类名
@@ -28,11 +25,11 @@ export interface DatePickerProps {
   /**
    * 选中值
    */
-  value?: DateValueType;
+  value?: string;
   /**
    * 默认选中值，非受控属性
    */
-  defaultValue?: DateValueType;
+  defaultValue?: string;
   /**
    * 触发方式
    * @default click
@@ -55,85 +52,51 @@ export interface DatePickerProps {
   placeholder?: 'date' | 'range';
   /**
    * 范围日期分隔符
-   * @default ~
+   * @default -
    */
   rangeSeparator?: string;
   /**
+   * 每周的第一天，0 为周日，1 为周一
+   * @default 1
+   */
+  firstDayOfWeek?: 0 | 1;
+  /**
    * 选中值发生变化时触发
    */
-  onChange?: (value: DateValueType) => void;
+  onChange?: (value: string) => void;
 }
 
 export interface DatePanelProps {
-  value: DateValueType;
+  value: string;
+  firstDayOfWeek: number;
   onChange: Function;
 }
 
 export interface YearSelectPanelProps {
-  value: number;
+  year: number;
   onChange: Function;
 }
 
-// 根据 value 获取年月
-const useValueToDate: ValueToDateFC = (value) => {
-  const [year, setYear] = useState(() => new Date().getFullYear())
-  const [month, setMonth] = useState(() => new Date().getMonth())
-
-  const checkYYMMDD = (value: string[] | string) => {
-    if (_.isArray(value)) {
-      value = value[0]
-    }
-    if (typeof value === 'string') {
-      const arr = value.split('-')
-      if (arr.length === 3) return value.split('-').map((item, index) => (index === 1 ? --item : +item))
-    }
-    const now = new Date()
-    return [now.getFullYear(), now.getMonth(), now.getDate()]
-  }
-
-  useEffect(() => {
-    const [_year, _month] = checkYYMMDD(value)
-    setMonth(_month)
-    setYear(_year)
-  }, [value])
-
-  const nextMonth = useCallback(() => {
-    if (month < 11) {
-      setMonth((month) => month + 1)
-    } else {
-      setYear((year) => year + 1)
-      setMonth(0)
-    }
-  }, [month])
-
-  const prepMonth = useCallback(() => {
-    if (month > 0) {
-      setMonth((month) => month - 1)
-    } else {
-      setYear((year) => year - 1)
-      setMonth(11)
-    }
-  }, [month])
-
-  return [year, month, nextMonth, prepMonth, setYear]
-}
+export const DATE_FORMAT = 'YYYY-MM-DD';
+export const WEEK_HEAD_0 = ['日', '一', '二', '三', '四', '五', '六']
+export const WEEK_HEAD_1 = ['一', '二', '三', '四', '五', '六', '日']
 
 const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
   const {
-    value = 2022,
+    year = 2022,
     onChange
   } = props
 
-  const [innerValue, setInnerValue] = useState(value)
+  const [innerYear, setInnerYear] = useState(year)
 
   useEffect(() => {
-    setInnerValue(value)
-  }, [value])
+    setInnerYear(year)
+  }, [year])
 
   const [yearList, setYearList] = useState([2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029])
 
-  const yearToRangeList = (value: number) => {
-    const year = String(value)
+  const yearToRangeList = (curYear: number) => {
+    const year = String(curYear)
     const startNum = Number(`${year.substring(0, 3)}0`)
     const endNum = Number(`${Number(year.substring(0, 3)) + 1}0`)
     const list = _.range(startNum, endNum)
@@ -141,7 +104,7 @@ const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
   }
 
   useEffect(() => {
-    yearToRangeList(value)
+    yearToRangeList(year)
   }, [])
 
   const handleLastTenYears = (e: React.MouseEvent) => {
@@ -179,7 +142,7 @@ const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
           <div
             className={classNames(
               'i-date__year-select-item',
-              innerValue === item && 'i-date__year-select-item__selected',
+              innerYear === item && 'i-date__year-select-item__selected',
               new Date().getFullYear() === item && 'i-date__year-select-item__current'
             )}
             key={item}
@@ -196,59 +159,155 @@ const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
 const DatePanel: React.FC<DatePanelProps> = (props) => {
   const {
     value,
+    firstDayOfWeek,
     onChange
   } = props;
 
-  const [year, month, nextMonth, prepMonth, setYear] = useValueToDate(props.value)
+  const [dateVal, setDateVal] = useState(value)
+  const [datePanelVal, setDatePanelVal] = useState(value)
+  useEffect(() => {
+    setDatePanelVal(value)
+  }, [value])
 
-  const handleChange = useCallback(
-    (...arg) => {
-      onChange?.(...arg)
-    },
-    [onChange],
-  )
+  const handleSwitchDate = (mode: 'add' | 'sub', type: 'year' | 'month', step = 1) => {
+    let newDateVal
+    if (mode === 'add') {
+      newDateVal = dayjs(datePanelVal).add(step, type).format(DATE_FORMAT)
+    } else {
+      newDateVal = dayjs(datePanelVal).subtract(step, type).format(DATE_FORMAT)
+    }
+    setDatePanelVal(newDateVal)
+  }
 
-  console.log(year, month, nextMonth, prepMonth, setYear)
+  const [yearPanelVisible, setYearPanelVisible] = useState(false)
+
+  const handleSelectYear = (val: number) => {
+    const newDateVal = dayjs(datePanelVal).year(val).format(DATE_FORMAT)
+    setDatePanelVal(newDateVal)
+    setYearPanelVisible(false)
+  }
+
+  const handleSelectMonth = (type: string, val: string) => {
+    type !== 'current' && setDatePanelVal(val)
+    setDateVal(val)
+    onChange?.(val)
+  }
+
+  const getMonthPanelDays = () => {
+    const currentMonthStart = dayjs(datePanelVal).startOf('month').day()
+    let startIndex = 0
+    // 每周第一天
+    if (firstDayOfWeek === 1) {
+      currentMonthStart === 0 ? (startIndex = 6) : (startIndex = currentMonthStart - 1)
+    } else {
+      startIndex = currentMonthStart
+    }
+
+    const panelDays = []
+
+    const lastMonthDays = dayjs(datePanelVal).subtract(1, 'month').daysInMonth()
+    for (let i = lastMonthDays - startIndex + 1; i < lastMonthDays + 1; i++) {
+      panelDays.push({
+        label: i,
+        type: 'last',
+        value: dayjs(datePanelVal).subtract(1, 'month').set('date', i).format(DATE_FORMAT)
+      })
+    }
+
+    const currentMonthDays = dayjs(datePanelVal).daysInMonth()
+    for (let i = 1; i < currentMonthDays + 1; i++) {
+      panelDays.push({
+        label: i,
+        type: 'current',
+        value: dayjs(datePanelVal).set('date', i).format(DATE_FORMAT)
+      })
+    }
+
+    const remainLen = 42 - startIndex + 1 - currentMonthDays
+    for (let i = 1; i < remainLen; i++) {
+      panelDays.push({
+        label: i,
+        type: 'next',
+        value: dayjs(datePanelVal).add(1, 'month').set('date', i).format(DATE_FORMAT)
+      })
+    }
+
+    return panelDays
+  }
 
   return (
     <div
       className="i-date-panel"
     >
       <header className="i-date-panel__header">
-
         <section className="i-date-panel__header-handle">
-          <div className="i-date-panel__header-icon" onClick={() => setYear((year: number) => year - 1)}>
+          <div className="i-date-panel__header-icon" onClick={() => handleSwitchDate('sub', "year")}>
             <Icon name="ArrowDoubleLeft" />
           </div>
-          <div className="i-date-panel__header-icon" onClick={() => prepMonth()}>
+          <div className="i-date-panel__header-icon" onClick={() => handleSwitchDate('sub', "month")}>
             <Icon name="ArrowLeft" />
           </div>
         </section>
 
         <section className="i-date-panel__header-title-wrapper">
-          <Popup content={
-            <YearSelectPanel value={year} onChange={setYear} />
-          } trigger="click">
+          <Popup
+            visible={yearPanelVisible}
+            content={
+              <YearSelectPanel year={dayjs(datePanelVal).year()} onChange={handleSelectYear} />
+            }
+            trigger="click"
+            onTrigger={visible => setYearPanelVisible(visible)}
+          >
             <div className="i-date-panel__header-title">
-              {`${year}年`}
+              {`${dayjs(datePanelVal).year()}年`}
             </div>
           </Popup>
           <div className="i-date-panel__header-title">
-            {`${month + 1}月`}
+            {`${dayjs(datePanelVal).month() + 1}月`}
           </div>
         </section>
 
         <section className="i-date-panel__header-handle">
-          <div className="i-date-panel__header-icon" onClick={() => nextMonth()}>
+          <div className="i-date-panel__header-icon" onClick={() => handleSwitchDate('add', "month")}>
             <Icon name="ArrowRight" />
           </div>
-          <div className="i-date-panel__header-icon" onClick={() => setYear((year: number) => year + 1)}>
+          <div className="i-date-panel__header-icon" onClick={() => handleSwitchDate('add', "year")}>
             <Icon name="ArrowDoubleRight" />
           </div>
         </section>
-
       </header>
-      123
+
+      <div className="i-date-panel__content">
+        <header className="i-date-panel__week-wrapper">
+          {firstDayOfWeek === 0 ?
+            WEEK_HEAD_0.map(item => (
+              <div className="i-date-panel__week-item" key={item}>
+                {item}
+              </div>
+            )) :
+            WEEK_HEAD_1.map(item => (
+              <div className="i-date-panel__week-item" key={item}>
+                {item}
+              </div>
+            ))}
+        </header>
+        <section className="i-date-panel__day-wrapper">
+          {getMonthPanelDays().map((item, index) => (
+            <div
+              className={classNames(
+                'i-date-panel__day-item',
+                item.type !== 'current' && 'i-date-panel__day-item__blur',
+                item.value === dateVal && 'i-date-panel__day-item__selected',
+                item.value === dayjs().format(DATE_FORMAT) && 'i-date-panel__day-item__current'
+              )}
+              key={item.value}
+              onClick={() => handleSelectMonth(item.type, item.value)}
+            >
+              {item.label}
+            </div>
+          ))}
+        </section>
+      </div>
     </div>
   )
 }
@@ -258,17 +317,6 @@ const DateRangePanel: React.FC<DatePanelProps> = (props) => {
     value,
     onChange
   } = props;
-
-  const [year, month, nextMonth, prepMonth, setYear] = useValueToDate(props.value)
-
-  const handleChange = useCallback(
-    (...arg) => {
-      onChange?.(...arg)
-    },
-    [onChange],
-  )
-
-  console.log(year, month, nextMonth, prepMonth, setYear)
 
   return (
     <div
@@ -284,12 +332,13 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
     children = '',
     className,
     style,
-    value = [],
+    value = dayjs().format(DATE_FORMAT),
     defaultValue,
     trigger = "click",
     disabled = false,
     type = 'date',
-    rangeSeparator = '~',
+    rangeSeparator = '-',
+    firstDayOfWeek = 1,
     onChange,
     ...others
   } = props;
@@ -299,26 +348,14 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
     setPopupVisible(visible)
   }
 
-  const REGEXP = /^[1-9]\d{3}-(0[1-9]|1[0-2])-([0-2][0-9]|3[01])$/
-  const checkDate = (value: DateValueType, type: string) => {
-    switch (type) {
-      case 'range':
-        if (_.isArray(value)
-          && typeof value[0] === 'string' && REGEXP.test(value[0])
-          && typeof value[1] === 'string' && REGEXP.test(value[1])) {
-          return value
-        } return []
-      default:
-        if (typeof value === 'string' && REGEXP.test(value)) {
-          return value
-        } return ''
-    }
-  }
+  const [innerValue, setInnerValue] = useState(value)
+  useEffect(() => {
+    setInnerValue(value)
+  }, [value])
 
-  const [innerValue, setInnerValue] = useState(checkDate(value, type))
-
-  const handleChange = (val: string | string[]) => {
+  const handleChange = (val: string) => {
     onChange?.(val)
+    setPopupVisible(false)
   }
 
   return (
@@ -334,6 +371,7 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
           type === 'date' ? (
             <DatePanel
               value={innerValue}
+              firstDayOfWeek={firstDayOfWeek}
               onChange={handleChange}
             />
           ) : (
@@ -352,10 +390,7 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
       >
         <Input
           readonly
-        // value={dateValue}
-        // format={format}
-        // disabled={disabled}
-        // onChange={updateValue}
+          value={innerValue.split('-').join(rangeSeparator)}
         />
       </Popup>
     </div>
