@@ -1,6 +1,15 @@
 $primary: #3a3cf5;
 
+.i-date-picker {
+  &[data-type='range'] {
+    .i-input {
+      min-width: 196px;
+    }
+  }
+}
+
 .i-date-panel {
+  box-sizing: border-box;
   width: auto;
 }
 
@@ -34,6 +43,15 @@ $primary: #3a3cf5;
   }
   &:hover {
     background: #f3f3f3;
+  }
+  &.i-date-panel__header-icon__disabled {
+    cursor: not-allowed;
+    .i-icon {
+      color: #c0c4cc;
+    }
+    &:hover {
+      background: unset;
+    }
   }
 }
 
@@ -118,7 +136,8 @@ $primary: #3a3cf5;
 .i-date-panel__day-wrapper {
   display: flex;
   flex-wrap: wrap;
-  width: 224px;
+  width: 252px;
+  row-gap: 4px;
 }
 
 .i-date-panel__week-item,
@@ -126,36 +145,76 @@ $primary: #3a3cf5;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
+  width: 36px;
+  height: 36px;
 }
 
 .i-date-panel__day-item {
+  position: relative;
   cursor: pointer;
   user-select: none;
   &.i-date-panel__day-item__current {
     color: #4493ef;
-    background: #dae9fc;
+    .i-date-panel__day-item-txt {
+      background: #dae9fc;
+    }
     &:hover {
       color: #4493ef;
     }
   }
+  &.i-date-panel__day-item__in-range {
+    color: #fff;
+    background: rgba(130, 183, 244, 0.9);
+    .i-date-panel__day-item-txt {
+      background: unset;
+    }
+    &.-range__start {
+      border-radius: 50% 0 0 50%;
+    }
+    &.-range__end {
+      border-radius: 0 50% 50% 0;
+    }
+    &.-range__same {
+      border-radius: 50%;
+    }
+  }
   &.i-date-panel__day-item__selected {
     color: #fff;
-    background: #4493ef;
+    .i-date-panel__day-item-txt {
+      background: #4493ef;
+    }
     &:hover {
       color: #fff;
     }
   }
   &.i-date-panel__day-item__blur {
-    color: #a8abb2;
-    background: unset;
+    color: #00000042;
+    .i-date-panel__day-item-txt {
+      background: unset;
+    }
     &:hover {
-      color: #a8abb2;
+      color: #00000042;
     }
   }
   &:hover {
     color: $primary;
+  }
+}
+
+.i-date-panel__day-item-txt {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  color: inherit;
+  border-radius: 50%;
+}
+
+.i-date-panel__range {
+  display: flex;
+  align-items: center;
+  .i-date-panel:last-of-type {
+    border-left: 1px solid #e5e5e6;
   }
 }
