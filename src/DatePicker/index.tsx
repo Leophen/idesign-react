@@ -611,6 +611,7 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
       >
         <Input
           readonly
+          disabled={disabled}
           value={!_.isArray(innerValue) ? innerValue : `${innerValue[0]} ${rangeSeparator} ${innerValue[1]}`}
           placeholder="请选择日期"
           suffixIcon="Calendar"
