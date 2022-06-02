@@ -73,13 +73,9 @@ export interface DateHeaderBtnProps {
 
 export interface DatePanelProps {
   value?: string;
-  displayValue?: string;
+  defaultDisplayVal?: string;
   rangeValue?: string[];
   firstDayOfWeek?: number;
-  disabledLastYear?: boolean;
-  disabledLastMonth?: boolean;
-  disabledNextYear?: boolean;
-  disabledNextMonth?: boolean;
   onChange?: Function;
   onHover?: Function;
   onClose?: Function
@@ -89,6 +85,11 @@ export interface DatePanelRangeProps extends DatePanelProps { }
 
 export interface YearSelectPanelProps {
   year: number;
+  onChange: Function;
+}
+
+export interface MonthSelectPanelProps {
+  month: number;
   onChange: Function;
 }
 
@@ -108,7 +109,7 @@ const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
     setInnerYear(year)
   }, [year])
 
-  const [yearList, setYearList] = useState([2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029])
+  const [yearList, setYearList] = useState(_.range(2020, 2030))
 
   const yearToRangeList = (curYear: number) => {
     const year = String(curYear)
@@ -171,6 +172,65 @@ const YearSelectPanel: React.FC<YearSelectPanelProps> = (props) => {
   )
 }
 
+const MonthSelectPanel: React.FC<MonthSelectPanelProps> = (props) => {
+  const {
+    month = 6,
+    onChange
+  } = props
+
+  const [innerMonth, setInnerMonth] = useState(month)
+
+  useEffect(() => {
+    setInnerMonth(month)
+  }, [month])
+
+  const handleLastMonth = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    innerMonth > 0 && setInnerMonth(innerMonth - 1)
+  }
+
+  const handleNextMonth = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    innerMonth < 11 && setInnerMonth(innerMonth + 1)
+  }
+
+  const handleClickItem = (e: React.MouseEvent, item: number) => {
+    e.stopPropagation()
+    onChange?.(item)
+  }
+
+  return (
+    <div className="i-date__month-select-panel" onClick={(e) => e.stopPropagation()}>
+      <header className="i-date__month-select-title">
+        <div className="i-date-panel__header-icon" onClick={handleLastMonth}>
+          <Icon name="ArrowLeft" />
+        </div>
+        <div className="i-date-panel__header-title">
+          {innerMonth + 1} 月
+        </div>
+        <div className="i-date-panel__header-icon" onClick={handleNextMonth}>
+          <Icon name="ArrowRight" />
+        </div>
+      </header>
+      <section className="i-date__month-select-list">
+        {_.range(0, 12).map(item => (
+          <div
+            className={classNames(
+              'i-date__month-select-item',
+              innerMonth === item && 'i-date__month-select-item__selected',
+              new Date().getMonth() === item && 'i-date__month-select-item__current'
+            )}
+            key={item}
+            onClick={(e) => handleClickItem(e, item)}
+          >
+            {item + 1}
+          </div>
+        ))}
+      </section>
+    </div>
+  )
+}
+
 const DateHeaderBtn: React.FC<DateHeaderBtnProps> = (props) => {
   const {
     icon = "ArrowDoubleLeft",
@@ -197,14 +257,10 @@ const DateHeaderBtn: React.FC<DateHeaderBtnProps> = (props) => {
 
 const DatePanel: React.FC<DatePanelProps> = (props) => {
   const {
-    value,
-    displayValue,
-    rangeValue,
     firstDayOfWeek,
-    disabledLastYear = false,
-    disabledLastMonth = false,
-    disabledNextYear = false,
-    disabledNextMonth = false,
+    value,
+    rangeValue,
+    defaultDisplayVal,
     onChange,
     onHover,
     onClose
@@ -213,8 +269,8 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
   const [dateVal, setDateVal] = useState(value)
   const [displayVal, setDisplayVal] = useState(value)
   useEffect(() => {
-    if (displayValue) {
-      setDisplayVal(displayValue)
+    if (defaultDisplayVal) {
+      setDisplayVal(defaultDisplayVal)
     } else {
       setDisplayVal(value)
     }
@@ -230,7 +286,12 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
     setDisplayVal(newDateVal)
   }
 
+  const handleToday = () => {
+    setDisplayVal(dayjs().format(DATE_FORMAT))
+  }
+
   const [yearPanelVisible, setYearPanelVisible] = useState(false)
+  const [monthPanelVisible, setMonthPanelVisible] = useState(false)
 
   const handleSelectYear = (val: number) => {
     const newDateVal = dayjs(displayVal).year(val).format(DATE_FORMAT)
@@ -238,14 +299,20 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
     setYearPanelVisible(false)
   }
 
-  const handleSelectMonth = (type: string, val: string) => {
+  const handleSelectMonth = (val: number) => {
+    const newDateVal = dayjs(displayVal).month(val).format(DATE_FORMAT)
+    setDisplayVal(newDateVal)
+    setMonthPanelVisible(false)
+  }
+
+  const handleSelectDay = (type: string, val: string) => {
     value && type !== 'current' && setDisplayVal(val)
     value && setDateVal(val)
     onChange?.(val)
     onClose?.()
   }
 
-  const handleEnterMonth = (type: string, val: string) => {
+  const handleEnterMonth = (val: string) => {
     onHover?.(val)
   }
 
@@ -302,19 +369,6 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
       className="i-date-panel"
     >
       <header className="i-date-panel__header">
-        <section className="i-date-panel__header-handle">
-          <DateHeaderBtn
-            icon="ArrowDoubleLeft"
-            disabled={disabledLastYear}
-            onClick={() => handleSwitchDate('sub', "year")}
-          />
-          <DateHeaderBtn
-            icon="ArrowLeft"
-            disabled={disabledLastMonth}
-            onClick={() => handleSwitchDate('sub', "month")}
-          />
-        </section>
-
         <section className="i-date-panel__header-title-wrapper">
           <Popup
             visible={yearPanelVisible}
@@ -328,20 +382,43 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
               {`${dayjs(displayVal).year()}年`}
             </div>
           </Popup>
-          <div className="i-date-panel__header-title">
-            {`${dayjs(displayVal).month() + 1}月`}
-          </div>
+          <Popup
+            visible={monthPanelVisible}
+            content={
+              <MonthSelectPanel month={dayjs(displayVal).month()} onChange={handleSelectMonth} />
+            }
+            trigger="click"
+            onTrigger={visible => setMonthPanelVisible(visible)}
+          >
+            <div className="i-date-panel__header-title">
+              {`${dayjs(displayVal).month() + 1}月`}
+            </div>
+          </Popup>
         </section>
 
         <section className="i-date-panel__header-handle">
           <DateHeaderBtn
+            icon="ArrowDoubleLeft"
+            disabled={false}
+            onClick={() => handleSwitchDate('sub', "year")}
+          />
+          <DateHeaderBtn
+            icon="ArrowLeft"
+            disabled={false}
+            onClick={() => handleSwitchDate('sub', "month")}
+          />
+          <div
+            className="i-date-panel__header-today"
+            onClick={handleToday}
+          />
+          <DateHeaderBtn
             icon="ArrowRight"
-            disabled={disabledNextYear}
+            disabled={false}
             onClick={() => handleSwitchDate('add', "month")}
           />
           <DateHeaderBtn
             icon="ArrowDoubleRight"
-            disabled={disabledNextMonth}
+            disabled={false}
             onClick={() => handleSwitchDate('add', "year")}
           />
         </section>
@@ -362,7 +439,7 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
             ))}
         </header>
         <section className="i-date-panel__day-wrapper">
-          {getMonthPanelDays().map((item, index) => (
+          {getMonthPanelDays().map(item => (
             <div
               className={classNames(
                 'i-date-panel__day-item',
@@ -375,8 +452,8 @@ const DatePanel: React.FC<DatePanelProps> = (props) => {
                 item.value === dayjs().format(DATE_FORMAT) && 'i-date-panel__day-item__current'
               )}
               key={item.value}
-              onClick={() => handleSelectMonth(item.type, item.value)}
-              onMouseEnter={() => handleEnterMonth(item.type, item.value)}
+              onClick={() => handleSelectDay(item.type, item.value)}
+              onMouseEnter={() => handleEnterMonth(item.value)}
             >
               <div
                 className='i-date-panel__day-item-txt'
@@ -395,7 +472,8 @@ const DateRangePanel: React.FC<DatePanelRangeProps> = (props) => {
   const {
     rangeValue = [dayjs().format(DATE_FORMAT), dayjs().add(1, 'month').format(DATE_FORMAT)],
     firstDayOfWeek,
-    onChange
+    onChange,
+    onClose
   } = props;
 
   const [innerRangeValue, setInnerRangeValue] = useState(rangeValue)
@@ -413,6 +491,7 @@ const DateRangePanel: React.FC<DatePanelRangeProps> = (props) => {
     } else {
       // 滑选已解锁 -> 锁定
       onChange?.(innerRangeValue)
+      onClose?.()
       setRangeLock(true)
     }
   }
@@ -442,16 +521,16 @@ const DateRangePanel: React.FC<DatePanelRangeProps> = (props) => {
       className="i-date-panel__range"
     >
       <DatePanel
-        rangeValue={innerRangeValue}
-        displayValue={dayjs(innerRangeValue[0]).format(DATE_FORMAT)}
         firstDayOfWeek={firstDayOfWeek}
+        rangeValue={innerRangeValue}
+        defaultDisplayVal={innerRangeValue[0]}
         onChange={handleSelect}
         onHover={handleHover}
       />
       <DatePanel
-        rangeValue={innerRangeValue}
-        displayValue={dayjs(innerRangeValue[1]).format(DATE_FORMAT)}
         firstDayOfWeek={firstDayOfWeek}
+        rangeValue={innerRangeValue}
+        defaultDisplayVal={dayjs(innerRangeValue[1]).month() !== dayjs(innerRangeValue[0]).month() ? innerRangeValue[1] : dayjs(innerRangeValue[1]).add(1, 'month').format(DATE_FORMAT)}
         onChange={handleSelect}
         onHover={handleHover}
       />
@@ -517,9 +596,9 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
           ) : (
             <DateRangePanel
               rangeValue={innerValue as string[]}
-              rangeSeparator={rangeSeparator}
               firstDayOfWeek={firstDayOfWeek}
               onChange={handleChange}
+              onClose={handleClose}
             />
           )
         }
