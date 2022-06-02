@@ -72,7 +72,7 @@ export default App;
 
 ## 自定义展位图
 
-提供 `default`（默认）、`shoppingTrolley`、`favorite`、`gold` 四种不同类型的空状态展位图。
+提供 `image` 属性自定义展位图。
 
 ```tsx
 import React from 'react';
