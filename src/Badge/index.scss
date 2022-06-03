@@ -1,0 +1,51 @@
+.i-badge {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.i-badge__content {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 12px;
+  white-space: nowrap;
+  text-align: center;
+  background-color: #f56c6c;
+  transform: translate(50%, -50%);
+  transform-origin: 100% 0;
+  &.i-badge--circle,
+  &.i-badge--round {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    line-height: 20px;
+  }
+  &.i-badge--circle {
+    border-radius: 10px;
+  }
+  &.i-badge--round {
+    border-radius: 6px;
+  }
+  &.i-badge__size-small {
+    &.i-badge--circle,
+    &.i-badge--round {
+      min-width: 16px;
+      height: 16px;
+      padding: 0 4px;
+      line-height: 16px;
+    }
+  }
+  &.i-badge--dot {
+    right: 1px;
+    width: 6px;
+    height: 6px;
+    margin-top: 1px;
+    border-radius: 50%;
+  }
+}
