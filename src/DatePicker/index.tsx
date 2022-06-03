@@ -529,7 +529,7 @@ const DateRangePanel: React.FC<DatePanelRangeProps> = (props) => {
       <DatePanel
         firstDayOfWeek={firstDayOfWeek}
         rangeValue={innerRangeValue}
-        defaultDisplayVal={dayjs(innerRangeValue[1]).month() !== dayjs(innerRangeValue[0]).month() ? innerRangeValue[1] : dayjs(innerRangeValue[1]).add(1, 'month').format(DATE_FORMAT)}
+        defaultDisplayVal={innerRangeValue[1]}
         onChange={handleSelect}
         onHover={handleHover}
       />
