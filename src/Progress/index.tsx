@@ -22,7 +22,7 @@ const Progress: React.FC<ProgressProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -32,7 +32,7 @@ const Progress: React.FC<ProgressProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>

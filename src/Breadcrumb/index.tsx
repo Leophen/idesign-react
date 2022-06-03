@@ -66,7 +66,7 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
     maxWidth,
     separator = <Icon name="ArrowRight" size={16} color="rgba(0,0,0,.3)" />,
     style,
-    ...others
+    ...restProps
   } = props;
 
   // 限制最大宽度
@@ -93,7 +93,7 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <span className="i-breadcrumb__inner" style={computedMaxWidth}>
         {children}
@@ -104,10 +104,10 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
 };
 
 const Breadcrumb: React.FC<BreadcrumbProps> & { Item: React.ElementType } = (props) => {
-  const { children = '', className, maxItemWidth, separator, style, ...others } = props;
+  const { children = '', className, maxItemWidth, separator, style, ...restProps } = props;
 
   return (
-    <div className={classNames('i-breadcrumb', className)} style={{ ...style }} {...others}>
+    <div className={classNames('i-breadcrumb', className)} style={{ ...style }} {...restProps}>
       {/* 将 separator 分隔符及 maxItemWidth 最大单项宽度传入 children */}
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {

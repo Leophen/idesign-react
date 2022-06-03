@@ -22,7 +22,7 @@ const Upload: React.FC<UploadProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -32,7 +32,7 @@ const Upload: React.FC<UploadProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>

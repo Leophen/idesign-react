@@ -22,7 +22,7 @@ const Steps: React.FC<StepsProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -32,7 +32,7 @@ const Steps: React.FC<StepsProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>

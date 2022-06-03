@@ -22,7 +22,7 @@ const Tree: React.FC<TreeProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -32,7 +32,7 @@ const Tree: React.FC<TreeProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>

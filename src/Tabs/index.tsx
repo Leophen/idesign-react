@@ -22,11 +22,11 @@ const TabsItem: React.FC<TabsItemProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
-    <div className={classNames('i-tabs__item', className)} style={{ ...style }} {...others}>
+    <div className={classNames('i-tabs__item', className)} style={{ ...style }} {...restProps}>
       {children}
     </div>
   );
@@ -52,10 +52,10 @@ export interface TabsProps {
 }
 
 const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
-  const { children = '', className, style, type = 'normal', ...others } = props;
+  const { children = '', className, style, type = 'normal', ...restProps } = props;
 
   return (
-    <div className={classNames('i-tabs', className)} style={{ ...style }} {...others}>
+    <div className={classNames('i-tabs', className)} style={{ ...style }} {...restProps}>
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {
           return null;

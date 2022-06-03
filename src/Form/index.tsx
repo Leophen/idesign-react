@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -32,7 +32,7 @@ const Form: React.FC<FormProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>

@@ -22,11 +22,11 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     children = '',
     className,
     style,
-    ...others
+    ...restProps
   } = props;
 
   return (
-    <div className={classNames('i-pagination', className)} style={{ ...style }} {...others}>
+    <div className={classNames('i-pagination', className)} style={{ ...style }} {...restProps}>
       {children}
     </div>
   );

@@ -90,7 +90,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
     header,
     footer,
     onClose = () => { },
-    ...others
+    ...restProps
   } = props;
 
   const handleKeyDown = (e: any) => {
@@ -170,7 +170,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
             className
           )}
           style={{ ...(style || {}), ...{ width: width } }}
-          {...others}
+          {...restProps}
         >
           <div className="i-dialog__close" onClick={closeDialog}>
             <Icon name="Close" />

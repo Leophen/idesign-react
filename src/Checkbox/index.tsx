@@ -138,7 +138,7 @@ const Checkbox: React.FC<CheckboxProps> & { Group: React.ElementType } = (props)
   const context = useContext(CheckboxContext);
   const newProps = context ? context.inject(props) : props;
 
-  const { children = '', className, style, checked = false, value, onChange, ...others } = newProps;
+  const { children = '', className, style, checked = false, value, onChange, ...restProps } = newProps;
 
   const size = newProps.size || props.size;
   const disabled = newProps.disabled || props.disabled || false;
@@ -168,7 +168,7 @@ const Checkbox: React.FC<CheckboxProps> & { Group: React.ElementType } = (props)
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <input
         readOnly

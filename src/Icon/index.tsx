@@ -43,7 +43,7 @@ const Icon: React.FC<IconProps> = (props) => {
     color,
     disabled = false,
     onClick,
-    ...others
+    ...restProps
   } = props;
 
   const iconStyles = {
@@ -63,7 +63,7 @@ const Icon: React.FC<IconProps> = (props) => {
               return;
             }
       }
-      {...others}
+      {...restProps}
     />
   );
 };

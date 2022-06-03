@@ -46,7 +46,7 @@ const Loading: React.FC<LoadingProps> = (props) => {
     color = "#A3C8FB",
     info = '',
     spinner,
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -56,7 +56,7 @@ const Loading: React.FC<LoadingProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <div className="i-loading-spinner">
         {spinner ||

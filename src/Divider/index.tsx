@@ -28,7 +28,7 @@ export interface DividerProps {
 }
 
 const Divider: React.FC<DividerProps> = (props) => {
-  const { align = 'center', children, className, dashed = false, style, ...others } = props;
+  const { align = 'center', children, className, dashed = false, style, ...restProps } = props;
 
   return (
     <div
@@ -40,7 +40,7 @@ const Divider: React.FC<DividerProps> = (props) => {
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {children && <span className="i-divider--text">{children}</span>}
     </div>

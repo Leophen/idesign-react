@@ -45,7 +45,7 @@ const Alert: React.FC<AlertProps> = (props) => {
     style,
     title,
     type = 'info',
-    ...others
+    ...restProps
   } = props;
 
   const [closed, setClosed] = useState(false);
@@ -58,7 +58,7 @@ const Alert: React.FC<AlertProps> = (props) => {
     <div
       className={classNames('i-alert', `i-alert--type-${type}`, className)}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <Icon
         name={

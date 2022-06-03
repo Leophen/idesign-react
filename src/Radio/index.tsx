@@ -157,7 +157,7 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
     checked = false,
     value,
     onChange,
-    ...others
+    ...restProps
   } = newProps;
 
   const type = newProps.type || props.type || 'radio';
@@ -189,7 +189,7 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <input
         readOnly

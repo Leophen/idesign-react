@@ -39,7 +39,7 @@ const Empty: React.FC<EmptyProps> = (props) => {
     size,
     style,
     type = 'default',
-    ...others
+    ...restProps
   } = props;
 
   return (
@@ -51,7 +51,7 @@ const Empty: React.FC<EmptyProps> = (props) => {
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <div className="i-empty-image">
         {/* 标准空 */}

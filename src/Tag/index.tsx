@@ -66,7 +66,7 @@ const Tag: React.FC<TagProps> = (props) => {
     onAdd,
     onClick = () => { },
     onClose,
-    ...others
+    ...restProps
   } = props;
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -89,7 +89,7 @@ const Tag: React.FC<TagProps> = (props) => {
       )}
       style={{ ...(style || {}), ...{ maxWidth } }}
       onClick={handleClick}
-      {...others}
+      {...restProps}
     >
       {onAdd && <Icon name="ThePlus" size={size === 'large' ? 16 : 12} />}
       {icon && <Icon name={icon} size={size && { small: 12, medium: 14, large: 16 }[size]} />}

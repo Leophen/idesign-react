@@ -73,7 +73,7 @@ const Switch: React.FC<SwitchProps> = (props) => {
     value,
     defaultValue = false,
     onChange = () => { },
-    ...others
+    ...restProps
   } = props;
 
   const [innerChecked, setInnerChecked] = useDefault(value, defaultValue, onChange);
@@ -115,7 +115,7 @@ const Switch: React.FC<SwitchProps> = (props) => {
         } || {}),
       }}
       onClick={handleSwitch}
-      {...others}
+      {...restProps}
     >
       <span className={'i-switch__handle'}>
         {loading && <Icon name="Loading" size={{ small: 12, medium: 16, large: 20 }[size]} />}

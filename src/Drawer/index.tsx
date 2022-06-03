@@ -93,7 +93,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     header,
     footer,
     onClose = () => { },
-    ...others
+    ...restProps
   } = props;
 
   const handleKeyDown = (e: any) => {
@@ -169,7 +169,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
             className
           )}
           style={{ ...(style || {}), ...{ width: width, height: height } }}
-          {...others}
+          {...restProps}
         >
           <div className="i-drawer__close" onClick={closeDrawer}>
             <Icon name="Close" />

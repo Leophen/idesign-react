@@ -120,7 +120,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     multiple = false,
     disabled = false,
     onChange = () => { },
-    ...others
+    ...restProps
   } = props;
 
   // 转换下拉数据及更新下拉框宽度
@@ -246,7 +246,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
       )}
       style={{ ...(style || {}), ...{ width, minWidth: width } }}
       data-size={size}
-      {...others}
+      {...restProps}
     >
       <Dropdown
         width={dropdownWidth}

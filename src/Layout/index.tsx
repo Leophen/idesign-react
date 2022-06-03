@@ -46,9 +46,9 @@ export interface FooterProps extends UsualProps {
 }
 
 const Header: React.FC<HeaderProps> = (props) => {
-  const { children, className, style, ...others } = props;
+  const { children, className, style, ...restProps } = props;
   return (
-    <header className={classNames('i-layout--header', className)} style={style} {...others}>
+    <header className={classNames('i-layout--header', className)} style={style} {...restProps}>
       {children}
     </header>
   );
@@ -76,18 +76,18 @@ const Aside: React.FC<AsideProps> = (props) => {
 };
 
 const Content: React.FC<ContentProps> = (props) => {
-  const { children, className, style, ...others } = props;
+  const { children, className, style, ...restProps } = props;
   return (
-    <main className={classNames('i-layout--content', className)} style={style} {...others}>
+    <main className={classNames('i-layout--content', className)} style={style} {...restProps}>
       {children}
     </main>
   );
 };
 
 const Footer: React.FC<FooterProps> = (props) => {
-  const { children, className, style, ...others } = props;
+  const { children, className, style, ...restProps } = props;
   return (
-    <footer className={classNames('i-layout--footer', className)} style={style} {...others}>
+    <footer className={classNames('i-layout--footer', className)} style={style} {...restProps}>
       {children}
     </footer>
   );
@@ -102,7 +102,7 @@ const Layout: React.FC<LayoutProps> & {
   Content: React.ElementType;
   Footer: React.ElementType;
 } = (props) => {
-  const { children, className, style, ...others } = props;
+  const { children, className, style, ...restProps } = props;
 
   const [asides, setAsides] = useState([]);
 
@@ -119,7 +119,7 @@ const Layout: React.FC<LayoutProps> & {
   );
 
   return (
-    <div className={layoutClassNames} style={style} {...others}>
+    <div className={layoutClassNames} style={style} {...restProps}>
       {children}
     </div>
   );

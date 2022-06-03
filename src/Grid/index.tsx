@@ -82,7 +82,7 @@ const GridItem: React.FC<GridItemProps> = (props) => {
     style,
     span = 24,
     width,
-    ...others
+    ...restProps
   } = props;
 
   const limitNum = (num: number) => {
@@ -127,7 +127,7 @@ const GridItem: React.FC<GridItemProps> = (props) => {
             }
           : { flex: '1' }),
       }}
-      {...others}
+      {...restProps}
     >
       {children}
     </div>
@@ -135,7 +135,7 @@ const GridItem: React.FC<GridItemProps> = (props) => {
 };
 
 const Grid: React.FC<GridProps> & { Item: React.ElementType } = (props) => {
-  const { align, children = '', className, gutter, justify, style, ...others } = props;
+  const { align, children = '', className, gutter, justify, style, ...restProps } = props;
 
   return (
     <div
@@ -146,7 +146,7 @@ const Grid: React.FC<GridProps> & { Item: React.ElementType } = (props) => {
         className,
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       {/* 将 gutter 传入 children */}
       {React.Children.map(children, (child) => {

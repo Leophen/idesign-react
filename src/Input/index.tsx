@@ -284,7 +284,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     onClear,
     clickPrefixIcon,
     clickSuffixIcon,
-    ...others
+    ...restProps
   } = props;
 
   // 聚焦 input 输入框
@@ -384,7 +384,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       onBlur={(e) => handleEvent('blur', e)}
       onKeyDown={handleKeyDown}
       onKeyUp={(e) => handleEvent('up', e)}
-      {...others}
+      {...restProps}
     />
   );
 

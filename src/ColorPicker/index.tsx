@@ -710,7 +710,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
     colorList = defaultColor,
     onChange,
     onTrigger,
-    ...others
+    ...restProps
   } = props
 
   const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
@@ -754,7 +754,7 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
         className
       )}
       style={{ ...style }}
-      {...others}
+      {...restProps}
     >
       <Popup
         visible={visible}

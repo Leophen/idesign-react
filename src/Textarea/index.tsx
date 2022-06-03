@@ -102,7 +102,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     onChange,
     onFocus,
     onBlur,
-    ...others
+    ...restProps
   } = props;
 
   const [valueLength, setValueLength] = useState(value?.toString().length || 0);
@@ -151,7 +151,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
           className
         )}
         style={{ ...style }}
-        {...others}
+        {...restProps}
       >
         <textarea
           className={classNames(

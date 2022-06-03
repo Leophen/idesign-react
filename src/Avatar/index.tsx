@@ -115,7 +115,7 @@ const Avatar: React.FC<AvatarProps> & { Group: React.ElementType } = (props) => 
     size = 32,
     shape = "circle",
     color = "#c1c4cb",
-    ...others
+    ...restProps
   } = newProps;
 
   const [imgLoad, setImgLoad] = useState(true)
@@ -131,7 +131,7 @@ const Avatar: React.FC<AvatarProps> & { Group: React.ElementType } = (props) => 
         className
       )}
       style={{ ...style, width: size, height: size, background: color }}
-      {...others}
+      {...restProps}
     >
       {image && imgLoad ?
         <img
