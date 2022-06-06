@@ -8,7 +8,7 @@ group:
 order: 6
 ---
 
-# Image 图片查看器（开发中）
+# Image 图片查看器
 
 ## 基本用法
 
