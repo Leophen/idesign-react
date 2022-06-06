@@ -1,0 +1,125 @@
+.i-image {
+  position: relative;
+  width: 200px;
+}
+
+.i-image-img {
+  width: 100%;
+  height: auto;
+  vertical-align: middle;
+}
+
+.i-image-mask {
+  position: absolute;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 14px;
+  background: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+  inset: 0;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.i-preview-dialog-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2500;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+}
+
+.i-preview-dialog__mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 2500;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  pointer-events: auto;
+}
+
+.i-preview-dialog__close {
+  position: absolute;
+  top: 40px;
+  right: 40px;
+  z-index: 2501;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 45px;
+  height: 45px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+  .i-icon {
+    margin: 0;
+  }
+  &:hover {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+
+.i-preview-dialog__handle {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  z-index: 2501;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  width: 360px;
+  height: 45px;
+  padding: 0 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
+  transform: translate(-50%);
+  .i-icon {
+    cursor: pointer;
+    opacity: 0.8;
+    transition: all 0.1s ease-out;
+    &:hover {
+      opacity: 1;
+    }
+  }
+  section {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+  }
+}
+
+@keyframes iDialogOpen {
+  0% {
+    transform: scale(0.2) translate(-50%, -50%);
+  }
+  100% {
+    transform: scale(1) translate(-50%, -50%);
+  }
+}
+
+.i-preview-img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 2501;
+  box-sizing: border-box;
+  width: -webkit-fill-available;
+  max-width: 100%;
+  max-height: 100%;
+  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+  cursor: grab;
+  animation: iDialogOpen 0.2s ease-out;
+  pointer-events: auto;
+}

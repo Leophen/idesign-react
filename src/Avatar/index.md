@@ -21,8 +21,8 @@ import { Avatar } from 'idesign-react';
 const App = () => {
   return (
     <div className="idesign-demo-block-row">
-      <Avatar image="https://iconfont.alicdn.com/t/1508911280546.jpg@200h_200w.jpg" />
-      <Avatar image="https://iconfont.alicdn123.com/t/1508911280546.jpg@200h_200w.jpg" />
+      <Avatar image="https://picsum.photos/180/120" />
+      <Avatar image="https://picsum123.photos/180/120" />
       <Avatar />
     </div>
   );
