@@ -17,27 +17,35 @@ order: 1
 不带描述，最基础的开关。
 
 ```tsx
-import React, { useState } from 'react';
-import { Switch } from 'idesign-react';
+import React, { useState } from 'react'
+import { Switch } from 'idesign-react'
 
 const App = () => {
-  const [checked, setChecked] = useState(true);
+  const [value, setValue] = useState(true)
 
   const handleChange = (val) => {
-    console.log('value', val);
-    setChecked(val);
-  };
+    console.log(val)
+    setValue(val)
+  }
 
   return (
-    <div className="idesign-demo-block-row">
+    <>
+      <h4>无默认值</h4>
       <Switch />
-      <Switch value={checked} />
-      <Switch value={checked} onChange={handleChange} />
-    </div>
-  );
-};
+      <h4>有默认值</h4>
+      <Switch defaultValue={value} />
+      <h4>有固定值</h4>
+      <Switch value={value} />
+      <h4>通用方法</h4>
+      <Switch
+        value={value}
+        onChange={handleChange}
+      />
+    </>
+  )
+}
 
-export default App;
+export default App
 ```
 
 ## 自定义颜色

@@ -1,0 +1,32 @@
+.i-rate {
+  display: flex;
+  align-items: center;
+  &.i-rate__readonly {
+    .i-rate-star {
+      cursor: default;
+      &:active {
+        transform: unset;
+      }
+    }
+  }
+}
+
+.i-rate-star {
+  position: relative;
+  cursor: pointer;
+  transition: all 0.1s ease-out;
+  &:active {
+    transform: scale(1.2);
+  }
+  &:not(:last-of-type) {
+    padding-right: 8px;
+  }
+}
+
+.i-rate-star__first {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 10px;
+  overflow: hidden;
+}

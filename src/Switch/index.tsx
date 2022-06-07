@@ -82,7 +82,6 @@ const Switch: React.FC<SwitchProps> = (props) => {
     if (disabled || loading) return;
     const changedValue = !innerChecked;
     setInnerChecked(changedValue)
-    onChange?.(changedValue);
   };
 
   const renderContent = (value: string | number | boolean) => {

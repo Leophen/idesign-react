@@ -514,7 +514,6 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     let currentTime
     val ? (currentTime = objToValue(val)) : (currentTime = objToValue(timeValue))
     setInnerValue(currentTime)
-    onChange?.(currentTime)
   }
 
   const selectTime = (type: string, val: string) => {

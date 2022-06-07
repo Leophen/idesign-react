@@ -720,7 +720,6 @@ const ColorPicker: React.FC<ColorPickerProps> = (props) => {
   const handleChange = (val: string) => {
     setInnerValue(val)
     currentColor.current = val
-    onChange?.(val)
   }
 
   const popupChange = (val: boolean) => {

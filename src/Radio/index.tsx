@@ -1,7 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
-import useDefault from '../hooks/useDefault';
 
 export interface RadioGroupProps {
   /**
