@@ -167,6 +167,6 @@ export default App;
 | --------- | ------------------------------------- | ----------------- | ------- |
 | children  | 按钮内容                              | `ReactNode`       | --      |
 | className | 类名                                  | `string`          | --      |
+| style     | 自定义样式                            | `CSSProperties`   | --      |
 | disabled  | 是否禁用当前项点击                    | `boolean`         | `false` |
 | maxWidth  | 单项最大宽度，优先级高于 maxItemWidth | `string / number` | --      |
-| style     | 自定义样式                            | `CSSProperties`   | --      |

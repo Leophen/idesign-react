@@ -1,0 +1,147 @@
+$primary: #3a3cf5;
+$ing: #999;
+$ing_soft: #d8dbe1;
+
+.i-steps {
+  display: flex;
+  &.i-steps__layout-vertical {
+    flex-direction: column;
+    .i-steps-item__title {
+      &::after {
+        display: none;
+      }
+    }
+    .i-steps-item {
+      padding-bottom: 20px;
+      &:not(:last-of-type) {
+        .i-steps-item__icon::after {
+          content: '';
+        }
+      }
+    }
+    .i-steps-item__icon {
+      &::after {
+        position: absolute;
+        top: calc(100% + 1px);
+        left: 50%;
+        display: block;
+        width: 2px;
+        height: 999px;
+        background: $ing_soft;
+        transform: translateX(-50%);
+      }
+    }
+  }
+  &.i-steps__dot {
+    .i-steps-item__content {
+      margin-left: 20px;
+    }
+    .i-steps-item__icon {
+      left: -20px;
+      width: 12px;
+      min-width: 12px;
+      height: 12px;
+      min-height: 12px;
+      border-width: 2px;
+      .i-icon,
+      span {
+        display: none;
+      }
+      &::after {
+        top: calc(100% + 6px);
+      }
+    }
+  }
+}
+
+.i-steps-item {
+  display: flex;
+  overflow: hidden;
+  &:not(:last-of-type) {
+    flex: 1;
+    margin-right: 8px;
+    .i-steps-item__title::after {
+      content: '';
+    }
+  }
+  &.i-steps-item__finish {
+    &,
+    .i-icon,
+    .i-steps-item__icon {
+      color: $primary;
+    }
+    .i-steps-item__icon {
+      border-color: $primary;
+    }
+    .i-steps-item__title {
+      color: #333;
+      &::after {
+        background: $primary;
+      }
+    }
+  }
+  &.i-steps-item__current {
+    &,
+    .i-icon,
+    .i-steps-item__icon {
+      color: #fff;
+    }
+    .i-steps-item__icon {
+      background: $primary;
+      border-color: $primary;
+    }
+    .i-steps-item__title {
+      color: $primary;
+    }
+  }
+}
+
+.i-steps-item__icon {
+  position: absolute;
+  top: 50%;
+  left: -28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 20px;
+  min-width: 20px;
+  height: 20px;
+  min-height: 20px;
+  margin-right: 8px;
+  color: $ing;
+  font-size: 12px;
+  border: 1px solid $ing;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  .i-icon {
+    color: $ing;
+  }
+}
+
+.i-steps-item__content {
+  margin-left: 28px;
+}
+
+.i-steps-item__title {
+  position: relative;
+  width: fit-content;
+  color: $ing;
+  font-size: 14px;
+  &::after {
+    position: absolute;
+    top: 50%;
+    left: calc(100% + 6px);
+    display: block;
+    width: 999px;
+    height: 2px;
+    background: $ing_soft;
+    transform: translateY(-50%);
+  }
+}
+
+.i-steps-item__description {
+  margin-top: 8px;
+  color: $ing;
+  font-size: 13px;
+}
