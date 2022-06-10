@@ -55,6 +55,16 @@ export interface ProgressProps {
    * @default 6
    */
   strokeWidth?: number;
+  /**
+   * 触发进度加载动画
+   * @default false
+   */
+  indeterminate?: boolean;
+  /**
+   * 进度加载动画速度
+   * @default 3
+   */
+  duration?: number;
 }
 
 const Progress: React.FC<ProgressProps> = (props) => {
@@ -70,8 +80,12 @@ const Progress: React.FC<ProgressProps> = (props) => {
     backColor = '#ebeef5',
     width = 200,
     strokeWidth = 6,
+    indeterminate = false,
+    duration = 3,
     ...restProps
   } = props;
+
+  const animateBar = `indeterminate_bar ${duration}s infinite ease-in-out`
 
   const progressBar = (
     <>
@@ -80,11 +94,19 @@ const Progress: React.FC<ProgressProps> = (props) => {
           'i-progress-bar',
           innerLabel && 'i-progress-bar__has-label',
         )}
-        style={{ width, height: strokeWidth, background: backColor }}
+        style={{
+          width,
+          height: strokeWidth,
+          background: backColor
+        }}
       >
         <div
           className="i-progress-bar__inner"
-          style={{ width: `${percentage}%`, background: color }}
+          style={{
+            width: `${percentage}%`,
+            background: color,
+            animation: indeterminate ? animateBar : 'unset'
+          }}
         />
         {innerLabel && (labelTxt || label) && (
           <div className="i-progress__info">
@@ -105,8 +127,11 @@ const Progress: React.FC<ProgressProps> = (props) => {
   }
   const circle = {
     d: getStyleNum(width),
-    r: (getStyleNum(width) / 2) - strokeWidth / 2
+    r: (getStyleNum(width) / 2) - strokeWidth / 2,
+    l: getStyleNum(width) * Math.PI
   }
+
+  const animateCircle = `indeterminate_circle ${duration}s infinite linear`
 
   const progressCircle = (
     <div
@@ -114,7 +139,10 @@ const Progress: React.FC<ProgressProps> = (props) => {
         'i-progress-circle',
         innerLabel && 'i-progress-circle__has-label',
       )}
-      style={{ width, height: width }}
+      style={{
+        width,
+        height: width
+      }}
     >
       <svg
         width={circle.d}
@@ -125,21 +153,26 @@ const Progress: React.FC<ProgressProps> = (props) => {
           cx={circle.d / 2}
           cy={circle.d / 2}
           r={circle.r}
-          strokeWidth={strokeWidth}
-          stroke={backColor}
           fill="none"
+          style={{
+            stroke: backColor,
+            strokeWidth,
+          }}
         />
         <circle
           cx={circle.d / 2}
           cy={circle.d / 2}
           r={circle.r}
-          strokeWidth={strokeWidth}
           fill="none"
-          strokeDasharray={circle.d * Math.PI}
-          strokeDashoffset={circle.d * Math.PI - circle.d * Math.PI * percentage / 100}
           className="i-progress-circle__inner"
-          stroke={color}
-          style={{ strokeLinecap: 'round' }}
+          style={{
+            stroke: color,
+            strokeWidth,
+            strokeLinecap: 'round',
+            strokeDasharray: circle.l,
+            strokeDashoffset: !indeterminate ? circle.l - circle.l * percentage / 100 : circle.l * 2,
+            animation: indeterminate ? animateCircle : 'unset'
+          }}
         />
       </svg>
       {(labelTxt || label) && (

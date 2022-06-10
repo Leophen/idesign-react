@@ -31,7 +31,7 @@ export default App;
 
 ## 隐藏进度提示
 
-条形进度条通过 `labelTxt` 属性控制是否显示进度提示。
+通过 `labelTxt` 属性控制是否显示进度提示。
 
 ```tsx
 import React from 'react';
@@ -89,7 +89,7 @@ export default App;
 
 ## 自定义进度条颜色
 
-通过 `color` 属性设置自定义进度条颜色。
+通过 `color` 属性设置自定义进度条颜色，`backColor` 属性控制进度条底色。
 
 ```tsx
 import React from 'react';
@@ -99,7 +99,7 @@ const App = () => {
   return (
     <div className="i-design-demo-column">
       <Progress percentage={30} color="#FFCF2E" />
-      <Progress percentage={60} color="linear-gradient(90deg, rgb(0, 255, 255), rgb(255, 0, 255))" />
+      <Progress percentage={60} color="linear-gradient(90deg, rgb(0, 255, 255), rgb(255, 0, 255))" backColor="#FFCF2E" />
     </div>
   );
 };
@@ -140,9 +140,36 @@ const App = () => {
     <div className="idesign-demo-block-row">
       <Progress type="circle" percentage={0} />
       <Progress type="circle" percentage={30} width={100} />
-      <Progress type="circle" percentage={60} strokeWidth={20} />
-      <Progress type="circle" percentage={90} label={<div>🌛</div>} />
+      <Progress type="circle" percentage={60} width={100} strokeWidth={20} />
+      <Progress type="circle" percentage={90} width={100} label={<div>🌛</div>} />
     </div>
+  );
+};
+
+export default App;
+```
+
+## 进度加载动画
+
+通过 `indeterminate` 属性设置不确定的进度加载循环动画，可用 `duration` 控制循环速度，默认为 `3`。
+
+```tsx
+import React from 'react';
+import { Progress } from 'idesign-react';
+
+const App = () => {
+  return (
+    <>
+      <div className="idesign-demo-block-column">
+        <Progress percentage={30} indeterminate />
+        <Progress percentage={30} indeterminate duration={1} />
+      </div>
+      <div className="idesign-demo-block-row" style={{ marginTop: 20 }}>
+        <Progress type="circle" width={100} indeterminate />
+        <Progress type="circle" width={100} percentage={30} indeterminate />
+        <Progress type="circle" width={100} duration={1} indeterminate />
+      </div>
+    </>
   );
 };
 

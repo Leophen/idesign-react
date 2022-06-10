@@ -3,8 +3,18 @@
   align-items: center;
 }
 
+@keyframes indeterminate_bar {
+  0% {
+    left: -100%;
+  }
+  to {
+    left: 100%;
+  }
+}
+
 .i-progress-bar {
   position: relative;
+  overflow: hidden;
   border-radius: 100px;
   .i-progress__info {
     position: absolute;
@@ -29,6 +39,12 @@
   margin-left: 8px;
   color: #515151;
   font-size: 14px;
+}
+
+@keyframes indeterminate_circle {
+  to {
+    stroke-dashoffset: 0;
+  }
 }
 
 .i-progress-circle {
