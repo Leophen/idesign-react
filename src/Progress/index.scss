@@ -1,0 +1,46 @@
+.i-progress {
+  display: flex;
+  align-items: center;
+}
+
+.i-progress-bar {
+  position: relative;
+  border-radius: 100px;
+  .i-progress__info {
+    position: absolute;
+    top: 50%;
+    right: 6px;
+    transform: translateY(-50%);
+  }
+  &.i-progress-bar__has-label {
+    min-height: 20px;
+  }
+}
+
+.i-progress-bar__inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  border-radius: 100px;
+}
+
+.i-progress__info {
+  margin-left: 8px;
+  color: #515151;
+  font-size: 14px;
+}
+
+.i-progress-circle {
+  position: relative;
+  svg {
+    transform: rotate(-90deg);
+  }
+  .i-progress__info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin: 0;
+    transform: translate(-50%, -50%);
+  }
+}
