@@ -125,6 +125,7 @@ const Progress: React.FC<ProgressProps> = (props) => {
   const getStyleNum = (val: string | number) => {
     return parseInt(String(width))
   }
+
   const circle = {
     d: getStyleNum(width),
     r: (getStyleNum(width) / 2) - strokeWidth / 2,
@@ -147,7 +148,6 @@ const Progress: React.FC<ProgressProps> = (props) => {
       <svg
         width={circle.d}
         height={circle.d}
-        viewBox={`0 0 ${circle.d} ${circle.d}`}
       >
         <circle
           cx={circle.d / 2}

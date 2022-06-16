@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import './index.scss';
 import ReactDOM from 'react-dom';
 import Transition from '../Transition';
+import useDefault from '../hooks/useDefault';
 
 type placementType =
   'top' |
@@ -63,14 +64,22 @@ export interface PopupProps {
   trigger?: 'hover' | 'click' | 'context-menu';
   /**
    * 手动显示气泡
-   * @default false
    */
   visible?: boolean;
+  /**
+   * 气泡默认显示
+   * @default false
+   */
+  defaultVisible?: boolean;
   /**
    * 是否禁用气泡
    * @default false
    */
   disabled?: boolean;
+  /**
+   * 这个值变化时手动更新位置
+   */
+  updateLocation?: string | number | boolean;
   /**
    * 触发气泡操作时触发
    */
@@ -205,7 +214,7 @@ const Portal: React.FC<PortalProps> = (props) => {
   useEffect(() => {
     const rect = popupRef.current.getBoundingClientRect()
     setStyles(getLocationStyle(currentPlacement, { ...tProps }, rect))
-  }, [visible, currentPlacement, tProps.width, tProps.height])
+  }, [visible, currentPlacement, tProps.width, tProps.height, tProps.left, tProps.top])
 
   const PopupNode = (
     <div
@@ -236,8 +245,10 @@ const Popup: React.FC<PopupProps> = (props) => {
     content,
     placement = 'top',
     trigger = 'hover',
-    visible = false,
+    visible,
+    defaultVisible = false,
     disabled = false,
+    updateLocation,
     onTrigger = () => { }
   } = props;
 
@@ -254,7 +265,7 @@ const Popup: React.FC<PopupProps> = (props) => {
     setHeight((rect?.height || 0))
   }
 
-  const [innerVisible, setInnerVisible] = useState(visible)
+  const [innerVisible, setInnerVisible] = useDefault(visible, defaultVisible, onTrigger);
 
   // 触发节点是否在指定包裹层中
   const hasParent = (node: any, parent: HTMLElement | null) => {
@@ -266,6 +277,12 @@ const Popup: React.FC<PopupProps> = (props) => {
     }
     return false;
   };
+
+  // 手动更新实时位置
+  useEffect(() => {
+    const currentTriggerNode = (triggerNode.current as any).children[0]
+    setTargetLocation(currentTriggerNode)
+  }, [updateLocation])
 
   // 打开气泡通用方法
   const switchPopup = (e: React.MouseEvent, show: boolean) => {
@@ -283,21 +300,14 @@ const Popup: React.FC<PopupProps> = (props) => {
       e.persist();
       setTargetLocation((currentTriggerNode))
     }
-    // 切换触发事件
-    onTrigger?.(show)
     // 设置气泡显示隐藏
     setInnerVisible(show)
   }
 
   // 关闭气泡通用方法
   const closePopup = () => {
-    onTrigger?.(false)
     setInnerVisible(false)
   }
-
-  useEffect(() => {
-    setInnerVisible(visible)
-  }, [visible])
 
   // 气泡包裹层节点
   const triggerNode = useRef(null)
