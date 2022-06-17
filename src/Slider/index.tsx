@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import useDefault from '../hooks/useDefault';
@@ -65,17 +65,17 @@ export interface SliderBtnProps {
    */
   layout?: 'vertical' | 'horizontal';
   /**
-   * 滑块范围最大值
+   * 滑块范围长度
    * @default 100
    */
-  max?: number;
+  length?: number;
 }
 
 const SliderBtn: React.FC<SliderBtnProps> = (props) => {
   const {
     value = 0,
     layout = 'horizontal',
-    max = 100,
+    length = 100,
   } = props
 
   const btnRef = useRef<HTMLDivElement>(null)
@@ -91,9 +91,9 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
 
   const getBtnStyle = () => {
     if (layout === 'horizontal') {
-      return { left: `calc(${value / max * 100}% - ${rect.width / 2}px)` }
+      return { left: `calc(${value / length * 100}% - ${rect.width / 2}px)` }
     } else {
-      return { top: `calc(${value / max * 100}% - ${rect.height / 2}px)` }
+      return { top: `calc(${value / length * 100}% - ${rect.height / 2}px)` }
     }
   }
 
@@ -112,7 +112,7 @@ const Slider: React.FC<SliderProps> = (props) => {
     style,
     layout = 'horizontal',
     value,
-    defaultValue = 0,
+    defaultValue = props.min || 0,
     disabled = false,
     max = 100,
     min = 0,
@@ -142,6 +142,9 @@ const Slider: React.FC<SliderProps> = (props) => {
     }
   }
 
+  // 精度
+  const [stepPrecision, setStepPrecision] = useState(0)
+
   useEffect(() => {
     const curRect = slider.current?.getBoundingClientRect()
     rect.left = curRect?.left || 0
@@ -149,11 +152,45 @@ const Slider: React.FC<SliderProps> = (props) => {
     rect.width = curRect?.width || 0
     rect.height = curRect?.height || 0
     setRect({ ...rect })
+
+    setStepPrecision(String(step).split('.')[1]?.length)
   }, [])
 
-  const moveTurnVal = (moveVal: number, maxVal: number) => {
-    const stepPrecision = String(step).split('.')[1]?.length
-    return _.floor((moveVal / maxVal) * max, stepPrecision);
+  // 所有可取值的位置
+  const positionArr = useMemo(() => {
+    const result = [];
+    for (let i = min; i <= max; i = _.add(i, step)) {
+      result.push((i - min) / (max - min));
+    }
+    return result;
+  }, [max, min, step]);
+
+  // 取数组中 最接近传入值的数
+  const getNearNum = (numArr: number[], num: number) => {
+    const newArr = _.cloneDeep(numArr)
+    newArr.push(num)
+    newArr.sort()
+    let nearNum = 0
+    for (let i = 0, len = newArr.length; i < len; i++) {
+      if (newArr[i] === num) {
+        if (i === 0) {
+          nearNum = numArr[0]
+        } else if (i === len - 1) {
+          nearNum = numArr[numArr.length - 1]
+        } else {
+          if (Math.abs(newArr[i - 1] - num) < Math.abs(newArr[i + 1] - num)) {
+            nearNum = newArr[i - 1]
+          } else {
+            nearNum = newArr[i + 1]
+          }
+        }
+      }
+    }
+    return nearNum
+  }
+
+  const positTurnVal = (movePercent: number) => {
+    return _.round((max - min) * getNearNum(positionArr, movePercent), stepPrecision);
   }
 
   const lastVal = useRef(0)
@@ -171,17 +208,13 @@ const Slider: React.FC<SliderProps> = (props) => {
     move < (min) && (move = (min))
     move > (maxMove) && (move = (maxMove))
 
-    const currentVal = moveTurnVal(move, maxMove)
-    if (
-      currentVal !== lastVal.current &&
-      (Math.abs(currentVal - lastVal.current) >= step ||
-        currentVal + step > max ||
-        currentVal - step < min)
-    ) {
-      setInnerValue(currentVal)
-      lastVal.current = currentVal
-    }
-  }, 10)
+    const movePercent = move / maxMove
+    const newVal = positTurnVal(movePercent)
+
+    if (newVal === lastVal.current) return
+    setInnerValue(newVal)
+    lastVal.current = newVal
+  }, 16)
 
   const handleSliderUp = () => {
     handleMoving(false)
@@ -194,11 +227,15 @@ const Slider: React.FC<SliderProps> = (props) => {
       e.persist();
       handleMoving(true)
 
+      let movePercent = 0
       if (layout === 'horizontal') {
-        setInnerValue(moveTurnVal(e.clientX - rect.left, rect.width))
+        movePercent = (e.clientX - rect.left) / rect.width
       } else {
-        setInnerValue(moveTurnVal(e.clientY - rect.top, rect.height))
+        movePercent = (e.clientY - rect.top) / rect.height
       }
+      const newVal = positTurnVal(movePercent)
+      lastVal.current = newVal
+      setInnerValue(newVal)
 
       window.addEventListener('mousemove', handleSliderMove);
       window.addEventListener('mouseup', handleSliderUp);
@@ -221,8 +258,8 @@ const Slider: React.FC<SliderProps> = (props) => {
         <div
           className="i-slider__bar-active"
           style={{
-            left: layout === 'horizontal' ? `${innerValue / max * 100}%` : 0,
-            top: layout === 'vertical' ? `${innerValue / max * 100}%` : 0,
+            left: layout === 'horizontal' ? `${innerValue / (max - min) * 100}%` : 0,
+            top: layout === 'vertical' ? `${innerValue / (max - min) * 100}%` : 0,
           }}
         ></div>
       </div>
@@ -235,7 +272,7 @@ const Slider: React.FC<SliderProps> = (props) => {
         <SliderBtn
           layout={layout}
           value={innerValue}
-          max={max}
+          length={max - min}
         />
       </Popup>
     </div>

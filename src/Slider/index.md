@@ -63,6 +63,30 @@ const App = () => {
 export default App
 ```
 
+## 自定义边界
+
+通过 `max` 和 `min` 属性控制滑块最大值和最小值。
+
+```tsx
+import React from 'react'
+import { Slider } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div style={{ width: 600 }}>
+      <h4>max 设为 10</h4>
+      <Slider max={10} />
+      <h4>min 设为 30</h4>
+      <Slider min={30} />
+      <h4>同时设置</h4>
+      <Slider max={200} min={50} />
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 自定义步长
 
 通过 `step` 属性控制滑块步长。
@@ -73,10 +97,13 @@ import { Slider } from 'idesign-react'
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column" style={{ width: 600 }}>
-      <Slider step={0.6} />
-      <Slider defaultValue={60} step={3} />
-      <Slider defaultValue={60} step={10} />
+    <div style={{ width: 600 }}>
+      <h4>step 设为 0.6</h4>
+      <Slider defaultValue={60} step={0.6} />
+      <h4>step 设为 3</h4>
+      <Slider defaultValue={33} step={3} />
+      <h4>step 设为 10</h4>
+      <Slider defaultValue={50} step={10} />
     </div>
   )
 }
@@ -102,13 +129,13 @@ const App = () => {
 
   return (
     <div className="idesign-demo-block-row" style={{ height: 200 }}>
-      <h4>无默认值</h4>
+      <h4>无默认值 →</h4>
       <Slider layout="vertical" />
-      <h4>有默认值</h4>
+      <h4>有默认值 →</h4>
       <Slider layout="vertical" defaultValue={value} />
-      <h4>有固定值</h4>
+      <h4>有固定值 →</h4>
       <Slider layout="vertical" value={value} />
-      <h4>通用方法</h4>
+      <h4>通用方法 →</h4>
       <Slider
         layout="vertical"
         value={value}
@@ -120,3 +147,5 @@ const App = () => {
 
 export default App
 ```
+
+<API />
