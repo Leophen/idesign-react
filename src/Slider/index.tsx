@@ -146,13 +146,6 @@ const Slider: React.FC<SliderProps> = (props) => {
   const [stepPrecision, setStepPrecision] = useState(0)
 
   useEffect(() => {
-    const curRect = slider.current?.getBoundingClientRect()
-    rect.left = curRect?.left || 0
-    rect.top = curRect?.top || 0
-    rect.width = curRect?.width || 0
-    rect.height = curRect?.height || 0
-    setRect({ ...rect })
-
     setStepPrecision(String(step).split('.')[1]?.length)
   }, [])
 
@@ -190,12 +183,13 @@ const Slider: React.FC<SliderProps> = (props) => {
   }
 
   const positTurnVal = (movePercent: number) => {
-    return _.round((max - min) * getNearNum(positionArr, movePercent), stepPrecision);
+    return min + _.round((max - min) * getNearNum(positionArr, movePercent), stepPrecision);
   }
 
   const lastVal = useRef(0)
   const handleSliderMove = _.throttle((e: any) => {
     let move = 0
+    let minMove = 0
     let maxMove = 0
 
     if (layout === 'horizontal') {
@@ -205,7 +199,7 @@ const Slider: React.FC<SliderProps> = (props) => {
       move = e.clientY - rect.top
       maxMove = rect.height
     }
-    move < (min) && (move = (min))
+    move < (minMove) && (move = (minMove))
     move > (maxMove) && (move = (maxMove))
 
     const movePercent = move / maxMove
@@ -222,10 +216,21 @@ const Slider: React.FC<SliderProps> = (props) => {
     window.removeEventListener('mouseup', handleSliderUp);
   };
 
+  const updateBtnPosition = () => {
+    const curRect = slider.current?.getBoundingClientRect()
+    rect.left = curRect?.left || 0
+    rect.top = curRect?.top || 0
+    rect.width = curRect?.width || 0
+    rect.height = curRect?.height || 0
+    setRect({ ...rect })
+  }
+
   const handleSliderDown = (e: React.MouseEvent) => {
     if (!disabled) {
       e.persist();
       handleMoving(true)
+
+      updateBtnPosition()
 
       let movePercent = 0
       if (layout === 'horizontal') {
@@ -258,8 +263,8 @@ const Slider: React.FC<SliderProps> = (props) => {
         <div
           className="i-slider__bar-active"
           style={{
-            left: layout === 'horizontal' ? `${innerValue / (max - min) * 100}%` : 0,
-            top: layout === 'vertical' ? `${innerValue / (max - min) * 100}%` : 0,
+            left: layout === 'horizontal' ? `${(innerValue - min) / (max - min) * 100}%` : 0,
+            top: layout === 'vertical' ? `${(innerValue - min) / (max - min) * 100}%` : 0,
           }}
         ></div>
       </div>
@@ -271,7 +276,7 @@ const Slider: React.FC<SliderProps> = (props) => {
       >
         <SliderBtn
           layout={layout}
-          value={innerValue}
+          value={innerValue - min}
           length={max - min}
         />
       </Popup>

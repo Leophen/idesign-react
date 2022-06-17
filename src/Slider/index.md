@@ -75,11 +75,11 @@ const App = () => {
   return (
     <div style={{ width: 600 }}>
       <h4>max 设为 10</h4>
-      <Slider max={10} />
+      <Slider defaultValue={5} max={10} />
       <h4>min 设为 30</h4>
-      <Slider min={30} />
+      <Slider defaultValue={60} min={30} />
       <h4>同时设置</h4>
-      <Slider max={200} min={50} />
+      <Slider defaultValue={100} max={200} min={50} />
     </div>
   )
 }
