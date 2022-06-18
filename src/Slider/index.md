@@ -8,7 +8,7 @@ group:
 order: 14
 ---
 
-# Slider 滑块（开发中）
+# Slider 滑块
 
 ## 基本用法
 
@@ -159,7 +159,7 @@ import { Slider } from 'idesign-react'
 const App = () => {
   return (
     <div style={{ width: 600 }}>
-      <Slider range defaultValue={[30, 100]} />
+      <Slider range defaultValue={[30, 90]} />
     </div>
   )
 }

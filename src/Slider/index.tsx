@@ -146,6 +146,30 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
   )
 }
 
+// 取数组中 最接近传入值的数
+const getNearNum = (numArr: number[], num: number) => {
+  const newArr = _.cloneDeep(numArr)
+  newArr.push(num)
+  newArr.sort()
+  let nearNum = 0
+  for (let i = 0, len = newArr.length; i < len; i++) {
+    if (newArr[i] === num) {
+      if (i === 0) {
+        nearNum = numArr[0]
+      } else if (i === len - 1) {
+        nearNum = numArr[numArr.length - 1]
+      } else {
+        if (Math.abs(newArr[i - 1] - num) < Math.abs(newArr[i + 1] - num)) {
+          nearNum = newArr[i - 1]
+        } else {
+          nearNum = newArr[i + 1]
+        }
+      }
+    }
+  }
+  return nearNum
+}
+
 const Slider: React.FC<SliderProps> = (props) => {
   const {
     className,
@@ -173,11 +197,11 @@ const Slider: React.FC<SliderProps> = (props) => {
     height: 0
   })
 
-  const [downShowTip, setDownShowTip] = useState(false)
+  const [downStatus, setDownStatus] = useState(false)
 
   // 是否为移动状态
-  const handleMoving = (ifMoving: boolean) => {
-    setDownShowTip(ifMoving)
+  const setMoving = (ifMoving: boolean) => {
+    setDownStatus(ifMoving)
     if (ifMoving) {
       document.body.style.userSelect = 'none'
     } else {
@@ -201,30 +225,6 @@ const Slider: React.FC<SliderProps> = (props) => {
     return result;
   }, [max, min, step]);
 
-  // 取数组中 最接近传入值的数
-  const getNearNum = (numArr: number[], num: number) => {
-    const newArr = _.cloneDeep(numArr)
-    newArr.push(num)
-    newArr.sort()
-    let nearNum = 0
-    for (let i = 0, len = newArr.length; i < len; i++) {
-      if (newArr[i] === num) {
-        if (i === 0) {
-          nearNum = numArr[0]
-        } else if (i === len - 1) {
-          nearNum = numArr[numArr.length - 1]
-        } else {
-          if (Math.abs(newArr[i - 1] - num) < Math.abs(newArr[i + 1] - num)) {
-            nearNum = newArr[i - 1]
-          } else {
-            nearNum = newArr[i + 1]
-          }
-        }
-      }
-    }
-    return nearNum
-  }
-
   const positTurnVal = (movePercent: number) => {
     return min + _.round((max - min) * getNearNum(positionArr, movePercent), stepPrecision);
   }
@@ -242,24 +242,24 @@ const Slider: React.FC<SliderProps> = (props) => {
       move = e.clientY - rect.top
       maxMove = rect.height
     }
-    move < (minMove) && (move = (minMove))
-    move > (maxMove) && (move = (maxMove))
+    move < (minMove) && (move = minMove)
+    move > (maxMove) && (move = maxMove)
 
     const movePercent = move / maxMove
     const newVal = positTurnVal(movePercent)
 
     if (newVal === lastVal.current) return
-    setInnerValue(newVal)
+    updateInnerValue(newVal)
     lastVal.current = newVal
   }, 16)
 
   const handleSliderUp = () => {
-    handleMoving(false)
+    setMoving(false)
     window.removeEventListener('mousemove', handleSliderMove);
     window.removeEventListener('mouseup', handleSliderUp);
   };
 
-  const updateBtnPosition = () => {
+  const getBtnRect = () => {
     const curRect = slider.current?.getBoundingClientRect()
     rect.left = curRect?.left || 0
     rect.top = curRect?.top || 0
@@ -268,12 +268,24 @@ const Slider: React.FC<SliderProps> = (props) => {
     setRect({ ...rect })
   }
 
+  const updateInnerValue = (val: number) => {
+    if (!range) {
+      setInnerValue(val)
+    } else {
+      if (Math.abs(val - (innerValue as number[])[0]) < Math.abs(val - (innerValue as number[])[1])) {
+        (innerValue as number[])[0] = val
+      } else {
+        (innerValue as number[])[1] = val
+      }
+      setInnerValue([...innerValue as number[]])
+    }
+  }
+
   const handleSliderDown = (e: React.MouseEvent) => {
     if (!disabled) {
       e.persist();
-      handleMoving(true)
-
-      updateBtnPosition()
+      setMoving(true)
+      getBtnRect()
 
       let movePercent = 0
       if (layout === 'horizontal') {
@@ -283,7 +295,7 @@ const Slider: React.FC<SliderProps> = (props) => {
       }
       const newVal = positTurnVal(movePercent)
       lastVal.current = newVal
-      setInnerValue(newVal)
+      updateInnerValue(newVal)
 
       window.addEventListener('mousemove', handleSliderMove);
       window.addEventListener('mouseup', handleSliderUp);
@@ -303,7 +315,7 @@ const Slider: React.FC<SliderProps> = (props) => {
       </div>
       <SliderBtn
         currentVal={innerValue as number}
-        downSlider={downShowTip}
+        downSlider={downStatus}
         {...props}
       />
     </>
@@ -331,12 +343,12 @@ const Slider: React.FC<SliderProps> = (props) => {
       </div>
       <SliderBtn
         currentVal={(innerValue as number[])[0]}
-        downSlider={downShowTip}
+        downSlider={downStatus}
         {...props}
       />
       <SliderBtn
         currentVal={(innerValue as number[])[1]}
-        downSlider={downShowTip}
+        downSlider={downStatus}
         {...props}
       />
     </>
