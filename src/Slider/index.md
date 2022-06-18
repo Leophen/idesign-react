@@ -148,6 +148,25 @@ const App = () => {
 export default App
 ```
 
+## 范围滑块
+
+通过 `range` 属性指定为范围滑块，注意 `value` 的值需为数组，例如 `[0, 100]`。
+
+```tsx
+import React from 'react'
+import { Slider } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div style={{ width: 600 }}>
+      <Slider range defaultValue={[30, 100]} />
+    </div>
+  )
+}
+
+export default App
+```
+
 ## 隐藏数值提示
 
 通过 `hideTip` 属性隐藏数值提示。

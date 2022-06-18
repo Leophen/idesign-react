@@ -36,11 +36,11 @@ export interface SliderProps {
   /**
    * 滑块值
    */
-  value?: number;
+  value?: number | number[];
   /**
    * 滑块值，非受控属性
    */
-  defaultValue?: number;
+  defaultValue?: number | number[];
   /**
    * 是否禁用滑块
    * @default false
@@ -62,6 +62,11 @@ export interface SliderProps {
    */
   step?: number;
   /**
+   * 是否为范围滑块
+   * @default false
+   */
+  range?: boolean;
+  /**
    * 是否隐藏数值提示
    * @default false
    */
@@ -77,40 +82,31 @@ export interface SliderProps {
   onChange?: (value: number) => void;
 }
 
-export interface SliderBtnProps {
+export interface SliderBtnProps extends SliderProps {
   /**
-   * 滑块位置比例
+   * 当前值
    * @default 0
    */
-  value?: number;
+  currentVal?: number;
   /**
-   * 滑块布局方向
-   * @default horizontal
+   * 是否正选中滑条
+   * @default false
    */
-  layout?: 'vertical' | 'horizontal';
-  /**
-   * 滑块范围长度
-   * @default 100
-   */
-  length?: number;
-  /**
-   * 移入滑块
-   */
-  onEnter?: () => void;
-  /**
-   * 移出滑块
-   */
-  onLeave?: () => void;
+  downSlider?: boolean;
 }
 
 const SliderBtn: React.FC<SliderBtnProps> = (props) => {
   const {
-    value = 0,
     layout = 'horizontal',
-    length = 100,
-    onEnter,
-    onLeave,
+    currentVal = 0,
+    max = 100,
+    min = 0,
+    downSlider = false,
+    hideTip = false,
+    placement = 'top',
   } = props
+
+  const [enterShowTip, setEnterShowTip] = useState(false)
 
   const btnRef = useRef<HTMLDivElement>(null)
   const [rect, setRect] = useState({
@@ -125,20 +121,28 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
 
   const getBtnStyle = () => {
     if (layout === 'horizontal') {
-      return { left: `calc(${value / length * 100}% - ${rect.width / 2}px)` }
+      return { left: `calc(${(currentVal - min) / (max - min) * 100}% - ${rect.width / 2}px)` }
     } else {
-      return { top: `calc(${value / length * 100}% - ${rect.height / 2}px)` }
+      return { top: `calc(${(currentVal - min) / (max - min) * 100}% - ${rect.height / 2}px)` }
     }
   }
 
   return (
-    <div
-      className="i-slider__button"
-      ref={btnRef}
-      style={getBtnStyle()}
-      onMouseEnter={() => onEnter?.()}
-      onMouseLeave={() => onLeave?.()}
-    />
+    <Popup
+      content={currentVal}
+      updateLocation={currentVal}
+      trigger="hover"
+      visible={!hideTip && (downSlider || enterShowTip)}
+      placement={placement}
+    >
+      <div
+        className="i-slider__button"
+        ref={btnRef}
+        style={getBtnStyle()}
+        onMouseEnter={() => setEnterShowTip(true)}
+        onMouseLeave={() => setEnterShowTip(false)}
+      />
+    </Popup>
   )
 }
 
@@ -148,11 +152,12 @@ const Slider: React.FC<SliderProps> = (props) => {
     style,
     layout = 'horizontal',
     value,
-    defaultValue = props.min || 0,
+    defaultValue = !props.range ? (props.min || 0) : ([props.min || 0, props.max || 0]),
     disabled = false,
     max = 100,
     min = 0,
     step = 1,
+    range = false,
     hideTip = false,
     placement = 'top',
     onChange,
@@ -169,7 +174,6 @@ const Slider: React.FC<SliderProps> = (props) => {
   })
 
   const [downShowTip, setDownShowTip] = useState(false)
-  const [enterShowTip, setEnterShowTip] = useState(false)
 
   // 是否为移动状态
   const handleMoving = (ifMoving: boolean) => {
@@ -286,6 +290,58 @@ const Slider: React.FC<SliderProps> = (props) => {
     }
   }
 
+  const singleSlider = (
+    <>
+      <div className="i-slider__bar">
+        <div
+          className="i-slider__bar-active"
+          style={{
+            left: layout === 'horizontal' ? `${(innerValue as number - min) / (max - min) * 100}%` : 0,
+            top: layout === 'vertical' ? `${(innerValue as number - min) / (max - min) * 100}%` : 0,
+          }}
+        ></div>
+      </div>
+      <SliderBtn
+        currentVal={innerValue as number}
+        downSlider={downShowTip}
+        {...props}
+      />
+    </>
+  )
+
+  const rangeSlider = (
+    <>
+      <div className="i-slider__bar">
+        <div
+          className="i-slider__bar-active"
+          style={{
+            left: 0,
+            top: 0,
+            width: layout === 'horizontal' ? `${((innerValue as number[])[0] - min) / (max - min) * 100}%` : 6,
+            height: layout === 'vertical' ? `${((innerValue as number[])[0] - min) / (max - min) * 100}%` : 6,
+          }}
+        ></div>
+        <div
+          className="i-slider__bar-active"
+          style={{
+            left: layout === 'horizontal' ? `${((innerValue as number[])[1] - min) / (max - min) * 100}%` : 0,
+            top: layout === 'vertical' ? `${((innerValue as number[])[1] - min) / (max - min) * 100}%` : 0,
+          }}
+        ></div>
+      </div>
+      <SliderBtn
+        currentVal={(innerValue as number[])[0]}
+        downSlider={downShowTip}
+        {...props}
+      />
+      <SliderBtn
+        currentVal={(innerValue as number[])[1]}
+        downSlider={downShowTip}
+        {...props}
+      />
+    </>
+  )
+
   return (
     <div
       className={classNames(
@@ -298,30 +354,8 @@ const Slider: React.FC<SliderProps> = (props) => {
       ref={slider}
       onMouseDown={handleSliderDown}
     >
-      <div className="i-slider__bar">
-        <div
-          className="i-slider__bar-active"
-          style={{
-            left: layout === 'horizontal' ? `${(innerValue - min) / (max - min) * 100}%` : 0,
-            top: layout === 'vertical' ? `${(innerValue - min) / (max - min) * 100}%` : 0,
-          }}
-        ></div>
-      </div>
-      <Popup
-        content={innerValue}
-        updateLocation={innerValue}
-        trigger="hover"
-        visible={!hideTip && (downShowTip || enterShowTip)}
-        placement={placement}
-      >
-        <SliderBtn
-          layout={layout}
-          value={innerValue - min}
-          length={max - min}
-          onEnter={() => setEnterShowTip(true)}
-          onLeave={() => setEnterShowTip(false)}
-        />
-      </Popup>
+      {!range && !_.isArray(innerValue) && singleSlider}
+      {range && _.isArray(innerValue) && rangeSlider}
     </div>
   );
 };
