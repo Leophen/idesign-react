@@ -5,6 +5,20 @@ import useDefault from '../hooks/useDefault';
 import _ from 'lodash';
 import Popup from '../Popup';
 
+type placementType =
+  'top' |
+  'top-left' |
+  'top-right' |
+  'bottom' |
+  'bottom-left' |
+  'bottom-right' |
+  'left' |
+  'left-top' |
+  'left-bottom' |
+  'right' |
+  'right-top' |
+  'right-bottom'
+
 export interface SliderProps {
   /**
    * 类名
@@ -48,6 +62,16 @@ export interface SliderProps {
    */
   step?: number;
   /**
+   * 是否隐藏数值提示
+   * @default false
+   */
+  hideTip?: boolean;
+  /**
+   * 数值提示出现位置
+   * @default top
+   */
+  placement?: placementType;
+  /**
    * 滑块值变化时触发
    */
   onChange?: (value: number) => void;
@@ -69,6 +93,14 @@ export interface SliderBtnProps {
    * @default 100
    */
   length?: number;
+  /**
+   * 移入滑块
+   */
+  onEnter?: () => void;
+  /**
+   * 移出滑块
+   */
+  onLeave?: () => void;
 }
 
 const SliderBtn: React.FC<SliderBtnProps> = (props) => {
@@ -76,6 +108,8 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
     value = 0,
     layout = 'horizontal',
     length = 100,
+    onEnter,
+    onLeave,
   } = props
 
   const btnRef = useRef<HTMLDivElement>(null)
@@ -102,6 +136,8 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
       className="i-slider__button"
       ref={btnRef}
       style={getBtnStyle()}
+      onMouseEnter={() => onEnter?.()}
+      onMouseLeave={() => onLeave?.()}
     />
   )
 }
@@ -117,6 +153,8 @@ const Slider: React.FC<SliderProps> = (props) => {
     max = 100,
     min = 0,
     step = 1,
+    hideTip = false,
+    placement = 'top',
     onChange,
   } = props;
 
@@ -130,11 +168,12 @@ const Slider: React.FC<SliderProps> = (props) => {
     height: 0
   })
 
-  const [showTip, setShowTip] = useState(false)
+  const [downShowTip, setDownShowTip] = useState(false)
+  const [enterShowTip, setEnterShowTip] = useState(false)
 
   // 是否为移动状态
   const handleMoving = (ifMoving: boolean) => {
-    setShowTip(ifMoving)
+    setDownShowTip(ifMoving)
     if (ifMoving) {
       document.body.style.userSelect = 'none'
     } else {
@@ -272,12 +311,15 @@ const Slider: React.FC<SliderProps> = (props) => {
         content={innerValue}
         updateLocation={innerValue}
         trigger="hover"
-        visible={showTip}
+        visible={!hideTip && (downShowTip || enterShowTip)}
+        placement={placement}
       >
         <SliderBtn
           layout={layout}
           value={innerValue - min}
           length={max - min}
+          onEnter={() => setEnterShowTip(true)}
+          onLeave={() => setEnterShowTip(false)}
         />
       </Popup>
     </div>

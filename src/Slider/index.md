@@ -148,4 +148,45 @@ const App = () => {
 export default App
 ```
 
+## 隐藏数值提示
+
+通过 `hideTip` 属性隐藏数值提示。
+
+```tsx
+import React from 'react'
+import { Slider } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div style={{ width: 600 }}>
+      <Slider defaultValue={60} hideTip />
+    </div>
+  )
+}
+
+export default App
+```
+
+## 数值提示位置
+
+通过 `placement` 属性自定义数值提示位置。
+
+```tsx
+import React from 'react'
+import { Slider } from 'idesign-react'
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-row" style={{ width: 600 }}>
+      <Slider defaultValue={20} placement='left' />
+      <Slider defaultValue={40} placement='top' />
+      <Slider defaultValue={60} placement='right' />
+      <Slider defaultValue={80} placement='bottom' />
+    </div>
+  )
+}
+
+export default App
+```
+
 <API />

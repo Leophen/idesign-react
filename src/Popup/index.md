@@ -22,13 +22,9 @@ import { Button, Popup } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Popup content="提示内容">
-          <Button>悬浮提示</Button>
-        </Popup>
-      </div>
-    </div>
+    <Popup content="提示内容">
+      <Button>悬浮提示</Button>
+    </Popup>
   );
 };
 
@@ -45,13 +41,9 @@ import { Button, Popup } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Popup content="提示内容" disabled={true}>
-          <Button>禁用气泡</Button>
-        </Popup>
-      </div>
-    </div>
+    <Popup content="提示内容" disabled={true}>
+      <Button>禁用气泡</Button>
+    </Popup>
   );
 };
 
@@ -68,18 +60,16 @@ import { Button, Popup } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Popup content="提示内容">
-          <Button>悬浮提示</Button>
-        </Popup>
-        <Popup content="提示内容" trigger="click">
-          <Button>点击提示</Button>
-        </Popup>
-        <Popup content="提示内容" trigger="context-menu">
-          <Button>右击提示</Button>
-        </Popup>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Popup content="提示内容">
+        <Button>悬浮提示</Button>
+      </Popup>
+      <Popup content="提示内容" trigger="click">
+        <Button>点击提示</Button>
+      </Popup>
+      <Popup content="提示内容" trigger="context-menu">
+        <Button>右击提示</Button>
+      </Popup>
     </div>
   );
 };
@@ -139,6 +129,40 @@ const App = () => {
 }
 
 export default App
+```
+
+## 手动显示隐藏
+
+通过 `defaultVisible` 属性显示默认显示隐藏，通过 `visible` 属性手动切换气泡显示隐藏。
+
+```tsx
+import React from 'react';
+import { Button, Popup } from 'idesign-react';
+
+const App = () => {
+  return (
+    <>
+      <h4>默认显示</h4>
+      <Popup placement="right" defaultVisible={true} content="提示内容">
+        <Button>悬浮提示</Button>
+      </Popup>
+      <h4>默认隐藏</h4>
+      <Popup placement="right" defaultVisible={false} content="提示内容">
+        <Button>悬浮提示</Button>
+      </Popup>
+      <h4>固定显示</h4>
+      <Popup placement="right" visible={true} content="提示内容">
+        <Button>悬浮提示</Button>
+      </Popup>
+      <h4>固定隐藏</h4>
+      <Popup placement="right" visible={false} content="提示内容">
+        <Button>悬浮提示</Button>
+      </Popup>
+    </>
+  );
+};
+
+export default App;
 ```
 
 <API />
