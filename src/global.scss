@@ -233,6 +233,7 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-demo {
   padding: 40px !important;
+  background: #F7F8FC;
   h3,
   h4 {
     color: #515151;
@@ -412,7 +413,7 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-actions {
   position: relative !important;
-  background-color: rgba(58, 60, 245, 0.01) !important;
+  border-top: 1px solid #EBEDF1;
 }
 
 .__dumi-default-previewer-actions button {
