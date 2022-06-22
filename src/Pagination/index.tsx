@@ -26,7 +26,14 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   } = props;
 
   return (
-    <div className={classNames('i-pagination', className)} style={{ ...style }} {...restProps}>
+    <div
+      className={classNames(
+        'i-pagination',
+        className
+      )}
+      style={{ ...style }}
+      {...restProps}
+    >
       {children}
     </div>
   );

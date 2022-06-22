@@ -23,7 +23,7 @@ export interface TimePickerProps {
   value?: string;
   /**
    * 默认时间值
-   * @default 00:00:00
+   * @default 当前时间
    */
   defaultValue?: string;
   /**
@@ -199,7 +199,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     (col: EPickerCols) => {
       let count = 0;
       if (timeArr.includes(col)) {
-        // hour/minute/second column scorller render
+        // hour/minute/second column scroll render
         const colIdx = timeArr.indexOf(col);
         const colStep = steps[colIdx];
         if (col === EPickerCols.hour) {
@@ -207,8 +207,11 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
         } else {
           count = 59;
         }
-        const colList =
-          _.range(0, count + 1, Number(colStep)).map((v) => _.padStart(String(v), 2, '0')) || [];
+        const colList = _.range(
+          0,
+          count + 1,
+          Number(colStep)).map((v) => _.padStart(String(v), 2, '0')
+          ) || [];
         return hideDisabledTime && !!disableTime
           ? colList.filter((t) => {
             const params: [number, number, number] = [dayjsValue.hour(), dayjsValue.minute(), dayjsValue.second()];
@@ -217,7 +220,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
           })
           : colList;
       }
-      // meridiem column scroller render
+      // meridiem column scroll render
       return MERIDIEM_LIST;
     },
     [steps, format, hideDisabledTime, dayjsValue, disableTime],
@@ -440,7 +443,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     className,
     style,
     value,
-    defaultValue = '00:00:00',
+    defaultValue = dayjs().format(props.format || DEFAULT_FORMAT),
     trigger = "click",
     disabled = false,
     format = DEFAULT_FORMAT,
