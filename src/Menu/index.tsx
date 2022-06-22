@@ -22,7 +22,7 @@ export interface MenuProps {
   /**
    * 当前选中值
    */
-  current?: string | number;
+  active: string | number;
   /**
    * 前置内容
    */
@@ -46,7 +46,7 @@ export interface MenuItemProps extends MenuProps {
   /**
    * 单项值
    */
-  value?: string | number;
+  value: string | number;
 }
 
 const MenuItem: React.FC<MenuItemProps> = (props) => {
@@ -55,7 +55,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     className,
     style,
     value = '',
-    current,
+    active,
     onChange
   } = props
 
@@ -63,7 +63,7 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
     <li
       className={classNames(
         'i-menu-item',
-        value === current && 'i-menu-item__active',
+        value === active && 'i-menu-item__active',
         className
       )}
       style={{ ...style }}
@@ -80,7 +80,7 @@ const Menu: React.FC<MenuProps> & { Item: React.ElementType } = (props) => {
     className,
     style,
     width,
-    current,
+    active,
     prefixContent,
     suffixContent,
     direction = 'horizontal',
@@ -109,7 +109,7 @@ const Menu: React.FC<MenuProps> & { Item: React.ElementType } = (props) => {
             return null;
           }
           const childProps = {
-            current,
+            active,
             onChange
           };
           return React.cloneElement(child, childProps);

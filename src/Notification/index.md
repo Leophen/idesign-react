@@ -339,8 +339,8 @@ export default App;
 
 | 属性      | 说明                                        | 类型                                                     | 默认值      |
 | --------- | ------------------------------------------- | -------------------------------------------------------- | ----------- |
-| title     | 通知标题                                    | `string`                                                 | --          |
-| content   | 通知内容                                    | `ReactNode`                                              | --          |
+| title     | 通知标题                                    | `string`                                                 | `--`          |
+| content   | 通知内容                                    | `ReactNode`                                              | `--`          |
 | duration  | 通知持续时间，单位：秒。值为 0 表示永久显示 | `number`                                                 | `3`         |
 | placement | 通知位置                                    | `'top-left'〡'top-right'〡'bottom-left'〡'bottom-right'` | `top-right` |
 | closeable | 通知是否可关闭                              | `boolean`                                                | `false`     |

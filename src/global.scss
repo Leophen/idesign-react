@@ -231,9 +231,16 @@ ul[role='slug-list'] li > a.active {
   border-radius: 0 0 8px 8px !important;
 }
 
+.__dumi-default-previewer {
+  &[id*='Menu'] {
+    .__dumi-default-previewer-demo {
+      background: #f7f8fc;
+    }
+  }
+}
+
 .__dumi-default-previewer-demo {
   padding: 40px !important;
-  background: #F7F8FC;
   h3,
   h4 {
     color: #515151;
@@ -413,7 +420,7 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-actions {
   position: relative !important;
-  border-top: 1px solid #EBEDF1;
+  border-top: 1px solid #ebedf1;
 }
 
 .__dumi-default-previewer-actions button {

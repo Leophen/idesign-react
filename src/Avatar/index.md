@@ -202,9 +202,9 @@ export default App;
 
 | 属性      | 说明         | 类型            | 默认值    |
 | --------- | ------------ | --------------- | --------- |
-| children  | 头像         | `ReactNode`     | --        |
-| className | 组合头像类名 | `string`        | --        |
-| style     | 组合头像样式 | `CSSProperties` | --        |
+| children  | 头像         | `ReactNode`     | `--`        |
+| className | 组合头像类名 | `string`        | `--`        |
+| style     | 组合头像样式 | `CSSProperties` | `--`        |
 | size      | 全局头像大小 | `number`        | `32`      |
 | shape     | 全局头像形状 | `circle〡round` | `circle`  |
 | color     | 全局头像底色 | `string`        | `#c1c4cb` |

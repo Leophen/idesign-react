@@ -206,19 +206,19 @@ export default App;
 
 | 属性      | 说明               | 类型                   | 默认值       |
 | --------- | ------------------ | ---------------------- | ------------ |
-| children  | 按钮内容           | `ReactNode`            | --           |
-| className | 类名               | `string`               | --           |
-| style     | 自定义样式         | `CSSProperties`        | --           |
+| children  | 按钮内容           | `ReactNode`            | `--`           |
+| className | 类名               | `string`               | `--`           |
+| style     | 自定义样式         | `CSSProperties`        | `--`           |
 | current   | 进行到哪一步       | `number`               | `0`          |
 | layout    | 步骤条方向         | `horizontal〡vertical` | `horizontal` |
-| reverse   | 步骤条是否倒序     | `boolean`              | 'false'      |
-| dot       | 是否为无序的步骤条 | `boolean`              | 'false'      |
+| reverse   | 步骤条是否倒序     | `boolean`              | `false`      |
+| dot       | 是否为无序的步骤条 | `boolean`              | `false`      |
 
 ## StepsItem API
 
 | 属性        | 说明               | 类型              | 默认值  |
 | ----------- | ------------------ | ----------------- | ------- |
-| className   | 类名               | `string`          | --      |
-| style       | 自定义样式         | `CSSProperties`   | --      |
+| className   | 类名               | `string`          | `--`      |
+| style       | 自定义样式         | `CSSProperties`   | `--`      |
 | title       | 步骤标题           | `React.ReactNode` | `--`    |
 | description | 步骤描述           | `React.ReactNode` | `--`    |

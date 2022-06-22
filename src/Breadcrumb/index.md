@@ -155,18 +155,18 @@ export default App;
 
 | 属性         | 说明                                     | 类型              | 默认值  |
 | ------------ | ---------------------------------------- | ----------------- | ------- |
-| children     | 按钮内容                                 | `ReactNode`       | --      |
-| className    | 类名                                     | `string`          | --      |
+| children     | 按钮内容                                 | `ReactNode`       | `--`      |
+| className    | 类名                                     | `string`          | `--`      |
 | maxItemWidth | 各项的最大宽度，超出后会以省略号形式呈现 | `string / number` | `200px` |
-| separator    | 自定义分隔符                             | `ReactNode`       | --      |
-| style        | 自定义样式                               | `CSSProperties`   | --      |
+| separator    | 自定义分隔符                             | `ReactNode`       | `--`      |
+| style        | 自定义样式                               | `CSSProperties`   | `--`      |
 
 ## BreadcrumbItem API
 
 | 属性      | 说明                                  | 类型              | 默认值  |
 | --------- | ------------------------------------- | ----------------- | ------- |
-| children  | 按钮内容                              | `ReactNode`       | --      |
-| className | 类名                                  | `string`          | --      |
-| style     | 自定义样式                            | `CSSProperties`   | --      |
+| children  | 按钮内容                              | `ReactNode`       | `--`      |
+| className | 类名                                  | `string`          | `--`      |
+| style     | 自定义样式                            | `CSSProperties`   | `--`      |
 | disabled  | 是否禁用当前项点击                    | `boolean`         | `false` |
-| maxWidth  | 单项最大宽度，优先级高于 maxItemWidth | `string / number` | --      |
+| maxWidth  | 单项最大宽度，优先级高于 maxItemWidth | `string / number` | `--`      |
