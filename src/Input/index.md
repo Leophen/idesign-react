@@ -194,25 +194,36 @@ export default App;
 另外，可通过 `speed` 属性值设置滑块移动数值变化速率，通过 `step` 设置数值变化间隔，通过 `precision` 设置数值保留几位有效数字，通过 `hideNumberBtn` 设置隐藏数字输入框后缀按钮。
 
 ```tsx
-import React from 'react';
+import React, { useState } from 'react';
 import { Input } from 'idesign-react';
 
 const App = () => {
+  const [value, setValue] = useState('1');
+
+  const handleChange = (val) => {
+    setValue(val)
+  }
+
   return (
     <>
+      <h4>默认数字输入框</h4>
       <Input type="number" />
-      <br />
+      <h4>隐藏调整控件的数字输入框</h4>
       <Input type="number" hideNumberBtn />
-      <br />
+      <h4>受控且有最大最小值的数字输入框</h4>
+      <Input value={value} type="number" minNumber={1} maxNumber={50} onChange={handleChange} />
+      <h4>受控且有最大最小值并锁定空值的数字输入框</h4>
+      <Input value={value} type="number" minNumber={1} maxNumber={50} minNumberLock onChange={handleChange} />
+      <h4>慢速拖拽控件且有最大值的数字输入框</h4>
       <Input
         placeholder="speed 设为 slow + 最大值 100"
         speed="slow"
         type="number"
         maxNumber={100}
       />
-      <br />
+      <h4>快速拖拽控件且有最小值的数字输入框</h4>
       <Input placeholder="speed 设为 fast + 最小值 0" speed="fast" type="number" minNumber={0} />
-      <br />
+      <h4>设置精度及数字间隔的数字输入框</h4>
       <Input
         placeholder="保留 2 位有效数字 + 间隔 0.5"
         type="number"
@@ -222,7 +233,7 @@ const App = () => {
           console.log(value);
         }}
       />
-      <br />
+      <h4>带前后缀图标的数字输入框</h4>
       <Input
         type="number"
         prefixIcon="TagCollection"

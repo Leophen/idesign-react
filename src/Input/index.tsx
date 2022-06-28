@@ -86,6 +86,11 @@ export interface InputProps {
    */
   minNumber?: number;
   /**
+   * 数字输入框清空值时是否转为最小值
+   * @default false
+   */
+  minNumberLock?: boolean;
+  /**
    * 数字输入框保留几位小数
    * @default 0
    */
@@ -145,6 +150,17 @@ export interface InputProps {
    * 清空按钮点击时触发
    */
   onClear?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
+  /**
+   * 数字输入框移动滑块时触发
+   */
+  onMove?: (
+    value: string,
+    context?: { e?: React.ChangeEvent<HTMLInputElement> },
+  ) => void;
+  /**
+   * 数字输入框滑块失焦时触发
+   */
+  onMoveUp?: (value: string) => void;
   /**
    * 点击前置图标触发事件
    */
@@ -269,6 +285,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     speed = 'default',
     maxNumber = Number.MAX_VALUE,
     minNumber = Number.MIN_SAFE_INTEGER,
+    minNumberLock = false,
     precision = 0,
     step = 1,
     prefixIcon,
@@ -282,6 +299,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     onEnter,
     onKeyUp,
     onClear,
+    onMove,
+    onMoveUp,
     clickPrefixIcon,
     clickSuffixIcon,
     ...restProps
@@ -298,17 +317,22 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     maxLength && setValueLength(e.target.value.length);
-    if (type === 'number' && Number(e.target.value) > maxNumber) {
-      e.target.value = maxNumber.toFixed(precision).toString();
-    }
-    if (type === 'number' && Number(e.target.value) < minNumber) {
-      e.target.value = minNumber.toFixed(precision).toString();
-    }
+    let currentValue = e.target.value
     if (type === 'number') {
-      onChange?.(Number(e.target.value).toFixed(precision), e as any);
-    } else {
-      onChange?.(e.target.value, e as any);
+      if (currentValue !== '') {
+        if (Number(currentValue) > maxNumber) {
+          currentValue = maxNumber.toFixed(precision).toString();
+        }
+        if (Number(currentValue) < minNumber) {
+          currentValue = minNumber.toFixed(precision).toString();
+        }
+      } else {
+        if (Number(currentValue) < minNumber && minNumberLock) {
+          currentValue = minNumber.toFixed(precision).toString();
+        }
+      }
     }
+    onChange?.(currentValue, e as any);
   };
 
   // 点击清空按钮
@@ -392,11 +416,23 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const [ifMaximum, setIfMaximum] = useState(false);
   const [ifLeastValue, setIfLeastValue] = useState(false);
 
+  useEffect(() => {
+    if (type === 'number') {
+      if (Number(value) <= minNumber) {
+        setIfLeastValue(true)
+      }
+      if (Number(value) >= maxNumber) {
+        setIfMaximum(true)
+      }
+    }
+  }, [])
+
   // 数字调整按钮
   const handleAdjustValue = (handle = true, e: React.MouseEvent<HTMLDivElement>) => {
     e.stopPropagation();
     let currentValue;
     let computedValue = 0;
+
     if (inputNode) {
       currentValue = Number((inputNode.current as any).value);
       if (handle) {
@@ -405,8 +441,18 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         computedValue = currentValue - step;
       }
       // 设置最大值最小值按钮禁用状态
-      computedValue === maxNumber ? setIfMaximum(true) : setIfMaximum(false);
-      computedValue === minNumber ? setIfLeastValue(true) : setIfLeastValue(false);
+      if (computedValue >= maxNumber) {
+        computedValue = maxNumber
+        setIfMaximum(true)
+      } else {
+        setIfMaximum(false)
+      }
+      if (computedValue <= minNumber) {
+        computedValue = minNumber
+        setIfLeastValue(true)
+      } else {
+        setIfLeastValue(false)
+      }
     }
     const result = computedValue.toFixed(precision);
     (inputNode.current as any).value = result;
@@ -462,6 +508,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       const result = countValue.toFixed(precision);
       (inputNode.current as any).value = result;
       onChange?.(result, e as any);
+      onMove?.(result, e as any);
     }
 
     // 滑块超出屏幕边界处理
@@ -487,6 +534,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     document.exitPointerLock();
     setSliderMovingX(0);
     setSliderMovingY(0);
+    onMoveUp?.((inputNode.current as any).value);
     window.removeEventListener('mouseup', handleSliderUp);
     window.removeEventListener('mousemove', handleSliderMove);
   };
