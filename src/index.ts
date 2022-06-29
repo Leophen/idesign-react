@@ -11,7 +11,7 @@ export { default as Menu } from './Menu';
 export { default as Tabs } from './Tabs';
 export { default as Breadcrumb } from './Breadcrumb';
 export { default as Pagination } from './Pagination';
-export { default as Affix } from './Affix';
+// export { default as Affix } from './Affix';
 export { default as BackTop } from './BackTop';
 // 表单
 export { default as Radio } from './Radio';
@@ -40,7 +40,7 @@ export { default as Badge } from './Badge';
 export { default as Image } from './Image';
 export { default as Swiper } from './Swiper';
 export { default as Collapse } from './Collapse';
-export { default as Tree } from './Tree';
+// export { default as Tree } from './Tree';
 // 反馈
 export { default as Alert } from './Alert';
 export { default as Message } from './Message';
