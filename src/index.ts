@@ -38,7 +38,7 @@ export { default as Loading } from './Loading';
 export { default as Avatar } from './Avatar';
 export { default as Badge } from './Badge';
 export { default as Image } from './Image';
-export { default as Swiper } from './Swiper';
+export { default as Carousel } from './Carousel';
 export { default as Collapse } from './Collapse';
 // export { default as Tree } from './Tree';
 // 反馈
