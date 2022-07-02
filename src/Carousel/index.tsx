@@ -81,6 +81,40 @@ export interface CarouselItemProps {
    * 自定义样式
    */
   style?: React.CSSProperties;
+  /**
+   * 索引值
+   * @default 0
+   */
+  index?: number;
+  /**
+   * 当前轮播项
+   * @default 0
+   */
+  innerCurrent?: number;
+  /**
+   * 轮播图类型
+   * @default default
+   */
+  type?: 'default' | 'card';
+  /**
+   * 是否有动画
+   * @default false
+   */
+  ifAnimation?: boolean;
+  /**
+   * 轮播项数量
+   * @default 1
+   */
+  childrenLength?: number;
+  /**
+   * 滑动动画时长
+   * @default 300
+   */
+  duration?: number;
+  /**
+   * 包裹层 ref
+   */
+  wrapWidth?: any;
 }
 
 export interface CarouselNavigationProps {
@@ -134,8 +168,74 @@ const CarouselItem: React.FC<CarouselItemProps> = (props) => {
     children,
     className,
     style,
+    index = 0,
+    innerCurrent = 0,
+    type = 'default',
+    ifAnimation = false,
+    childrenLength = 1,
+    duration = 300,
+    wrapWidth = 0,
     ...restProps
   } = props;
+
+  const disposeIndex = (index: number, innerCurrent: number, childrenLength: number) => {
+    if (innerCurrent === 0 && index === childrenLength - 1) {
+      return -1;
+    }
+    if (innerCurrent === childrenLength - 1 && index === 0) {
+      return childrenLength;
+    }
+    if (index < innerCurrent - 1 && innerCurrent - index >= childrenLength / 2) {
+      return childrenLength + 1;
+    }
+    if (index > innerCurrent + 1 && index - innerCurrent >= childrenLength / 2) {
+      return -2;
+    }
+    return index;
+  };
+
+  const CARD_SCALE = 210 / 332; // 缩放比例
+  const itemWidth = 0.415; // 宽度比例
+
+  const calculateTranslate = (index: number, innerCurrent: number, parentWidth: number, inStage: boolean) => {
+    if (inStage) {
+      return (parentWidth * ((index - innerCurrent) * (1 - itemWidth * CARD_SCALE) - itemWidth + 1)) / 2;
+    }
+    if (index < innerCurrent) {
+      return (-itemWidth * (1 + CARD_SCALE) * parentWidth) / 2;
+    }
+    return ((2 + itemWidth * (CARD_SCALE - 1)) * parentWidth) / 2;
+  };
+
+  const getZIndex = (isActivity: boolean, inStage: boolean) => {
+    if (isActivity) {
+      return 2;
+    }
+    if (inStage) {
+      return 1;
+    }
+    return 0;
+  };
+
+  const getItemStyle = () => {
+    if (type === 'card') {
+      const translateIndex =
+        index !== innerCurrent && childrenLength > 2 ? disposeIndex(index, innerCurrent, childrenLength) : index;
+      const inStage = Math.round(Math.abs(translateIndex - innerCurrent)) <= 1;
+      const translate = calculateTranslate(translateIndex, innerCurrent, wrapWidth, inStage).toFixed(2);
+      const isActivity = translateIndex === innerCurrent;
+      const zIndex = getZIndex(isActivity, inStage);
+      return {
+        msTransform: `translateX(${translate}px) scale(${isActivity ? 1 : CARD_SCALE})`,
+        WebkitTransform: `translateX(${translate}px) scale(${isActivity ? 1 : CARD_SCALE})`,
+        transform: `translateX(${translate}px) scale(${isActivity ? 1 : CARD_SCALE})`,
+        transition: `transform ${duration / 1000}s ease`,
+        zIndex,
+        ...style
+      };
+    }
+    return { ...style };
+  };
 
   return (
     <li
@@ -143,7 +243,7 @@ const CarouselItem: React.FC<CarouselItemProps> = (props) => {
         'i-carousel-item',
         className
       )}
-      style={{ ...style }}
+      style={getItemStyle()}
       {...restProps}
     >
       {children}
@@ -170,12 +270,16 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   } = props;
 
   const resetDefaultCurrent = (index: number) => {
-    if (index >= childrenLength) {
-      return 0
-    } else if (index <= -1) {
-      return childrenLength - 1
+    if (type === 'default') {
+      if (index >= childrenLength) {
+        return 0
+      } else if (index <= -1) {
+        return childrenLength - 1
+      } else {
+        return index + 1
+      }
     } else {
-      return index + 1
+      return index
     }
   }
 
@@ -191,15 +295,28 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   );
   const childrenLength = childrenList.length;
 
+  const carouselRef = useRef<any>(null);
+  const [wrapWidth, setWrapWidth] = useState(0)
+  useEffect(() => {
+    setWrapWidth(carouselRef.current.getBoundingClientRect().width)
+  }, [])
+
   // 创建渲染用的节点列表
   const carouselItemList = childrenList.map((child: any, index: number) =>
     React.cloneElement(child, {
       key: index,
+      index,
+      innerCurrent,
+      ifAnimation,
+      childrenLength,
+      wrapWidth,
+      type,
+      duration,
       ...child.props,
     }),
   );
   // 列表头尾补一项（衔接轮播滑动）
-  if (childrenLength > 0) {
+  if (childrenLength > 0 && type === 'default') {
     const firstEle = carouselItemList[0];
     const lastEle = carouselItemList[carouselItemList.length - 1];
     carouselItemList.push(
@@ -343,9 +460,11 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
       className={classNames(
         'i-carousel',
         direction === 'vertical' && 'i-carousel__vertical',
+        type === 'card' && 'i-carousel__card',
         className
       )}
       style={{ ...style, width, height }}
+      ref={carouselRef}
       {...restProps}
     >
       <div

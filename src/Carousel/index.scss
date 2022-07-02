@@ -30,6 +30,22 @@
       bottom: 16px;
     }
   }
+  &.i-carousel__card {
+    .i-carousel__wrapper {
+      display: block;
+    }
+    .i-carousel-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+      width: 41.5%;
+      height: 100%;
+      &.i-carousel-item__active {
+        z-index: 2;
+      }
+    }
+  }
 }
 
 .i-carousel__content {

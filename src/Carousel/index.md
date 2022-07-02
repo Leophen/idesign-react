@@ -8,7 +8,7 @@ group:
 order: 7
 ---
 
-# Carousel 轮播图（开发中）
+# Carousel 轮播图
 
 ## 基本用法
 
@@ -167,3 +167,11 @@ export default App;
 ## Carousel API
 
 <API hideTitle />
+
+## CarouselItem API
+
+| 属性      | 说明       | 类型            | 默认值 |
+| --------- | ---------- | --------------- | ------ |
+| children  | 按钮内容   | `ReactNode`     | `--`   |
+| className | 类名       | `string`        | `--`   |
+| style     | 自定义样式 | `CSSProperties` | `--`   |
