@@ -1,15 +1,49 @@
 .i-carousel {
   position: relative;
+  min-height: 60px;
+  &.i-carousel__vertical {
+    .i-carousel__wrapper {
+      flex-direction: column;
+    }
+    .i-carousel__navigation {
+      right: 16px;
+      bottom: 50%;
+      left: unset;
+      flex-direction: column;
+      transform: translateY(50%);
+      .i-carousel__navigation-item {
+        width: 6px;
+        height: 26px;
+      }
+    }
+    .i-carousel__arrow-last,
+    .i-carousel__arrow-next {
+      top: unset;
+      right: unset;
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+    }
+    .i-carousel__arrow-last {
+      top: 16px;
+    }
+    .i-carousel__arrow-next {
+      bottom: 16px;
+    }
+  }
 }
 
 .i-carousel__content {
   position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
 .i-carousel__wrapper {
   position: relative;
   display: flex;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
 }
@@ -22,8 +56,34 @@
   list-style: none;
 }
 
-.i-carousel__arrow-left,
-.i-carousel__arrow-right {
+.i-carousel__navigation {
+  position: absolute;
+  bottom: 16px;
+  left: 50%;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  transform: translateX(-50%);
+}
+
+.i-carousel__navigation-item {
+  width: 26px;
+  height: 6px;
+  list-style: none;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.12);
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  &.i-carousel__navigation-item__active {
+    background: #fff;
+  }
+}
+
+.i-carousel__arrow-last,
+.i-carousel__arrow-next {
   position: absolute;
   top: 50%;
   z-index: 2;
@@ -34,6 +94,7 @@
   height: 24px;
   background: rgba(0, 0, 0, 0.1);
   border-radius: 50%;
+  box-shadow: inset 0 1px 6px rgba(0, 0, 0, 0.12);
   transform: translateY(-50%);
   cursor: pointer;
   transition: all 0.2s ease-out;
@@ -42,10 +103,10 @@
   }
 }
 
-.i-carousel__arrow-left {
+.i-carousel__arrow-last {
   left: 16px;
 }
 
-.i-carousel__arrow-right {
+.i-carousel__arrow-next {
   right: 16px;
 }

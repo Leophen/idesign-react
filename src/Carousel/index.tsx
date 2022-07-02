@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
-import useDefault from '../hooks/useDefault';
+import _ from 'lodash';
 import Icon from '../Icon'
 
 export interface CarouselProps {
@@ -18,23 +18,35 @@ export interface CarouselProps {
    */
   style?: React.CSSProperties;
   /**
-   * 当前轮播项
-   */
-  current?: number;
-  /**
-   * 当前默认轮播项
+   * 初始轮播项
    * @default 0
    */
   defaultCurrent?: number;
   /**
-   * 是否循环播放
-   * @default true
+   * 轮播图的宽度
+   * @default 100%
    */
-  loop?: boolean;
+  width?: string | number;
   /**
    * 轮播图的高度
+   * @default 300
    */
-  height?: number;
+  height?: string | number;
+  /**
+   * 是否自动播放
+   * @default false
+   */
+  autoPlay?: boolean;
+  /**
+   * 轮播间隔时间
+   * @default 3000
+   */
+  interval?: number;
+  /**
+   * 是否悬浮时停止轮播
+   * @default true
+   */
+  stopOnHover?: boolean;
   /**
    * 轮播图类型
    * @default default
@@ -72,20 +84,47 @@ export interface CarouselItemProps {
 }
 
 export interface CarouselNavigationProps {
-
+  /**
+   * 轮播项数量
+   * @default 0
+   */
+  itemNum?: number
+  /**
+   * 当前轮播项
+   * @default 0
+   */
+  current?: number;
+  /**
+   * 悬浮导航项时触发
+   */
+  onEnter?: (current: number) => void
 }
 
 const CarouselNavigation: React.FC<CarouselNavigationProps> = (props) => {
   const {
-    ...restProps
+    itemNum = 0,
+    current = 0,
+    onEnter,
   } = props;
 
-  return (
-    <ul
-      className='i-carousel__navigation'
-      {...restProps}
-    >
+  const lists = _.range(0, itemNum)
 
+  const handleEnterItem = (index: number) => {
+    onEnter?.(index)
+  }
+
+  return (
+    <ul className='i-carousel__navigation'>
+      {lists.map(item => (
+        <li
+          className={classNames(
+            'i-carousel__navigation-item',
+            current - 1 === item && 'i-carousel__navigation-item__active'
+          )}
+          onMouseEnter={() => handleEnterItem(item)}
+          key={item}
+        />
+      ))}
     </ul>
   )
 }
@@ -117,10 +156,12 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     children,
     className,
     style,
-    current,
     defaultCurrent = 0,
-    loop = true,
-    height,
+    width = '100%',
+    height = 300,
+    autoPlay = false,
+    interval = 3,
+    stopOnHover = true,
     type = 'default',
     direction = 'horizontal',
     duration = 300,
@@ -128,7 +169,17 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     ...restProps
   } = props;
 
-  const [innerCurrent, setInnerCurrent] = useDefault(current, defaultCurrent, onChange);
+  const resetDefaultCurrent = (index: number) => {
+    if (index >= childrenLength) {
+      return 0
+    } else if (index <= -1) {
+      return childrenLength - 1
+    } else {
+      return index + 1
+    }
+  }
+
+  const [innerCurrent, setInnerCurrent] = useState(resetDefaultCurrent(defaultCurrent));
 
   // 进行子组件筛选，创建子节点列表
   const childrenList = useMemo(
@@ -157,72 +208,108 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
         key: childrenLength
       }),
     );
-    // carouselItemList.unshift(
-    //   React.cloneElement(lastEle, {
-    //     ...lastEle.props,
-    //     key: -1
-    //   }),
-    // );
+    carouselItemList.unshift(
+      React.cloneElement(lastEle, {
+        ...lastEle.props,
+        key: -1
+      }),
+    );
   }
   const carouselItemLength = carouselItemList.length
 
-  const carouselRef = useRef<HTMLDivElement>(null)
   const [ifAnimation, setIfAnimation] = useState(false);
   const animationTimer = useRef<any>(null); // 计时器指针
 
   // 轮播图通用跳转函数
   const handleTo = useCallback(
-    (index: number) => {
+    (index: number, handle?: 'last' | 'next') => {
       setIfAnimation(true);
       setInnerCurrent(index);
+      if (handle === 'last') {
+        if (index > 0) {
+          onChange?.(index - 1);
+        } else {
+          onChange?.(childrenLength - 1);
+        }
+      } else {
+        if (index <= childrenLength) {
+          onChange?.(index - 1);
+        } else {
+          onChange?.(0);
+        }
+      }
     },
-    [childrenLength],
+    [childrenLength, onChange],
   );
 
   // 监听每次轮播结束
   useEffect(() => {
-    console.log(innerCurrent)
-    // if (innerCurrent + 1 > carouselItemLength && type === 'card') {
-    //   return setInnerCurrent(0);
-    // }
     if (animationTimer.current) {
       clearTimeout(animationTimer.current);
       animationTimer.current = null;
     }
-    // window.requestAnimationFrame(
-    //   () => {
-    //     setIfAnimation(false);
-    //     if (innerCurrent + 1 >= carouselItemLength && type !== 'card') {
-    //       setInnerCurrent(0);
-    //     }
-    //   }
-    // );
     animationTimer.current = setTimeout(() => {
       setIfAnimation(false);
-      if (innerCurrent + 1 >= carouselItemLength && type !== 'card') {
-        setInnerCurrent(0);
+      if (type !== 'card') {
+        if (innerCurrent + 1 >= carouselItemLength) {
+          setInnerCurrent(1);
+        }
+        if (innerCurrent <= 0) {
+          setInnerCurrent(carouselItemLength - 2);
+        }
       }
-    }, duration + 50); // 多 50ms 的间隔时间参考了 react-slick 的动画间隔取值
+    }, duration + 50);
   }, [innerCurrent, carouselItemLength, duration, type]);
 
-  const handleClickArrow = (direction: 'left' | 'right') => {
-    console.log('-----------')
-    console.log(ifAnimation)
+  const [ifHoverContent, setIfHoverContent] = useState(false)
+
+  const handleEnterContent = () => {
+    stopOnHover && setIfHoverContent(true)
+  }
+
+  const handleLeaveContent = () => {
+    stopOnHover && setIfHoverContent(false)
+  }
+
+  // 自动轮播
+  const loopTimer = useRef<any>(null); // 自动轮播指针
+  const setLoopTimer = useCallback(() => {
+    if (!ifHoverContent && autoPlay && interval > 0) {
+      loopTimer.current = setTimeout(
+        () => {
+          handleTo(innerCurrent + 1);
+        },
+        innerCurrent === 0 ? interval * 1000 - (duration + 50) : interval * 1000, // 当 index 为 0 时，表示刚从克隆的最后一项跳转过来，且经历了 duration + 50 的间隔时间，减去即可
+      );
+    }
+  }, [autoPlay, ifHoverContent, innerCurrent, duration, interval, handleTo]);
+  const clearLoopTimer = useCallback(() => {
+    if (loopTimer.current) {
+      clearTimeout(loopTimer.current);
+      loopTimer.current = null;
+    }
+  }, []);
+  useEffect(() => {
+    setLoopTimer();
+    return () => clearLoopTimer();
+  }, [setLoopTimer])
+
+  const handleClickArrow = (handle: 'last' | 'next') => {
     if (ifAnimation) {
       return false;
     } else {
-      if (direction === 'left') {
+      if (handle === 'last') {
         if (innerCurrent - 1 < 0) {
-          return handleTo(childrenLength - 1);
+          return handleTo(childrenLength - 1, 'last');
         } else {
-          return handleTo(innerCurrent - 1);
+          return handleTo(innerCurrent - 1, 'last');
         }
       }
-      if (direction === 'right') {
+      if (handle === 'next') {
         if (type === 'card') {
-          return handleTo(innerCurrent + 1 >= carouselItemLength ? 0 : innerCurrent + 1);
+          return handleTo(innerCurrent + 1 >= carouselItemLength ? 0 : innerCurrent + 1, 'next');
         } else {
-          return handleTo(innerCurrent + 1);
+          return handleTo(innerCurrent + 1, 'next');
         }
       }
     }
@@ -230,23 +317,19 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
 
   // Item 包裹层样式
   const getWrapperStyle = () => {
-    const offsetHeight = height ? `${height}px` : `${carouselRef.current?.offsetHeight}px`;
     if (type === 'card') {
       // 卡片样式轮播
-      return {
-        height: offsetHeight,
-      };
+      // return {
+      //   height: offsetHeight,
+      // };
     } else {
       // 默认样式轮播
       if (direction === 'vertical') {
-        // 垂直滑动
         return {
-          height: offsetHeight,
           transform: `translate3d(0, -${innerCurrent * 100}%, 0px)`,
           transition: ifAnimation ? `transform ${duration / 1000}s ease` : '',
         };
       } else {
-        // 水平滑动
         return {
           transform: `translate3d(-${innerCurrent * 100}%, 0px, 0px)`,
           transition: ifAnimation ? `transform ${duration / 1000}s ease` : '',
@@ -259,30 +342,38 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     <div
       className={classNames(
         'i-carousel',
+        direction === 'vertical' && 'i-carousel__vertical',
         className
       )}
-      style={{ ...style }}
-      ref={carouselRef}
+      style={{ ...style, width, height }}
       {...restProps}
     >
-      <div className="i-carousel__content">
+      <div
+        className="i-carousel__content"
+        onMouseEnter={handleEnterContent}
+        onMouseLeave={handleLeaveContent}
+      >
         <ul
-          className="i-carousel__wrapper"
+          className='i-carousel__wrapper'
           style={getWrapperStyle()}
         >
           {carouselItemList}
         </ul>
       </div>
-      <CarouselNavigation />
+      <CarouselNavigation
+        itemNum={childrenLength}
+        current={innerCurrent}
+        onEnter={(current: number) => handleTo(current + 1)}
+      />
       <div
-        className="i-carousel__arrow-left"
-        onClick={() => handleClickArrow('left')}
+        className="i-carousel__arrow-last"
+        onClick={() => handleClickArrow('last')}
       >
         <Icon color="#fff" name="ArrowLeft" />
       </div>
       <div
-        className="i-carousel__arrow-right"
-        onClick={() => handleClickArrow('right')}
+        className="i-carousel__arrow-next"
+        onClick={() => handleClickArrow('next')}
       >
         <Icon color="#fff" name="ArrowRight" />
       </div>
