@@ -104,10 +104,24 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
 };
 
 const Breadcrumb: React.FC<BreadcrumbProps> & { Item: React.ElementType } = (props) => {
-  const { children = '', className, maxItemWidth, separator, style, ...restProps } = props;
+  const {
+    children = '',
+    className,
+    maxItemWidth,
+    separator,
+    style,
+    ...restProps
+  } = props;
 
   return (
-    <div className={classNames('i-breadcrumb', className)} style={{ ...style }} {...restProps}>
+    <div
+      className={classNames(
+        'i-breadcrumb',
+        className
+      )}
+      style={{ ...style }}
+      {...restProps}
+    >
       {/* 将 separator 分隔符及 maxItemWidth 最大单项宽度传入 children */}
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {
