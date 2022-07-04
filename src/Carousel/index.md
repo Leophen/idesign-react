@@ -20,7 +20,7 @@ import { Carousel } from 'idesign-react';
 
 const App = () => {
   const handleChange = (val) => {
-    // console.log(val)
+    console.log(val)
   }
 
   return (

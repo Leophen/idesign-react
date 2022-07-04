@@ -115,6 +115,10 @@ export interface CarouselItemProps {
    * 包裹层 ref
    */
   wrapWidth?: any;
+  /**
+   * 点击轮播项触发
+   */
+  clickItem?: (index: number) => void
 }
 
 export interface CarouselNavigationProps {
@@ -175,6 +179,7 @@ const CarouselItem: React.FC<CarouselItemProps> = (props) => {
     childrenLength = 1,
     duration = 300,
     wrapWidth = 0,
+    clickItem,
     ...restProps
   } = props;
 
@@ -244,6 +249,7 @@ const CarouselItem: React.FC<CarouselItemProps> = (props) => {
         className
       )}
       style={getItemStyle()}
+      onClick={() => clickItem?.(index)}
       {...restProps}
     >
       {children}
@@ -312,6 +318,12 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
       wrapWidth,
       type,
       duration,
+      clickItem: (index: number) => {
+        if (type === 'card') {
+          setInnerCurrent(index)
+          onChange?.(index)
+        }
+      },
       ...child.props,
     }),
   );
@@ -481,8 +493,8 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
       </div>
       <CarouselNavigation
         itemNum={childrenLength}
-        current={innerCurrent}
-        onEnter={(current: number) => handleTo(current + 1)}
+        current={type === 'default' ? innerCurrent : innerCurrent + 1}
+        onEnter={(current: number) => handleTo(type === 'default' ? current + 1 : current)}
       />
       <div
         className="i-carousel__arrow-last"
