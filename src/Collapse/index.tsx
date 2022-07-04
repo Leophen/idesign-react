@@ -48,6 +48,16 @@ export interface CollapseProps {
    */
   iconPlacement?: 'left' | 'right';
   /**
+   * 是否隐藏边框
+   * @default false
+   */
+  hideBorder?: boolean;
+  /**
+   * 无缩进模式
+   * @default false
+   */
+  noIndent?: boolean;
+  /**
    * 切换面板时触发，返回变化的值
    */
   onChange?: (value: CollapseValueType) => void;
@@ -135,7 +145,13 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
   useEffect(() => {
     const height = contentInnerRef.current?.getBoundingClientRect().height || 0
     setContentHeight(height + 16) // 加上下 padding
-  })
+
+    const resizeObserver = new ResizeObserver(entries => {
+      setContentHeight(entries[0].contentRect.height + 16)
+    });
+    resizeObserver.observe((contentInnerRef.current as any))
+    return () => resizeObserver.disconnect()
+  }, [])
 
   return (
     <div
@@ -204,6 +220,8 @@ const Collapse: React.FC<CollapseProps> & { Item: React.ElementType } = (props) 
     disabled = false,
     expandAll = false,
     iconPlacement = 'left',
+    hideBorder = false,
+    noIndent = false,
     onChange,
     ...restProps
   } = props;
@@ -243,6 +261,8 @@ const Collapse: React.FC<CollapseProps> & { Item: React.ElementType } = (props) 
       <div
         className={classNames(
           'i-collapse',
+          hideBorder && 'i-collapse__hide-border',
+          noIndent && 'i-collapse__no-indent',
           className
         )}
         style={{ ...style }}

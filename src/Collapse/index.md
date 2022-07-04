@@ -233,6 +233,107 @@ const App = () => {
 export default App
 ```
 
+## 隐藏所有边框
+
+可通过 `hideBorder` 属性隐藏所有边框：
+
+```tsx
+import React, { useState } from 'react'
+import { Collapse } from 'idesign-react'
+
+const App = () => {
+  return (
+    <Collapse hideBorder>
+      <Collapse.Item title="折叠标题1">
+        折叠内容 1111111111111111111111
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题2">
+        折叠内容 2222222222222222222222
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题3">
+        折叠内容 3333333333333333333333
+      </Collapse.Item>
+    </Collapse>
+  )
+}
+
+export default App
+```
+
+## 嵌套折叠面板
+
+可在 `Collapse.Item` 中多层嵌套 `Collapse` 折叠面板：
+
+```tsx
+import React, { useState } from 'react'
+import { Collapse } from 'idesign-react'
+
+const App = () => {
+  return (
+    <Collapse>
+      <Collapse.Item title="折叠标题1">
+        <Collapse hideBorder>
+          <Collapse.Item title="折叠标题A">
+            折叠内容 AAAAAAAAAAAAAAAAAAAAAA
+          </Collapse.Item>
+          <Collapse.Item title="折叠标题B">
+            折叠内容 BBBBBBBBBBBBBBBBBBBBBB
+          </Collapse.Item>
+          <Collapse.Item title="折叠标题C">
+            折叠内容 CCCCCCCCCCCCCCCCCCCCCC
+          </Collapse.Item>
+        </Collapse>
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题2">
+        折叠内容 2222222222222222222222
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题3">
+        折叠内容 3333333333333333333333
+      </Collapse.Item>
+    </Collapse>
+  )
+}
+
+export default App
+```
+
+## 无缩进模式
+
+可通过 `noIndent` 属性隐藏所有边框：
+
+```tsx
+import React, { useState } from 'react'
+import { Collapse } from 'idesign-react'
+
+const App = () => {
+  return (
+    <Collapse noIndent>
+      <Collapse.Item title="折叠标题1">
+        <Collapse hideBorder>
+          <Collapse.Item title="折叠标题A">
+            折叠内容 AAAAAAAAAAAAAAAAAAAAAA
+          </Collapse.Item>
+          <Collapse.Item title="折叠标题B">
+            折叠内容 BBBBBBBBBBBBBBBBBBBBBB
+          </Collapse.Item>
+          <Collapse.Item title="折叠标题C">
+            折叠内容 CCCCCCCCCCCCCCCCCCCCCC
+          </Collapse.Item>
+        </Collapse>
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题2">
+        折叠内容 2222222222222222222222
+      </Collapse.Item>
+      <Collapse.Item title="折叠标题3">
+        折叠内容 3333333333333333333333
+      </Collapse.Item>
+    </Collapse>
+  )
+}
+
+export default App
+```
+
 ## Collapse API
 
 <API hideTitle />
