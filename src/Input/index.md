@@ -14,37 +14,35 @@ order: 4
 
 ## 基本用法
 
-基础的单行输入框，可通过 `value` 属性设置默认值，通过 `onChange` 设置值改变时触发的操作。
+基础的单行输入框，可通过 `defaultValue` 设置默认值，通过 `value` 属性设置受控值，通过 `onChange` 设置值改变时触发的操作：
 
 ```tsx
-import React, { useState } from 'react';
-import { Input } from 'idesign-react';
+import React, { useState } from 'react'
+import { Input } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('iDesign');
+  const [value, setValue] = useState('这是默认值')
+
+  const handleChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
 
   return (
     <>
-      <Input
-        placeholder="请输入内容（无默认值）"
-        onChange={(value) => {
-          console.log(value);
-        }}
-      />
-      <br />
-      <Input
-        placeholder="请输入内容（有默认值）"
-        value={value}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
-      />
+      <h4>无默认值</h4>
+      <Input />
+      <h4>有默认值</h4>
+      <Input defaultValue={value} />
+      <h4>有固定值</h4>
+      <Input value={value} />
+      <h4>通用方法</h4>
+      <Input value={value} onChange={handleChange} />
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```
 
 ## 禁用状态

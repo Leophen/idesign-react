@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import Icon from '../Icon';
+import useDefault from '../hooks/useDefault';
 
 export interface InputProps {
   /**
@@ -22,9 +23,13 @@ export interface InputProps {
    */
   placeholder?: string;
   /**
-   * 输入框的值
+   * 输入框受控值
    */
   value?: string | number;
+  /**
+   * 输入框默认值
+   */
+  defaultValue?: string | number;
   /**
    * 是否禁用输入框
    * @default false
@@ -203,8 +208,15 @@ export interface InputGroupProps {
 }
 
 const InputGroup: React.FC<InputGroupProps> = (props) => {
-  const { className, children, style, prefixContent, suffixContent, clickPrefix, clickSuffix } =
-    props;
+  const {
+    className,
+    children,
+    style,
+    prefixContent,
+    suffixContent,
+    clickPrefix,
+    clickSuffix
+  } = props;
 
   const [contentHeight, setContentHeight] = useState(0);
   const groupNode = useRef(null);
@@ -272,6 +284,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     placeholder = '请输入',
     style,
     value,
+    defaultValue,
     disabled = false,
     readonly = false,
     size,
@@ -312,7 +325,9 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     (inputNode.current as any).focus();
   };
 
-  const [valueLength, setValueLength] = useState(value?.toString().length || 0);
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
+
+  const [valueLength, setValueLength] = useState(innerValue?.toString().length || 0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
@@ -332,12 +347,12 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         }
       }
     }
-    onChange?.(currentValue, e as any);
+    setInnerValue(currentValue, e as any)
   };
 
   // 点击清空按钮
   const handleClear = (e: any) => {
-    onChange?.('', e);
+    setInnerValue('', e)
     onClear?.(e);
   };
 
@@ -456,7 +471,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     }
     const result = computedValue.toFixed(precision);
     (inputNode.current as any).value = result;
-    onChange?.(result, e as any);
+    setInnerValue(result, e as any)
   };
 
   const renderNumberBtn = (
@@ -507,7 +522,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
       const result = countValue.toFixed(precision);
       (inputNode.current as any).value = result;
-      onChange?.(result, e as any);
+      setInnerValue(result, e as any)
       onMove?.(result, e as any);
     }
 
