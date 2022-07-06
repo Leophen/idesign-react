@@ -170,6 +170,7 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
           !isActive && 'i-collapse-item__header-fold'
         )}
         onClick={handleClickHeader}
+        data-active={isActive ? 1 : 0}
       >
         <Icon
           name="ArrowCaretRight"
@@ -177,7 +178,9 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
             transform: isActive ? 'rotate(90deg)' : 'rotate(0deg)'
           }}
         />
-        {title}
+        <span className="i-collapse-item__header-txt">
+          {title}
+        </span>
       </header>
 
       <section
@@ -186,6 +189,7 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
           isActive && 'i-collapse-item__content-unfold'
         )}
         style={{ height: isActive ? contentHeight : 0 }}
+        data-active={isActive ? 1 : 0}
       >
         <div
           className="i-collapse-item__content-inner"

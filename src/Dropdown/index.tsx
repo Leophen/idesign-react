@@ -90,6 +90,10 @@ export interface DropdownProps {
    */
   className?: string;
   /**
+   * 下拉内容类名
+   */
+  contentClassName?: string;
+  /**
    * 内容
    */
   children?: React.ReactNode;
@@ -257,6 +261,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
   const {
     children = '',
     className,
+    contentClassName,
     style,
     width,
     maxHeight,
@@ -319,7 +324,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     <div
       className={classNames(
         'i-dropdown',
-        className
+        contentClassName
       )}
       style={{ ...(style || {}), ...{ width: width ? width : 'auto', maxHeight, overflowY: maxHeight ? 'auto' : 'unset' } }}
     >
@@ -336,6 +341,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
   return (
     <Popup
+      portalClassName={className}
       content={DropdownContent}
       placement={placement}
       trigger={trigger}
