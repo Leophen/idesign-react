@@ -19,7 +19,7 @@ import React, { useState } from 'react'
 import { Tabs } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('2')
+  const [value, setValue] = useState(1)
 
   const handleChange = (val) => {
     console.log(val)
@@ -30,27 +30,27 @@ const App = () => {
     <>
       <h4>无默认值</h4>
       <Tabs>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>有默认值</h4>
       <Tabs defaultActive={value}>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>有固定值</h4>
       <Tabs active={value}>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>通用方法</h4>
       <Tabs active={value} onChange={handleChange}>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
     </>
   )
@@ -69,7 +69,7 @@ import { Tabs } from 'idesign-react'
 
 const App = () => {
   return (
-    <Tabs theme="card">
+    <Tabs defaultActive="2" theme="card">
       <Tabs.Item value="1">选项卡1</Tabs.Item>
       <Tabs.Item value="2">选项卡22</Tabs.Item>
       <Tabs.Item value="3">选项卡333</Tabs.Item>
@@ -93,27 +93,27 @@ const App = () => {
     <>
       <h4>全局禁用</h4>
       <Tabs disabled>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>单项禁用</h4>
       <Tabs>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2" disabled>选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item disabled>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>卡片风格全局禁用</h4>
       <Tabs theme="card" disabled>
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2">选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
       <h4>卡片风格单项禁用</h4>
       <Tabs theme="card">
-        <Tabs.Item value="1">选项卡1</Tabs.Item>
-        <Tabs.Item value="2" disabled>选项卡22</Tabs.Item>
-        <Tabs.Item value="3">选项卡333</Tabs.Item>
+        <Tabs.Item>选项卡1</Tabs.Item>
+        <Tabs.Item disabled>选项卡22</Tabs.Item>
+        <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
     </>
   )

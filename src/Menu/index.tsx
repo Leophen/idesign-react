@@ -27,7 +27,7 @@ export interface MenuProps {
   /**
    * 当前选中值
    */
-  active: string | number;
+  active?: string | number;
   /**
    * 默认选中值
    * @default 0
@@ -36,11 +36,11 @@ export interface MenuProps {
   /**
    * 前置内容
    */
-  prefixContent: React.ReactNode;
+  prefixContent?: React.ReactNode;
   /**
    * 前置内容
    */
-  suffixContent: React.ReactNode;
+  suffixContent?: React.ReactNode;
   /**
    * 导航方向
    * @default horizontal
