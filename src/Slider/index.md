@@ -30,9 +30,9 @@ const App = () => {
       <Slider />
       <h4>有默认值</h4>
       <Slider defaultValue={value} />
-      <h4>有固定值</h4>
+      <h4>有受控值</h4>
       <Slider value={value} />
-      <h4>通用方法</h4>
+      <h4>一般用法</h4>
       <Slider
         value={value}
         onChange={handleChange}
@@ -133,9 +133,9 @@ const App = () => {
       <Slider layout="vertical" />
       <h4>有默认值 →</h4>
       <Slider layout="vertical" defaultValue={value} />
-      <h4>有固定值 →</h4>
+      <h4>有受控值 →</h4>
       <Slider layout="vertical" value={value} />
-      <h4>通用方法 →</h4>
+      <h4>一般用法 →</h4>
       <Slider
         layout="vertical"
         value={value}

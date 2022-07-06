@@ -34,9 +34,9 @@ const App = () => {
       <Input />
       <h4>有默认值</h4>
       <Input defaultValue={value} />
-      <h4>有固定值</h4>
+      <h4>有受控值</h4>
       <Input value={value} />
-      <h4>通用方法</h4>
+      <h4>一般用法</h4>
       <Input value={value} onChange={handleChange} />
     </>
   )

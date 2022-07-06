@@ -42,14 +42,14 @@ const App = () => {
         <Menu.Item>菜单3</Menu.Item>
         <Menu.Item>菜单4</Menu.Item>
       </Menu>
-      <h4>有固定值</h4>
+      <h4>有受控值</h4>
       <Menu active={value}>
         <Menu.Item>菜单1</Menu.Item>
         <Menu.Item>菜单2</Menu.Item>
         <Menu.Item>菜单3</Menu.Item>
         <Menu.Item>菜单4</Menu.Item>
       </Menu>
-      <h4>通用方法</h4>
+      <h4>一般用法</h4>
       <Menu active={value} onChange={handleChange}>
         <Menu.Item>菜单1</Menu.Item>
         <Menu.Item>菜单2</Menu.Item>

@@ -52,7 +52,7 @@ const App = () => {
           折叠内容 3333333333333333333333
         </Collapse.Item>
       </Collapse>
-      <h4>有固定值</h4>
+      <h4>有受控值</h4>
       <Collapse active={value}>
         <Collapse.Item title="折叠标题1">
           折叠内容 1111111111111111111111
@@ -64,7 +64,7 @@ const App = () => {
           折叠内容 3333333333333333333333
         </Collapse.Item>
       </Collapse>
-      <h4>通用方法</h4>
+      <h4>一般用法</h4>
       <Collapse active={value} onChange={handleChange}>
         <Collapse.Item title="折叠标题1">
           折叠内容 1111111111111111111111

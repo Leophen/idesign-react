@@ -40,13 +40,13 @@ const App = () => {
         <Tabs.Item>选项卡22</Tabs.Item>
         <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
-      <h4>有固定值</h4>
+      <h4>有受控值</h4>
       <Tabs active={value}>
         <Tabs.Item>选项卡1</Tabs.Item>
         <Tabs.Item>选项卡22</Tabs.Item>
         <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
-      <h4>通用方法</h4>
+      <h4>一般用法</h4>
       <Tabs active={value} onChange={handleChange}>
         <Tabs.Item>选项卡1</Tabs.Item>
         <Tabs.Item>选项卡22</Tabs.Item>
