@@ -12,37 +12,35 @@ order: 4
 
 ## 基本用法
 
-用于字符输入的多行输入框。
+用于字符输入的多行输入框：
 
 ```tsx
-import React, { useState } from 'react';
-import { Textarea } from 'idesign-react';
+import React, { useState } from 'react'
+import { Textarea } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('iDesign');
+  const [value, setValue] = useState('这是默认值')
+
+  const handleChange = (val, e) => {
+    console.log(val, e)
+    setValue(val)
+  }
 
   return (
     <>
-      <Textarea
-        placeholder="请输入内容（无默认值）"
-        onChange={(value) => {
-          console.log(value);
-        }}
-      />
-      <br />
-      <Textarea
-        placeholder="请输入内容（有默认值）"
-        value={value}
-        onChange={(value) => {
-          console.log(value);
-          setValue(value);
-        }}
-      />
+      <h4>无默认值</h4>
+      <Textarea />
+      <h4>有默认值</h4>
+      <Textarea defaultValue={value} />
+      <h4>有固定值</h4>
+      <Textarea value={value} />
+      <h4>通用方法</h4>
+      <Textarea value={value} onChange={handleChange} />
     </>
-  );
-};
+  )
+}
 
-export default App;
+export default App
 ```
 
 ## 禁用状态

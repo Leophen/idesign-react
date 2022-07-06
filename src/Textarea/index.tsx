@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import useDefault from '../hooks/useDefault';
 
 export interface TextareaProps {
   /**
@@ -21,9 +22,13 @@ export interface TextareaProps {
    */
   placeholder?: string;
   /**
-   * 文本框值
+   * 文本框受控值
    */
   value?: string | number;
+  /**
+   * 文本框默认值
+   */
+  defaultValue?: string | number;
   /**
    * 是否禁用文本框
    * @default false
@@ -99,18 +104,21 @@ const Textarea: React.FC<TextareaProps> = (props) => {
     minRows,
     maxRows,
     value,
+    defaultValue = '',
     onChange,
     onFocus,
     onBlur,
     ...restProps
   } = props;
 
-  const [valueLength, setValueLength] = useState(value?.toString().length || 0);
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
+
+  const [valueLength, setValueLength] = useState(innerValue?.toString().length || 0);
 
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     e.persist();
     maxLength && setValueLength((e.target as HTMLTextAreaElement).value.length);
-    onChange?.((e.target as HTMLTextAreaElement).value, e as any);
+    setInnerValue((e.target as HTMLTextAreaElement).value, e as any)
     resize()
   };
 
@@ -172,7 +180,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
           rows={autoSize ? 1 : undefined}
           maxLength={maxLength}
           autoFocus={autofocus}
-          value={value}
+          value={innerValue}
           onChange={handleChange}
           onFocus={(e) => handleEvent('focus', e)}
           onBlur={(e) => handleEvent('blur', e)}
