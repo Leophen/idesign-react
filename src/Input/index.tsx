@@ -284,7 +284,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     placeholder = '请输入',
     style,
     value,
-    defaultValue,
+    defaultValue = '',
     disabled = false,
     readonly = false,
     size,
@@ -412,7 +412,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       disabled={disabled}
       readOnly={readonly}
       ref={inputNode}
-      value={value}
+      value={innerValue}
       type={currentType}
       maxLength={maxLength}
       max={currentType === 'number' ? maxNumber : undefined}
@@ -433,10 +433,10 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
   useEffect(() => {
     if (type === 'number') {
-      if (Number(value) <= minNumber) {
+      if (Number(innerValue) <= minNumber) {
         setIfLeastValue(true)
       }
-      if (Number(value) >= maxNumber) {
+      if (Number(innerValue) >= maxNumber) {
         setIfMaximum(true)
       }
     }
@@ -694,7 +694,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
             </span>
           </div>
         )}
-        {!disabled && value && (clearable || onClear) && (
+        {!disabled && innerValue && (clearable || onClear) && (
           <Icon name="TipCloseFill" onClick={handleClear} />
         )}
         {!disabled && type === 'password' && (
