@@ -1,0 +1,22 @@
+.i-upload {
+  color: #333;
+  font-size: 14px;
+}
+
+.i-upload__block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100px;
+  height: 100px;
+  border: 1px dashed #e5e6eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  &:hover {
+    border-color: #dcdcdc;
+  }
+}

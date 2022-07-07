@@ -26,7 +26,7 @@ export { default as ColorPicker } from './ColorPicker';
 export { default as Form } from './Form';
 export { default as Table } from './Table';
 export { default as Upload } from './Upload';
-export { default as Transfer } from './Transfer';
+// export { default as Transfer } from './Transfer';
 export { default as Slider } from './Slider';
 export { default as Progress } from './Progress';
 export { default as Steps } from './Steps';

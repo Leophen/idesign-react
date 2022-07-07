@@ -35,7 +35,7 @@ $null_bg: transparent;
   box-sizing: border-box;
   height: 32px;
   margin: 0;
-  padding: 0 16px;
+  padding: 0 12px;
   color: #fff;
   font-size: 14px;
   white-space: nowrap;
@@ -60,13 +60,19 @@ $null_bg: transparent;
   // size
   &.i-button--size-small {
     height: 24px;
-    padding: 0 7px;
+    padding: 0 8px;
     font-size: 12px;
+    .i-button-icon {
+      margin-right: 4px;
+    }
   }
   &.i-button--size-large {
     height: 40px;
-    padding: 0 23px;
+    padding: 0 16px;
     font-size: 16px;
+    .i-button-icon {
+      margin-right: 8px;
+    }
   }
   // shape
   &.i-button--shape-square {
@@ -79,6 +85,12 @@ $null_bg: transparent;
   &.i-button-disabled {
     cursor: not-allowed;
   }
+}
+
+.i-button-icon {
+  margin-right: 6px;
+  color: inherit;
+  font-size: inherit;
 }
 
 @mixin injectColor($color, $color_hover, $color_active, $color_disabled) {

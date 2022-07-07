@@ -17,14 +17,40 @@ import React from 'react';
 import { Upload } from 'idesign-react';
 
 const App = () => {
+  const handleChange = (file) => {
+    console.log(file)
+  }
+
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Upload>填充按钮</Upload>
-      </div>
+    <Upload onChange={handleChange} />
+  );
+};
+
+export default App;
+```
+
+## 不同主题
+
+可通过 `theme` 属性控制不同属性的上传组件：
+
+```tsx
+import React from 'react';
+import { Upload } from 'idesign-react';
+
+const App = () => {
+  const handleChange = (file) => {
+    console.log(file)
+  }
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Upload theme="button" onChange={handleChange} />
+      <Upload theme="block" onChange={handleChange} />
     </div>
   );
 };
 
 export default App;
 ```
+
+<API />

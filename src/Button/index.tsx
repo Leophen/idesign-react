@@ -1,6 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
+import Icon from '../Icon';
 
 export interface ButtonProps {
   /**
@@ -46,6 +47,10 @@ export interface ButtonProps {
    */
   variant?: 'base' | 'outline' | 'dashed' | 'text';
   /**
+   * 内置图标
+   */
+  icon?: string;
+  /**
    * 点击按钮触发事件
    */
   onClick?: React.MouseEventHandler;
@@ -65,6 +70,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     style,
     type = 'primary',
     variant = 'base',
+    icon,
     onClick = () => { },
     ...buttonProps
   } = props;
@@ -85,6 +91,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       onClick={onClick}
       {...buttonProps}
     >
+      {icon && <Icon className='i-button-icon' name={icon} />}
       {children}
     </button>
   );

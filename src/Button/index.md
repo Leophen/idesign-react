@@ -380,4 +380,25 @@ const App = () => {
 export default App;
 ```
 
+## 图标按钮
+
+通过 `icon` 属性控制按钮中的内置图标：
+
+```tsx
+import React from 'react';
+import { Button } from 'idesign-react';
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-row">
+      <Button size="small" icon="ThePlus">图标按钮</Button>
+      <Button size="medium" icon="ThePlus">图标按钮</Button>
+      <Button size="large" icon="ThePlus">图标按钮</Button>
+    </div>
+  );
+};
+
+export default App;
+```
+
 <API />
