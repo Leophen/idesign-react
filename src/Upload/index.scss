@@ -1,3 +1,5 @@
+$primary: #3a3cf5;
+
 .i-upload {
   color: #333;
   font-size: 14px;
@@ -19,4 +21,35 @@
   &:hover {
     border-color: #dcdcdc;
   }
+}
+
+.i-upload__drag {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 320px;
+  padding: 12px 0;
+  background: #f7f8fa;
+  border: 1px dashed #e5e6eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-out;
+  &:hover {
+    border-color: #dcdcdc;
+  }
+  &.i-upload__dragging {
+    border-color: $primary;
+  }
+}
+
+.i-upload-placeholder {
+  color: #666;
+}
+
+.i-upload-tip {
+  color: #999;
+  font-size: 12px;
 }

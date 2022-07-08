@@ -1,8 +1,9 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import Button from '../Button';
 import Icon from '../Icon';
+import Message from '../Message';
 
 export interface UploadProps {
   /**
@@ -10,7 +11,7 @@ export interface UploadProps {
    */
   className?: string;
   /**
-   * 内容
+   * 自定义上传内容
    */
   children?: React.ReactNode;
   /**
@@ -19,14 +20,18 @@ export interface UploadProps {
   style?: React.CSSProperties;
   /**
    * 占位符
-   * @default 点击上传
    */
   placeholder?: string;
   /**
    * 上传组件风格
    * @default button
    */
-  theme?: 'button' | 'block';
+  theme?: 'button' | 'block' | 'drag';
+  /**
+   * 文件大小限制，单位 M
+   * @default 10
+   */
+  maxSize?: number;
   /**
    * 上传时触发
    */
@@ -34,15 +39,19 @@ export interface UploadProps {
 }
 
 const Upload: React.FC<UploadProps> = (props) => {
+  const defaultPlaceHolder = props.theme === 'drag' ? '点击或拖动到框内上传' : '点击上传'
   const {
     children,
     className,
     style,
-    placeholder = '点击上传',
+    placeholder = defaultPlaceHolder,
     theme = 'button',
+    maxSize = 10,
     onChange,
     ...restProps
   } = props;
+
+  const MAX_SIZE = useMemo(() => maxSize * 1024 * 1024, [maxSize])
 
   const inputRef = useRef<HTMLInputElement>(null)
 
@@ -53,7 +62,32 @@ const Upload: React.FC<UploadProps> = (props) => {
   const handleUpload = (e: React.ChangeEvent) => {
     e.persist()
     const file = ((e.target as HTMLInputElement).files || [])[0]
-    onChange?.(file)
+    if (file) {
+      if (file.size > MAX_SIZE) {
+        const unit = MAX_SIZE > 1 * 1024 ? 'M' : 'kb'
+        const size = MAX_SIZE > 1 * 1024 ? maxSize : maxSize * 1024
+        Message.error(`文件大小不得超过 ${size} ${unit}`);
+      } else {
+        onChange?.(file)
+      }
+    }
+  }
+
+  const [ifDragIn, setIfDragIn] = useState(false)
+
+  const handleDragOver = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIfDragIn(true)
+  }
+
+  const handleDragLeave = (e: React.MouseEvent) => {
+    setIfDragIn(false)
+  }
+
+  const handleDragDrop = (e: React.MouseEvent) => {
+    e.preventDefault()
+    handleClickInput()
+    setIfDragIn(false)
   }
 
   const renderUpload = () => {
@@ -68,6 +102,23 @@ const Upload: React.FC<UploadProps> = (props) => {
         <div className="i-upload__block">
           <Icon name="ThePlus" size={20} />
           {placeholder}
+        </div>
+      )
+    } else if (theme === 'drag') {
+      return (
+        <div
+          className={classNames(
+            'i-upload__drag',
+            ifDragIn && 'i-upload__dragging'
+          )}
+          draggable
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDragDrop}
+        >
+          <Icon name="ArrowLineUpload" size={20} />
+          <span className='i-upload-placeholder'>{placeholder}</span>
+          <span className='i-upload-tip'>支持不超过 10M 的 excel 类型文件</span>
         </div>
       )
     }
