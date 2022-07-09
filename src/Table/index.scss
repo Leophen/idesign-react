@@ -1,0 +1,56 @@
+.i-table {
+  width: 100%;
+  min-width: 100%;
+  margin: 0;
+  color: #1d2129;
+  font-size: 14px;
+  border-collapse: separate; // 合并相邻单元格边框
+  border-spacing: 0;
+}
+
+.i-table-body {
+  background: #fff;
+  .i-table-row {
+    &:last-of-type {
+      .i-table-td {
+        &:first-of-type {
+          border-radius: 0 0 0 8px;
+        }
+        &:last-of-type {
+          border-radius: 0 0 8px 0;
+        }
+      }
+    }
+  }
+}
+
+.i-table-head {
+  background: #f7f7fa;
+  .i-table-th {
+    border-top: 1px solid #e5e6eb;
+    border-bottom: 1px solid #e5e6eb;
+    &:first-of-type {
+      border-radius: 8px 0 0 0;
+    }
+    &:last-of-type {
+      border-radius: 0 8px 0 0;
+    }
+  }
+}
+
+.i-table-th,
+.i-table-td {
+  box-sizing: border-box;
+  padding: 9px 16px;
+  text-align: left;
+  &:first-of-type {
+    border-left: 1px solid #e5e6eb;
+  }
+  &:last-of-type {
+    border-right: 1px solid #e5e6eb;
+  }
+}
+
+.i-table-td {
+  border-bottom: 1px solid #e5e6eb;
+}
