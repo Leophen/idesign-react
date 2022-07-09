@@ -23,7 +23,7 @@ export interface MenuProps {
   /**
    * 导航宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 当前选中值
    */

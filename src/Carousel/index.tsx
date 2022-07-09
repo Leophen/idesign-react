@@ -26,12 +26,12 @@ export interface CarouselProps {
    * 轮播图的宽度
    * @default 100%
    */
-  width?: string | number;
+  width?: React.CSSProperties["width"];
   /**
    * 轮播图的高度
    * @default 300
    */
-  height?: string | number;
+  height?: React.CSSProperties["height"];
   /**
    * 是否自动播放
    * @default false

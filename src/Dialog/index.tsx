@@ -37,7 +37,7 @@ export interface DialogProps {
   /**
    * 对话框宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 对话框头部内容
    */

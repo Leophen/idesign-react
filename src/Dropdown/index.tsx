@@ -18,11 +18,11 @@ export interface DropdownItemProps {
   /**
    * 级联子项宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 级联子项最大高度
    */
-  maxHeight?: number;
+  maxHeight?: React.CSSProperties["height"];
   /**
    * 单项是否禁用
    * @default false
@@ -52,11 +52,11 @@ export interface DropdownMenuProps {
   /**
    * 下拉列表宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 级联子项最大高度
    */
-  maxHeight?: number;
+  maxHeight?: React.CSSProperties["height"];
   /**
    * 下拉项高度
    * @default medium
@@ -104,11 +104,11 @@ export interface DropdownProps {
   /**
    * 下拉列表宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 列表项最大高度
    */
-  maxHeight?: number;
+  maxHeight?: React.CSSProperties["height"];
   /**
    * 下拉项高度
    * @default medium

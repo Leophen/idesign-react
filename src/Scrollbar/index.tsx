@@ -10,11 +10,11 @@ interface ScrollbarProps {
   /**
    * 滚动容器高度
    */
-  height?: number | string;
+  height?: React.CSSProperties["height"];
   /**
    * 滚动容器宽度
    */
-  width?: number | string;
+  width?: React.CSSProperties["width"];
   /**
    * 水平滚动触发事件
    */

@@ -24,7 +24,7 @@ export interface HeaderProps extends UsualProps {
    * 顶栏高度。样式表（class）中定义的默认高度为：64px
    * @default ''
    */
-  height?: string;
+  height?: React.CSSProperties["height"];
 }
 
 export interface AsideProps extends UsualProps {
@@ -32,7 +32,7 @@ export interface AsideProps extends UsualProps {
    * 侧边栏宽度。样式表（class）中定义的默认宽度为：232px
    * @default ''
    */
-  width?: string | number;
+  width?: React.CSSProperties["width"];
 }
 
 export interface ContentProps extends UsualProps {}
@@ -42,7 +42,7 @@ export interface FooterProps extends UsualProps {
    * 底栏高度。样式表（class）中定义的默认高度为：24px
    * @default ''
    */
-  height?: string;
+  height?: React.CSSProperties["height"];
 }
 
 const Header: React.FC<HeaderProps> = (props) => {

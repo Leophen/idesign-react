@@ -24,7 +24,7 @@ export interface SelectProps {
    * 选择器宽度
    * @default 100%
    */
-  width?: string | number;
+  width?:React.CSSProperties["width"];
   /**
    * 选中值
    */

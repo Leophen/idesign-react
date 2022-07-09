@@ -49,7 +49,7 @@ export interface ProgressProps {
    * 进度条长度/环形直径
    * @default 300
    */
-  width?: number | string;
+  width?: React.CSSProperties["width"];
   /**
    * 进度条粗细度
    * @default 6

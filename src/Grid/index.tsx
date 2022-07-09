@@ -68,7 +68,7 @@ export interface GridItemProps {
   /**
    * 自定义单项宽度
    */
-  width?: string | number;
+  width?: React.CSSProperties["width"];
 }
 
 const GridItem: React.FC<GridItemProps> = (props) => {
@@ -96,7 +96,7 @@ const GridItem: React.FC<GridItemProps> = (props) => {
     return result;
   };
 
-  const computedWidth = (width: string | number) => {
+  const computedWidth = (width: React.CSSProperties["width"]) => {
     if (isNaN(width as number)) {
       return width;
     }

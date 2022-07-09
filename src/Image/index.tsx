@@ -26,7 +26,7 @@ export interface ImageProps {
    * 图片宽度
    * @default 200
    */
-  width?: number | string;
+  width?: React.CSSProperties["width"];
 }
 
 export interface PreviewDialogProps {

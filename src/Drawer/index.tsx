@@ -42,11 +42,11 @@ export interface DrawerProps {
   /**
    * 抽屉宽度
    */
-  width?: number;
+  width?: React.CSSProperties["width"];
   /**
    * 抽屉高度
    */
-  height?: number;
+  height?: React.CSSProperties["height"];
   /**
    * 抽屉头部内容
    */
