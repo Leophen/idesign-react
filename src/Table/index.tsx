@@ -34,29 +34,34 @@ export interface TableProps {
    * 表头配置数据
    * @default []
    */
-  columns: ColumnType[];
+  columns?: ColumnType[];
   /**
    * 表格数据源
    * @default []
    */
   data?: { [x: string]: any }[];
   /**
-   * 表格列表高度，超出显示滚动条
-   * @default 600
+   * 表格列表最大高度，超出显示滚动条
    */
-  height?: React.CSSProperties["height"];
+  maxHeight?: React.CSSProperties["height"];
+  /**
+   * 是否显示斑马纹
+   * @default false
+   */
+  stripe?: boolean;
 }
 
 export interface ColumnGroupProps {
   /**
    * 列数据项
+   * @default []
    */
-  columns: ColumnType[];
+  columns?: ColumnType[];
 }
 
 const ColumnGroup: React.FC<ColumnGroupProps> = (props) => {
   const {
-    columns
+    columns = []
   } = props
 
   const columnWidths = columns.map((ele) => ele.width).join("-");
@@ -70,6 +75,7 @@ const ColumnGroup: React.FC<ColumnGroupProps> = (props) => {
         cols.unshift(
           <col
             key={i}
+            width={width}
             style={{ width, minWidth: width, textAlign: columns[i].align }}
           />
         );
@@ -85,60 +91,90 @@ const ColumnGroup: React.FC<ColumnGroupProps> = (props) => {
 export interface TableHeadProps {
   /**
    * 列数据
+   * @default []
    */
-  columns: ColumnType[];
+  columns?: ColumnType[];
 }
 
 const TableHead: React.FC<TableHeadProps> = (props) => {
   const {
-    columns
+    columns = []
   } = props
 
   return (
-    <thead className='i-table-head'>
-      <tr className='i-table-row'>
-        {columns.map((column) => (
-          <th className="i-table-th" key={column.key}>
-            {column.title}
-          </th>
-        ))}
-      </tr>
-    </thead>
+    <table className="i-table-thead__wrapper">
+      <ColumnGroup columns={columns} />
+      <thead className='i-table-thead'>
+        <tr className='i-table-tr'>
+          {columns.map((column) => (
+            <th className="i-table-th" key={column.key}>
+              {column.title}
+            </th>
+          ))}
+        </tr>
+      </thead>
+    </table>
   );
 };
 
 export interface TableBodyProps {
   /**
    * 数据源
+   * @default []
    */
   data?: { [x: string]: any }[];
   /**
    * 列数据
+   * @default []
    */
-  columns: ColumnType[];
+  columns?: ColumnType[];
+  /**
+   * 表格列表高度，超出显示滚动条
+   */
+  maxHeight?: React.CSSProperties["height"];
+  /**
+   * 是否显示斑马纹
+   * @default false
+   */
+  stripe?: boolean;
 }
 
 const TableBody: React.FC<TableBodyProps> = (props) => {
   const {
-    data,
-    columns
+    data = [],
+    columns = [],
+    maxHeight,
+    stripe = false
   } = props
 
   return (
-    <tbody className='i-table-body'>
-      {data?.map((item) => (
-        <tr
-          className='i-table-row'
-          key={item.key}
+    <div
+      className="i-table-tbody__box"
+      style={{ maxHeight }}
+    >
+      <table className="i-table-tbody__wrapper">
+        <ColumnGroup columns={columns} />
+        <tbody
+          className={classNames(
+            'i-table-tbody',
+            stripe && 'i-table-tbody__stripe'
+          )}
         >
-          {columns.map((cell) => (
-            <td className="i-table-td" key={cell.key}>
-              {item[cell.key]}
-            </td>
+          {data.map((item) => (
+            <tr
+              className='i-table-tr'
+              key={item.key}
+            >
+              {columns.map((cell) => (
+                <td className="i-table-td" key={cell.key}>
+                  {item[cell.key]}
+                </td>
+              ))}
+            </tr>
           ))}
-        </tr>
-      ))}
-    </tbody>
+        </tbody>
+      </table>
+    </div>
   );
 };
 
@@ -146,14 +182,15 @@ const Table: React.FC<TableProps> = (props) => {
   const {
     className,
     style,
-    columns,
-    data,
-    height = 600,
+    columns = [],
+    data = [],
+    maxHeight,
+    stripe = false,
     ...restProps
   } = props;
 
   return (
-    <table
+    <div
       className={classNames(
         'i-table',
         className
@@ -161,13 +198,15 @@ const Table: React.FC<TableProps> = (props) => {
       style={{ ...style }}
       {...restProps}
     >
-      <ColumnGroup columns={columns} />
+      {/* <ColumnGroup columns={columns} /> */}
       <TableHead columns={columns}></TableHead>
       <TableBody
         columns={columns}
         data={data}
+        maxHeight={maxHeight}
+        stripe={stripe}
       />
-    </table>
+    </div>
   )
 };
 
