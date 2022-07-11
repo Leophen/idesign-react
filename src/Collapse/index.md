@@ -10,6 +10,8 @@ order: 8
 
 # Collapse 折叠面板
 
+用于折叠 / 展开内容区域的折叠面板组件。
+
 ## 基本用法
 
 使用 `Collapse` 包裹菜单的每一项 `Collapse.Item`：

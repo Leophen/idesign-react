@@ -23,7 +23,7 @@ export { default as Select } from './Select';
 export { default as TimePicker } from './TimePicker';
 export { default as DatePicker } from './DatePicker';
 export { default as ColorPicker } from './ColorPicker';
-export { default as Form } from './Form';
+// export { default as Form } from './Form';
 export { default as Table } from './Table';
 export { default as Upload } from './Upload';
 // export { default as Transfer } from './Transfer';

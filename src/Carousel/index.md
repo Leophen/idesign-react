@@ -10,6 +10,8 @@ order: 7
 
 # Carousel 轮播图
 
+用于展示多个内容的循环播放轮播组件。
+
 ## 基本用法
 
 可通过 `defaultCurrent` 属性控制默认轮播项：
