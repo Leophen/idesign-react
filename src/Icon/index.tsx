@@ -25,7 +25,7 @@ interface IconProps {
    */
   color?: string;
   /**
-   * 是否禁用按钮
+   * 是否禁用图标
    */
   disabled?: boolean;
   /**
