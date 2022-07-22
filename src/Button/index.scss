@@ -1,29 +1,4 @@
-$info: #e7e7e7;
-$info_hover: #dcdcdc;
-$info_active: #c1c1c1;
-$info_disabled: #ededed;
-$info_font: rgba(0, 0, 0, 0.8);
-
-$primary: #3a3cf5;
-$primary_hover: #5d5ff3;
-$primary_active: #2e31d5;
-$primary_disabled: #9fa1fe;
-
-$success: #67c23a;
-$success_hover: #71d340;
-$success_active: #4f9c28;
-$success_disabled: #b3e19d;
-
-$warning: #e69e31;
-$warning_hover: #f5aa3a;
-$warning_active: #c98a2b;
-$warning_disabled: #f3d19e;
-
-$error: #f16262;
-$error_hover: #fc7b7b;
-$error_active: #d35050;
-$error_disabled: #fab6b6;
-
+$info_font: var(--i-font);
 $null_bg: transparent;
 
 .i-button {
@@ -36,7 +11,7 @@ $null_bg: transparent;
   height: 32px;
   margin: 0;
   padding: 0 12px;
-  color: #fff;
+  color: var(--i-font);
   font-size: 14px;
   white-space: nowrap;
   text-align: center;
@@ -49,6 +24,12 @@ $null_bg: transparent;
   cursor: pointer;
   transition: all 0.2s linear;
   user-select: none;
+
+  .i-button-icon {
+    margin-right: 6px;
+    color: inherit;
+    font-size: inherit;
+  }
 
   // variant
   &.i-button--variant-dashed {
@@ -85,12 +66,6 @@ $null_bg: transparent;
   &.i-button-disabled {
     cursor: not-allowed;
   }
-}
-
-.i-button-icon {
-  margin-right: 6px;
-  color: inherit;
-  font-size: inherit;
 }
 
 @mixin injectColor($color, $color_hover, $color_active, $color_disabled) {
@@ -160,7 +135,12 @@ $null_bg: transparent;
 }
 
 .i-button--type-info {
-  @include injectColor($info, $info_hover, $info_active, $info_disabled);
+  @include injectColor(
+    var(--i-info),
+    var(--i-info-hover),
+    var(--i-info-active),
+    var(--i-info-disabled)
+  );
   color: $info_font;
 
   &.i-button--variant-text,
@@ -206,17 +186,37 @@ $null_bg: transparent;
 }
 
 .i-button--type-primary {
-  @include injectColor($primary, $primary_hover, $primary_active, $primary_disabled);
+  @include injectColor(
+    var(--i-primary),
+    var(--i-primary-hover),
+    var(--i-primary-active),
+    var(--i-primary-disabled)
+  );
 }
 
 .i-button--type-success {
-  @include injectColor($success, $success_hover, $success_active, $success_disabled);
+  @include injectColor(
+    var(--i-success),
+    var(--i-success-hover),
+    var(--i-success-active),
+    var(--i-success-disabled)
+  );
 }
 
 .i-button--type-warning {
-  @include injectColor($warning, $warning_hover, $warning_active, $warning_disabled);
+  @include injectColor(
+    var(--i-warning),
+    var(--i-warning-hover),
+    var(--i-warning-active),
+    var(--i-warning-disabled)
+  );
 }
 
 .i-button--type-error {
-  @include injectColor($error, $error_hover, $error_active, $error_disabled);
+  @include injectColor(
+    var(--i-error),
+    var(--i-error-hover),
+    var(--i-error-active),
+    var(--i-error-disabled)
+  );
 }

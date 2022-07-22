@@ -7,7 +7,7 @@ export interface DividerProps {
    * 文本位置
    * @default center
    */
-  align?: 'left' | 'right' | 'center';
+  align?: 'left' | 'center' | 'right';
   /**
    * 类名
    */

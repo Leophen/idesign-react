@@ -1,0 +1,85 @@
+// 默认
+:root {
+  /**
+   * 基础颜色
+   */
+  --i-bg: #fff;
+  --i-font: #333;
+
+  /**
+   * 主题色
+   */
+  --i-primary: #5e62ea;
+  --i-primary-hover: #7378fa;
+  --i-primary-active: #5155d3;
+  --i-primary-disabled: #8e92f5;
+
+  --i-info: #e7e7e7;
+  --i-info-hover: #dcdcdc;
+  --i-info-active: #c1c1c1;
+  --i-info-disabled: #ededed;
+
+  --i-success: #65b687;
+  --i-success-hover: #62c58b;
+  --i-success-active: #4f9b6e;
+  --i-success-disabled: #92ccaa;
+
+  --i-warning: #f1ac51;
+  --i-warning-hover: #f19e46;
+  --i-warning-active: #de8a2b;
+  --i-warning-disabled: #f3d19e;
+
+  --i-error: #ec7491;
+  --i-error-hover: #f76e8e;
+  --i-error-active: #cd5571;
+  --i-error-disabled: #fab6b6;
+
+  /**
+   * 边框颜色
+   */
+  --i-border: #e5e7eb;
+}
+
+// 夜间模式
+html.dark,
+*[data-theme='dark'],
+*[data-prefers-color='dark'] {
+  /**
+   * 基础颜色
+   */
+  --i-bg: #333;
+  --i-font: #fff;
+
+  /**
+   * 主题色
+   */
+  --i-primary: #3033ab;
+  --i-primary-hover: #484aa9;
+  --i-primary-active: #282b95;
+  --i-primary-disabled: #595b85;
+
+  --i-info: #29292c;
+  --i-info-hover: #333336;
+  --i-info-active: #3c3c3f;
+  --i-info-disabled: #29292c;
+
+  --i-success: #5e8c3e;
+  --i-success-hover: #669843;
+  --i-success-active: #4a7130;
+  --i-success-disabled: #687a5c;
+
+  --i-warning: #9f7639;
+  --i-warning-hover: #a97f3f;
+  --i-warning-active: #8c6832;
+  --i-warning-disabled: #80735c;
+
+  --i-error: #a2514e;
+  --i-error-hover: #ab615f;
+  --i-error-active: #8f4441;
+  --i-error-disabled: #826665;
+
+  /**
+   * 边框颜色
+   */
+  --i-border: #484849;
+}
