@@ -11,6 +11,7 @@
   --i-font-2: #343c47;
   --i-font-3: #4e5969;
   --i-font-4: #67758b;
+  --i-font-5: #c9cdd4;
 
   /**
    * 边框
@@ -84,7 +85,8 @@ html.dark,
   --i-font: #fff;
   --i-font-2: #dcdcdc;
   --i-font-3: #bababb;
-  --i-font-3: #a5a5a5;
+  --i-font-4: #a5a5a5;
+  --i-font-5: #737375;
 
   /**
    * 边框颜色
@@ -94,8 +96,8 @@ html.dark,
   /**
    * 阴影
    */
-  --i-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px,
-    rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
+  --i-shadow: rgba(0, 0, 0, 0.48) 0px 3px 6px -4px, rgba(0, 0, 0, 0.32) 0px 6px 16px 0px,
+    rgba(0, 0, 0, 0.2) 0px 9px 28px 8px;
 
   /**
    * 主题色

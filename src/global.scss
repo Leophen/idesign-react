@@ -122,6 +122,10 @@
 }
 
 .markdown {
+  color: var(--i-font);
+  p {
+    color: inherit;
+  }
   h2 {
     font-size: 20px;
   }
@@ -238,6 +242,7 @@ ul[role='slug-list'] li > a.active {
 
 .__dumi-default-previewer-demo {
   padding: 24px !important;
+  color: var(--i-font-2);
   border-radius: 10px 10px 0px 0px !important;
   h3,
   h4 {

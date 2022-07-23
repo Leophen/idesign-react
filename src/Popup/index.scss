@@ -6,10 +6,10 @@
   justify-content: center;
   box-sizing: border-box;
   width: fit-content;
-  color: #262626;
+  color: var(--i-font);
   font-size: 14px;
-  background-color: #fff;
-  border: 1px solid rgb(228, 231, 237);
+  background-color: var(--i-bg);
+  border: 1px solid var(--i-border);
   border-radius: 4px;
   box-shadow: var(--i-shadow);
 
@@ -55,7 +55,7 @@
     position: absolute;
     width: 8px;
     height: 8px;
-    background: #fff;
+    background: var(--i-bg);
     transform: rotate(45deg);
     content: '';
   }
@@ -64,8 +64,7 @@
     bottom: -4px;
     &::before {
       border-top-left-radius: 100%;
-      box-shadow: rgb(220, 220, 220) -0.5px 0px 0px 0px inset,
-        rgb(220, 220, 220) 0px -0.5px 0px 0px inset;
+      box-shadow: var(--i-border) -0.5px 0px 0px 0px inset, var(--i-border) 0px -0.5px 0px 0px inset;
     }
   }
   &[data-popper-placement='top'] {
@@ -83,8 +82,7 @@
     top: -4px;
     &::before {
       border-bottom-right-radius: 100%;
-      box-shadow: rgb(220, 220, 220) 0px 0.5px 0px 0px inset,
-        rgb(220, 220, 220) 0.5px 0px 0px 0px inset;
+      box-shadow: var(--i-border) 0px 0.5px 0px 0px inset, var(--i-border) 0.5px 0px 0px 0px inset;
     }
   }
   &[data-popper-placement='bottom'] {
@@ -101,8 +99,7 @@
   &[data-popper-placement^='left'] {
     right: calc(-8px / 2);
     &::before {
-      box-shadow: rgb(220, 220, 220) -0.5px 0px 0px 0px inset,
-        rgb(220, 220, 220) 0px 0.5px 0px 0px inset;
+      box-shadow: var(--i-border) -0.5px 0px 0px 0px inset, var(--i-border) 0px 0.5px 0px 0px inset;
     }
   }
   &[data-popper-placement='left'] {
@@ -119,8 +116,7 @@
   &[data-popper-placement^='right'] {
     left: -4px;
     &::before {
-      box-shadow: rgb(220, 220, 220) 0.5px 0px 0px 0px inset,
-        rgb(220, 220, 220) 0px -0.5px 0px 0px inset;
+      box-shadow: var(--i-border) 0.5px 0px 0px 0px inset, var(--i-border) 0px -0.5px 0px 0px inset;
     }
   }
   &[data-popper-placement='right'] {

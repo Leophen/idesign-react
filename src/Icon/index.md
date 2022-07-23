@@ -43,9 +43,9 @@ import { Icon } from 'idesign-react';
 const App = () => {
   return (
     <div className="idesign-demo-block-row">
+      <Icon name="TipCheck" size={16} />
       <Icon name="TipCheck" size={24} />
       <Icon name="TipCheck" size={32} />
-      <Icon name="TipCheck" size={48} />
     </div>
   );
 };
@@ -64,10 +64,10 @@ import { Icon } from 'idesign-react';
 const App = () => {
   return (
     <div className="idesign-demo-block-row">
-      <Icon name="TipClose" size={32} color="#8A88FF" />
-      <Icon name="TipClose" size={32} color="rgb(58, 54, 255)" />
-      <Icon name="TipClose" size={32} color="hsl(211, 100%, 61%)" />
-      <Icon name="TipClose" size={32} color="#19E6F3" />
+      <Icon name="TipClose" size={24} color="#5e62ea" />
+      <Icon name="TipClose" size={24} color="#65b687" />
+      <Icon name="TipClose" size={24} color="#f1ac51" />
+      <Icon name="TipClose" size={24} color="#ec7491" />
     </div>
   );
 };
