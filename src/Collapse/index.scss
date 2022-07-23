@@ -59,10 +59,10 @@
   }
   &.i-collapse-item__disabled {
     .i-collapse-item__header {
-      color: var(--i-font-5);
+      color: var(--i-font-disabled);
       cursor: not-allowed;
       .icon-ArrowCaretRight {
-        color: var(--i-font-5);
+        color: var(--i-font-disabled);
       }
     }
   }

@@ -6,17 +6,20 @@
   --i-bg: #fff;
   --i-bg-hover: #f7f8fa;
   --i-bg-active: #f2f3f5;
+  --i-bg-disabled: #f5f7fa;
 
   --i-font: #252b33;
   --i-font-2: #343c47;
   --i-font-3: #4e5969;
   --i-font-4: #67758b;
-  --i-font-5: #c9cdd4;
+  --i-font-5: #a2a5af;
+  --i-font-disabled: #c9cdd4;
 
   /**
    * 边框
    */
   --i-border: #e5e7eb;
+  --i-border-hover: #c9cdd4;
 
   /**
    * 阴影
@@ -81,17 +84,20 @@ html.dark,
   --i-bg: #17171a;
   --i-bg-hover: #202023;
   --i-bg-active: #29292c;
+  --i-bg-disabled: #262627;
 
   --i-font: #fff;
   --i-font-2: #dcdcdc;
   --i-font-3: #bababb;
   --i-font-4: #a5a5a5;
-  --i-font-5: #737375;
+  --i-font-5: #8e9095;
+  --i-font-disabled: #737375;
 
   /**
    * 边框颜色
    */
   --i-border: #484849;
+  --i-border-hover: #737375;
 
   /**
    * 阴影

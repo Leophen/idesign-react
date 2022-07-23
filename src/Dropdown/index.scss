@@ -92,7 +92,7 @@
   }
   &[data-disabled] {
     .i-icon {
-      color: var(--i-font-5) !important;
+      color: var(--i-font-disabled) !important;
     }
     &:hover {
       & > .i-dropdown__menu {
@@ -121,7 +121,7 @@
     background-color: var(--i-bg-active);
   }
   &.i-dropdown__item-is-disabled {
-    color: var(--i-font-5);
+    color: var(--i-font-disabled);
     cursor: not-allowed;
     user-select: none;
     &:hover {

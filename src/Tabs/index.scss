@@ -1,11 +1,9 @@
-$primary: #3a3cf5;
-
 .i-tabs {
   position: relative;
   display: flex;
   box-sizing: border-box;
   font-size: 14px;
-  border-bottom: 1px solid #e5e5e6;
+  border-bottom: 1px solid var(--i-border);
 }
 
 .i-tabs-item {
@@ -15,27 +13,27 @@ $primary: #3a3cf5;
   box-sizing: border-box;
   height: 40px;
   padding: 0 12px;
-  color: #333;
+  color: var(--i-font-2);
   cursor: pointer;
   &.i-tabs-item__active {
-    color: $primary;
+    color: var(--i-primary-txt);
   }
   &.i-tabs-item__disabled {
-    color: #c9cdd4;
+    color: var(--i-font-disabled);
     cursor: not-allowed;
   }
   &.i-tabs-item__card {
-    border-top: 1px solid #e5e5e6;
-    border-left: 1px solid #e5e5e6;
+    border-top: 1px solid var(--i-border);
+    border-left: 1px solid var(--i-border);
     &:first-of-type {
       border-radius: 4px 0 0 0;
     }
     &:last-of-type {
-      border-right: 1px solid #e5e5e6;
+      border-right: 1px solid var(--i-border);
       border-radius: 0 4px 0 0;
     }
     &.i-tabs-item__active {
-      background: #fff;
+      background: var(--i-bg);
       &::after {
         content: '';
       }
@@ -47,7 +45,7 @@ $primary: #3a3cf5;
       display: block;
       width: 100%;
       height: 1px;
-      background: #fff;
+      background: var(--i-bg);
     }
   }
 }
@@ -56,7 +54,7 @@ $primary: #3a3cf5;
   position: absolute;
   bottom: 0px;
   height: 2px;
-  background: $primary;
+  background: var(--i-primary-txt);
   border-radius: 1px;
   transition: all 0.2s ease-out;
 }

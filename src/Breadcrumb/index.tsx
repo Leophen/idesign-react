@@ -64,7 +64,7 @@ const BreadcrumbItem: React.FC<BreadcrumbItemProps> = (props) => {
     disabled,
     maxItemWidth,
     maxWidth,
-    separator = <Icon name="ArrowRight" size={16} color="rgba(0,0,0,.3)" />,
+    separator = <Icon name="ArrowRight" size={16} />,
     style,
     ...restProps
   } = props;
