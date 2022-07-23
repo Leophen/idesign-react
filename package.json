@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.0.18",
+  "version": "1.0.20",
   "description": "iDesign 前端通用组件库",
   "scripts": {
     "start": "dumi dev",
@@ -14,7 +14,7 @@
     "test:coverage": "umi-test --coverage",
     "prepublishOnly": "npm run build"
   },
-  "main": "dist/src/index.d.ts",
+  "main": "dist/index.esm.js",
   "module": "dist/index.esm.js",
   "typings": "dist/src/index.d.ts",
   "files": [
@@ -36,6 +36,7 @@
     "axios": "^0.25.0",
     "classnames": "^2.3.1",
     "dayjs": "^1.11.2",
+    "idesign-react": "^1.0.20",
     "lodash": "^4.17.21",
     "react": "^16.12.0 || ^17.0.0",
     "react-router-dom": "6",
@@ -53,7 +54,7 @@
     "@types/tinycolor2": "^1.4.3",
     "@umijs/fabric": "^2.8.1",
     "@umijs/test": "^3.5.23",
-    "dumi": "^1.1.0",
+    "dumi": "^1.1.46",
     "father-build": "^1.17.2",
     "gh-pages": "^3.0.0",
     "lint-staged": "^10.0.7",

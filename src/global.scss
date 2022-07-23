@@ -1,79 +1,82 @@
-// 全局色模块
-$theme_color: #3a3cf5;
-$theme_color2: #3998ff;
-
 // 通用模块
 .__dumi-default-layout[data-route='\/'] {
-  padding: 0 !important;
-  overflow-x: hidden !important;
-  user-select: none !important;
+  padding: 0;
+  overflow-x: hidden;
+  user-select: none;
 }
 
 .__dumi-default-navbar {
   padding: 0 36px !important;
-  background: rgba(255, 255, 255, 0.8) !important;
-  backdrop-filter: blur(8px) !important;
 }
 
 .__dumi-default-search-input {
-  width: 220px !important;
-  height: 36px !important;
-  border-radius: 10px !important;
+  width: 220px;
+  height: 36px;
+  border-radius: 16px;
+  &:hover {
+    box-shadow: 0 0 0 1px var(--i-primary-hover) inset !important;
+  }
+  &:focus {
+    box-shadow: 0 0 0 1px var(--i-primary) inset !important;
+  }
+}
+
+.__dumi-default-search > ul li a:hover {
+  color: var(--i-primary-txt) !important;
 }
 
 .__dumi-default-navbar-logo {
   font-weight: bold !important;
 }
 
-.__dumi-default-layout-hero {
-  display: none !important;
-}
-
-.__dumi-default-layout-content {
-  margin: 0 !important;
-}
-
 .__dumi-default-layout-footer-meta {
-  display: none !important;
+  display: none;
 }
 
 .__dumi-default-navbar-tool {
   .__dumi-default-dark-auto {
-    display: none !important;
+    display: none;
   }
 }
 
 .__dumi-default-navbar nav > span > a {
-  font-size: 16px !important;
+  font-size: 14.4px;
 }
 
 .__dumi-default-navbar nav > span > a:hover,
 .__dumi-default-navbar nav > span > a.active {
-  color: $theme_color !important;
+  color: var(--i-primary-txt) !important;
   &::after {
-    background-color: $theme_color !important;
+    background-color: var(--i-primary-txt) !important;
   }
-}
-
-.__dumi-default-search > ul li a:hover {
-  color: $theme_color !important;
 }
 
 // 组件展示页模块
 .__dumi-default-menu[data-mode='site'] {
-  padding-top: 36px !important;
+  padding-top: 0px !important;
+}
+
+.__dumi-default-menu-list {
+  padding-top: 12px !important;
 }
 
 .__dumi-default-menu-list > li > a {
   padding-left: 36px !important;
 }
 
+.__dumi-default-menu,
+.__dumi-default-menu-inner {
+  overflow: overlay !important;
+  background-color: transparent !important;
+}
+
+.__dumi-default-menu::after {
+  background: var(--i-border) !important;
+}
+
 .__dumi-default-menu-inner > ul > li > a:not([href]) {
   padding-top: 20px !important;
-  color: #303133 !important;
-  font-weight: 700 !important;
-  font-size: 18px !important;
-  line-height: 1.7 !important;
+  line-height: 1.7;
 }
 
 .__dumi-default-menu-inner .__dumi-default-menu-list > li > a ~ ul {
@@ -86,29 +89,26 @@ $theme_color2: #3998ff;
 
 .__dumi-default-menu-list > li > a.active,
 .__dumi-default-menu-inner > ul ul a {
-  height: 40px !important;
-  margin: 0 24px !important;
-  margin-top: 6px !important;
-  padding: 0px 24px !important;
-  overflow: hidden !important;
-  color: #606266 !important;
-  font-size: 16px !important;
-  line-height: 40px !important;
-  white-space: nowrap !important;
-  text-decoration: none !important;
-  text-overflow: ellipsis !important;
-  border-radius: 10px !important;
-  transition: all 0.1s linear 0s !important;
+  height: 36px;
+  margin: 0 20px;
+  margin-top: 6px;
+  padding: 0px 18px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  border-radius: 10px;
+  transition: all 0.1s linear 0s;
   &::after {
-    display: none !important;
+    display: none;
   }
   &:hover {
-    color: #38393b !important;
-    background: #f6f6f6 !important;
+    color: var(--i-font) !important;
+    background: var(--i-bg-hover) !important;
   }
   &.active {
-    color: $theme_color !important;
-    background: rgba(58, 60, 245, 0.06) !important;
+    color: var(--i-primary-txt) !important;
+    background: var(--i-primary-bg) !important;
   }
 }
 
@@ -116,56 +116,50 @@ $theme_color2: #3998ff;
 .__dumi-default-layout-content {
   .markdown {
     a {
-      color: $theme_color !important;
+      color: var(--i-primary-txt);
     }
   }
 }
 
 .markdown {
-  font-size: 18px !important;
-  h1,
   h2 {
-    color: #515151;
-    font-weight: 700 !important;
-    font-size: 32px !important;
-  }
-  h2 {
-    font-size: 24px !important;
-  }
-  p {
-    color: #304455 !important;
+    font-size: 20px;
   }
   code {
-    color: $theme_color2 !important;
+    color: var(--i-success) !important;
   }
   table {
-    box-sizing: border-box !important;
-    overflow: hidden !important;
-    border: 1px solid transparent !important;
-    border-radius: 10px !important;
-    box-shadow: inset 0 0 0 1px #ebedf1 !important;
-  }
-  table thead {
-    border: 2px solid #ebedf1 !important;
-    border-bottom: 0 !important;
-  }
-  table th {
-    text-align: left !important;
-    &:first-of-type {
-      border-radius: 12px 0 0 0 !important;
+    box-sizing: border-box;
+    overflow: hidden;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    box-shadow: inset 0 0 0 1px var(--i-border);
+    thead {
+      border: 2px solid var(--i-border);
+      border-bottom: 0;
     }
-    &:last-of-type {
-      border-radius: 0 12px 0 0 !important;
+    th {
+      text-align: left;
+      &:first-of-type {
+        border-radius: 12px 0 0 0;
+      }
+      &:last-of-type {
+        border-radius: 0 12px 0 0;
+      }
     }
   }
-  h1:hover > a[aria-hidden]::after,
-  h2:hover > a[aria-hidden]::after,
-  h3:hover > a[aria-hidden]::after,
-  h4:hover > a[aria-hidden]::after,
-  h5:hover > a[aria-hidden]::after,
-  h6:hover > a[aria-hidden]::after {
-    display: none !important;
-  }
+}
+
+.prism-code {
+  padding: 20px 24px;
+}
+
+.__dumi-default-layout[data-route='/'] {
+  padding: 0 !important;
+}
+
+.__dumi-default-layout-footer-meta {
+  display: none !important;
 }
 
 .__dumi-default-layout[data-site-mode='true'][data-show-slugs='true'] {
@@ -174,39 +168,41 @@ $theme_color2: #3998ff;
 
 .__dumi-default-layout-toc {
   width: 290px !important;
+  overflow: overlay !important;
 }
 
 .__dumi-default-layout-toc li {
-  display: flex !important;
-  padding: 0 !important;
+  display: flex;
+  padding: 0;
 }
 
 .__dumi-default-layout-toc li a {
-  box-sizing: border-box !important;
-  width: 100% !important;
-  height: auto !important;
-  margin-bottom: 6px !important;
-  margin-left: 24px !important;
-  padding: 10px 2px !important;
-  font-size: 16px !important;
-  border-radius: 10px !important;
-  transition: all 0.1s ease-out !important;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  margin-bottom: 4px;
+  margin-left: 24px;
+  padding: 8px 2px;
+  font-size: 14.4px;
+  border-radius: 10px;
+  transition: all 0.1s ease-out;
   &:hover {
-    background: #f6f6f6 !important;
+    background: var(--i-bg-hover);
   }
 }
 
 .__dumi-default-layout-toc li a:hover,
 ul[role='slug-list'] li > a.active {
-  color: $theme_color !important;
+  color: var(--i-primary-txt) !important;
 }
 
 .__dumi-default-layout-toc li a::before {
   width: 1px !important;
+  background: var(--i-border) !important;
 }
 
 .__dumi-default-layout-toc li a.active::before {
-  background: $theme_color !important;
+  background: var(--i-primary-txt) !important;
 }
 
 // 代码块模块
@@ -223,278 +219,219 @@ ul[role='slug-list'] li > a.active {
 }
 
 .__dumi-default-previewer {
+  border-color: var(--i-border) !important;
   border-radius: 10px !important;
 }
 
 .__dumi-default-previewer-source-wrapper {
-  overflow: hidden !important;
+  overflow: hidden;
   border-radius: 0 0 8px 8px !important;
 }
 
 .__dumi-default-previewer {
   &[id*='Menu'] {
     .__dumi-default-previewer-demo {
-      background: #f7f8fc;
+      background: var(--i-bg-hover);
     }
   }
 }
 
 .__dumi-default-previewer-demo {
-  padding: 40px !important;
+  padding: 24px !important;
+  border-radius: 10px 10px 0px 0px !important;
   h3,
   h4 {
-    color: #515151;
-    font-weight: 700 !important;
+    color: var(--i-font-3);
+    font-weight: 700;
   }
 }
 
 .idesign-demo-itemy {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  height: 50px !important;
-  color: #409eff !important;
-  background: #ecf5ff !important;
-  border-radius: 4px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 50px;
+  color: var(--i-primary-txt);
+  background: var(--i-primary-bg);
+  border-radius: 4px;
   &:not(:last-of-type) {
-    margin-bottom: 10px !important;
+    margin-bottom: 10px;
   }
 }
 
 .idesign-demo-itemx-wrap {
-  display: flex !important;
-  align-items: center !important;
-  width: fit-content !important;
+  display: flex;
+  align-items: center;
+  width: fit-content;
 }
 
 .idesign-demo-itemx {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  width: 100px !important;
-  height: 50px !important;
-  color: #f56c6c !important;
-  background: #fef0f0 !important;
-  border-radius: 4px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100px;
+  height: 50px;
+  color: var(--i-success-txt);
+  background: var(--i-success-bg);
+  border-radius: 4px;
   &:not(:last-of-type) {
-    margin-right: 10px !important;
+    margin-right: 10px;
   }
 }
 
 .idesign-demo-block-column {
-  display: flex !important;
-  flex-direction: column !important;
-  box-sizing: border-box !important;
-  column-gap: 16px !important;
-  row-gap: 16px !important;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  column-gap: 16px;
+  row-gap: 16px;
 }
 
 .idesign-demo-block-row {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  align-items: center !important;
-  box-sizing: border-box !important;
-  column-gap: 16px !important;
-  row-gap: 16px !important;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  box-sizing: border-box;
+  column-gap: 16px;
+  row-gap: 16px;
   .i-select {
     width: 200px;
   }
 }
 
 .idesign-demo-block-popup {
-  position: relative !important;
-  width: 560px !important;
-  height: 260px !important;
-  margin: 0 auto !important;
+  position: relative;
+  width: 560px;
+  height: 260px;
+  margin: 0 auto;
   .i-button {
-    position: absolute !important;
-    width: 100px !important;
+    position: absolute;
+    width: 100px;
   }
   .Top {
-    top: 0 !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .TopLeft {
-    top: 0 !important;
-    left: 100px !important;
+    top: 0;
+    left: 100px;
   }
   .TopRight {
-    top: 0 !important;
-    right: 100px !important;
+    top: 0;
+    right: 100px;
   }
   .Bottom {
-    bottom: 0 !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .BottomLeft {
-    bottom: 0 !important;
-    left: 100px !important;
+    bottom: 0;
+    left: 100px;
   }
   .BottomRight {
-    right: 100px !important;
-    bottom: 0 !important;
+    right: 100px;
+    bottom: 0;
   }
   .Left {
-    top: 50% !important;
-    left: 0 !important;
-    transform: translateY(-50%) !important;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
   }
   .LeftTop {
-    top: 55px !important;
-    left: 0 !important;
+    top: 55px;
+    left: 0;
   }
   .LeftBottom {
-    bottom: 55px !important;
-    left: 0 !important;
+    bottom: 55px;
+    left: 0;
   }
   .Right {
-    top: 50% !important;
-    right: 0 !important;
-    transform: translateY(-50%) !important;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
   }
   .RightTop {
-    top: 55px !important;
-    right: 0 !important;
+    top: 55px;
+    right: 0;
   }
   .RightBottom {
-    right: 0 !important;
-    bottom: 55px !important;
+    right: 0;
+    bottom: 55px;
   }
 }
 
 .i-design-demo-icon-list {
-  display: grid !important;
-  grid-template-columns: repeat(7, 1fr) !important;
-  box-sizing: border-box !important;
-  padding: 0 !important;
-  overflow: hidden !important;
-  color: #303133 !important;
-  border: 1px solid #ebedf1 !important;
-  border-radius: 10px !important;
-  text-size-adjust: 100% !important;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  box-sizing: border-box;
+  padding: 0;
+  overflow: hidden;
+  color: var(--i-font-3);
+  border: 1px solid var(--i-border);
+  border-radius: 10px;
+  text-size-adjust: 100%;
 }
 
 .i-design-demo-icon-item {
-  position: relative !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-  box-sizing: border-box !important;
-  height: 125px !important;
-  color: #606266 !important;
-  font-size: 15px !important;
-  line-height: 1.8 !important;
-  text-align: center !important;
-  list-style: none !important;
-  border-radius: 10px !important;
-  cursor: pointer !important;
-  transition: background 0.2s !important;
-  text-size-adjust: 100% !important;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 125px;
+  color: var(--i-font-2);
+  font-size: 15px;
+  line-height: 1.8;
+  text-align: center;
+  list-style: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-size-adjust: 100%;
   &:hover {
-    background: #f2f2f2 !important;
+    background: var(--i-bg-hover);
   }
   &::after {
-    position: absolute !important;
-    top: 4px !important;
-    color: #999ba2 !important;
-    font-size: 14px !important;
-    opacity: 0 !important;
-    transition: all 0.1s ease-out !important;
-    content: '已复制组件' !important;
+    position: absolute;
+    top: 4px;
+    color: var(--i-font-3);
+    font-size: 14px;
+    opacity: 0;
+    transition: all 0.1s ease-out;
+    content: '已复制组件';
   }
   &.-copyed {
     &::after {
-      opacity: 1 !important;
+      opacity: 1;
     }
   }
-}
-
-.prism-code {
-  padding: 20px 24px !important;
-}
-
-.__dumi-default-previewer-actions {
-  position: relative !important;
-  border-top: 1px solid #ebedf1;
-}
-
-.__dumi-default-previewer-actions button {
-  position: relative !important;
-  transform: scale(1.2) !important;
-  opacity: 1 !important;
-  &::before {
-    position: absolute !important;
-    top: 50% !important;
-    left: 50% !important;
-    z-index: 0 !important;
-    width: 26px !important;
-    height: 26px !important;
-    background-color: rgba(0, 0, 0, 0.05) !important;
-    border-radius: 8px !important;
-    transform: translate(-50%, -50%) !important;
-    opacity: 0 !important;
-    transition: all 0.2s ease-out !important;
-    content: '' !important;
-  }
-  &::after {
-    z-index: 1 !important;
-  }
-  &:hover {
-    opacity: 1 !important;
-    &::before {
-      opacity: 1 !important;
-    }
-  }
-}
-
-.__dumi-default-previewer-actions > a:not(:last-child),
-.__dumi-default-previewer-actions > button:not(:last-child) {
-  margin-right: 20px !important;
-}
-
-.__dumi-default-previewer-actions a,
-.__dumi-default-icon[title='Get JSX via TypeScript Playground'] {
-  display: none !important;
-}
-
-.__dumi-default-previewer-actions button[role='codesandbox'] {
-  position: absolute !important;
-  right: 70px !important;
-}
-
-code[class*='language-'],
-pre[class*='language-'] {
-  font-size: 18px !important;
-  font-family: Menlo, Monaco, Consolas, Courier New, monospace !important;
-  line-height: 28px !important;
-  text-shadow: none !important;
 }
 
 .__dumi-default-layout[data-route='\/components\/grid'] {
   .__dumi-default-previewer-demo {
     .i-grid {
-      margin-bottom: 16px !important;
+      margin-bottom: 16px;
       &:last-of-type {
-        margin-bottom: 0 !important;
+        margin-bottom: 0;
       }
     }
     .i-grid__item {
       & > div {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        min-height: 40px !important;
-        color: #fff !important;
-        background: #759eee !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 40px;
+        color: #fff;
+        background: var(--i-primary);
       }
       &:nth-of-type(2n) {
         & > div {
-          background: #9dbbf3 !important;
+          background: var(--i-primary-disabled);
         }
       }
     }
@@ -504,43 +441,43 @@ pre[class*='language-'] {
 .__dumi-default-layout[data-route='\/components\/layout'] {
   .__dumi-default-previewer-demo {
     .i-layout--header {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      height: 64px !important;
-      color: #fff !important;
-      font-size: 16px !important;
-      text-align: center !important;
-      background: #9dbbf3 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 64px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      background: var(--i-primary-disabled);
     }
     .i-layout--aside {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      color: #fff !important;
-      font-size: 16px !important;
-      text-align: center !important;
-      background: #5886e9 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      background: var(--i-primary);
     }
     .i-layout--content {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      height: 100px !important;
-      color: #fff !important;
-      font-size: 16px !important;
-      text-align: center !important;
-      background: #759eee !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      background: var(--i-primary-hover);
     }
     .i-layout--footer {
-      display: flex !important;
-      align-items: center !important;
-      justify-content: center !important;
-      height: 46px !important;
-      color: #fff !important;
-      font-size: 16px !important;
-      text-align: center !important;
-      background: #9dbbf3 !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 46px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      background: var(--i-primary-disabled);
     }
   }
 }
@@ -557,6 +494,61 @@ pre[class*='language-'] {
       }
     }
   }
+}
+
+.__dumi-default-previewer-actions {
+  position: relative;
+  border-top: 1px solid var(--i-border) !important;
+}
+
+.__dumi-default-previewer-actions button {
+  position: relative;
+  opacity: 1;
+  &::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: 26px;
+    height: 26px;
+    background-color: rgba(0, 0, 0, 0.05);
+    border-radius: 8px;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: all 0.2s ease-out;
+    content: '';
+  }
+  &::after {
+    z-index: 1;
+  }
+  &:hover {
+    opacity: 1;
+    &::before {
+      opacity: 1;
+    }
+  }
+}
+
+.__dumi-default-previewer-actions > a:not(:last-child),
+.__dumi-default-previewer-actions > button:not(:last-child) {
+  margin-right: 20px !important;
+}
+
+.__dumi-default-previewer-actions a,
+.__dumi-default-icon[title='Get JSX via TypeScript Playground'] {
+  display: none;
+}
+
+.__dumi-default-previewer-actions button[role='codesandbox'] {
+  position: absolute;
+  right: 70px;
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  font-family: Menlo, Monaco, Consolas, Courier New, monospace;
+  line-height: 24px;
+  text-shadow: none !important;
 }
 
 .token.operator,
