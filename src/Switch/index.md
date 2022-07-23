@@ -65,11 +65,11 @@ const App = () => {
 
   return (
     <div className="idesign-demo-block-row">
-      <Switch inactiveColor="#64D878" value={checked} onChange={handleChange} />
-      <Switch activeColor="#64D878" value={checked} onChange={handleChange} />
+      <Switch inactiveColor="#65b687" value={checked} onChange={handleChange} />
+      <Switch activeColor="#65b687" value={checked} onChange={handleChange} />
       <Switch
-        inactiveColor="#ff4949"
-        activeColor="#64D878"
+        inactiveColor="#ec7491"
+        activeColor="#65b687"
         value={checked}
         onChange={handleChange}
       />

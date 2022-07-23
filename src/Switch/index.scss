@@ -1,8 +1,3 @@
-$gray: #c5c5c5;
-$gray_disabled: #e6e6e6;
-$primary: #3a3cf5;
-$primary_disabled: #9fa1fe;
-
 .i-switch {
   position: relative;
   display: inline-flex;
@@ -13,7 +8,7 @@ $primary_disabled: #9fa1fe;
   padding: 0;
   line-height: 20px;
   vertical-align: middle;
-  background-color: $gray;
+  background-color: var(--i-info-active);
   border: 0;
   border-radius: 10px;
   outline: none;
@@ -34,12 +29,12 @@ $primary_disabled: #9fa1fe;
     }
   }
   &.i-switch-is-checked {
-    background-color: $primary;
+    background-color: var(--i-primary);
     .i-switch__handle {
       left: calc(100% - 2px);
       transform: translate(-100%);
       .icon-Loading {
-        color: $primary_disabled !important;
+        color: var(--i-primary-disabled) !important;
       }
     }
     &:active:not(.i-switch-is-disabled) {
@@ -50,10 +45,10 @@ $primary_disabled: #9fa1fe;
     }
   }
   &.i-switch-is-disabled {
-    background-color: $gray_disabled;
+    background-color: var(--i-info-hover);
     cursor: not-allowed;
     &.i-switch-is-checked {
-      background-color: $primary_disabled;
+      background-color: var(--i-primary-disabled);
     }
     .i-switch__handle {
       cursor: not-allowed;
@@ -89,7 +84,7 @@ $primary_disabled: #9fa1fe;
   user-select: none;
   .icon-Loading {
     z-index: 1;
-    color: $gray !important;
+    color: var(--i-info) !important;
     transform: scale(0.8);
     animation: rotating 2s linear infinite;
   }

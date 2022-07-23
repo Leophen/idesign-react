@@ -1,11 +1,3 @@
-$primary: #3a3cf5;
-$primary_hover: #5d5ff3;
-$primary_active: #2e31d5;
-$primary_disabled: #9fa1fe;
-
-$disabled: #eeeeee;
-$disabled_line: #c1c1c1;
-
 @keyframes checked {
   0% {
     transform: scale(0);
@@ -24,7 +16,7 @@ $disabled_line: #c1c1c1;
   user-select: none;
   &.i-radio-is-checked {
     .i-radio__input {
-      border-color: $primary;
+      border-color: var(--i-primary);
       &::after {
         transform: scale(1);
         animation: checked 0.2s cubic-bezier(0, 0, 0.15, 1);
@@ -33,7 +25,7 @@ $disabled_line: #c1c1c1;
   }
   &:hover {
     .i-radio__input {
-      border-color: $primary;
+      border-color: var(--i-primary);
     }
   }
   &:active {
@@ -48,24 +40,24 @@ $disabled_line: #c1c1c1;
   &.i-radio-is-disabled {
     cursor: not-allowed;
     .i-radio__input {
-      background-color: $disabled;
+      background-color: var(--i-bg-disabled);
       &::after {
-        background-color: $disabled_line;
+        background-color: var(--i-border-hover);
       }
     }
     &.i-radio-is-checked {
       .i-radio__input {
-        border-color: $disabled_line;
+        border-color: var(--i-border);
       }
       &:hover {
         .i-radio__input {
-          border-color: $disabled_line;
+          border-color: var(--i-border);
         }
       }
     }
     &:hover {
       .i-radio__input {
-        border-color: $disabled_line;
+        border-color: var(--i-border);
       }
     }
   }
@@ -78,8 +70,8 @@ $disabled_line: #c1c1c1;
   width: 16px;
   height: 16px;
   vertical-align: middle;
-  background-color: #ffffff;
-  border: 1px solid #dcdcdc;
+  background-color: var(--i-bg);
+  border: 1px solid var(--i-border);
   border-radius: 50%;
   transition: border 0.2s cubic-bezier(0, 0, 0.15, 1);
   &::after {
@@ -91,7 +83,7 @@ $disabled_line: #c1c1c1;
     height: 8px;
     margin-top: -4px;
     margin-left: -4px;
-    background-color: $primary;
+    background-color: var(--i-primary);
     border-radius: 50%;
     transform: scale(0);
     transition: all 0.2s cubic-bezier(0, 0, 0.15, 1);
@@ -102,7 +94,7 @@ $disabled_line: #c1c1c1;
 .i-radio__label {
   display: inline-block;
   margin-left: 8px;
-  color: #333;
+  color: var(--i-font);
   font-size: 14px;
   white-space: nowrap;
   vertical-align: middle;
@@ -111,20 +103,20 @@ $disabled_line: #c1c1c1;
 .i-radio-button {
   position: relative;
   padding: 4px 16px;
-  color: #333;
+  color: var(--i-font);
   font-size: 14px;
   white-space: nowrap;
-  border: 1px solid #dcdcdc;
+  border: 1px solid var(--i-border);
   border-radius: 4px;
   cursor: pointer;
   transition: color 0.2s cubic-bezier(0, 0, 0.15, 1);
   user-select: none;
   &.i-radio-button-is-checked {
-    color: $primary;
-    border-color: $primary;
+    color: var(--i-primary);
+    border-color: var(--i-primary);
     &:active {
-      color: $primary_active;
-      border-color: $primary_active;
+      color: var(--i-primary-active);
+      border-color: var(--i-primary-active);
     }
   }
   &.i-radio-button--size-small {
@@ -136,29 +128,29 @@ $disabled_line: #c1c1c1;
     font-size: 16px;
   }
   &:hover {
-    color: $primary_hover;
+    color: var(--i-primary-hover);
   }
   &:active {
-    color: $primary;
+    color: var(--i-primary);
   }
   &.i-radio-button-is-disabled {
-    color: $disabled_line;
-    background-color: $disabled;
-    border-color: #dcdcdc !important;
+    color: var(--i-font-disabled);
+    background-color: var(--i-bg-disabled);
+    border-color: var(--i-border) !important;
     cursor: not-allowed;
     &.i-radio-button-is-checked {
-      color: #b1b1b1;
-      background-color: #e6e6e6;
-      border-color: #dcdcdc;
+      color: var(--i-font-5);
+      background-color: var(--i-bg-active);
+      border-color: var(--i-border);
       &:hover {
-        color: #b1b1b1;
+        color: var(--i-font-5);
       }
     }
     &:hover {
-      color: $disabled_line;
+      color: var(--i-font-disabled);
     }
     &:active {
-      color: $disabled_line;
+      color: var(--i-font-disabled);
     }
   }
 }
@@ -184,15 +176,15 @@ $disabled_line: #c1c1c1;
       border-radius: 4px 0 0 4px;
     }
     &:last-of-type {
-      border-right: 1px solid #dcdcdc;
+      border-right: 1px solid var(--i-border);
       border-radius: 0 4px 4px 0;
     }
     &.i-radio-button-is-checked {
-      border-top-color: $primary;
+      border-top-color: var(--i-primary);
       border-right: 1px solid;
-      border-right-color: $primary;
-      border-bottom-color: $primary;
-      border-left-color: $primary;
+      border-right-color: var(--i-primary);
+      border-bottom-color: var(--i-primary);
+      border-left-color: var(--i-primary);
       transition: border-color 0.2s cubic-bezier(0, 0, 0.15, 1);
       & + .i-radio-button {
         border-left: 0;

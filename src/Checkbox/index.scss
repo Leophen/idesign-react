@@ -1,13 +1,8 @@
-$primary: #3a3cf5;
-$primary_hover: #5d5ff3;
-$primary_active: #2e31d5;
-$primary_disabled: #9fa1fe;
-
 .i-checkbox {
   position: relative;
   display: inline-flex;
   align-items: center;
-  color: #333;
+  color: var(--i-font-2);
   cursor: pointer;
   &.i-checkbox--size-small {
     .i-checkbox__input {
@@ -29,14 +24,14 @@ $primary_disabled: #9fa1fe;
   }
   &:hover {
     .i-checkbox__input {
-      border-color: $primary_hover;
+      border-color: var(--i-primary-hover);
     }
   }
   &.i-checkbox-is-checked {
     margin-left: inherit;
     .i-checkbox__input {
-      background-color: $primary;
-      border-color: $primary;
+      background-color: var(--i-primary);
+      border-color: var(--i-primary);
       transition: background-color 0.1s cubic-bezier(0.82, 0, 1, 0.9);
       &::after {
         opacity: 1;
@@ -48,17 +43,17 @@ $primary_disabled: #9fa1fe;
     &:hover,
     &.i-checkbox-is-checked {
       .i-checkbox__input {
-        border-color: #dcdcdc;
+        border-color: var(--i-border);
       }
     }
     .i-checkbox__input {
-      background-color: #eee;
+      background-color: var(--i-bg-disabled);
       &::after {
-        border-color: #c0c4cc;
+        border-color: var(--i-border);
       }
     }
     .i-checkbox__label {
-      color: #c0c4cc;
+      color: var(--i-font-disabled);
     }
   }
 }
@@ -84,8 +79,8 @@ $primary_disabled: #9fa1fe;
   width: 16px;
   height: 16px;
   vertical-align: middle;
-  background-color: #fff;
-  border: 1px solid #dcdcdc;
+  background-color: var(--i-bg);
+  border: 1px solid var(--i-border);
   border-radius: 4px;
   transition: all 0.2s ease-out;
   &::after {
@@ -95,7 +90,7 @@ $primary_disabled: #9fa1fe;
     width: 4px;
     height: 8px;
     background: transparent;
-    border: 2px solid #dcdcdc;
+    border: 2px solid #fff;
     border-top: 0;
     border-left: 0;
     border-radius: 0 0 1px;
