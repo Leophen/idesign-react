@@ -1,9 +1,9 @@
 .i-collapse {
   box-sizing: border-box;
   overflow: hidden;
-  color: #282f38;
+  color: var(--i-font-2);
   font-size: 14px;
-  border: 1px solid #e5e6eb;
+  border: 1px solid var(--i-border);
   border-radius: 6px;
   outline: none;
   &.i-collapse__hide-border {
@@ -55,14 +55,14 @@
     }
   }
   &.i-collapse-item__active {
-    border-bottom: 1px solid #e5e6eb;
+    border-bottom: 1px solid var(--i-border);
   }
   &.i-collapse-item__disabled {
     .i-collapse-item__header {
-      color: #c9cdd4;
+      color: var(--i-font-5);
       cursor: not-allowed;
       .icon-ArrowCaretRight {
-        color: #c9cdd4;
+        color: var(--i-font-5);
       }
     }
   }
@@ -75,11 +75,11 @@
   box-sizing: border-box;
   height: 40px;
   padding: 0 12px;
-  border-bottom: 1px solid #e5e6eb;
+  border-bottom: 1px solid var(--i-border);
   cursor: pointer;
   transition: all 0.2s ease-in;
   .icon-ArrowCaretRight {
-    color: #6d7784;
+    color: var(--i-font-2);
     transition: all 0.2s ease-out;
   }
 }
@@ -88,12 +88,12 @@
   box-sizing: border-box;
   padding: 0 12px 0 34px;
   overflow: hidden;
-  background: #f7f8fa;
+  background: var(--i-bg);
   visibility: hidden;
   transition: all 0.2s ease-out;
   &.i-collapse-item__content-unfold {
     padding: 8px 12px 8px 34px;
-    border-bottom: 1px solid #e5e6eb;
+    border-bottom: 1px solid var(--i-border);
     visibility: visible;
   }
   .i-collapse-item__header {
