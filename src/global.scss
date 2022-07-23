@@ -66,8 +66,36 @@
 
 .__dumi-default-menu,
 .__dumi-default-menu-inner {
-  overflow: overlay !important;
   background-color: transparent !important;
+}
+
+body,
+.__dumi-default-layout-toc,
+.__dumi-default-menu-inner {
+  overflow: overlay !important;
+  &:hover {
+    &::-webkit-scrollbar-thumb {
+      background: rgba(104, 106, 114, 1);
+    }
+  }
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 10px;
+    height: var(--ifm-scrollbar-size);
+  }
+  // 滚动条背景
+  &::-webkit-scrollbar-track {
+    background: rgba(87, 89, 98, 0);
+  }
+  // 滚动条
+  &::-webkit-scrollbar-thumb {
+    background: rgba(104, 106, 114, 0);
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    &:hover {
+      background: rgb(132, 134, 145);
+    }
+  }
 }
 
 .__dumi-default-menu::after {
@@ -172,7 +200,6 @@
 
 .__dumi-default-layout-toc {
   width: 290px !important;
-  overflow: overlay !important;
 }
 
 .__dumi-default-layout-toc li {
