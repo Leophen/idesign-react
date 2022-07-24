@@ -33,10 +33,10 @@
 [npm package](https://www.npmjs.com/package/idesign-react)
 
 ```bash
-// npm
+# npm
 npm install idesign-react
 
-// yarn
+# yarn
 yarn add idesign-react
 ```
 
