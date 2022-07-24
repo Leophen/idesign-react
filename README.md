@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://idesign-react.vercel.app/" target="_blank">
-    <img alt="iDesign Logo" width="200" src="./public/images/logo.svg"/>
+    <img alt="iDesign Logo" width="200" src="https://i.postimg.cc/fbLPyXJd/logo.png"/>
   </a>
 </div>
 
