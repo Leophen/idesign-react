@@ -9,7 +9,25 @@ import atomic from './assets/atomic.svg';
 import fluent from './assets/fluent.svg';
 import logo from './assets/logo.svg';
 
-import { Avatar, Breadcrumb, Button, Checkbox, ColorPicker, DatePicker, Dropdown, Input, Layout, Menu, Pagination, Progress, Radio, Rate, Slider, TimePicker, Upload } from 'idesign-react'
+import {
+  Avatar,
+  Breadcrumb,
+  Button,
+  Checkbox,
+  ColorPicker,
+  DatePicker,
+  Dropdown,
+  Input,
+  Layout,
+  Menu,
+  Pagination,
+  Progress,
+  Radio,
+  Rate,
+  Slider,
+  TimePicker,
+  Upload,
+} from 'idesign-react';
 
 const contentArr = [
   {
@@ -40,7 +58,7 @@ const contentArr = [
 
 const Home = () => {
   const toVueVersion = () => {
-    window.open('https://idesign-vue.vercel.app/')
+    window.open('https://idesign-vue.vercel.app/');
   };
   const [tipVisible, setTipVisible] = useState(false);
   const [copyText, setCopyText] = useState('点击复制邮箱');
@@ -60,20 +78,20 @@ const Home = () => {
   const options = [
     {
       content: '个人中心',
-      value: 1
+      value: 1,
     },
     {
       content: '退出',
-      value: 2
+      value: 2,
     },
-  ]
+  ];
 
-  const prefix = <img src="/images/logo.svg" />
+  const prefix = <img src="/images/logo.svg" />;
   const suffix = (
     <Dropdown options={options}>
       <Avatar size={24} />
     </Dropdown>
-  )
+  );
 
   const [currentValue, setCurrentValue] = useState('2');
   const handleChange = (val: string) => {
@@ -107,30 +125,22 @@ const Home = () => {
               <div className="home-web-header-dot"></div>
               <div className="home-web-header-dot"></div>
             </div>
-            <Input
-              placeholder='iDesign'
-              clearable
-              size="small"
-              suffixIcon="Search"
-            />
+            <Input placeholder="iDesign" clearable size="small" suffixIcon="Search" />
           </header>
           <Layout>
             <Layout.Header>
-              <Menu defaultActive='b' prefixContent={prefix} suffixContent={suffix}>
-                <Menu.Item value='a'>菜单1</Menu.Item>
-                <Menu.Item value='b'>菜单2</Menu.Item>
-                <Menu.Item value='c'>菜单3</Menu.Item>
-                <Menu.Item value='d'>菜单4</Menu.Item>
+              <Menu defaultActive="b" prefixContent={prefix} suffixContent={suffix}>
+                <Menu.Item value="a">菜单1</Menu.Item>
+                <Menu.Item value="b">菜单2</Menu.Item>
+                <Menu.Item value="c">菜单3</Menu.Item>
+                <Menu.Item value="d">菜单4</Menu.Item>
               </Menu>
             </Layout.Header>
             <Layout style={{ height: 320 }}>
               <Layout.Aside width={120}>
-                <Menu
-                  width="100%"
-                  direction="vertical"
-                >
+                <Menu width="100%" direction="vertical">
                   <Menu.Item>选项1</Menu.Item>
-                  <Menu.Group title='选项2' expandAll>
+                  <Menu.Group title="选项2" expandAll>
                     <Menu.Item>选项2-1</Menu.Item>
                     <Menu.Item>选项2-2</Menu.Item>
                     <Menu.Item>选项2-3</Menu.Item>
@@ -139,7 +149,7 @@ const Home = () => {
                   <Menu.Item>选项4</Menu.Item>
                 </Menu>
               </Layout.Aside>
-              <Layout className='home-web-layout-content-wrapper'>
+              <Layout className="home-web-layout-content-wrapper">
                 <Layout.Content>
                   <div className="home-web-breadcrumb">
                     <Breadcrumb>
@@ -151,32 +161,50 @@ const Home = () => {
                     <div className="home-web-block-item">
                       <div className="home-web-block -demo1">
                         {/* 灰色 info */}
-                        <Button size="small" type="info">填充按钮</Button>
+                        <Button size="small" type="info">
+                          填充按钮
+                        </Button>
                         {/* 蓝色 primary（默认） */}
-                        <Button size="small" type="primary">填充按钮</Button>
+                        <Button size="small" type="primary">
+                          填充按钮
+                        </Button>
                         <Button size="small" type="primary" variant="dashed">
                           虚框按钮
                         </Button>
                         {/* 绿色 success */}
-                        <Button size="small" type="success">填充按钮</Button>
+                        <Button size="small" type="success">
+                          填充按钮
+                        </Button>
                         <Button size="small" type="success" variant="dashed">
                           虚框按钮
                         </Button>
                         {/* 黄色 warning */}
-                        <Button size="small" type="warning">填充按钮</Button>
+                        <Button size="small" type="warning">
+                          填充按钮
+                        </Button>
                         <Button size="small" type="warning" variant="dashed">
                           虚框按钮
                         </Button>
                         {/* 红色 error */}
-                        <Button size="small" type="error">填充按钮</Button>
+                        <Button size="small" type="error">
+                          填充按钮
+                        </Button>
                       </div>
                       <div className="home-web-block -demo2">
-                        <Radio.Group size="small" currentValue={currentValue} onChange={handleChange}>
+                        <Radio.Group
+                          size="small"
+                          currentValue={currentValue}
+                          onChange={handleChange}
+                        >
                           <Radio value="1">选项一</Radio>
                           <Radio value="2">选项二</Radio>
                           <Radio value="3">选项三</Radio>
                         </Radio.Group>
-                        <Checkbox.Group size="small" currentValue={currentValue2} onChange={handleChange2}>
+                        <Checkbox.Group
+                          size="small"
+                          currentValue={currentValue2}
+                          onChange={handleChange2}
+                        >
                           <Checkbox value="bj">北京</Checkbox>
                           <Checkbox value="sh">上海</Checkbox>
                           <Checkbox value="gz">广州</Checkbox>
@@ -184,9 +212,9 @@ const Home = () => {
                         <DatePicker type="range" />
                       </div>
                       <div className="home-web-block -demo3">
-                        <ColorPicker />
-                        <ColorPicker defaultValue='#79B48B' />
-                        <ColorPicker defaultValue='#E7AE61' />
+                        <ColorPicker defaultValue="#5674f5" />
+                        <ColorPicker defaultValue="#72d4b7" />
+                        <ColorPicker defaultValue="#d8eef2" />
                         <TimePicker />
                         <Upload />
                       </div>
@@ -209,7 +237,6 @@ const Home = () => {
                       </div>
                     </div>
                   </div>
-
                 </Layout.Content>
                 <Layout.Footer>
                   <div className="home-web-footer">
@@ -222,7 +249,7 @@ const Home = () => {
         </section>
       </div>
     </header>
-  )
+  );
 
   return (
     <div className="home-container">

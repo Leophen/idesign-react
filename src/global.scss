@@ -58,6 +58,21 @@
 
 .__dumi-default-menu-list {
   padding-top: 12px !important;
+  & > li {
+    & > a {
+      font-weight: 600 !important;
+    }
+  }
+}
+
+html[data-prefers-color='light'] {
+  .__dumi-default-menu-list {
+    & > li {
+      & > a {
+        opacity: 0.8;
+      }
+    }
+  }
 }
 
 .__dumi-default-menu-list > li > a {
@@ -80,8 +95,8 @@ body,
   }
   &::-webkit-scrollbar {
     width: 8px;
-    border-radius: 10px;
     height: var(--ifm-scrollbar-size);
+    border-radius: 10px;
   }
   // 滚动条背景
   &::-webkit-scrollbar-track {
