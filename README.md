@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://idesign-react.vercel.app/" target="_blank">
-    <img alt="iDesign Logo" width="200" src="http://tva1.sinaimg.cn/large/0068vjfvgy1h4icfscds3j305k05kjri.jpg"/>
+    <img alt="iDesign Logo" width="200" src="./public/images/logo.svg"/>
   </a>
 </div>
 
@@ -16,15 +16,15 @@
 
 ## 特性
 
-### 全面
+### 1、全面
 
 40 多个开箱即用的高质量组件, 可覆盖绝大部分的业务场景。
 
-### 可配置的主题
+### 2、可配置的主题
 
 包括海量的主题变量，可在开发时自定义配置。
 
-### TypeScript 友好
+### 3、TypeScript 友好
 
 所有组件都是用 TypeScript 编写的，所以存在类型友好。
 
