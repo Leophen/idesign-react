@@ -42,7 +42,7 @@ yarn add idesign-react
 
 ## 示例
 
-```typescript
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'idesign-react';
