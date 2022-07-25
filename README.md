@@ -10,7 +10,7 @@
 
 <div align="center">
 
-基于 [iDesign](https://idesign-react.vercel.app/) 的 React UI 组件库。
+基于 React 框架的 UI 组件库 [iDesign](https://idesign-react.vercel.app/)。
 
 </div>
 
@@ -42,7 +42,7 @@ yarn add idesign-react
 
 ## 示例
 
-```typescript
+```jsx
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Button } from 'idesign-react';
