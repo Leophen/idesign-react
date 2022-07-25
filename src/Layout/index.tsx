@@ -1,97 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
-
-export interface UsualProps {
-  /**
-   * 组件自定义类名
-   */
-  className?: string;
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
-   * 组件自定义样式
-   */
-  style?: React.CSSProperties;
-}
-
-export interface LayoutProps extends UsualProps {}
-
-export interface HeaderProps extends UsualProps {
-  /**
-   * 顶栏高度。样式表（class）中定义的默认高度为：64px
-   * @default ''
-   */
-  height?: React.CSSProperties["height"];
-}
-
-export interface AsideProps extends UsualProps {
-  /**
-   * 侧边栏宽度。样式表（class）中定义的默认宽度为：232px
-   * @default ''
-   */
-  width?: React.CSSProperties["width"];
-}
-
-export interface ContentProps extends UsualProps {}
-
-export interface FooterProps extends UsualProps {
-  /**
-   * 底栏高度。样式表（class）中定义的默认高度为：24px
-   * @default ''
-   */
-  height?: React.CSSProperties["height"];
-}
-
-const Header: React.FC<HeaderProps> = (props) => {
-  const { children, className, style, ...restProps } = props;
-  return (
-    <header className={classNames('i-layout--header', className)} style={style} {...restProps}>
-      {children}
-    </header>
-  );
-};
-
-const Aside: React.FC<AsideProps> = (props) => {
-  const { width = 240, className, style, children, ...otherAsideProps } = props;
-
-  const asideClassNames = classNames('i-layout--aside', className);
-  const asideWidth = typeof width === 'number' ? `${width}px` : String(width);
-
-  const asideStyle = {
-    width: asideWidth,
-    maxWidth: asideWidth,
-    minWidth: asideWidth,
-    flex: `0 0 ${asideWidth}`,
-    ...style,
-  };
-
-  return (
-    <aside className={asideClassNames} style={asideStyle} {...otherAsideProps}>
-      {children}
-    </aside>
-  );
-};
-
-const Content: React.FC<ContentProps> = (props) => {
-  const { children, className, style, ...restProps } = props;
-  return (
-    <main className={classNames('i-layout--content', className)} style={style} {...restProps}>
-      {children}
-    </main>
-  );
-};
-
-const Footer: React.FC<FooterProps> = (props) => {
-  const { children, className, style, ...restProps } = props;
-  return (
-    <footer className={classNames('i-layout--footer', className)} style={style} {...restProps}>
-      {children}
-    </footer>
-  );
-};
+import LayoutHeader from './LayoutHeader';
+import LayoutAside from './LayoutAside';
+import LayoutContent from './LayoutContent';
+import LayoutFooter from './LayoutFooter';
+import { LayoutProps } from './type';
 
 /**
  * 布局组件
@@ -108,7 +22,7 @@ const Layout: React.FC<LayoutProps> & {
 
   useEffect(() => {
     React.Children.forEach(children, (child: any) => {
-      if (child.type === Aside) setAsides([child] as any);
+      if (child.type === LayoutAside) setAsides([child] as any);
     });
   }, [children]);
 
@@ -125,15 +39,15 @@ const Layout: React.FC<LayoutProps> & {
   );
 };
 
-Layout.Header = Header;
-Layout.Aside = Aside;
-Layout.Content = Content;
-Layout.Footer = Footer;
+Layout.Header = LayoutHeader;
+Layout.Aside = LayoutAside;
+Layout.Content = LayoutContent;
+Layout.Footer = LayoutFooter;
 
-Header.displayName = 'Header';
-Aside.displayName = 'Aside';
-Content.displayName = 'Content';
-Footer.displayName = 'Footer';
+LayoutHeader.displayName = 'LayoutHeader';
+LayoutAside.displayName = 'LayoutAside';
+LayoutContent.displayName = 'LayoutContent';
+LayoutFooter.displayName = 'LayoutFooter';
 
 Layout.displayName = 'Layout';
 

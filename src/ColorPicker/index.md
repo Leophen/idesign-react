@@ -111,4 +111,21 @@ const App = () => {
 export default App;
 ```
 
+## 颜色面板
+
+可通过 `<ColorPicker.Panel />` 单独使用颜色面板。
+
+```tsx
+import React from 'react';
+import { ColorPicker } from 'idesign-react';
+
+const App = () => {
+  return (
+    <ColorPicker.Panel />
+  );
+};
+
+export default App;
+```
+
 <API />

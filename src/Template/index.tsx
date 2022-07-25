@@ -1,25 +1,11 @@
 import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
-
-export interface TemplateProps {
-  /**
-   * 类名
-   */
-  className?: string;
-  /**
-   * 内容
-   */
-  children?: React.ReactNode;
-  /**
-   * 自定义样式
-   */
-  style?: React.CSSProperties;
-}
+import { TemplateProps } from './type';
 
 const Template: React.FC<TemplateProps> = (props) => {
   const {
-    children = '',
+    children,
     className,
     style,
     ...restProps
