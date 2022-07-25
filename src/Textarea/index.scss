@@ -1,5 +1,3 @@
-$primary: #3a3cf5;
-
 $success: #67c23a;
 
 $warning: #e69e31;
@@ -43,7 +41,7 @@ $error: #f16262;
     border-color: #c0c4cc;
   }
   &:focus {
-    border-color: $primary;
+    border-color: var(--i-primary);
   }
   &.i-textarea__inner-is-disabled {
     background-color: #f5f7fa;

@@ -1,8 +1,3 @@
-$primary: #3a3cf5;
-$primary_hover: #5d5ff3;
-$primary_active: #2e31d5;
-
-$info: #909399;
 $info_background: #f4f4f5;
 
 $success: #67c23a;
@@ -49,14 +44,14 @@ $error_background: #fef0f0;
   display: inline-block;
   box-sizing: border-box;
   margin-left: 8px;
-  color: $primary;
+  color: var(--i-primary);
   cursor: pointer;
   user-select: none;
   &:hover {
-    color: $primary_hover;
+    color: var(--i-primary-hover);
   }
   &:active {
-    color: $primary_active;
+    color: var(--i-primary-active);
   }
 }
 
@@ -87,12 +82,12 @@ $error_background: #fef0f0;
   }
   .icon-Close {
     margin-right: 0;
-    color: $info !important;
+    color: var(--i-info) !important;
   }
 }
 
 .i-alert--type-info {
-  @include injectColor($info, $info_background);
+  @include injectColor(var(--i-info), $info_background);
 }
 
 .i-alert--type-success {

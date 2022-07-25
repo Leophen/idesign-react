@@ -1,4 +1,4 @@
-$primary: #3a3cf5;
+
 $success: #67c23a;
 $warning: #e6a23c;
 $error: #f56c6c;
@@ -95,7 +95,7 @@ $error: #f56c6c;
     font-size: 20px;
   }
   .icon-TipInfo {
-    color: $primary;
+    color: var(--i-primary);
   }
   .icon-TipCheckFill {
     color: $success;

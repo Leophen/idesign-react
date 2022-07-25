@@ -1,4 +1,4 @@
-$primary: #3a3cf5;
+
 $ing: #999;
 $ing_soft: #d8dbe1;
 
@@ -68,15 +68,15 @@ $ing_soft: #d8dbe1;
     &,
     .i-icon,
     .i-steps-item__icon {
-      color: $primary;
+      color: var(--i-primary);
     }
     .i-steps-item__icon {
-      border-color: $primary;
+      border-color: var(--i-primary);
     }
     .i-steps-item__title {
       color: #333;
       &::after {
-        background: $primary;
+        background: var(--i-primary);
       }
     }
   }
@@ -87,11 +87,11 @@ $ing_soft: #d8dbe1;
       color: #fff;
     }
     .i-steps-item__icon {
-      background: $primary;
-      border-color: $primary;
+      background: var(--i-primary);
+      border-color: var(--i-primary);
     }
     .i-steps-item__title {
-      color: $primary;
+      color: var(--i-primary);
     }
   }
 }

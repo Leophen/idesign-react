@@ -1,5 +1,3 @@
-$primary: #3a3cf5;
-$primary_disabled: #9fa1fe;
 
 .i-slider {
   position: relative;
@@ -26,10 +24,10 @@ $primary_disabled: #9fa1fe;
   &.i-slider__disabled {
     cursor: not-allowed;
     .i-slider__bar {
-      background-color: $primary_disabled;
+      background-color: var(--i-primary-disabled);
     }
     .i-slider__button {
-      border-color: $primary_disabled;
+      border-color: var(--i-primary-disabled);
     }
   }
 }
@@ -39,7 +37,7 @@ $primary_disabled: #9fa1fe;
   width: 100%;
   height: 6px;
   overflow: hidden;
-  background-color: $primary;
+  background-color: var(--i-primary);
   border-radius: 3px;
 }
 
@@ -58,7 +56,7 @@ $primary_disabled: #9fa1fe;
   width: 20px;
   height: 20px;
   background: #fff;
-  border: 2px solid $primary;
+  border: 2px solid var(--i-primary);
   border-radius: 50%;
   transform: translateY(-50%);
 }

@@ -2,7 +2,7 @@ $default: #b3b6bd;
 $default_border: #d3d4d6;
 $default_border_opacity: rgba(211, 212, 214, 0.2);
 
-$primary: #3a3cf5;
+
 $primary_border: #adaefb;
 $primary_border_opacity: rgba(173, 174, 251, 0.2);
 
@@ -42,7 +42,7 @@ a .i-tag {
   cursor: pointer;
   transition: all 0.2s ease-out;
   &:hover {
-    color: $primary;
+    color: var(--i-primary);
     border-color: $primary_border;
   }
 }
@@ -113,7 +113,7 @@ a .i-tag {
 }
 
 .i-tag--type-primary {
-  @include injectColor($primary, $primary_border, $primary_border_opacity);
+  @include injectColor(var(--i-primary), $primary_border, $primary_border_opacity);
 }
 
 .i-tag--type-success {

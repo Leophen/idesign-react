@@ -1,4 +1,4 @@
-$primary: #3a3cf5;
+
 
 .i-upload {
   color: #333;
@@ -41,7 +41,7 @@ $primary: #3a3cf5;
     border-color: #dcdcdc;
   }
   &.i-upload__dragging {
-    border-color: $primary;
+    border-color: var(--i-primary);
   }
 }
 

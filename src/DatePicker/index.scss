@@ -1,4 +1,4 @@
-$primary: #3a3cf5;
+
 
 .i-date-picker {
   &[data-type='range'] {
@@ -81,7 +81,7 @@ $primary: #3a3cf5;
   transition: all 0.1s ease-out;
   user-select: none;
   &:hover {
-    color: $primary;
+    color: var(--i-primary);
   }
 }
 
@@ -141,7 +141,7 @@ $primary: #3a3cf5;
     }
   }
   &:hover {
-    color: $primary;
+    color: var(--i-primary);
   }
 }
 
@@ -218,7 +218,7 @@ $primary: #3a3cf5;
     }
   }
   &:hover {
-    color: $primary;
+    color: var(--i-primary);
   }
 }
 
