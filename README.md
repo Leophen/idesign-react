@@ -10,7 +10,7 @@
 
 <div align="center">
 
-基于 [iDesign](https://idesign-react.vercel.app/) 的 React UI 组件库。
+基于 React 框架的 UI 组件库 [iDesign](https://idesign-react.vercel.app/)。
 
 </div>
 
