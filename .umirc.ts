@@ -13,7 +13,7 @@ export default defineConfig({
     null, // null 值代表保留约定式生成的导航，只做增量配置
     {
       title: 'GitHub',
-      path: 'https://github.com/Leophen',
+      path: 'https://github.com/Leophen/idesign-react',
     },
     // {
     //   title: '我有二级导航',

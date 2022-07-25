@@ -17,7 +17,8 @@ a {
   align-items: center;
   justify-content: center;
   margin-top: 64px;
-  padding: 52px 0;
+  padding: 72px 0;
+  margin-bottom: 24px;
   .home-banner-left {
     margin-right: 200px;
     h1 {
@@ -77,8 +78,8 @@ a {
   flex: 1;
   align-items: center;
   justify-content: center;
-  width: calc(100% - 200px);
-  padding: 0 100px;
+  width: calc(100% - 240px);
+  padding: 0 120px;
   .home-content-item {
     display: flex;
     flex-direction: column;
