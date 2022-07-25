@@ -578,19 +578,9 @@ ul[role='slug-list'] li > a.active {
   }
 }
 
-.__dumi-default-previewer-actions > a:not(:last-child),
-.__dumi-default-previewer-actions > button:not(:last-child) {
-  margin-right: 20px !important;
-}
-
 .__dumi-default-previewer-actions a,
 .__dumi-default-icon[title='Get JSX via TypeScript Playground'] {
   display: none;
-}
-
-.__dumi-default-previewer-actions button[role='codesandbox'] {
-  position: absolute;
-  right: 70px;
 }
 
 code[class*='language-'],

@@ -28,16 +28,16 @@ const App = () => {
   return (
     <Carousel defaultCurrent={1} onChange={handleChange}>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>1</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>2</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>3</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>3</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>4</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>4</div>
       </Carousel.Item>
     </Carousel>
   );
@@ -58,16 +58,16 @@ const App = () => {
   return (
     <Carousel direction="vertical">
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>1</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>2</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>3</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>3</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>4</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>4</div>
       </Carousel.Item>
     </Carousel>
   );
@@ -88,16 +88,16 @@ const App = () => {
   return (
     <Carousel autoPlay interval={2}>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>1</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>2</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>3</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>3</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>4</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>4</div>
       </Carousel.Item>
     </Carousel>
   );
@@ -118,16 +118,16 @@ const App = () => {
   return (
     <Carousel duration={100}>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>1</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>2</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>3</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>3</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>4</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>4</div>
       </Carousel.Item>
     </Carousel>
   );
@@ -148,16 +148,16 @@ const App = () => {
   return (
     <Carousel type='card'>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>1</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>1</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>2</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>2</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#d6d9dc', height: '100%' }}>3</div>
+        <div style={{ background: 'var(--i-primary)', height: '100%' }}>3</div>
       </Carousel.Item>
       <Carousel.Item>
-        <div style={{ background: '#bcbfc2', height: '100%' }}>4</div>
+        <div style={{ background: 'var(--i-primary-disabled)', height: '100%' }}>4</div>
       </Carousel.Item>
     </Carousel>
   );

@@ -35,6 +35,16 @@ $base_height: auto;
   }
 }
 
+html.dark,
+*[data-theme='dark'],
+*[data-prefers-color='dark'] {
+  .i-empty-image {
+    svg {
+      filter: invert(1) contrast(0.9) grayscale(1);
+    }
+  }
+}
+
 .i-empty-description {
   margin-top: 20px;
   color: #888;

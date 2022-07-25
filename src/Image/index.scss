@@ -58,7 +58,7 @@
   justify-content: center;
   width: 45px;
   height: 45px;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--i-bg-mid);
   border-radius: 50%;
   cursor: pointer;
   transition: all 0.1s ease-out;
@@ -66,7 +66,7 @@
     margin: 0;
   }
   &:hover {
-    background: rgba(0, 0, 0, 0.7);
+    background: var(--i-bg-mid-hover);
   }
 }
 
@@ -82,9 +82,11 @@
   width: 360px;
   height: 45px;
   padding: 0 20px;
-  background: rgba(0, 0, 0, 0.5);
+  background: var(--i-bg-mid);
   border-radius: 20px;
+  box-shadow: var(--i-shadow);
   transform: translate(-50%);
+  backdrop-filter: blur(4px);
   .i-icon {
     cursor: pointer;
     opacity: 0.8;
@@ -118,7 +120,7 @@
   width: -webkit-fill-available;
   max-width: 100%;
   max-height: 100%;
-  box-shadow: 0 3px 6px -4px #0000001f, 0 6px 16px #00000014, 0 9px 28px 8px #0000000d;
+  box-shadow: var(--i-shadow);
   cursor: grab;
   animation: iDialogOpen 0.2s ease-out;
   pointer-events: auto;

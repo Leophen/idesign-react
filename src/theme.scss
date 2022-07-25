@@ -8,6 +8,8 @@
   --i-bg-active: #f2f3f5;
   --i-bg-back: #e5e6ea;
   --i-bg-disabled: #f5f7fa;
+  --i-bg-mid: rgba(0, 0, 0, 0.5);
+  --i-bg-mid-hover: rgba(0, 0, 0, 0.7);
 
   --i-font: #252b33;
   --i-font-2: #343c47;
@@ -48,6 +50,9 @@
   --i-info-active: #c1c1c1;
   --i-info-disabled: #ededed;
 
+  --i-info-txt: #e7e7e7;
+  --i-info-bg: rgba(231, 231, 231, 0.08);
+
   /**
    * success 主题
    */
@@ -67,6 +72,9 @@
   --i-warning-active: #de8a2b;
   --i-warning-disabled: #f3d19e;
 
+  --i-warning-txt: #f1ac51;
+  --i-warning-bg: rgba(241, 172, 81, 0.08);
+
   /**
    * error 主题
    */
@@ -74,6 +82,9 @@
   --i-error-hover: #f76e8e;
   --i-error-active: #cd5571;
   --i-error-disabled: #fab6b6;
+
+  --i-error-txt: #ec7491;
+  --i-error-bg: rgba(236, 116, 145, 0.08);
 }
 
 // 夜间模式
@@ -88,6 +99,8 @@ html.dark,
   --i-bg-active: #29292c;
   --i-bg-back: #333336;
   --i-bg-disabled: #262627;
+  --i-bg-mid: rgba(255, 255, 255, 0.1);
+  --i-bg-mid-hover: rgba(255, 255, 255, 0.2);
 
   --i-font: #fff;
   --i-font-2: #dcdcdc;
@@ -127,6 +140,9 @@ html.dark,
   --i-info-active: #3c3c3f;
   --i-info-disabled: #29292c;
 
+  --i-info-txt: #29292c;
+  --i-info-bg: rgba(41, 41, 44, 0.08);
+
   /**
    * success 主题
    */
@@ -146,6 +162,9 @@ html.dark,
   --i-warning-active: #8c6832;
   --i-warning-disabled: #80735c;
 
+  --i-warning-txt: #9f7639;
+  --i-warning-bg: rgba(159, 118, 57, 0.08);
+
   /**
    * error 主题
    */
@@ -153,4 +172,7 @@ html.dark,
   --i-error-hover: #ab615f;
   --i-error-active: #8f4441;
   --i-error-disabled: #826665;
+
+  --i-error-txt: #a2514e;
+  --i-error-bg: rgba(162, 81, 78, 0.08);
 }

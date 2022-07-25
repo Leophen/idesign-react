@@ -102,8 +102,8 @@ import { Avatar } from 'idesign-react';
 const App = () => {
   return (
     <div className="idesign-demo-block-row">
-      <Avatar color="#BCE0A4">L</Avatar>
-      <Avatar color="#F0B9B7">L</Avatar>
+      <Avatar color="#3236A4">L</Avatar>
+      <Avatar color="#8AD2B8">L</Avatar>
     </div>
   );
 };

@@ -32,7 +32,6 @@ export interface AvatarProps {
   shape?: 'circle' | 'round';
   /**
    * 头像底色
-   * @default #c1c4cb
    */
   color?: string;
 }
@@ -58,7 +57,7 @@ const AvatarGroup: React.FC<AvatarGroupProps> = (props) => {
     style,
     size = 32,
     shape = "circle",
-    color = "#c1c4cb",
+    color,
     cascading = "right",
   } = props
 
@@ -114,7 +113,7 @@ const Avatar: React.FC<AvatarProps> & { Group: React.ElementType } = (props) => 
     image,
     size = 32,
     shape = "circle",
-    color = "#c1c4cb",
+    color,
     ...restProps
   } = newProps;
 

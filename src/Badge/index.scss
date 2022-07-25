@@ -16,7 +16,7 @@
   font-size: 12px;
   white-space: nowrap;
   text-align: center;
-  background-color: #f56c6c;
+  background-color: var(--i-error);
   transform: translate(50%, -50%);
   transform-origin: 100% 0;
   &.i-badge--circle,

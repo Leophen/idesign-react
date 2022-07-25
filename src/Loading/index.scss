@@ -11,8 +11,12 @@
 
 .i-loading-spinner {
   animation: loading-rotate 2s linear infinite;
+  .i-icon {
+    color: var(--i-primary-txt);
+  }
 }
 
 .i-loading-info {
   margin-left: 8px;
+  color: var(--i-primary-txt);
 }

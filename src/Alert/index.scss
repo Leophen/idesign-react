@@ -1,14 +1,3 @@
-$info_background: #f4f4f5;
-
-
-$success_background: #f0f9eb;
-
-
-$warning_background: #fdf6ec;
-
-
-$error_background: #fef0f0;
-
 .i-alert {
   position: relative;
   display: flex;
@@ -44,7 +33,7 @@ $error_background: #fef0f0;
   display: inline-block;
   box-sizing: border-box;
   margin-left: 8px;
-  color: var(--i-primary);
+  color: var(--i-primary-txt);
   cursor: pointer;
   user-select: none;
   &:hover {
@@ -65,7 +54,7 @@ $error_background: #fef0f0;
   cursor: pointer;
   &:hover {
     .icon-Close {
-      color: #3b3c3f !important;
+      color: var(--i-font-3) !important;
       transition: color 0.2s ease-out;
     }
   }
@@ -82,22 +71,22 @@ $error_background: #fef0f0;
   }
   .icon-Close {
     margin-right: 0;
-    color: var(--i-info) !important;
+    color: var(--i-font-5) !important;
   }
 }
 
 .i-alert--type-info {
-  @include injectColor(var(--i-info), $info_background);
+  @include injectColor(var(--i-font-5), var(--i-bg-hover));
 }
 
 .i-alert--type-success {
-  @include injectColor(var(--i-success), $success_background);
+  @include injectColor(var(--i-success), var(--i-success-bg));
 }
 
 .i-alert--type-warning {
-  @include injectColor(var(--i-warning), $warning_background);
+  @include injectColor(var(--i-warning), var(--i-warning-bg));
 }
 
 .i-alert--type-error {
-  @include injectColor(var(--i-error), $error_background);
+  @include injectColor(var(--i-error), var(--i-error-bg));
 }

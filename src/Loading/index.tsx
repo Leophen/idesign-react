@@ -24,7 +24,6 @@ export interface LoadingProps {
   size?: number;
   /**
    * 加载图标颜色
-   * @default #A3C8FB
    */
   color?: string;
   /**
@@ -43,7 +42,7 @@ const Loading: React.FC<LoadingProps> = (props) => {
     style,
     icon = "Loading",
     size = 36,
-    color = "#A3C8FB",
+    color,
     info = '',
     spinner,
     ...restProps

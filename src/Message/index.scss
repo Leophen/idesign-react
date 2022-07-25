@@ -1,21 +1,15 @@
-
-
-
-
-
 .i-message {
   display: flex;
   align-items: center;
   box-sizing: border-box;
   width: fit-content;
   padding: 10px 16px;
-  color: #262626;
+  color: var(--i-font-2);
   font-size: 14px;
-  background-color: #fff;
+  background-color: var(--i-bg);
   border-radius: 6px;
   outline: 0;
-  box-shadow: rgba(0, 0, 0, 0.12) 0px 3px 6px -4px, rgba(0, 0, 0, 0.08) 0px 6px 16px 0px,
-    rgba(0, 0, 0, 0.05) 0px 9px 28px 8px;
+  box-shadow: var(--i-shadow);
   transform: translateX(0);
   .i-icon {
     margin-right: 8px;

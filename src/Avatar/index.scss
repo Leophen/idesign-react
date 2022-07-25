@@ -5,6 +5,7 @@
   box-sizing: border-box;
   overflow: hidden;
   color: #fff;
+  background: var(--i-font-5);
   border-radius: 50%;
   &.i-avatar__shape-round {
     border-radius: 6px;
@@ -21,7 +22,7 @@
   align-items: center;
   box-sizing: border-box;
   .i-avatar {
-    border: 2px solid #fff;
+    border: 2px solid var(--i-bg);
   }
   &.i-avatar__offset-right {
     .i-avatar:not(:last-child) {
