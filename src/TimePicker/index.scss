@@ -21,9 +21,9 @@
 
 .i-time-colon {
   margin-bottom: 2px;
-  color: #333;
+  color: var(--i-font-2);
   &.i-time-colon__disabled {
-    color: rgb(168, 171, 178);
+    color: var(--i-font-disabled);
   }
 }
 
@@ -66,13 +66,13 @@
   list-style: none;
   cursor: default;
   &:hover {
-    background: #f5f7fa;
+    background: var(--i-bg-hover);
   }
   &.i-time-spinner-item__selected {
     font-weight: bold;
-    background: #eef5fe;
+    background: var(--i-bg-active);
     &:hover {
-      background: #eef5fe;
+      background: var(--i-bg-active);
     }
   }
 }
@@ -84,7 +84,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 12px;
-  border-top: 1px solid #e5e5e6;
+  border-top: 1px solid var(--i-border);
 }
 
 .i-time-panel-footer__handle {

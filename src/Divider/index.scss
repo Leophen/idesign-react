@@ -3,7 +3,7 @@
   margin: 24px 0;
   color: #303133;
   font-size: 14px;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--i-border);
 }
 
 .i-divider--dashed {
@@ -19,7 +19,7 @@
     position: relative;
     top: 50%;
     width: 50%;
-    border-top: 1px solid #e5e7eb;
+    border-top: 1px solid var(--i-border);
     transform: translateY(calc(50% - 0.5px));
     content: '';
   }

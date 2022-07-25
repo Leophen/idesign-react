@@ -2,7 +2,7 @@
   box-sizing: border-box;
   width: 32px;
   height: 32px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--i-border);
   border-radius: 6px;
   cursor: pointer;
   &.i-color--size-small {
@@ -30,7 +30,7 @@
   width: 100%;
   height: 40px;
   padding: 0 16px;
-  color: #333;
+  color: var(--i-font-2);
 }
 
 .i-color-panel-header-txt {
@@ -51,7 +51,7 @@
     margin: 0;
   }
   &:hover {
-    background: #f3f3f3;
+    background: var(--i-bg-hover);
   }
 }
 
@@ -114,12 +114,15 @@
 .i-color-panel-controls__dropper {
   width: 32px;
   height: 32px;
-  border: 1px solid #e5e7eb;
+  border: 1px solid var(--i-border);
   border-radius: 16px;
   cursor: pointer;
   transition: all 0.2s cubic-bezier(0.38, 0, 0.24, 1);
+  .icon-Dropper {
+    color: var(--i-font-4);
+  }
   &:hover {
-    background: #f4f4f4;
+    background: var(--i-bg-hover);
   }
 }
 
@@ -190,19 +193,20 @@
   align-items: center;
   box-sizing: border-box;
   width: 66%;
-  border: 1px solid #e5e7eb;
+  overflow: hidden;
+  border: 1px solid var(--i-border);
   border-radius: 4px;
   transition: all 0.2s cubic-bezier(0.38, 0, 0.24, 1);
   &:focus-within {
-    border-color: #3a3cf5;
+    border-color: var(--i-primary);
   }
   .i-input {
     border: none;
-    border-right: 1px solid #e5e7eb;
+    border-right: 1px solid var(--i-border);
     border-radius: 0;
     &:hover,
     &:focus-within {
-      background-color: rgba(38, 92, 240, 0.06);
+      background-color: var(--i-bg-hover);
     }
   }
   .i-input__inner {
@@ -212,7 +216,7 @@
     }
     &:focus {
       &::selection {
-        background: #b4d7fe;
+        background: var(--i-primary-bg-2);
       }
     }
   }
@@ -238,7 +242,7 @@
   box-sizing: border-box;
   width: 100%;
   padding: 16px;
-  border-top: 1px solid rgb(228, 231, 237);
+  border-top: 1px solid var(--i-border);
 }
 
 .i-color-panel-color {

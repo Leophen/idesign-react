@@ -1,7 +1,4 @@
 
-$ing: #999;
-$ing_soft: #d8dbe1;
-
 .i-steps {
   display: flex;
   &.i-steps__layout-vertical {
@@ -27,7 +24,7 @@ $ing_soft: #d8dbe1;
         display: block;
         width: 2px;
         height: 999px;
-        background: $ing_soft;
+        background: var(--i-bg-back);
         transform: translateX(-50%);
       }
     }
@@ -68,13 +65,13 @@ $ing_soft: #d8dbe1;
     &,
     .i-icon,
     .i-steps-item__icon {
-      color: var(--i-primary);
+      color: var(--i-primary-txt);
     }
     .i-steps-item__icon {
       border-color: var(--i-primary);
     }
     .i-steps-item__title {
-      color: #333;
+      color: var(--i-font-2);
       &::after {
         background: var(--i-primary);
       }
@@ -109,13 +106,13 @@ $ing_soft: #d8dbe1;
   height: 20px;
   min-height: 20px;
   margin-right: 8px;
-  color: $ing;
+  color: var(--i-font-5);
   font-size: 12px;
-  border: 1px solid $ing;
+  border: 1px solid var(--i-font-5);
   border-radius: 50%;
   transform: translateY(-50%);
   .i-icon {
-    color: $ing;
+    color: var(--i-font-5);
   }
 }
 
@@ -126,7 +123,7 @@ $ing_soft: #d8dbe1;
 .i-steps-item__title {
   position: relative;
   width: fit-content;
-  color: $ing;
+  color: var(--i-font-5);
   font-size: 14px;
   &::after {
     position: absolute;
@@ -135,13 +132,13 @@ $ing_soft: #d8dbe1;
     display: block;
     width: 999px;
     height: 2px;
-    background: $ing_soft;
+    background: var(--i-bg-back);
     transform: translateY(-50%);
   }
 }
 
 .i-steps-item__description {
   margin-top: 8px;
-  color: $ing;
+  color: var(--i-font-5);
   font-size: 13px;
 }

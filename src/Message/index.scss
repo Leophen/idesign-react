@@ -1,7 +1,7 @@
 
-$success: #67c23a;
-$warning: #e6a23c;
-$error: #f56c6c;
+
+
+
 
 .i-message {
   display: flex;
@@ -24,13 +24,13 @@ $error: #f56c6c;
     color: var(--i-primary);
   }
   .icon-TipCheckFill {
-    color: $success;
+    color: var(--i-success);
   }
   .icon-TipWarningFill {
-    color: $warning;
+    color: var(--i-warning);
   }
   .icon-TipCloseFill {
-    color: $error;
+    color: var(--i-error);
   }
 }
 

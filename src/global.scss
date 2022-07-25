@@ -60,6 +60,8 @@
   padding-top: 12px !important;
   & > li {
     & > a {
+      margin-top: 4px;
+      margin-bottom: 14px !important;
       font-weight: 600 !important;
     }
   }
@@ -226,7 +228,7 @@ body,
   box-sizing: border-box;
   width: 100%;
   height: auto;
-  margin-bottom: 4px;
+  // margin-bottom: 4px;
   margin-left: 24px;
   padding: 8px 2px;
   font-size: 14.4px;

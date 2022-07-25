@@ -1,4 +1,3 @@
-
 .i-slider {
   position: relative;
   display: flex;
@@ -45,7 +44,7 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: rgb(231, 231, 231);
+  background-color: var(--i-bg-active);
 }
 
 .i-slider__button {

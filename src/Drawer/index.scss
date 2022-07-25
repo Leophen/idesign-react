@@ -85,7 +85,7 @@
   font-weight: 700;
   font-size: 16px;
   word-break: break-word;
-  border-bottom: 1px solid #e5e7eb;
+  border-bottom: 1px solid var(--i-border);
   .i-icon {
     margin-right: 8px;
     font-size: 20px;
@@ -101,7 +101,7 @@
 .i-drawer__footer {
   width: 100%;
   text-align: right;
-  border-top: 1px solid #e5e7eb;
+  border-top: 1px solid var(--i-border);
   .i-button + .i-button {
     margin-left: 10px;
   }

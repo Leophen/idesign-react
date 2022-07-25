@@ -1,12 +1,12 @@
 $info_background: #f4f4f5;
 
-$success: #67c23a;
+
 $success_background: #f0f9eb;
 
-$warning: #e6a23c;
+
 $warning_background: #fdf6ec;
 
-$error: #f56c6c;
+
 $error_background: #fef0f0;
 
 .i-alert {
@@ -91,13 +91,13 @@ $error_background: #fef0f0;
 }
 
 .i-alert--type-success {
-  @include injectColor($success, $success_background);
+  @include injectColor(var(--i-success), $success_background);
 }
 
 .i-alert--type-warning {
-  @include injectColor($warning, $warning_background);
+  @include injectColor(var(--i-warning), $warning_background);
 }
 
 .i-alert--type-error {
-  @include injectColor($error, $error_background);
+  @include injectColor(var(--i-error), $error_background);
 }

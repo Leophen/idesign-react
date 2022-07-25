@@ -37,12 +37,10 @@ export interface ProgressProps {
   label?: React.ReactNode;
   /**
    * 进度条颜色
-   * @default #3a3cf5
    */
   color?: string;
   /**
    * 进度条底色
-   * @default #ebeef5
    */
   backColor?: string;
   /**
@@ -76,8 +74,8 @@ const Progress: React.FC<ProgressProps> = (props) => {
     labelTxt = true,
     innerLabel = false,
     label,
-    color = '#3a3cf5',
-    backColor = '#ebeef5',
+    color,
+    backColor,
     width = 200,
     strokeWidth = 6,
     indeterminate = false,
@@ -154,6 +152,7 @@ const Progress: React.FC<ProgressProps> = (props) => {
           cy={circle.d / 2}
           r={circle.r}
           fill="none"
+          className="i-progress-circle__bg"
           style={{
             stroke: backColor,
             strokeWidth,

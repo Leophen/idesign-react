@@ -587,7 +587,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
             className="i-color-panel-controls__dropper"
             onClick={handleClickDropper}
           >
-            <Icon name="Dropper" color="#333" />
+            <Icon name="Dropper" />
           </div>
         }
         <div className="i-color-panel-controls__bar">

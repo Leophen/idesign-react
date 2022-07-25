@@ -15,6 +15,7 @@
 .i-progress-bar {
   position: relative;
   overflow: hidden;
+  background: var(--i-bg-back);
   border-radius: 100px;
   .i-progress__info {
     position: absolute;
@@ -27,17 +28,26 @@
   }
 }
 
+.i-progress-circle__bg {
+  stroke: var(--i-bg-back);
+}
+
 .i-progress-bar__inner {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
+  background: var(--i-primary);
   border-radius: 100px;
+}
+
+.i-progress-circle__inner {
+  stroke: var(--i-primary);
 }
 
 .i-progress__info {
   margin-left: 8px;
-  color: #515151;
+  color: var(--i-font-2);
   font-size: 14px;
 }
 

@@ -6,6 +6,7 @@
   --i-bg: #fff;
   --i-bg-hover: #f7f8fa;
   --i-bg-active: #f2f3f5;
+  --i-bg-back: #e5e6ea;
   --i-bg-disabled: #f5f7fa;
 
   --i-font: #252b33;
@@ -33,10 +34,11 @@
   --i-primary: #5e62ea;
   --i-primary-hover: #7378fa;
   --i-primary-active: #5155d3;
-  --i-primary-disabled: #8e92f5;
+  --i-primary-disabled: #969ef6;
 
   --i-primary-txt: #5e62ea;
   --i-primary-bg: rgba(94, 98, 234, 0.08);
+  --i-primary-bg-2: rgba(94, 98, 234, 0.16);
 
   /**
    * info 主题
@@ -84,6 +86,7 @@ html.dark,
   --i-bg: #17171a;
   --i-bg-hover: #202023;
   --i-bg-active: #29292c;
+  --i-bg-back: #333336;
   --i-bg-disabled: #262627;
 
   --i-font: #fff;
@@ -111,7 +114,7 @@ html.dark,
   --i-primary: #3033ab;
   --i-primary-hover: #484aa9;
   --i-primary-active: #282b95;
-  --i-primary-disabled: #595b85;
+  --i-primary-disabled: #595d85;
 
   --i-primary-txt: #8689e0;
   --i-primary-bg: rgba(134, 137, 224, 0.08);

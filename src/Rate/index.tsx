@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import './index.scss';
 import Icon from '../Icon';
 import useDefault from '../hooks/useDefault';
+import tinycolor from 'tinycolor2';
 
 export interface RateProps {
   /**
@@ -44,12 +45,10 @@ export interface RateProps {
   count?: number;
   /**
    * 选中颜色
-   * @default #F5DB4D
    */
   activeColor?: string;
   /**
    * 未选中颜色
-   * @default #e6e6e6
    */
   voidColor?: string;
   /**
@@ -78,8 +77,8 @@ const Rate: React.FC<RateProps> = (props) => {
     allowClear = false,
     allowHalf = false,
     count = 5,
-    activeColor = '#F5DB4D',
-    voidColor = '#e6e6e6',
+    activeColor,
+    voidColor,
     activeIcon = 'StarFill',
     voidIcon = 'StarFill',
     onChange = () => { },
@@ -115,10 +114,10 @@ const Rate: React.FC<RateProps> = (props) => {
   }
 
   const getStar = (index: number, type: 'name' | 'color') => {
-    let result = (type === 'name') ? voidIcon : voidColor
+    let result = (type === 'name') ? voidIcon : (voidColor ?? 'void')
     const compareValue = ifHover ? hoverValue : innerValue
     if (compareValue > index) {
-      result = (type === 'name') ? activeIcon : activeColor
+      result = (type === 'name') ? activeIcon : (activeColor ?? 'active')
     }
     return result
   }
@@ -138,14 +137,17 @@ const Rate: React.FC<RateProps> = (props) => {
       {Array(count).fill('star').map((item, index) =>
         !allowHalf ? (
           <div
-            className="i-rate-star"
+            className={classNames(
+              'i-rate-star',
+              getStar(index, 'color') === 'active' && 'i-rate-star__active',
+            )}
             onMouseEnter={() => handleEnterRateItem(index)}
             onMouseDown={() => handleDownRateItem(index)}
             key={`${item}${index}`}
           >
             <Icon
               name={getStar(index, 'name')}
-              color={getStar(index, 'color')}
+              color={tinycolor(getStar(index, 'color')).isValid() ? getStar(index, 'color') : undefined}
               size={20}
             />
           </div>) : (
@@ -154,24 +156,32 @@ const Rate: React.FC<RateProps> = (props) => {
             key={`${item}${index}`}
           >
             <div
-              className="i-rate-star__first"
+              className={classNames(
+                'i-rate-star',
+                'i-rate-star__first',
+                getStar(index, 'color') === 'active' && 'i-rate-star__active',
+              )}
               onMouseEnter={() => handleEnterRateItem(index)}
               onMouseDown={() => handleDownRateItem(index)}
             >
               <Icon
                 name={getStar(index, 'name')}
-                color={getStar(index, 'color')}
+                color={tinycolor(getStar(index, 'color')).isValid() ? getStar(index, 'color') : undefined}
                 size={20}
               />
             </div>
             <div
-              className="i-rate-star__second"
+              className={classNames(
+                'i-rate-star',
+                'i-rate-star__second',
+                getStar(index, 'color') === 'active' && 'i-rate-star__active',
+              )}
               onMouseEnter={() => handleEnterRateItem(index + 0.5)}
               onMouseDown={() => handleDownRateItem(index + 0.5)}
             >
               <Icon
                 name={getStar(index + 0.5, 'name')}
-                color={getStar(index + 0.5, 'color')}
+                color={tinycolor(getStar(index + 0.5, 'color')).isValid() ? getStar(index, 'color') : undefined}
                 size={20}
               />
             </div>
