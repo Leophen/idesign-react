@@ -1,6 +1,7 @@
 import React from 'react';
 import './index.scss';
 import classNames from 'classnames';
+import { IconProps } from './type'
 
 const Icon: React.FC<IconProps> = (props) => {
   const {
