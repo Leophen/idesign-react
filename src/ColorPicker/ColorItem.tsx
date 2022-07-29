@@ -4,7 +4,7 @@ import { ColorItemProps } from './type';
 
 const ColorItem: React.FC<ColorItemProps> = (props) => {
   const {
-    color = '#265CF0',
+    color = '#5e62ea',
     onClick
   } = props
 

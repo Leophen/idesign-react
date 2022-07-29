@@ -30,7 +30,7 @@ export interface ColorPickerProps {
   value?: string;
   /**
    * 默认颜色值（非受控）
-   * @default #265CF0
+   * @default #5e62ea
    */
   defaultValue?: string;
   /**
@@ -57,7 +57,7 @@ export interface ColorPanelProps extends ColorPickerProps {
 export interface ColorItemProps {
   /**
    * 颜色
-   * @default #265CF0
+   * @default #5e62ea
    */
   color?: string;
   /**
@@ -86,7 +86,7 @@ export interface ColorCursorProps {
   mode?: 'x' | 'y' | 'xy';
   /**
    * 滑块颜色
-   * @default #265CF0
+   * @default #5e62ea
    */
   color?: string;
 }

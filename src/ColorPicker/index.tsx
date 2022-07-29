@@ -62,7 +62,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
     triggerStyle,
     size,
     value,
-    defaultValue = '#265CF0',
+    defaultValue = '#5e62ea',
     colorList = defaultColor,
     onChange,
     onTrigger,

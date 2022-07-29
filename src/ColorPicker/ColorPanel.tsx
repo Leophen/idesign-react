@@ -11,7 +11,7 @@ import { ColorPanelProps } from './type';
 
 const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const {
-    value = '#265CF0',
+    value = '#5e62ea',
     colorList = defaultColor,
     onChange,
     onClose
