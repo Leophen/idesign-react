@@ -254,7 +254,7 @@ import { Grid } from 'idesign-react';
 const App = () => {
   return (
     <>
-      <h3>start</h3>
+      <h4>start</h4>
       <Grid justify="start">
         <Grid.Item span={4}>
           <div>GridItem1</div>
@@ -270,7 +270,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>center</h3>
+      <h4>center</h4>
       <Grid justify="center">
         <Grid.Item span={4}>
           <div>GridItem1</div>
@@ -286,7 +286,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>end</h3>
+      <h4>end</h4>
       <Grid justify="end">
         <Grid.Item span={4}>
           <div>GridItem1</div>
@@ -302,7 +302,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>space-between</h3>
+      <h4>space-between</h4>
       <Grid justify="space-between">
         <Grid.Item span={4}>
           <div>GridItem1</div>
@@ -318,7 +318,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>space-around</h3>
+      <h4>space-around</h4>
       <Grid justify="space-around">
         <Grid.Item span={4}>
           <div>GridItem1</div>
@@ -351,7 +351,7 @@ import { Grid } from 'idesign-react';
 const App = () => {
   return (
     <>
-      <h3>top</h3>
+      <h4>top</h4>
       <Grid align="top">
         <Grid.Item span={4}>
           <div style={{ height: '80px' }}>GridItem1</div>
@@ -367,7 +367,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>middle</h3>
+      <h4>middle</h4>
       <Grid align="middle">
         <Grid.Item span={4}>
           <div style={{ height: '80px' }}>GridItem1</div>
@@ -383,7 +383,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>bottom</h3>
+      <h4>bottom</h4>
       <Grid align="bottom">
         <Grid.Item span={4}>
           <div style={{ height: '80px' }}>GridItem1</div>
@@ -399,7 +399,7 @@ const App = () => {
         </Grid.Item>
       </Grid>
 
-      <h3>单项对齐设置</h3>
+      <h4>单项对齐设置</h4>
       <Grid align="bottom">
         <Grid.Item span={4}>
           <div style={{ height: '80px' }}>GridItem1</div>

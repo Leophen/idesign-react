@@ -341,7 +341,7 @@ const App = () => {
 
   return (
     <>
-      <h3>输入框 + 输入框</h3>
+      <h4>输入框 + 输入框</h4>
       <Input.Group>
         <Input />
         <Input />
@@ -372,13 +372,13 @@ const App = () => {
         </Grid>
       </Input.Group>
 
-      <h3>输入框 + 按钮</h3>
+      <h4>输入框 + 按钮</h4>
       <Input.Group>
         <Input />
         <Button style={{ marginLeft: '10px' }}>搜索</Button>
       </Input.Group>
 
-      <h3>输入框 + 前后缀</h3>
+      <h4>输入框 + 前后缀</h4>
       <Input.Group prefixContent="http://">
         <Input />
       </Input.Group>
@@ -415,43 +415,43 @@ const App = () => {
 
   return (
     <>
-      <h3>onChange 输入时触发</h3>
+      <h4>onChange 输入时触发</h4>
       <Input
         onChange={(val, e) => {
           console.log('onChange', val, e);
         }}
       />
-      <h3>onFocus 聚焦时触发</h3>
+      <h4>onFocus 聚焦时触发</h4>
       <Input
         onFocus={(val, e) => {
           console.log('onFocus', val, e);
         }}
       />
-      <h3>onBlur 失焦时触发</h3>
+      <h4>onBlur 失焦时触发</h4>
       <Input
         onBlur={(val, e) => {
           console.log('onBlur', val, e);
         }}
       />
-      <h3>onKeyDown 键盘按下时触发</h3>
+      <h4>onKeyDown 键盘按下时触发</h4>
       <Input
         onKeyDown={(val, e) => {
           console.log('onKeyDown', val, e);
         }}
       />
-      <h3>onEnter 键盘按下回车时触发</h3>
+      <h4>onEnter 键盘按下回车时触发</h4>
       <Input
         onEnter={(val, e) => {
           console.log('onEnter', val, e);
         }}
       />
-      <h3>onKeyUp 键盘释放时触发</h3>
+      <h4>onKeyUp 键盘释放时触发</h4>
       <Input
         onKeyUp={(val, e) => {
           console.log('onKeyUp', val, e);
         }}
       />
-      <h3>onClear 清空按钮点击时触发</h3>
+      <h4>onClear 清空按钮点击时触发</h4>
       <Input
         value={value}
         onChange={(val) => {

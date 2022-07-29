@@ -156,7 +156,7 @@ import { Checkbox } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
+    <>
       <h4>单项禁用</h4>
       <Checkbox disabled>未选中</Checkbox>
 
@@ -181,7 +181,7 @@ const App = () => {
           <Checkbox value="sz">深圳</Checkbox>
         </Checkbox.Group>
       </div>
-    </div>
+    </>
   );
 };
 

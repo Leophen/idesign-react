@@ -229,7 +229,7 @@ const App = () => {
 
   return (
     <div className="idesign-demo-block-column">
-      <h3>单项禁用</h3>
+      <h4>单项禁用</h4>
       <div className="idesign-demo-block-row">
         <Radio disabled>未选中</Radio>
         <Radio type="radio-button" disabled>
@@ -237,7 +237,7 @@ const App = () => {
         </Radio>
       </div>
 
-      <h3>单选框组局部禁用</h3>
+      <h4>单选框组局部禁用</h4>
       <div className="idesign-demo-block-row">
         <Radio.Group selected={selected} onChange={handleChange}>
           <Radio value="1">选项一</Radio>
@@ -257,7 +257,7 @@ const App = () => {
         </Radio.Group>
       </div>
 
-      <h3>单选框组全局禁用</h3>
+      <h4>单选框组全局禁用</h4>
       <div className="idesign-demo-block-row">
         <Radio.Group disabled selected={selected} onChange={handleChange}>
           <Radio value="1">选项一</Radio>

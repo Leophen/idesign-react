@@ -288,10 +288,16 @@ ul[role='slug-list'] li > a.active {
   padding: 24px !important;
   color: var(--i-font-2);
   border-radius: 10px 10px 0px 0px !important;
-  h3,
   h4 {
-    color: var(--i-font-3);
-    font-weight: 700;
+    margin-top: 24px;
+    margin-bottom: 12px;
+    padding: 0;
+    color: var(--i-font-4);
+    font-weight: 500;
+    font-size: 16px;
+    &:first-of-type {
+      margin-top: 0;
+    }
   }
 }
 
