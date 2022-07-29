@@ -8,11 +8,11 @@ export interface TimePickerProps {
    */
   style?: React.CSSProperties;
   /**
-   * 时间值
+   * 时间固定值（受控）
    */
   value?: string;
   /**
-   * 默认时间值
+   * 时间默认值（非受控）
    * @default 当前时间
    */
   defaultValue?: string;

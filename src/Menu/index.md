@@ -37,14 +37,14 @@ const App = () => {
         <Menu.Item>菜单3</Menu.Item>
         <Menu.Item>菜单4</Menu.Item>
       </Menu>
-      <h4>有默认值</h4>
+      <h4>有默认值（非受控）</h4>
       <Menu defaultActive={value}>
         <Menu.Item>菜单1</Menu.Item>
         <Menu.Item>菜单2</Menu.Item>
         <Menu.Item>菜单3</Menu.Item>
         <Menu.Item>菜单4</Menu.Item>
       </Menu>
-      <h4>有受控值</h4>
+      <h4>有固定值（受控）</h4>
       <Menu active={value}>
         <Menu.Item>菜单1</Menu.Item>
         <Menu.Item>菜单2</Menu.Item>

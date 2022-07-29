@@ -39,11 +39,11 @@ export interface SwitchProps {
    */
   loading?: boolean;
   /**
-   * 开关值
+   * 开关固定值（受控）
    */
   value?: boolean;
   /**
-   * 开关默认值
+   * 开关默认值（非受控）
    * @default false
    */
   defaultValue?: boolean;

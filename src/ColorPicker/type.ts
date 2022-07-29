@@ -25,11 +25,11 @@ export interface ColorPickerProps {
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * 颜色值
+   * 固定颜色值（受控）
    */
   value?: string;
   /**
-   * 默认颜色值
+   * 默认颜色值（非受控）
    * @default #265CF0
    */
   defaultValue?: string;

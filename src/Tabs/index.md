@@ -36,13 +36,13 @@ const App = () => {
         <Tabs.Item>选项卡22</Tabs.Item>
         <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
-      <h4>有默认值</h4>
+      <h4>有默认值（非受控）</h4>
       <Tabs defaultActive={value}>
         <Tabs.Item>选项卡1</Tabs.Item>
         <Tabs.Item>选项卡22</Tabs.Item>
         <Tabs.Item>选项卡333</Tabs.Item>
       </Tabs>
-      <h4>有受控值</h4>
+      <h4>有固定值（受控）</h4>
       <Tabs active={value}>
         <Tabs.Item>选项卡1</Tabs.Item>
         <Tabs.Item>选项卡22</Tabs.Item>

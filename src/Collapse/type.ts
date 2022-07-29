@@ -14,11 +14,11 @@ export interface CollapseProps {
    */
   style?: React.CSSProperties;
   /**
-   * 当前展开项
+   * 固定展开项（受控）
    */
   active?: CollapseValueType;
   /**
-   * 默认展开项
+   * 默认展开项（非受控）
    */
   defaultActive?: CollapseValueType;
   /**

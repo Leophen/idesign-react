@@ -30,9 +30,9 @@ const App = () => {
     <div style={{ width: 600 }}>
       <h4>无默认值</h4>
       <Slider />
-      <h4>有默认值</h4>
+      <h4>有默认值（非受控）</h4>
       <Slider defaultValue={value} />
-      <h4>有受控值</h4>
+      <h4>有固定值（受控）</h4>
       <Slider value={value} />
       <h4>一般用法</h4>
       <Slider
@@ -133,9 +133,9 @@ const App = () => {
     <div className="idesign-demo-block-row" style={{ height: 200 }}>
       <h4>无默认值 →</h4>
       <Slider layout="vertical" />
-      <h4>有默认值 →</h4>
+      <h4>有默认值（非受控） →</h4>
       <Slider layout="vertical" defaultValue={value} />
-      <h4>有受控值 →</h4>
+      <h4>有固定值（受控） →</h4>
       <Slider layout="vertical" value={value} />
       <h4>一般用法 →</h4>
       <Slider

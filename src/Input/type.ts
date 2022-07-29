@@ -17,11 +17,11 @@ export interface InputProps {
    */
   placeholder?: string;
   /**
-   * 输入框受控值
+   * 输入框固定值（受控）
    */
   value?: string | number;
   /**
-   * 输入框默认值
+   * 输入框默认值（非受控）
    */
   defaultValue?: string | number;
   /**

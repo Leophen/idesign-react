@@ -17,11 +17,11 @@ export interface TabsProps {
    */
   theme?: 'normal' | 'card';
   /**
-   * 当前选中值
+   * 固定选中值（受控）
    */
   active?: string | number;
   /**
-   * 默认选中值
+   * 默认选中值（非受控）
    */
   defaultActive?: string | number;
   /**

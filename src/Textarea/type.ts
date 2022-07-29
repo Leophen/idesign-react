@@ -17,11 +17,11 @@ export interface TextareaProps {
    */
   placeholder?: string;
   /**
-   * 文本框受控值
+   * 文本框固定值（受控）
    */
   value?: string | number;
   /**
-   * 文本框默认值
+   * 文本框默认值（非受控）
    */
   defaultValue?: string | number;
   /**

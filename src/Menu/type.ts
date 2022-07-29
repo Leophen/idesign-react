@@ -16,11 +16,11 @@ export interface MenuProps {
    */
   width?: React.CSSProperties["width"];
   /**
-   * 当前选中值
+   * 固定选中值（受控）
    */
   active?: string | number;
   /**
-   * 默认选中值
+   * 默认选中值（非受控）
    * @default 0
    */
   defaultActive?: string | number;

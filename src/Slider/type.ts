@@ -27,11 +27,11 @@ export interface SliderProps {
    */
   layout?: 'vertical' | 'horizontal';
   /**
-   * 滑块值
+   * 滑块固定值（受控）
    */
   value?: number | number[];
   /**
-   * 滑块值，非受控属性
+   * 滑块默认值（非受控）
    */
   defaultValue?: number | number[];
   /**
