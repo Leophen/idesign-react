@@ -17,10 +17,14 @@ export interface CheckboxProps {
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * 是否选中
-   * @default false
+   * 是否固定选中（受控）
    */
   checked?: boolean;
+  /**
+   * 是否默认选中（非受控）
+   * @default false
+   */
+  defaultChecked?: boolean;
   /**
    * 是否禁用组件
    * @default false
@@ -33,7 +37,7 @@ export interface CheckboxProps {
   /**
    * 值变化时触发
    */
-  onChange?: (checked: boolean, context: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (checked: boolean, ev: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface CheckboxGroupProps {
@@ -50,9 +54,14 @@ export interface CheckboxGroupProps {
    */
   style?: React.CSSProperties;
   /**
-   * 多选框组选中的值
+   * 多选框组选中固定值（受控）
    */
-  currentValue?: Array<string | number> | string | number;
+  selected?: Array<string | number> | string | number;
+  /**
+   * 多选框组选中默认值（非受控）
+   * @default 第一项
+   */
+  defaultSelected?: Array<string | number> | string | number;
   /**
    * 按钮多选框全局尺寸
    * @default medium
@@ -67,7 +76,7 @@ export interface CheckboxGroupProps {
    */
   onChange?: (
     value: Array<string | number> | string | number,
-    context: React.ChangeEvent<HTMLInputElement>,
+    ev: React.ChangeEvent<HTMLInputElement>,
   ) => void;
 }
 

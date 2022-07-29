@@ -30,7 +30,6 @@ const RadioGroup: React.FC<RadioGroupProps> = (props) => {
     onChange,
   } = props;
 
-  // const [groupValue, setGroupValue] = useState(selected);
   const [groupValue, setGroupValue] = useDefault(selected, defaultSelected, onChange);
 
   // 注入每一项单选框的 context

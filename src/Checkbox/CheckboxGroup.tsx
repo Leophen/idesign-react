@@ -2,20 +2,29 @@ import React, { useState, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import { CheckboxContextValue, CheckboxGroupProps, CheckboxProps } from './type';
+import useDefault from '../hooks/useDefault';
 
 export const CheckboxContext = React.createContext<CheckboxContextValue>(null as any);
 
 // 多选框组
 const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
-  const { children = '', className, style, currentValue, size, disabled, onChange } = props;
+  const {
+    children = '',
+    className,
+    style,
+    selected,
+    defaultSelected = [],
+    size,
+    disabled,
+    onChange
+  } = props;
 
-  const [groupValue, setGroupValue] = useState(currentValue);
+  const [groupValue, setGroupValue] = useDefault(selected, defaultSelected, onChange);
   let groupCheckedArr: Set<any> = new Set([].concat(groupValue as any));
 
   useEffect(() => {
-    setGroupValue(currentValue);
     groupCheckedArr = new Set([].concat(groupValue as any));
-  }, [currentValue]);
+  }, [groupValue]);
 
   // 注入每一项多选框的 context
   const context: CheckboxContextValue = {
@@ -41,7 +50,7 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
             groupCheckedArr.delete(itemVal);
           }
           // 触发多选框组传入的 onChange
-          onChange?.(Array.from(groupCheckedArr) as any, e);
+          itemVal && setGroupValue(Array.from(groupCheckedArr), e)
         },
       };
     },

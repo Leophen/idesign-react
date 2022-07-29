@@ -3,6 +3,7 @@ import classNames from 'classnames';
 import './index.scss';
 import CheckboxGroup, { CheckboxContext } from './CheckboxGroup';
 import { CheckboxProps } from './type';
+import useDefault from '../hooks/useDefault';
 
 // 单一多选框
 const Checkbox: React.FC<CheckboxProps> & { Group: React.ElementType } = (props) => {
@@ -10,24 +11,26 @@ const Checkbox: React.FC<CheckboxProps> & { Group: React.ElementType } = (props)
   const context = useContext(CheckboxContext);
   const newProps = context ? context.inject(props) : props;
 
-  const { children = '', className, style, checked = false, value, onChange, ...restProps } = newProps;
+  const {
+    children = '',
+    className,
+    style,
+    checked,
+    defaultChecked = false,
+    value,
+    onChange,
+    ...restProps
+  } = newProps;
 
   const size = newProps.size || props.size;
   const disabled = newProps.disabled || props.disabled || false;
 
-  const [innerChecked, setInnerChecked] = useState(checked);
-
-  useEffect(() => {
-    setInnerChecked(checked);
-  }, [checked]);
+  const [innerChecked, setInnerChecked] = useDefault(checked, defaultChecked, onChange);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     const checkedValue = e.currentTarget.checked;
-    // 多选框组时使用 context 提供的修改 checked 方法同步整组的 currentValue
-    if (typeof newProps.onChange === 'function') {
-      newProps.onChange(checkedValue, e);
-    }
+    setInnerChecked(checkedValue, e)
   };
 
   return (
