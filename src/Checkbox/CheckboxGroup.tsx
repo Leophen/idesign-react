@@ -20,25 +20,25 @@ const CheckboxGroup: React.FC<CheckboxGroupProps> = (props) => {
   // 注入每一项多选框的 context
   const context: CheckboxContextValue = {
     // 将多选框组的 props 注入单项多选框的方法
-    inject: (singleCheckboxProps: CheckboxProps) => {
+    inject: (itemProps: CheckboxProps) => {
       // 拿到单项多选框的 value，方便与多选框组的 groupValue 做比较
-      const singleCheckboxValue = singleCheckboxProps.value;
+      const itemVal = itemProps.value;
       return {
-        ...singleCheckboxProps,
+        ...itemProps,
         size,
         disabled,
-        checked: groupCheckedArr.has(singleCheckboxValue),
+        checked: groupCheckedArr.has(itemVal),
         onChange(checked, e) {
           e.persist();
           // 触发单项多选框传入的 onChange
-          if (typeof singleCheckboxProps.onChange === 'function') {
-            singleCheckboxProps.onChange(checked, e);
+          if (typeof itemProps.onChange === 'function') {
+            itemProps.onChange(checked, e);
           }
           // 设置多选框组的 groupCheckedArr
           if (checked) {
-            groupCheckedArr.add(singleCheckboxValue);
+            groupCheckedArr.add(itemVal);
           } else {
-            groupCheckedArr.delete(singleCheckboxValue);
+            groupCheckedArr.delete(itemVal);
           }
           // 触发多选框组传入的 onChange
           onChange?.(Array.from(groupCheckedArr) as any, e);

@@ -12,9 +12,14 @@ export interface RadioGroupProps {
    */
   style?: React.CSSProperties;
   /**
-   * 单选框组选中的值
+   * 单选框组选中固定值（受控）
    */
-  currentValue?: string | number;
+  selected?: string | number;
+  /**
+   * 单选框组选中默认值（非受控）
+   * @default 第一项 value
+   */
+  defaultSelected?: string | number;
   /**
    * 单选框组全局类型
    * @default radio
@@ -32,7 +37,7 @@ export interface RadioGroupProps {
   /**
    * 选中某一项时触发
    */
-  onChange?: (value: string | number, context: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string | number, ev: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface RadioProps {
@@ -59,10 +64,14 @@ export interface RadioProps {
    */
   size?: 'small' | 'medium' | 'large';
   /**
-   * 是否选中
-   * @default false
+   * 是否固定选中（受控）
    */
   checked?: boolean;
+  /**
+   * 是否默认选中（非受控）
+   * @default false
+   */
+  defaultChecked?: boolean;
   /**
    * 是否禁用组件
    * @default false
@@ -75,7 +84,7 @@ export interface RadioProps {
   /**
    * 值变化时触发
    */
-  onChange?: (checked: boolean, context: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (checked: boolean, ev: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export interface RadioContextValue {

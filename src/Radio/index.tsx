@@ -1,10 +1,9 @@
 import React, { useState, useContext, useEffect } from 'react';
 import classNames from 'classnames';
 import './index.scss';
-import RadioGroup from './RadioGroup';
-import { RadioContextValue, RadioProps } from './type';
-
-export const RadioContext = React.createContext<RadioContextValue>(null as any);
+import RadioGroup, { RadioContext } from './RadioGroup';
+import { RadioProps } from './type';
+import useDefault from '../hooks/useDefault';
 
 // 单一单选框
 const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
@@ -16,7 +15,8 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
     children = '',
     className,
     style,
-    checked = false,
+    checked,
+    defaultChecked = false,
     value,
     onChange,
     ...restProps
@@ -26,19 +26,12 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
   const size = newProps.size || props.size;
   const disabled = newProps.disabled || props.disabled || false;
 
-  const [innerChecked, setInnerChecked] = useState(checked);
-
-  useEffect(() => {
-    setInnerChecked(checked);
-  }, [checked]);
+  const [innerChecked, setInnerChecked] = useDefault(checked, defaultChecked, onChange);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (disabled) return;
     const checkedValue = e.currentTarget.checked;
-    // 单选框组时使用 context 提供的修改 checked 方法同步整组的 currentValue
-    if (typeof newProps.onChange === 'function') {
-      newProps.onChange(checkedValue, e);
-    }
+    setInnerChecked(checkedValue, e)
   };
 
   return (
@@ -61,7 +54,7 @@ const Radio: React.FC<RadioProps> & { Group: React.ElementType } = (props) => {
         disabled={disabled}
         value={value}
         onClick={(e) => e.stopPropagation()}
-        onChange={(e) => handleCheck(e)}
+        onChange={handleCheck}
       />
       <span className={`i-${type}__input`} />
       <span className={`i-${type}__label`}>{children}</span>
