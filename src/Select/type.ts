@@ -19,9 +19,14 @@ export interface SelectProps {
    */
   width?:React.CSSProperties["width"];
   /**
-   * 选中值
+   * 固定选中值（受控）
    */
   value?: string | number | Array<string | number>;
+  /**
+   * 默认选中值（非受控）
+   * @default []
+   */
+  defaultValue?: string | number | Array<string | number>;
   /**
    * 占位符
    * @default 请选择

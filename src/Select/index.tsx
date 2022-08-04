@@ -7,6 +7,7 @@ import Input from '../Input';
 import Tag from '../Tag';
 import { SelectItemProps, SelectProps } from './type';
 import { DropdownOption } from '../Dropdown/type';
+import useDefault from '../hooks/useDefault';
 
 const SelectItem: React.FC<SelectItemProps> = (props) => {
   const { children } = props;
@@ -21,7 +22,8 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     className,
     style,
     width,
-    value = [],
+    value,
+    defaultValue=[],
     placeholder = '请选择',
     options = [],
     size,
@@ -66,17 +68,11 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
   }, [])
 
   // 更新下拉数据
-  const [innerValue, setInnerValue] = useState(value)
-
-  useEffect(() => {
-    if (value !== innerValue) {
-      setInnerValue(value)
-    }
-  }, [value])
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
 
   const updateValue = (val: string | number | Array<string | number>) => {
     const newVal = _.cloneDeep(val)
-    onChange?.(newVal)
+    setInnerValue(newVal)
   }
 
   // 根据 options 的 value 获得对应的 content
@@ -137,7 +133,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     e.stopPropagation()
     if (Array.isArray(innerValue)) {
       const curInnerValue = _.pull(innerValue, val);
-      onChange?.(_.cloneDeep(curInnerValue))
+      setInnerValue(_.cloneDeep(curInnerValue))
     }
   }
 
@@ -148,7 +144,6 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
       nullVal = []
     }
     setInnerValue(nullVal)
-    onChange?.(nullVal)
   }
 
   return (

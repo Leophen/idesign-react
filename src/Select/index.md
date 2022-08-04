@@ -14,7 +14,7 @@ order: 5
 
 ## 基本用法
 
-可通过包裹 `<Select.Item>` 或传入 `options` 参数来实现选择器，可将 `clearable` 设为 `false` 关闭一键清空功能。
+可通过 `defaultValue` 设置默认值，通过 `value` 属性设置受控值，通过 `onChange` 设置值改变时触发的操作：
 
 ```tsx
 import React, { useState } from 'react'
@@ -38,14 +38,78 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
+    console.log(val)
+    setValue(val)
+  }
+
+  return (
+    <>
+      <h4>无默认值</h4>
+      <Select>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
+      <h4>有默认值（非受控）</h4>
+      <Select defaultValue={value}>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
+      <h4>有固定值（受控）</h4>
+      <Select value={value}>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
+      <h4>通用方法</h4>
+      <Select value={value} onChange={handleChange}>
+        <Select.Item value="item1">选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
+        <Select.Item value="item3">选项三</Select.Item>
+      </Select>
+    </>
+  )
+}
+
+export default App
+```
+
+## 两种用法
+
+除了通过包裹 `<Select.Item>` 的方式传入下拉数据外，还可以直接传入 `options` 属性来实现选择器，可将 `clearable` 设为 `false` 关闭一键清空功能。
+
+```tsx
+import React, { useState } from 'react'
+import { Select } from 'idesign-react'
+
+const App = () => {
+  const [value, setValue] = useState('item1')
+
+  const options = [
+    {
+      content: '选项一',
+      value: 'item1'
+    },
+    {
+      content: '选项二',
+      value: 'item2'
+    },
+    {
+      content: '选项三',
+      value: 'item3'
+    }
+  ]
+
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={handleChange}>
         <Select.Item value="item1">选项一</Select.Item>
         <Select.Item value="item2">选项二</Select.Item>
         <Select.Item value="item3">选项三</Select.Item>
@@ -54,7 +118,7 @@ const App = () => {
         value={value}
         options={options}
         clearable={false}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -89,7 +153,7 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
@@ -100,19 +164,19 @@ const App = () => {
         value={value}
         options={options}
         size="small"
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         value={value}
         options={options}
         size="medium"
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         value={value}
         options={options}
         size="large"
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -147,7 +211,7 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
@@ -158,7 +222,7 @@ const App = () => {
         value={value}
         options={options}
         disabled={true}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -194,22 +258,22 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
-      <Select value={value} onChange={onChange}>
-        <Select.Item value="item1">选项一</Select.Item>
-        <Select.Item value="item2" disabled>选项二</Select.Item>
+      <Select value={value} onChange={handleChange}>
+        <Select.Item value="item1" disabled>选项一</Select.Item>
+        <Select.Item value="item2">选项二</Select.Item>
         <Select.Item value="item3">选项三</Select.Item>
       </Select>
       <Select
         value={value}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -245,14 +309,14 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={handleChange}>
         <Select.Item value="item1">选项一</Select.Item>
         <Select.Item value="item2" divider>选项二</Select.Item>
         <Select.Item value="item3">选项三</Select.Item>
@@ -260,7 +324,7 @@ const App = () => {
       <Select
         value={value}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -298,14 +362,14 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
-      <Select value={value} onChange={onChange}>
+      <Select value={value} onChange={handleChange}>
         <Select.Item value="item1" title="分组 1">选项一</Select.Item>
         <Select.Item value="item2" divider>选项二</Select.Item>
         <Select.Item value="item3" title="分组 2">选项三</Select.Item>
@@ -313,7 +377,7 @@ const App = () => {
       <Select
         value={value}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -348,7 +412,7 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
@@ -359,13 +423,13 @@ const App = () => {
         value={value}
         options={options}
         prefixIcon="Search"
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         value={value}
         options={options}
         suffixIcon="Search"
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -400,7 +464,7 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
@@ -411,13 +475,13 @@ const App = () => {
         value={value}
         options={options}
         multiple={true}
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         value={value}
         options={options}
         multiple={true}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )
@@ -480,7 +544,7 @@ const App = () => {
     }
   ]
 
-  const onChange = (val) => {
+  const handleChange = (val) => {
     console.log(val)
     setValue(val)
   }
@@ -491,21 +555,21 @@ const App = () => {
         placeholder="级联选择器"
         value={value}
         options={options}
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         placeholder="级联多选选择器"
         value={value}
         options={options}
         multiple={true}
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         placeholder="向左展开的级联选择器"
         value={value}
         options={options}
         cascaderDirection="left"
-        onChange={onChange}
+        onChange={handleChange}
       />
       <Select
         placeholder="向左展开的级联多选选择器"
@@ -513,7 +577,7 @@ const App = () => {
         options={options}
         cascaderDirection="left"
         multiple={true}
-        onChange={onChange}
+        onChange={handleChange}
       />
     </div>
   )

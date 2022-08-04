@@ -117,7 +117,7 @@ a .i-tag {
     right: 0;
     display: flex;
     align-items: center;
-    justify-content: end;
+    justify-content: flex-end;
     width: 24px;
     height: 100%;
     background: linear-gradient(270deg, var(--i-bg) 20%, rgba(255, 255, 255, 0) 100%);
