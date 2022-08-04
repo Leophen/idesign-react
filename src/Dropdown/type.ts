@@ -152,7 +152,7 @@ export interface DropdownMenuProps {
    */
   multiple?: boolean;
   /**
-   * 是否可多选
+   * 选中值
    */
   selectedValue?: string | number | Array<string | number>;
   /**

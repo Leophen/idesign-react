@@ -27,6 +27,11 @@ const Tag: React.FC<TagProps> = (props) => {
     onClick(e);
   };
 
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    e.stopPropagation();
+    onClose?.(e)
+  }
+
   return (
     <div
       className={classNames(
@@ -46,7 +51,7 @@ const Tag: React.FC<TagProps> = (props) => {
       {icon && <Icon name={icon} size={size && { small: 12, medium: 14, large: 16 }[size]} />}
       {children}
       {onClose && (
-        <div className="i-tag--close-btn" onClick={(e) => onClose(e)}>
+        <div className="i-tag--close-btn" onClick={handleClose}>
           <Icon name="Close" size={size === 'large' ? 16 : 12} />
         </div>
       )}

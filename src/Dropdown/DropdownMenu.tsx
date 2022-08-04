@@ -54,7 +54,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               data-disabled={item.disabled}
               onClick={!item.disabled ? ((e) => handleItemClick(item, e)) : () => { }}
             >
-              {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="rgba(0,0,0,.6)" />}
+              {item.children && item.children?.length > 0 && cascaderDirection === 'left' && <Icon name="ArrowLeft" size={12} color="var(--i-font-2)" />}
               <div
                 className={classNames(
                   'i-dropdown__item-txt',
@@ -64,7 +64,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
               >
                 {item.content}
               </div>
-              {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="rgba(0,0,0,.6)" />}
+              {item.children && item.children?.length > 0 && cascaderDirection === 'right' && <Icon name="ArrowRight" size={12} color="var(--i-font-2)" />}
               {item.children && item.children?.length > 0 &&
                 <DropdownMenu
                   options={item.children}

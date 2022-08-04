@@ -153,7 +153,7 @@ const App = () => {
         <Tag type="primary" theme="dark" onClose={() => alert('close')}>
           标签三
         </Tag>
-        <Tag type="primary" theme="dark" icon="TagPrice" onClose={() => alert('close')}>
+        <Tag type="primary" theme="dark" icon="TagPrice" onClick={() => alert('click')} onClose={() => alert('close')}>
           标签四
         </Tag>
       </div>

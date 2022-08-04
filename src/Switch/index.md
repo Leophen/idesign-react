@@ -109,7 +109,7 @@ export default App;
 
 ## 带描述内容的开关
 
-提供 `inactiveColor` 和 `activeColor` 属性控制开关关闭和打开时的颜色。
+提供 `inactiveLabel` 和 `activeLabel` 属性控制开关关闭和打开时的描述。
 
 ```tsx
 import React, { useState } from 'react';
