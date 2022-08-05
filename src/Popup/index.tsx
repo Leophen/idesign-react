@@ -197,7 +197,7 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   // 触发节点 - 点击
   const handleClickReference = () => {
-    if (trigger !== 'click') {
+    if (trigger !== 'click' || disabled) {
       return
     }
     const newVal = !innerVisible

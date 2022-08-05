@@ -31,25 +31,6 @@ const App = () => {
 export default App;
 ```
 
-## 禁用状态
-
-通过 `disabled` 属性控制气泡禁用。
-
-```tsx
-import React from 'react';
-import { Button, Popup } from 'idesign-react';
-
-const App = () => {
-  return (
-    <Popup content="提示内容" disabled={true}>
-      <Button>禁用气泡</Button>
-    </Popup>
-  );
-};
-
-export default App;
-```
-
 ## 不同触发方式
 
 可通过 `trigger` 属性指定触发方式，默认为 `hover`。
@@ -69,6 +50,33 @@ const App = () => {
       </Popup>
       <Popup content="提示内容" trigger="context-menu">
         <Button>右击提示</Button>
+      </Popup>
+    </div>
+  );
+};
+
+export default App;
+```
+
+## 禁用状态
+
+通过 `disabled` 属性控制气泡禁用。
+
+```tsx
+import React from 'react';
+import { Button, Popup } from 'idesign-react';
+
+const App = () => {
+  return (
+    <div className="idesign-demo-block-row">
+      <Popup disabled content="提示内容">
+        <Button>禁用悬浮提示</Button>
+      </Popup>
+      <Popup disabled content="提示内容" trigger="click">
+        <Button>禁用点击提示</Button>
+      </Popup>
+      <Popup disabled content="提示内容" trigger="context-menu">
+        <Button>禁用右击提示</Button>
       </Popup>
     </div>
   );

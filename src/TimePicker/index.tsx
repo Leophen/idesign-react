@@ -141,6 +141,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
         className="i-time-popup"
         visible={popupVisible}
         disabled={disabled}
+        noPadding
         onTrigger={switchPopup}
       >
         <TimeInput
