@@ -34,9 +34,14 @@ export interface ColorPickerProps {
    */
   defaultValue?: string;
   /**
-   * 默认可选值
+   * 底部预设颜色
    */
   colorList?: colorListType[]
+  /**
+   * 是否禁用颜色选择器
+   * @default false
+   */
+  disabled?: boolean;
   /**
    * 修改颜色值时触发
    */
@@ -48,6 +53,11 @@ export interface ColorPickerProps {
 }
 
 export interface ColorPanelProps extends ColorPickerProps {
+  /**
+   * 是否在弹出气泡中
+   * @default false
+   */
+  ifInPopup?: boolean;
   /**
    * 点击关闭按钮时触发
    */

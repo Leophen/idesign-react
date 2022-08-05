@@ -64,6 +64,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
     value,
     defaultValue = '#5e62ea',
     colorList = defaultColor,
+    disabled = false,
     onChange,
     onTrigger,
     ...restProps
@@ -96,6 +97,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
   const colorPanel = useMemo(() =>
     <ColorPanel
       value={innerValue}
+      ifInPopup
       colorList={colorList}
       onChange={handleChange}
       onClose={handleClose}
@@ -114,6 +116,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
       <Popup
         visible={visible}
         content={colorPanel}
+        disabled={disabled}
         trigger="click"
         placement='bottom-start'
         noPadding

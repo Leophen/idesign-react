@@ -8,26 +8,36 @@ import ColorCursor from './ColorCursor';
 import ColorItem from './ColorItem';
 import { defaultColor } from './index'
 import { ColorPanelProps } from './type';
+import classNames from 'classnames';
+import useDefault from '../hooks/useDefault';
 
 const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const {
-    value = '#5e62ea',
+    className,
+    style,
+    value,
+    defaultValue = '#5e62ea',
     colorList = defaultColor,
+    ifInPopup = false,
+    disabled = false,
     onChange,
-    onClose
+    onClose,
+    ...restProps
   } = props;
+
+  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
 
   // 颜色值
   const [colors, setColors] = useState({
-    rgbVal: tinycolor(value).toRgbString(),
-    hexVal: tinycolor(value).toHexString(),
-    r: tinycolor(value).toRgb().r,
-    g: tinycolor(value).toRgb().g,
-    b: tinycolor(value).toRgb().b,
-    h: tinycolor(value).toHsv().h,
-    s: tinycolor(value).toHsv().s,
-    v: tinycolor(value).toHsv().v,
-    a: tinycolor(value).getAlpha()
+    rgbVal: tinycolor(innerValue).toRgbString(),
+    hexVal: tinycolor(innerValue).toHexString(),
+    r: tinycolor(innerValue).toRgb().r,
+    g: tinycolor(innerValue).toRgb().g,
+    b: tinycolor(innerValue).toRgb().b,
+    h: tinycolor(innerValue).toHsv().h,
+    s: tinycolor(innerValue).toHsv().s,
+    v: tinycolor(innerValue).toHsv().v,
+    a: tinycolor(innerValue).getAlpha()
   })
 
   // 是否为移动状态
@@ -59,7 +69,8 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   const panelNode = useRef<HTMLDivElement>(null)
   const rgbBarNode = useRef<HTMLDivElement>(null)
   const aBarNode = useRef<HTMLDivElement>(null)
-  useEffect(() => {
+
+  const updateLocation = () => {
     // 初始化给各节点宽高及位置参数赋值（popup 打开后再执行）
     setTimeout(() => {
       const panelRect = panelNode.current?.getBoundingClientRect()
@@ -75,6 +86,9 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       rect.a.left = aRect?.left || 0
       setRect({ ...rect })
     })
+  }
+  useEffect(() => {
+    updateLocation()
     // 设置初始滑块位置
     const currentColor = tinycolor(colors.rgbVal)
     location.panel.x = currentColor.toHsv().s
@@ -82,6 +96,12 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     location.rgb.x = currentColor.toHsv().h / 360
     location.a.x = currentColor.getAlpha()
     setLocation({ ...location })
+    if (!ifInPopup) {
+      document.addEventListener('scroll', updateLocation)
+      return () => {
+        document.removeEventListener('scroll', updateLocation)
+      }
+    }
   }, [])
 
   // 调色板、色阶柱、透明度柱 坐标值
@@ -100,9 +120,9 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   const emitColor = (tinyObj: any) => {
     if (colorType === 'hex') {
-      onChange?.(tinyObj.toHex8String())
+      setInnerValue(tinyObj.toHex8String())
     } else {
-      onChange?.(tinyObj.toRgbString())
+      setInnerValue(tinyObj.toRgbString())
     }
   }
 
@@ -262,6 +282,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   // 选择颜色值类型
   const [colorType, setColorType] = useState('hex')
   const handleSelect = (val: any) => {
+    if (disabled) return
     setColorType(val)
   }
 
@@ -324,6 +345,9 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   // 取色
   const handleClickDropper = async () => {
+    if (disabled) {
+      return
+    }
     // @ts-ignore
     const eyeDropper = new EyeDropper();
     const result = await eyeDropper.open();
@@ -333,7 +357,14 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   }
 
   return (
-    <div className="i-color-panel">
+    <div
+      className={classNames(
+        'i-color-panel',
+        className
+      )}
+      style={{ ...style }}
+      {...restProps}
+    >
       <header className="i-color-panel-header">
         <div className="i-color-panel-header-txt">
           颜色选择器
@@ -356,7 +387,10 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
         <div
           className="i-color-panel-block__black"
           ref={panelNode}
-          onMouseDown={(e) => handleUsualDown(e, 'panel')}
+          onMouseDown={(e) => {
+            if (disabled) return
+            handleUsualDown(e, 'panel')
+          }}
         />
         <ColorCursor
           x={location.panel.x}
@@ -379,7 +413,10 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
           <div
             className="i-color-panel-bar__rgb"
             ref={rgbBarNode}
-            onMouseDown={(e) => handleUsualDown(e, 'rgb')}
+            onMouseDown={(e) => {
+              if (disabled) return
+              handleUsualDown(e, 'rgb')
+            }}
           >
             <ColorCursor
               x={location.rgb.x}
@@ -389,7 +426,10 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
           <div
             className="i-color-panel-bar__a"
             ref={aBarNode}
-            onMouseDown={(e) => handleUsualDown(e, 'a')}
+            onMouseDown={(e) => {
+              if (disabled) return
+              handleUsualDown(e, 'a')
+            }}
           >
             <ColorCursor
               mode="x"
@@ -410,6 +450,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
           width={60}
           value={colorType}
           size="small"
+          disabled={disabled}
           clearable={false}
           onChange={handleSelect}
         >
@@ -422,6 +463,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
               <Input
                 value={colors.hexVal}
                 size="small"
+                disabled={disabled}
                 onFocus={inputFocusHex}
                 onChange={inputChangeHex}
                 onBlur={inputBlurHex}
@@ -464,6 +506,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
               value={(colors.a * 100).toFixed(0)}
               type="number"
               size="small"
+              disabled={disabled}
               maxNumber={100}
               minNumber={0}
               selectAll
@@ -476,7 +519,14 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
       <footer className="i-color-panel-footer">
         {colorList.map(item =>
-          <ColorItem color={item?.value} key={item?.value} onClick={() => handleUsualUpdate(item?.value)} />
+          <ColorItem
+            color={item?.value}
+            key={item?.value}
+            onClick={() => {
+              if (disabled) return
+              handleUsualUpdate(item?.value)
+            }}
+          />
         )}
       </footer>
     </div>

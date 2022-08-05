@@ -21,7 +21,7 @@ import React, { useState } from 'react'
 import { ColorPicker } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('#4362E2')
+  const [value, setValue] = useState('#5e62ea')
 
   const handleChange = (val) => {
     console.log(val)
@@ -51,6 +51,23 @@ const App = () => {
 }
 
 export default App
+```
+
+## 禁用状态
+
+可通过 `disabled` 属性禁用颜色选择器。
+
+```tsx
+import React from 'react';
+import { ColorPicker } from 'idesign-react';
+
+const App = () => {
+  return (
+    <ColorPicker disabled />
+  );
+};
+
+export default App;
 ```
 
 ## 不同尺寸
@@ -128,4 +145,35 @@ const App = () => {
 export default App;
 ```
 
-<API />
+## 禁用颜色面板
+
+可通过 `<ColorPicker.Panel />` 单独使用颜色面板。
+
+```tsx
+import React from 'react';
+import { ColorPicker } from 'idesign-react';
+
+const App = () => {
+  return (
+    <ColorPicker.Panel disabled />
+  );
+};
+
+export default App;
+```
+
+## ColorPicker API
+
+<API hideTitle />
+
+## ColorPanel API
+
+| 属性         | 说明                 | 类型                    | 默认值    |
+| ------------ | -------------------- | ----------------------- | --------- |
+| className    | 类名                 | `string`                | `--`      |
+| style        | 自定义样式           | `CSSProperties`         | `--`      |
+| value        | 固定颜色值（受控）   | `string`                | `--`      |
+| defaultValue | 默认颜色值（非受控） | `string`                | `#5e62ea` |
+| colorList    | 底部预设颜色         | `colorListType[]`       | `--`      |
+| disabled     | 禁用颜色面板         | `boolean`               | `false`   |
+| onChange     | 修改颜色值时触发     | `(val: string) => void` | `--`      |
