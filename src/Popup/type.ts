@@ -1,16 +1,19 @@
 export type placementType =
+  | 'auto'
+  | 'auto-start'
+  | 'auto-end'
   | 'top'
-  | 'top-left'
-  | 'top-right'
+  | 'top-start'
+  | 'top-end'
   | 'bottom'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'left'
-  | 'left-top'
-  | 'left-bottom'
+  | 'bottom-start'
+  | 'bottom-end'
   | 'right'
-  | 'right-top'
-  | 'right-bottom';
+  | 'right-start'
+  | 'right-end'
+  | 'left'
+  | 'left-start'
+  | 'left-end';
 
 export interface PopupProps {
   /**
@@ -26,6 +29,10 @@ export interface PopupProps {
    */
   portalClassName?: string;
   /**
+   * 弹窗内容样式
+   */
+  portalStyle?: React.CSSProperties;
+  /**
    * 气泡样式
    */
   style?: React.CSSProperties;
@@ -37,19 +44,7 @@ export interface PopupProps {
    * 气泡提示位置
    * @default top
    */
-  placement?:
-    | 'top'
-    | 'left'
-    | 'right'
-    | 'bottom'
-    | 'top-left'
-    | 'top-right'
-    | 'bottom-left'
-    | 'bottom-right'
-    | 'left-top'
-    | 'left-bottom'
-    | 'right-top'
-    | 'right-bottom';
+  placement?: placementType;
   /**
    * 触发气泡出现的方式
    * @default hover
@@ -70,9 +65,15 @@ export interface PopupProps {
    */
   disabled?: boolean;
   /**
-   * 这个值变化时手动更新位置
+   * 气泡是否与触发节点等宽
+   * @default false
    */
-  updateLocation?: string | number | boolean;
+  sameWidth?: boolean;
+  /**
+   * 气泡内是否有边距
+   * @default false
+   */
+  noPadding?: boolean;
   /**
    * 触发气泡操作时触发
    */
@@ -80,14 +81,29 @@ export interface PopupProps {
 }
 
 export interface PortalProps {
-  className?: string;
-  style?: React.CSSProperties;
-  visible?: boolean;
+  /**
+   * 气泡类名
+   */
+  portalClassName?: string;
+  /**
+   * 气泡样式
+   */
+  portalStyle?: React.CSSProperties;
+  /**
+   * 气泡内是否有边距
+   * @default false
+   */
+  noPadding?: boolean;
+  /**
+   * 气泡内容
+   */
   content?: React.ReactNode;
-  placement?: placementType;
-  top: number;
-  left: number;
-  width: number;
-  height: number;
+  /**
+   * 是否显示
+   */
+  visible?: boolean;
+  /**
+   * 获取气泡节点
+   */
   getRef?: (ref: React.Ref<HTMLDivElement>) => void;
 }

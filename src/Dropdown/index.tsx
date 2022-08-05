@@ -22,6 +22,8 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     cascaderDirection = 'right',
     multiple = false,
     disabled = false,
+    noPadding = true,
+    sameWidth = false,
     onClick = () => { },
     onTrigger = () => { }
   } = props;
@@ -94,6 +96,8 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
       trigger={trigger}
       visible={popupVisible}
       disabled={disabled}
+      noPadding={noPadding}
+      sameWidth={sameWidth}
       onTrigger={switchPopup}
     >
       {children}

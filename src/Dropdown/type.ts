@@ -1,3 +1,5 @@
+import { placementType } from '../Popup/type';
+
 export interface DropdownProps {
   /**
    * 类名
@@ -18,16 +20,16 @@ export interface DropdownProps {
   /**
    * 下拉列表宽度
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width'];
   /**
    * 列表项最大高度
    */
-  maxHeight?: React.CSSProperties["height"];
+  maxHeight?: React.CSSProperties['height'];
   /**
    * 下拉项高度
    * @default medium
    */
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   /**
    * 下拉选中项
    */
@@ -41,19 +43,7 @@ export interface DropdownProps {
    * 菜单触发位置
    * @default bottom
    */
-  placement?:
-  | 'top'
-  | 'left'
-  | 'right'
-  | 'bottom'
-  | 'top-left'
-  | 'top-right'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'left-top'
-  | 'left-bottom'
-  | 'right-top'
-  | 'right-bottom';
+  placement?: placementType;
   /**
    * 菜单触发方式
    * @default click
@@ -74,6 +64,16 @@ export interface DropdownProps {
    * @default false
    */
   disabled?: boolean;
+  /**
+   * 气泡内是否有内边距
+   * @default false
+   */
+  noPadding?: boolean;
+  /**
+   * 气泡是否与触发节点等宽
+   * @default false
+   */
+  sameWidth?: boolean;
   /**
    * 点击菜单项触发事件
    */
@@ -97,11 +97,11 @@ export interface DropdownItemProps {
   /**
    * 级联子项宽度
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width'];
   /**
    * 级联子项最大高度
    */
-  maxHeight?: React.CSSProperties["height"];
+  maxHeight?: React.CSSProperties['height'];
   /**
    * 单项是否禁用
    * @default false
@@ -131,16 +131,16 @@ export interface DropdownMenuProps {
   /**
    * 下拉列表宽度
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width'];
   /**
    * 级联子项最大高度
    */
-  maxHeight?: React.CSSProperties["height"];
+  maxHeight?: React.CSSProperties['height'];
   /**
    * 下拉项高度
    * @default medium
    */
-  size?: "small" | "medium" | "large";
+  size?: 'small' | 'medium' | 'large';
   /**
    * 级联子层级展开方向
    * @default right
@@ -161,4 +161,5 @@ export interface DropdownMenuProps {
   clickItem?: (dropdownItem: DropdownOption, event: React.MouseEvent) => void;
 }
 
-export type DropdownOption = { children?: Array<DropdownItemProps> } & DropdownItemProps & Record<string, any>;
+export type DropdownOption = { children?: Array<DropdownItemProps> } & DropdownItemProps &
+  Record<string, any>;

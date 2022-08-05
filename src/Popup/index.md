@@ -91,38 +91,38 @@ const App = () => {
       <Popup content="气泡提示内容 top" placement="top">
         <Button className="Top">top</Button>
       </Popup>
-      <Popup content="气泡提示内容 top-left" placement="top-left">
-        <Button className="TopLeft">top-left</Button>
+      <Popup content="气泡提示内容 top-start" placement="top-start">
+        <Button className="TopLeft">top-start</Button>
       </Popup>
-      <Popup content="气泡提示内容 top-right" placement="top-right">
-        <Button className="TopRight">top-right</Button>
+      <Popup content="气泡提示内容 top-end" placement="top-end">
+        <Button className="TopRight">top-end</Button>
       </Popup>
       <Popup content="气泡提示内容 bottom" placement="bottom">
         <Button className="Bottom">bottom</Button>
       </Popup>
-      <Popup content="气泡提示内容 bottom-left" placement="bottom-left">
-        <Button className="BottomLeft">bottom-left</Button>
+      <Popup content="气泡提示内容 bottom-start" placement="bottom-start">
+        <Button className="BottomLeft">bottom-start</Button>
       </Popup>
-      <Popup content="气泡提示内容 bottom-right" placement="bottom-right">
-        <Button className="BottomRight">bottom-right</Button>
+      <Popup content="气泡提示内容 bottom-end" placement="bottom-end">
+        <Button className="BottomRight">bottom-end</Button>
       </Popup>
       <Popup content="气泡提示内容 left" placement="left">
         <Button className="Left">left</Button>
       </Popup>
-      <Popup content="气泡提示内容 left-top" placement="left-top">
-        <Button className="LeftTop">left-top</Button>
+      <Popup content="气泡提示内容 left-start" placement="left-start">
+        <Button className="LeftTop">left-start</Button>
       </Popup>
-      <Popup content="气泡提示内容 left-bottom" placement="left-bottom">
-        <Button className="LeftBottom">left-bottom</Button>
+      <Popup content="气泡提示内容 left-end" placement="left-end">
+        <Button className="LeftBottom">left-end</Button>
       </Popup>
       <Popup content="气泡提示内容 right" placement="right">
         <Button className="Right">right</Button>
       </Popup>
-      <Popup content="气泡提示内容 right-top" placement="right-top">
-        <Button className="RightTop">right-top</Button>
+      <Popup content="气泡提示内容 right-start" placement="right-start">
+        <Button className="RightTop">right-start</Button>
       </Popup>
-      <Popup content="气泡提示内容 right-bottom" placement="right-bottom">
-        <Button className="RightBottom">right-bottom</Button>
+      <Popup content="气泡提示内容 right-end" placement="right-end">
+        <Button className="RightBottom">right-end</Button>
       </Popup>
     </div>
   )
