@@ -115,7 +115,8 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
         visible={visible}
         content={colorPanel}
         trigger="click"
-        placement='bottom-left'
+        placement='bottom-start'
+        noPadding
         onTrigger={popupChange}
       >
         <div

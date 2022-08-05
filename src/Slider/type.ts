@@ -1,16 +1,4 @@
-export type placementType =
-  | 'top'
-  | 'top-left'
-  | 'top-right'
-  | 'bottom'
-  | 'bottom-left'
-  | 'bottom-right'
-  | 'left'
-  | 'left-top'
-  | 'left-bottom'
-  | 'right'
-  | 'right-top'
-  | 'right-bottom';
+import { placementType } from '../Popup/type';
 
 export interface SliderProps {
   /**

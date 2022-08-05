@@ -38,7 +38,6 @@ const SliderBtn: React.FC<SliderBtnProps> = (props) => {
   return (
     <Popup
       content={currentVal}
-      updateLocation={currentVal}
       trigger="hover"
       visible={!hideTip && (downSlider || enterShowTip)}
       placement={placement}
