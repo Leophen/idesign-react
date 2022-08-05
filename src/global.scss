@@ -166,6 +166,13 @@ body,
   }
 }
 
+html[data-prefers-color='dark'] {
+  .markdown code {
+    color: #8b9eb0 !important;
+    background: #262c34;
+  }
+}
+
 .markdown {
   color: var(--i-font);
   p {
@@ -175,6 +182,7 @@ body,
     font-size: 20px;
   }
   code {
+    border-radius: 2px;
     color: var(--i-success) !important;
   }
   table {

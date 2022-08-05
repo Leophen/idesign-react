@@ -147,7 +147,7 @@ export default App;
 
 ## 禁用颜色面板
 
-可通过 `<ColorPicker.Panel />` 单独使用颜色面板。
+可通过 `disabled` 属性禁用独立的颜色面板。
 
 ```tsx
 import React from 'react';
