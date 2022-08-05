@@ -125,6 +125,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
         <div
           className={classNames(
             'i-color',
+            disabled && 'i-color__disabled',
             size && `i-color--size-${size}`,
             triggerClassName
           )}

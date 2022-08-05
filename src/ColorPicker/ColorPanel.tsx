@@ -360,6 +360,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     <div
       className={classNames(
         'i-color-panel',
+        disabled && 'i-color-panel__disabled',
         className
       )}
       style={{ ...style }}

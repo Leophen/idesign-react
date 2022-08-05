@@ -5,6 +5,9 @@
   border: 1px solid var(--i-border);
   border-radius: 6px;
   cursor: pointer;
+  &.i-color__disabled {
+    cursor: not-allowed;
+  }
   &.i-color--size-small {
     width: 24px;
     height: 24px;
@@ -20,6 +23,18 @@
   flex-direction: column;
   align-items: center;
   width: 240px;
+  &.i-color-panel__disabled {
+    .i-color-panel-block,
+    .i-color-panel-bar__rgb,
+    .i-color-panel-bar__a,
+    .i-color-panel-controls__dropper,
+    .i-color-panel-color {
+      cursor: not-allowed;
+    }
+    .i-color-panel-controls__dropper {
+      background: var(--i-bg-disabled);
+    }
+  }
 }
 
 .i-color-panel-header {
