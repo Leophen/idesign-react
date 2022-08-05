@@ -21,7 +21,7 @@ import React, { useState } from 'react'
 import { ColorPicker } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('#5e62ea')
+  const [value, setValue] = useState('rgb(92, 192, 131)')
 
   const handleChange = (val) => {
     console.log(val)
