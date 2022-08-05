@@ -248,6 +248,9 @@
   .i-input {
     border-right: none;
   }
+  .i-input--type-number .i-input__inner {
+    padding-right: 0;
+  }
 }
 
 .i-color-panel-footer {
