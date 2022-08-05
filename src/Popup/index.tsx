@@ -77,18 +77,44 @@ const Popup: React.FC<PopupProps> = (props) => {
               }
             },
             {
-              name: "observeReferenceModifier",
+              name: "observeReferenceContent",
               enabled: true,
               phase: "main",
               fn: () => { },
               effect: ({ state, instance }) => {
                 const { reference } = state.elements;
-                const referenceObserver = new ResizeObserver((entries) => {
+
+                // 监听触发节点宽高内容变化
+                const referenceObserverContent = new ResizeObserver((entries) => {
                   instance.update();
                 });
-                referenceObserver.observe(reference as HTMLElement);
+                referenceObserverContent.observe(reference as HTMLElement);
+
                 return () => {
-                  referenceObserver.disconnect();
+                  referenceObserverContent.disconnect();
+                };
+              }
+            },
+            {
+              name: "observeReferenceLocation",
+              enabled: true,
+              phase: "main",
+              fn: () => { },
+              effect: ({ state, instance }) => {
+                const { reference } = state.elements;
+
+                // 监听触发节点位置变化
+                const referenceObserverLocation = new MutationObserver((entries) => {
+                  instance.update();
+                });
+                referenceObserverLocation.observe(reference as HTMLElement, {
+                  attributes: true,
+                  childList: false,
+                  subtree: false
+                });
+
+                return () => {
+                  referenceObserverLocation.disconnect();
                 };
               }
             }
@@ -105,7 +131,7 @@ const Popup: React.FC<PopupProps> = (props) => {
       popperInstance?.destroy?.()
       popperInstance = null
     }
-  }, [])
+  }, [visible])
 
   // 通用方法 - 切换气泡显示隐藏
   const switchPopupShow = (show: boolean) => {
