@@ -75,8 +75,10 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
 
   const currentColor = useRef(innerValue)
   const handleChange = (val: string) => {
-    currentColor.current !== val && setInnerValue(val)
-    currentColor.current = val
+    if (currentColor.current !== val) {
+      setInnerValue(val)
+      currentColor.current = val
+    }
   }
 
   const popupChange = (val: boolean) => {
