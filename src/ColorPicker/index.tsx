@@ -75,7 +75,7 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
 
   const currentColor = useRef(innerValue)
   const handleChange = (val: string) => {
-    setInnerValue(val)
+    currentColor.current !== val && setInnerValue(val)
     currentColor.current = val
   }
 
