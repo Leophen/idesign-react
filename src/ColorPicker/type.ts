@@ -54,11 +54,6 @@ export interface ColorPickerProps {
 
 export interface ColorPanelProps extends ColorPickerProps {
   /**
-   * 是否在弹出气泡中
-   * @default false
-   */
-  ifInPopup?: boolean;
-  /**
    * 点击关闭按钮时触发
    */
   onClose?: () => void

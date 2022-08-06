@@ -18,7 +18,6 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     value,
     defaultValue = '#5e62ea',
     colorList = defaultColor,
-    ifInPopup = false,
     disabled = false,
     onChange,
     onClose,
@@ -96,11 +95,9 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     location.rgb.x = currentColor.toHsv().h / 360
     location.a.x = currentColor.getAlpha()
     setLocation({ ...location })
-    if (!ifInPopup) {
-      document.addEventListener('scroll', updateLocation)
-      return () => {
-        document.removeEventListener('scroll', updateLocation)
-      }
+    document.addEventListener('scroll', updateLocation)
+    return () => {
+      document.removeEventListener('scroll', updateLocation)
     }
   }, [])
 

@@ -82,11 +82,6 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
   }
 
   const popupChange = (val: boolean) => {
-    if (val) {
-      document.documentElement.style.overflowY = 'hidden';
-    } else {
-      document.documentElement.style.overflowY = '';
-    }
     setVisible(val)
     onTrigger?.(currentColor.current, val)
   }
@@ -99,7 +94,6 @@ const ColorPicker: React.FC<ColorPickerProps> & { Panel: React.ElementType } = (
   const colorPanel = useMemo(() =>
     <ColorPanel
       value={innerValue}
-      ifInPopup
       colorList={colorList}
       onChange={handleChange}
       onClose={handleClose}
