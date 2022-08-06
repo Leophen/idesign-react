@@ -85,7 +85,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
       rect.a.width = aRect?.width || 0
       rect.a.left = aRect?.left || 0
       setRect({ ...rect })
-    })
+    }, 100)
   }
   useEffect(() => {
     updateLocation()
