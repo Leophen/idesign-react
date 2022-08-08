@@ -33,14 +33,13 @@
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
-    "@docsearch/react": "3",
     "@umijs/plugin-sass": "^1.1.1",
     "axios": "^0.25.0",
     "classnames": "^2.3.1",
     "dayjs": "^1.11.2",
     "idesign-react": "^1.0.20",
     "lodash": "^4.17.21",
-    "react": "^18.2.0",
+    "react": "^16.12.0 || ^17.0.0",
     "react-router-dom": "6",
     "react-transition-group": "^4.4.2",
     "tinycolor2": "^1.4.2"
