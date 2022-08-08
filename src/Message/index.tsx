@@ -5,6 +5,11 @@ import Icon from '../Icon';
 import { TransitionGroup } from 'react-transition-group'
 import Transition from '../Transition'
 import { MessageConfig, MessageProps } from './type';
+import { useContainer } from '../hooks/useContainer'
+
+// 创建消息提示容器
+const popupWrapper = useContainer('i-popup-wrapper', document.body)
+const messageWrapper = useContainer('i-message-container', popupWrapper)
 
 const Message: React.FC<MessageProps> & {
   success?: any
@@ -19,9 +24,7 @@ const Message: React.FC<MessageProps> & {
   } = props;
 
   return (
-    <div
-      className='i-message'
-    >
+    <div className='i-message'>
       <Icon
         name={
           {
@@ -70,14 +73,8 @@ const messageList: any = {
 
 const createMessageWrapper = (placement: 'top' | 'bottom') => {
   const idName = `i-message-wrapper__${placement}`
-  let el = document.querySelector(`#${idName}`)
-  if (!el) {
-    el = document.createElement('div')
-    el.className = `i-message-wrapper ${idName}`
-    el.id = idName
-    document.body.append(el)
-  }
-  ReactDOM.render(<MessageContainer placement={placement} messageListData={messageList[placement]} />, el)
+  const container = useContainer(idName, messageWrapper, `i-message-wrapper ${idName}`)
+  ReactDOM.render(<MessageContainer placement={placement} messageListData={messageList[placement]} />, container)
 }
 
 createMessageWrapper('top')

@@ -6,6 +6,7 @@ import Button from '../Button';
 import Transition from '../Transition';
 import ReactDOM from 'react-dom';
 import { DrawerProps } from './type';
+import { useContainer } from '../hooks/useContainer';
 
 // 获取触发抽屉打开的 DOM 节点原位置
 let clickOpenTarget: EventTarget | null;
@@ -17,13 +18,8 @@ if (typeof window !== 'undefined' && window.document && window.document.document
 }
 
 // 创建抽屉容器
-let drawerWrapper = document.querySelector('#i-drawer-wrapper')
-if (!drawerWrapper) {
-  drawerWrapper = document.createElement('div')
-  drawerWrapper.className = 'i-drawer-wrapper'
-  drawerWrapper.id = 'i-drawer-wrapper'
-  document.body.append(drawerWrapper)
-}
+const popupWrapper = useContainer('i-popup-wrapper', document.body)
+const drawerWrapper = useContainer('i-drawer-wrapper', popupWrapper)
 
 const Drawer: React.FC<DrawerProps> = (props) => {
   const {
@@ -92,14 +88,16 @@ const Drawer: React.FC<DrawerProps> = (props) => {
 
   const drawerNode = (
     <>
-      {showMask && <Transition
-        timeout={200}
-        in={visible}
-        animation='fade-in'
-        key='i-drawer__mask'
-      >
-        <div className="i-drawer__mask" onClick={closeDrawer}></div>
-      </Transition>}
+      {showMask && (
+        <Transition
+          timeout={200}
+          in={visible}
+          animation='fade-in'
+          key='i-drawer__mask'
+        >
+          <div className="i-drawer__mask" onClick={closeDrawer}></div>
+        </Transition>
+      )}
 
       <Transition
         timeout={200}

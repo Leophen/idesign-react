@@ -3,15 +3,10 @@ import classNames from 'classnames';
 import './index.scss';
 import ReactDOM from 'react-dom';
 import { PortalProps } from './type';
+import { useContainer } from '../hooks/useContainer';
 
 // 创建气泡提示容器
-let popupWrapper = document.querySelector('#i-popup-wrapper')
-if (!popupWrapper) {
-  popupWrapper = document.createElement('div')
-  popupWrapper.className = 'i-popup-wrapper'
-  popupWrapper.id = 'i-popup-wrapper'
-  document.body.append(popupWrapper)
-}
+const popupWrapper = useContainer('i-popup-wrapper', document.body)
 
 const Portal: React.FC<PortalProps> = (props) => {
   const {

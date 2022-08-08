@@ -6,6 +6,7 @@ import Button from '../Button';
 import Transition from '../Transition';
 import ReactDOM from 'react-dom';
 import { DialogProps } from './type';
+import { useContainer } from '../hooks/useContainer';
 
 // 获取触发对话框打开的 DOM 节点原位置
 let clickOpenTarget: EventTarget | null;
@@ -25,13 +26,8 @@ if (typeof window !== 'undefined' && window.document && window.document.document
 }
 
 // 创建对话框容器
-let dialogWrapper = document.querySelector('#i-dialog-wrapper')
-if (!dialogWrapper) {
-  dialogWrapper = document.createElement('div')
-  dialogWrapper.className = 'i-dialog-wrapper'
-  dialogWrapper.id = 'i-dialog-wrapper'
-  document.body.append(dialogWrapper)
-}
+const popupWrapper = useContainer('i-popup-wrapper', document.body)
+const dialogWrapper = useContainer('i-dialog-wrapper', popupWrapper)
 
 const Dialog: React.FC<DialogProps> = (props) => {
   const {

@@ -7,14 +7,10 @@ import InputGroup from './InputGroup';
 import { InputProps } from './type'
 import InputSlider from './inputSlider';
 import ReactDOM from 'react-dom';
+import { useContainer } from '../hooks/useContainer';
 
 // 创建输入框滑块容器
-let inputSliderWrapper = document.querySelector('#i-input-slider-wrapper')
-if (!inputSliderWrapper) {
-  inputSliderWrapper = document.createElement('div')
-  inputSliderWrapper.id = 'i-input-slider-wrapper'
-  document.body.append(inputSliderWrapper)
-}
+const inputSliderWrapper = useContainer('i-input-slider-wrapper', document.body)
 
 const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const {

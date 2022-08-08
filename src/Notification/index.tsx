@@ -5,6 +5,11 @@ import Icon from '../Icon';
 import { TransitionGroup } from 'react-transition-group'
 import Transition from '../Transition'
 import { NotificationConfig, NotificationPlacement, NotificationProps } from './type';
+import { useContainer } from '../hooks/useContainer';
+
+// 创建通知容器
+const popupWrapper = useContainer('i-popup-wrapper', document.body)
+const notificationWrapper = useContainer('i-notification-container', popupWrapper)
 
 const Notification: React.FC<NotificationProps> & {
   success?: any
@@ -90,14 +95,8 @@ const notificationList: any = {
 
 const createNotificationWrapper = (placement: NotificationPlacement) => {
   const idName = `i-notification-wrapper__${placement}`
-  let el = document.querySelector(`#${idName}`)
-  if (!el) {
-    el = document.createElement('div')
-    el.className = `i-notification-wrapper ${idName}`
-    el.id = idName
-    document.body.append(el)
-  }
-  ReactDOM.render(<NotificationContainer placement={placement} notificationListData={notificationList[placement]} />, el)
+  const container = useContainer(idName, notificationWrapper, `i-notification-wrapper ${idName}`)
+  ReactDOM.render(<NotificationContainer placement={placement} notificationListData={notificationList[placement]} />, container)
 }
 
 createNotificationWrapper('top-left')
