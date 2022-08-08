@@ -191,3 +191,22 @@ export interface InputGroupProps {
    */
   clickSuffix?: (context: { e: React.MouseEvent<HTMLDivElement> }) => void;
 }
+
+export interface InputSliderProps {
+  /**
+   * style - left
+   */
+  left?: number;
+  /**
+   * style - top
+   */
+  top?: number;
+  /**
+   * style - translateX
+   */
+  translateX?: number;
+  /**
+   * style - translateY
+   */
+  translateY?: number;
+}

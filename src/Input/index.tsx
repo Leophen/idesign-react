@@ -5,6 +5,16 @@ import Icon from '../Icon';
 import useDefault from '../hooks/useDefault';
 import InputGroup from './InputGroup';
 import { InputProps } from './type'
+import InputSlider from './inputSlider';
+import ReactDOM from 'react-dom';
+
+// 创建输入框滑块容器
+let inputSliderWrapper = document.querySelector('#i-input-slider-wrapper')
+if (!inputSliderWrapper) {
+  inputSliderWrapper = document.createElement('div')
+  inputSliderWrapper.id = 'i-input-slider-wrapper'
+  document.body.append(inputSliderWrapper)
+}
 
 const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const {
@@ -49,9 +59,9 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   } = props;
 
   // 聚焦 input 输入框
-  const inputNode = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const focusInputNode = () => {
-    (inputNode.current as any).focus();
+    inputRef.current?.focus();
   };
 
   const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
@@ -105,7 +115,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     if (eventType === 'focus') {
       onFocus?.(e.target.value, e);
       if (selectAll) {
-        (inputNode.current as unknown as HTMLInputElement).select()
+        inputRef.current?.select()
       }
     }
     if (eventType === 'blur') {
@@ -119,7 +129,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       onKeyUp?.(e.target.value, e);
       if (type === 'number') {
         // 设置最大值最小值按钮禁用状态
-        const currentValue = Number((inputNode.current as any).value);
+        const currentValue = Number(inputRef.current?.value);
         if (currentValue === maxNumber) {
           setIfMaximum(true);
         } else {
@@ -140,7 +150,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       placeholder={placeholder}
       disabled={disabled}
       readOnly={readonly}
-      ref={inputNode}
+      ref={inputRef}
       value={innerValue}
       type={currentType}
       maxLength={maxLength}
@@ -177,8 +187,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     let currentValue;
     let computedValue = 0;
 
-    if (inputNode) {
-      currentValue = Number((inputNode.current as any).value);
+    if (inputRef) {
+      currentValue = Number(inputRef.current?.value);
       if (handle) {
         computedValue = currentValue + step;
       } else {
@@ -199,7 +209,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       }
     }
     const result = computedValue.toFixed(precision);
-    (inputNode.current as any).value = result;
+    (inputRef.current as HTMLInputElement).value = result;
     setInnerValue(result, e as any)
   };
 
@@ -219,11 +229,13 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   );
 
   // 数字调整滑块
-  const [sliderDown, setSliderDown] = useState(false);
-  const [sliderX, setSliderX] = useState(0);
-  const [sliderY, setSliderY] = useState(0);
-  const [sliderMovingX, setSliderMovingX] = useState(0);
-  const [sliderMovingY, setSliderMovingY] = useState(0);
+  const [slider, setSlider] = useState({
+    ifDown: false,
+    left: 0,
+    top: 0,
+    translateX: 0,
+    translateY: 0
+  })
   let startX = 0;
   let startY = 0;
   let countValue = 0;
@@ -233,8 +245,8 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     startY += e.movementY;
 
     // 滑块更新输入框数值
-    if (inputNode) {
-      countValue = Number((inputNode.current as any).value);
+    if (inputRef) {
+      countValue = Number(inputRef.current?.value);
       criticalValue += e.movementX;
       let changeSpeedNum = { slow: 30, default: 10, fast: 1 }[speed];
       if (criticalValue > changeSpeedNum && countValue < maxNumber) {
@@ -250,7 +262,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       countValue === minNumber ? setIfLeastValue(true) : setIfLeastValue(false);
 
       const result = countValue.toFixed(precision);
-      (inputNode.current as any).value = result;
+      (inputRef.current as HTMLInputElement).value = result;
       setInnerValue(result, e as any)
       onMove?.(result, e as any);
     }
@@ -270,102 +282,48 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     }
 
     // 更新滑块位置
-    setSliderMovingX(startX);
-    setSliderMovingY(startY);
+    slider.translateX = startX
+    slider.translateY = startY
+    setSlider({ ...slider })
   };
   const handleSliderUp = () => {
-    setSliderDown(false);
     document.exitPointerLock();
-    setSliderMovingX(0);
-    setSliderMovingY(0);
-    onMoveUp?.((inputNode.current as any).value);
+    slider.ifDown = false
+    slider.translateX = 0
+    slider.translateY = 0
+    setSlider({ ...slider })
+    onMoveUp?.((inputRef.current as HTMLInputElement).value);
     window.removeEventListener('mouseup', handleSliderUp);
     window.removeEventListener('mousemove', handleSliderMove);
   };
   const handleSliderDown = (e: React.MouseEvent<HTMLDivElement>) => {
     e.persist();
-
     if (size && size === 'small') {
-      setSliderY(e.clientY - 8);
+      slider.top = e.clientY - 8;
     } else if (size && size === 'large') {
-      setSliderY(e.clientY - 15);
+      slider.top = e.clientY - 15;
     } else {
-      setSliderY(e.clientY - 10);
+      slider.top = e.clientY - 10;
     }
-    setSliderX(e.clientX - 14);
+    slider.left = e.clientX - 14;
     (e.target as HTMLElement).requestPointerLock();
-    setSliderDown(true);
+    slider.ifDown = true
+    setSlider({ ...slider })
     window.addEventListener('mouseup', handleSliderUp);
     window.addEventListener('mousemove', handleSliderMove);
   };
   const renderNumberSlider = (
     <div className="i-input-number-slider" onMouseDown={handleSliderDown}>
-      {sliderDown && (
-        <div
-          className="i-input-number-scrubbable"
-          style={{
-            left: sliderX,
-            top: sliderY,
-            transform: `translate(${sliderMovingX}px,${sliderMovingY}px)`,
-          }}
-        >
-          <svg
-            width="30"
-            height="19"
-            viewBox="0 0 30 19"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g filter="url(#filter0_d_7775_2255)">
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M3 8.999V9.004L8.997 15L8.998 11.001H10.997H21V15L27 9L21 3V7.022H10.997H8.997L8.998 3L3 8.999ZM4.411 9.002L7.998 5.414L7.997 8.001H11.497H22V5.414L25.5 9L22 12.587V10L11.497 10.002L7.998 10.001L7.997 12.587L4.411 9.002Z"
-                fill="white"
-              />
-              <path
-                fillRule="evenodd"
-                clipRule="evenodd"
-                d="M11.4971 10.0015L22 10.0005V12.5875L25.5 9L22 5.41451V8.02151H11.4971H7.99707V5.41451L4.41107 9.0015L7.99707 12.5875V10.0005L11.4971 10.0015Z"
-                fill="black"
-              />
-            </g>
-            <defs>
-              <filter
-                id="filter0_d_7775_2255"
-                x="-0.6"
-                y="-1.6"
-                width="31.2"
-                height="23.2"
-                filterUnits="userSpaceOnUse"
-                colorInterpolationFilters="sRGB"
-              >
-                <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                <feColorMatrix
-                  in="SourceAlpha"
-                  type="matrix"
-                  values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                  result="hardAlpha"
-                />
-                <feOffset dy="1" />
-                <feGaussianBlur stdDeviation="1.3" />
-                <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.32 0" />
-                <feBlend
-                  mode="normal"
-                  in2="BackgroundImageFix"
-                  result="effect1_dropShadow_7775_2255"
-                />
-                <feBlend
-                  mode="normal"
-                  in="SourceGraphic"
-                  in2="effect1_dropShadow_7775_2255"
-                  result="shape"
-                />
-              </filter>
-            </defs>
-          </svg>
-        </div>
-      )}
+      {slider.ifDown &&
+        <>
+          {ReactDOM.createPortal(<InputSlider
+            left={slider.left}
+            top={slider.top}
+            translateX={slider.translateX}
+            translateY={slider.translateY}
+          />, inputSliderWrapper as HTMLElement)}
+        </>
+      }
     </div>
   );
 

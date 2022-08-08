@@ -31,11 +31,6 @@ export interface DatePickerProps {
    */
   type?: 'date' | 'range';
   /**
-   * 占位符
-   * @default date
-   */
-  placeholder?: 'date' | 'range';
-  /**
    * 范围日期分隔符
    * @default -
    */

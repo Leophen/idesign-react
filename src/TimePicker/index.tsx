@@ -108,7 +108,6 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
   const handleNow = () => {
     const currentTime = dayjs().format(format)
     setInnerValue(currentTime)
-    onChange?.(currentTime)
   }
 
   const handleConfirm = () => {

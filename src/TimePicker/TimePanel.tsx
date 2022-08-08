@@ -81,10 +81,10 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
   );
 
   // 同步滚动
-  const hourPanelRef = useRef<any>(null)
-  const minutePanelRef = useRef<any>(null)
-  const secondPanelRef = useRef<any>(null)
-  const meridiemPanelRef = useRef<any>(null)
+  const hourPanelRef = useRef<HTMLUListElement>(null)
+  const minutePanelRef = useRef<HTMLUListElement>(null)
+  const secondPanelRef = useRef<HTMLUListElement>(null)
+  const meridiemPanelRef = useRef<HTMLUListElement>(null)
   const getRef = (type: string) => {
     let ref = meridiemPanelRef
     type === 'hour' && (ref = hourPanelRef);
@@ -92,7 +92,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     type === 'second' && (ref = secondPanelRef);
     return ref
   }
-  const updateScroll = (mode?: string) => {
+  const updateScroll = (mode?: ScrollBehavior) => {
     hourPanelRef.current && hourPanelRef.current.scrollTo({
       top: 32 * (Number(value.hour) / Number(steps[0])),
       behavior: mode
