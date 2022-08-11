@@ -197,7 +197,7 @@ const App = () => {
           Message.info({
             content: "这是一条持续 10 秒的提示",
             duration: 10,
-            placement: 'bottom'
+            position: 'bottom'
           });
         }}
       >
@@ -210,4 +210,5 @@ const App = () => {
 export default App;
 ```
 
-<API />
+## Message API
+
