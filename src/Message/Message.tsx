@@ -1,14 +1,14 @@
 import React from 'react';
 import './index.scss';
-import { MessageProps } from './type';
+import { MessageMethod, MessageProps, PositionType } from './type';
 import Icon from '../Icon';
 
 const Message: React.FC<MessageProps> & {
-  success?: any;
-  warning?: any;
-  error?: any;
-  info?: any;
-  closeAll?: any;
+  success?: MessageMethod;
+  warning?: MessageMethod;
+  error?: MessageMethod;
+  info?: MessageMethod;
+  closeAll?: (position?: PositionType) => void;
 } = (props) => {
   const {
     type = 'info',

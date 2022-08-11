@@ -67,4 +67,10 @@ export interface MessageConfigType extends MessageProps {
   position?: PositionType;
 }
 
+export type MessageMethod = (
+  messageConfig: MessageConfig,
+  duration?: number,
+  position?: PositionType,
+) => void;
+
 export type MessageConfig = string | MessageConfigType;
