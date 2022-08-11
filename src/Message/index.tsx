@@ -1,13 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Message from './Message';
-import { TransitionGroup } from 'react-transition-group';
-import Transition from '../Transition';
+import MessageList from './MessageList';
 import {
   MergeConfigType,
   MessageConfig,
-  MessageContainerProps,
-  MessageList,
+  MessageConfigType,
+  MessageListData,
   MessageType,
   PositionType,
 } from './type';
@@ -18,20 +17,7 @@ import './index.scss';
 const popupWrapper = useContainer('i-popup-wrapper', document.body);
 const messageWrapper = useContainer('i-message-container', popupWrapper);
 
-const MessageContainer: React.FC<MessageContainerProps> = (props) => {
-  const { listData, position = 'top' } = props;
-  return (
-    <TransitionGroup>
-      {listData.map(({ id, type, content }) => (
-        <Transition timeout={300} in animation={`message-${position}`} key={id}>
-          <Message type={type} content={content} />
-        </Transition>
-      ))}
-    </TransitionGroup>
-  );
-};
-
-const messageList: MessageList = {
+const messageList: MessageListData = {
   top: [],
   bottom: [],
 };
@@ -40,7 +26,7 @@ const createMessageWrapper = (position: PositionType) => {
   const idName = `i-message-wrapper__${position}`;
   const container = useContainer(idName, messageWrapper, `i-message-wrapper ${idName}`);
   ReactDOM.render(
-    <MessageContainer position={position} listData={messageList[position]} />,
+    <MessageList position={position} listData={messageList[position]} />,
     container,
   );
 };
@@ -67,7 +53,7 @@ const updateMessageWrapper = (config: MergeConfigType) => {
         }
       });
       ReactDOM.render(
-        <MessageContainer position={position} listData={messageList[position]} />,
+        <MessageList position={position} listData={messageList[position]} />,
         renderContainer,
       );
     }, duration * 1000);
@@ -75,22 +61,9 @@ const updateMessageWrapper = (config: MergeConfigType) => {
 
   // 此刻更新
   ReactDOM.render(
-    <MessageContainer position={position} listData={messageList[position]} />,
+    <MessageList position={position} listData={messageList[position]} />,
     renderContainer,
   );
-};
-
-const clearMessage = (position?: PositionType) => {
-  const positionArr: PositionType[] = ['top', 'bottom'];
-  if (position) {
-    messageList[position] = [];
-    ReactDOM.render(<MessageContainer position={position} listData={[]} />, getWrapper(position));
-  } else {
-    positionArr.forEach((item) => {
-      messageList[item] = [];
-      ReactDOM.render(<MessageContainer position={item} listData={[]} />, getWrapper(item));
-    });
-  }
 };
 
 const openMessage = (
@@ -99,15 +72,28 @@ const openMessage = (
   duration = 3,
   position = 'top',
 ) => {
-  const isConfigMode = typeof messageConfig === 'object';
+  const isConfigMode = typeof messageConfig === 'object' && !React.isValidElement(messageConfig);
   const mergeConfig: MergeConfigType = {
     id: Date.now(),
     type,
-    content: isConfigMode ? messageConfig?.content : messageConfig,
-    duration: isConfigMode ? messageConfig?.duration ?? 3 : duration,
-    position: isConfigMode ? messageConfig?.position ?? 'top' : (position as PositionType),
+    content: isConfigMode ? (messageConfig as MessageConfigType)?.content : messageConfig,
+    duration: isConfigMode ? (messageConfig as MessageConfigType)?.duration ?? 3 : duration,
+    position: isConfigMode ? (messageConfig as MessageConfigType)?.position ?? 'top' : (position as PositionType),
   };
   updateMessageWrapper(mergeConfig);
+};
+
+const clearMessage = (position?: PositionType) => {
+  const positionArr: PositionType[] = ['top', 'bottom'];
+  if (position) {
+    messageList[position] = [];
+    ReactDOM.render(<MessageList position={position} listData={[]} />, getWrapper(position));
+  } else {
+    positionArr.forEach((item) => {
+      messageList[item] = [];
+      ReactDOM.render(<MessageList position={item} listData={[]} />, getWrapper(item));
+    });
+  }
 };
 
 Message.info = (messageConfig: MessageConfig, duration?: number, position?: PositionType) =>
@@ -118,7 +104,7 @@ Message.warning = (messageConfig: MessageConfig, duration?: number, position?: P
   openMessage('warning', messageConfig, duration, position);
 Message.error = (messageConfig: MessageConfig, duration?: number, position?: PositionType) =>
   openMessage('error', messageConfig, duration, position);
-Message.closeAll = (position?: PositionType) => clearMessage(position);
+Message.clear = (position?: PositionType) => clearMessage(position);
 
 Message.displayName = 'Message';
 

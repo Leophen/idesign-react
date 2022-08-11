@@ -135,7 +135,7 @@ export default App;
 
 ## 手动关闭所有提示
 
-可通过 `Message.closeAll()` 来关闭所有提示。
+可通过 `Message.clear()` 来关闭所有提示。
 
 ```tsx
 import React from 'react';
@@ -146,21 +146,21 @@ const App = () => {
     <div className="idesign-demo-block-row">
       <Button
         onClick={() => {
-          Message.closeAll();
+          Message.clear();
         }}
       >
         关闭所有提示
       </Button>
       <Button
         onClick={() => {
-          Message.closeAll('top');
+          Message.clear('top');
         }}
       >
         关闭顶部提示
       </Button>
       <Button
         onClick={() => {
-          Message.closeAll('bottom');
+          Message.clear('bottom');
         }}
       >
         关闭底部提示
@@ -210,5 +210,63 @@ const App = () => {
 export default App;
 ```
 
-## Message API
+## 自定义提示内容
 
+通知内容或标题节点均可自定义展示：
+
+```tsx
+import React from 'react'
+import { Button, Message } from 'idesign-react'
+
+const App = () => {
+  const a = <Button>这是提示的内容</Button>
+
+  return (
+    <div className="idesign-demo-block-row">
+      <Button onClick={() => Message.info(a)}>
+        自定义提示内容（默认）
+      </Button>
+      <Button
+        onClick={() => {
+          Message.info({
+            content: a
+          })
+        }}
+      >
+        自定义提示内容（配置项）
+      </Button>
+    </div>
+  )
+}
+
+export default App
+```
+
+## Message 方法
+
+| 属性    | 说明         | 类型                                |
+| ------- | ------------ | ----------------------------------- |
+| info    | 显示信息提示 | `MessageMethod`                     |
+| success | 显示成功提示 | `MessageMethod`                     |
+| warning | 显示警告提示 | `MessageMethod`                     |
+| error   | 显示错误提示 | `MessageMethod`                     |
+| clear   | 清除全部提示 | `(position?: PositionType) => void` |
+
+```ts
+type MessageMethod = (
+  messageConfig: ReactNode | MessageConfigType,
+  duration?: number,
+  position?: PositionType,
+  closeable?: boolean
+) => void;
+
+type PositionType = 'top' | 'bottom';
+```
+
+## Message 配置项
+
+| 属性     | 说明                 | 类型           | 默认值 |
+| -------- | -------------------- | -------------- | ------ |
+| content  | 提示内容             | `ReactNode`    | `--`   |
+| duration | 消息持续时间，单位秒 | `number`       | `3`    |
+| position | 提示位置             | `PositionType` | `top`  |

@@ -286,7 +286,7 @@ const App = () => {
 
   return (
     <div className="idesign-demo-block-row">
-      <Button onClick={() => Notification.info(a)}>
+      <Button onClick={() => Notification.info(b)}>
         自定义通知内容（默认）
       </Button>
       <Button

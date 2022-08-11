@@ -13,7 +13,7 @@ export interface MessageProps {
   content: React.ReactNode;
 }
 
-export interface MessageList {
+export interface MessageListData {
   /**
    * 顶部提示组数据
    */
@@ -24,7 +24,7 @@ export interface MessageList {
   bottom: MergeConfigType[];
 }
 
-export interface MessageContainerProps {
+export interface MessageListProps {
   /**
    * 消息组数据
    */
@@ -73,4 +73,4 @@ export type MessageMethod = (
   position?: PositionType,
 ) => void;
 
-export type MessageConfig = string | MessageConfigType;
+export type MessageConfig = React.ReactNode | MessageConfigType;

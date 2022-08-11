@@ -8,11 +8,11 @@ const Message: React.FC<MessageProps> & {
   warning?: MessageMethod;
   error?: MessageMethod;
   info?: MessageMethod;
-  closeAll?: (position?: PositionType) => void;
+  clear?: (position?: PositionType) => void;
 } = (props) => {
   const {
     type = 'info',
-    content = '',
+    content,
     ...restProps
   } = props;
 
