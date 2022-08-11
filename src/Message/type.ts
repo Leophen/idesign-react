@@ -18,6 +18,11 @@ export interface MessageProps {
   * @default top
   */
   placement?: 'top' | 'bottom';
+  /**
+  * 关闭指定位置消息，不传参则关闭所有消息
+  * @default all
+  */
+  closeAll?: 'top' | 'bottom' | 'all';
 }
 
 export interface MessageConfig extends MessageProps { }

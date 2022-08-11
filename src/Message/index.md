@@ -22,41 +22,39 @@ import { Button, Message } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Button
-          type="primary"
-          onClick={() => {
-            Message.info("这是一条默认提示");
-          }}
-        >
-          默认提示
-        </Button>
-        <Button
-          type="success"
-          onClick={() => {
-            Message.success("这是一条成功提示");
-          }}
-        >
-          成功提示
-        </Button>
-        <Button
-          type="warning"
-          onClick={() => {
-            Message.warning("这是一条警告提示");
-          }}
-        >
-          警告提示
-        </Button>
-        <Button
-          type="error"
-          onClick={() => {
-            Message.error("这是一条错误提示");
-          }}
-        >
-          错误提示
-        </Button>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Button
+        type="primary"
+        onClick={() => {
+          Message.info("这是一条默认提示");
+        }}
+      >
+        默认提示
+      </Button>
+      <Button
+        type="success"
+        onClick={() => {
+          Message.success("这是一条成功提示");
+        }}
+      >
+        成功提示
+      </Button>
+      <Button
+        type="warning"
+        onClick={() => {
+          Message.warning("这是一条警告提示");
+        }}
+      >
+        警告提示
+      </Button>
+      <Button
+        type="error"
+        onClick={() => {
+          Message.error("这是一条错误提示");
+        }}
+      >
+        错误提示
+      </Button>
     </div>
   );
 };
@@ -74,30 +72,28 @@ import { Button, Message } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Button
-          onClick={() => {
-            Message.info("这是一条不关闭的提示", 0);
-          }}
-        >
-          提示不关闭
-        </Button>
-        <Button
-          onClick={() => {
-            Message.info("这是一条持续 2 秒的提示", 2);
-          }}
-        >
-          提示 2 秒后关闭
-        </Button>
-        <Button
-          onClick={() => {
-            Message.info("这是一条持续 10 秒的提示", 10);
-          }}
-        >
-          提示 10 秒后关闭
-        </Button>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Button
+        onClick={() => {
+          Message.info("这是一条不关闭的提示", 0);
+        }}
+      >
+        提示不关闭
+      </Button>
+      <Button
+        onClick={() => {
+          Message.info("这是一条持续 2 秒的提示", 2);
+        }}
+      >
+        提示 2 秒后关闭
+      </Button>
+      <Button
+        onClick={() => {
+          Message.info("这是一条持续 10 秒的提示", 10);
+        }}
+      >
+        提示 10 秒后关闭
+      </Button>
     </div>
   );
 };
@@ -115,23 +111,21 @@ import { Button, Message } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Button
-          onClick={() => {
-            Message.info("这是一条不关闭的提示", 3);
-          }}
-        >
-          展示在顶部的提示
-        </Button>
-        <Button
-          onClick={() => {
-            Message.info("这是一条不关闭的提示", 3, "bottom");
-          }}
-        >
-          展示在底部的提示
-        </Button>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Button
+        onClick={() => {
+          Message.info("这是一条不关闭的提示", 3);
+        }}
+      >
+        展示在顶部的提示
+      </Button>
+      <Button
+        onClick={() => {
+          Message.info("这是一条不关闭的提示", 3, "bottom");
+        }}
+      >
+        展示在底部的提示
+      </Button>
     </div>
   );
 };
@@ -149,30 +143,28 @@ import { Button, Message } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Button
-          onClick={() => {
-            Message.info("这是一条不关闭的提示", 0);
-          }}
-        >
-          提示不关闭
-        </Button>
-        <Button
-          onClick={() => {
-            Message.info("这是一条持续 2 秒的提示", 2);
-          }}
-        >
-          提示 2 秒后关闭
-        </Button>
-        <Button
-          onClick={() => {
-            Message.closeAll();
-          }}
-        >
-          关闭所有提示
-        </Button>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Button
+        onClick={() => {
+          Message.closeAll();
+        }}
+      >
+        关闭所有提示
+      </Button>
+      <Button
+        onClick={() => {
+          Message.closeAll('top');
+        }}
+      >
+        关闭顶部提示
+      </Button>
+      <Button
+        onClick={() => {
+          Message.closeAll('bottom');
+        }}
+      >
+        关闭底部提示
+      </Button>
     </div>
   );
 };
@@ -190,29 +182,27 @@ import { Button, Message } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-column">
-      <div className="idesign-demo-block-row">
-        <Button
-          onClick={() => {
-            Message.info({
-              content: "这是一条默认提示"
-            });
-          }}
-        >
-          默认提示
-        </Button>
-        <Button
-          onClick={() => {
-            Message.info({
-              content: "这是一条持续 10 秒的提示",
-              duration: 10,
-              placement: 'bottom'
-            });
-          }}
-        >
-          提示 10 秒后关闭
-        </Button>
-      </div>
+    <div className="idesign-demo-block-row">
+      <Button
+        onClick={() => {
+          Message.info({
+            content: "这是一条默认提示"
+          });
+        }}
+      >
+        默认提示
+      </Button>
+      <Button
+        onClick={() => {
+          Message.info({
+            content: "这是一条持续 10 秒的提示",
+            duration: 10,
+            placement: 'bottom'
+          });
+        }}
+      >
+        提示 10 秒后关闭
+      </Button>
     </div>
   );
 };

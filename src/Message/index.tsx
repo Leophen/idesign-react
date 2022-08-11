@@ -2,29 +2,26 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
 import Icon from '../Icon';
-import { TransitionGroup } from 'react-transition-group'
-import Transition from '../Transition'
+import { TransitionGroup } from 'react-transition-group';
+import Transition from '../Transition';
 import { MessageConfig, MessageProps } from './type';
-import { useContainer } from '../hooks/useContainer'
+import { useContainer } from '../hooks/useContainer';
 
 // 创建消息提示容器
-const popupWrapper = useContainer('i-popup-wrapper', document.body)
-const messageWrapper = useContainer('i-message-container', popupWrapper)
+const popupWrapper = useContainer('i-popup-wrapper', document.body);
+const messageWrapper = useContainer('i-message-container', popupWrapper);
 
 const Message: React.FC<MessageProps> & {
-  success?: any
-  warning?: any
-  error?: any
-  info?: any
-  closeAll?: any
+  success?: any;
+  warning?: any;
+  error?: any;
+  info?: any;
+  closeAll?: any;
 } = (props) => {
-  const {
-    type = 'info',
-    content = ''
-  } = props;
+  const { type = 'info', content = '' } = props;
 
   return (
-    <div className='i-message'>
+    <div className="i-message">
       <Icon
         name={
           {
@@ -42,95 +39,142 @@ const Message: React.FC<MessageProps> & {
 };
 
 interface MessageContainerProps {
-  messageListData: any[]
+  messageListData: any[];
   placement?: 'top' | 'bottom';
 }
 
 const MessageContainer: React.FC<MessageContainerProps> = (props) => {
-  const { messageListData, placement = 'top' } = props
+  const { messageListData, placement = 'top' } = props;
   return (
     <TransitionGroup>
-      {
-        messageListData.map(({ key, type, content }) => (
-          <Transition
-            timeout={200}
-            in
-            animation={`slide-in-${placement}`}
-            key={key}
-          >
-            <Message type={type} content={content} />
-          </Transition>
-        ))
-      }
+      {messageListData.map(({ key, type, content }) => (
+        <Transition timeout={300} in animation={`message-${placement}`} key={key}>
+          <Message type={type} content={content} />
+        </Transition>
+      ))}
     </TransitionGroup>
-  )
-}
+  );
+};
 
 const messageList: any = {
-  'top': [],
-  'bottom': []
-}
+  top: [],
+  bottom: [],
+};
 
 const createMessageWrapper = (placement: 'top' | 'bottom') => {
-  const idName = `i-message-wrapper__${placement}`
-  const container = useContainer(idName, messageWrapper, `i-message-wrapper ${idName}`)
-  ReactDOM.render(<MessageContainer placement={placement} messageListData={messageList[placement]} />, container)
-}
+  const idName = `i-message-wrapper__${placement}`;
+  const container = useContainer(idName, messageWrapper, `i-message-wrapper ${idName}`);
+  ReactDOM.render(
+    <MessageContainer placement={placement} messageListData={messageList[placement]} />,
+    container,
+  );
+};
 
-createMessageWrapper('top')
-createMessageWrapper('bottom')
+createMessageWrapper('top');
+createMessageWrapper('bottom');
 
 const updateMessageContainer = (config: any, mode = 'add') => {
-  const location = config.placement
-  let el = document.querySelector(`#i-message-wrapper__${location}`)
-  if (mode === 'add') { // 添加模式
-    location === 'top' ? messageList[location].push(config) : messageList[location].unshift(config)
+  const location = config.placement;
+  if (mode === 'add') {
+    const el = document.querySelector(`#i-message-wrapper__${location}`);
+    // 添加模式
+    location === 'top' ? messageList[location].push(config) : messageList[location].unshift(config);
     // 延迟更新 DOM
     if (config.duration > 0) {
       setTimeout(() => {
         messageList[location].map((item: any, index: number) => {
           if (item.key === config.key) {
-            messageList[location].splice(index, 1)
+            messageList[location].splice(index, 1);
           }
-        })
-        ReactDOM.render(<MessageContainer placement={location} messageListData={messageList[location]} />, el)
-      }, config.duration * 1000)
+        });
+        ReactDOM.render(
+          <MessageContainer placement={location} messageListData={messageList[location]} />,
+          el,
+        );
+      }, config.duration * 1000);
     }
-  } else { // 删除模式
-    messageList[location] = []
+    ReactDOM.render(
+      <MessageContainer placement={location} messageListData={messageList[location]} />,
+      el,
+    );
+  } else {
+    // 清空消息
+    const topContainer = document.querySelector('#i-message-wrapper__top');
+    const bottomContainer = document.querySelector('#i-message-wrapper__bottom');
+    if (location === 'top') {
+      messageList.top = []
+      ReactDOM.render(
+        <MessageContainer placement='top' messageListData={[]} />,
+        topContainer,
+      )
+    } else if (location === 'bottom') {
+      messageList.bottom = []
+      ReactDOM.render(
+        <MessageContainer placement='bottom' messageListData={[]} />,
+        bottomContainer,
+      )
+    } else {
+      messageList.top = []
+      messageList.bottom = []
+      ReactDOM.render(
+        <MessageContainer placement='top' messageListData={[]} />,
+        topContainer,
+      )
+      ReactDOM.render(
+        <MessageContainer placement='bottom' messageListData={[]} />,
+        bottomContainer,
+      )
+    }
   }
-  ReactDOM.render(<MessageContainer placement={location} messageListData={messageList[location]} />, el)
-}
+};
 
 const openMessage = (
   type: 'info' | 'success' | 'warning' | 'error',
   content: string | MessageConfig,
   duration = 3,
-  placement = 'top'
+  placement = 'top',
 ) => {
-  updateMessageContainer({
-    key: Date.now(),
-    type,
-    content: typeof content === 'object' ? content?.content : content,
-    duration: typeof content === 'object' ? content?.duration || 3 : duration,
-    placement: typeof content === 'object' ? content?.placement || 'top' : placement
-  }, 'add')
-}
+  updateMessageContainer(
+    {
+      key: Date.now(),
+      type,
+      content: typeof content === 'object' ? content?.content : content,
+      duration: typeof content === 'object' ? content?.duration || 3 : duration,
+      placement: typeof content === 'object' ? content?.placement || 'top' : placement,
+    },
+    'add',
+  );
+};
 
-const closeMessage = (
+const clearMessage = (placement?: 'top' | 'bottom') => {
+  updateMessageContainer(
+    {
+      placement
+    },
+    'del',
+  );
+};
+
+Message.info = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') =>
+  openMessage('info', content, duration, placement);
+Message.success = (
   content: string | MessageConfig,
-  placement = 'top'
-) => {
-  updateMessageContainer({
-    placement: typeof content === 'object' ? content?.placement || 'top' : placement
-  }, 'del')
-}
-
-Message.info = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('info', content, duration, placement)
-Message.success = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('success', content, duration, placement)
-Message.warning = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('warning', content, duration, placement)
-Message.error = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => openMessage('error', content, duration, placement)
-Message.closeAll = (content: string | MessageConfig, duration?: number, placement?: 'top' | 'bottom') => closeMessage(content, placement)
+  duration?: number,
+  placement?: 'top' | 'bottom',
+) => openMessage('success', content, duration, placement);
+Message.warning = (
+  content: string | MessageConfig,
+  duration?: number,
+  placement?: 'top' | 'bottom',
+) => openMessage('warning', content, duration, placement);
+Message.error = (
+  content: string | MessageConfig,
+  duration?: number,
+  placement?: 'top' | 'bottom',
+) => openMessage('error', content, duration, placement);
+Message.closeAll = (
+  placement?: 'top' | 'bottom',
+) => clearMessage(placement);
 
 Message.displayName = 'Message';
 
