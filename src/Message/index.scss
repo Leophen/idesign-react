@@ -10,7 +10,6 @@
   border-radius: 6px;
   outline: 0;
   box-shadow: var(--i-shadow);
-  transform: translateX(0);
   .i-icon {
     margin-right: 8px;
   }
@@ -33,10 +32,12 @@
   top: 20px;
   left: 50%;
   z-index: 5000;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   transform: translateX(-50%);
+  & > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
   .i-message:not(:last-of-type) {
     margin-bottom: 16px;
   }
@@ -44,47 +45,4 @@
     top: unset;
     bottom: 20px;
   }
-}
-
-$line_enter: all 200ms ease-out, opacity 200ms ease-in-out;
-$line_exit: all 300ms linear 100ms, opacity 300ms ease-in-out;
-
-// 顶部消息动画
-.i-message-top-enter {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-.i-message-top-enter-active {
-  transform: translate(0);
-  opacity: 1;
-  transition: $line_enter;
-}
-.i-message-top-exit {
-  opacity: 1;
-}
-.i-message-top-exit-active {
-  transform: translateY(-100%);
-  margin-top: -90px;
-  opacity: 0;
-  transition: $line_exit;
-}
-
-// 底部消息动画
-.i-message-bottom-enter {
-  transform: translateY(100%);
-  opacity: 0;
-}
-.i-message-bottom-enter-active {
-  transform: translate(0);
-  opacity: 1;
-  transition: $line_enter;
-}
-.i-message-bottom-exit {
-  opacity: 1;
-}
-.i-message-bottom-exit-active {
-  transform: translateY(100%);
-  margin-bottom: -90px;
-  opacity: 0;
-  transition: $line_exit;
 }

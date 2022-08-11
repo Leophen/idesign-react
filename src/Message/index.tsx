@@ -18,10 +18,10 @@ const Message: React.FC<MessageProps> & {
   info?: any;
   closeAll?: any;
 } = (props) => {
-  const { type = 'info', content = '' } = props;
+  const { type = 'info', content = '', ...restProps } = props;
 
   return (
-    <div className="i-message">
+    <div className="i-message" {...restProps}>
       <Icon
         name={
           {
@@ -48,8 +48,16 @@ const MessageContainer: React.FC<MessageContainerProps> = (props) => {
   return (
     <TransitionGroup>
       {messageListData.map(({ key, type, content }) => (
-        <Transition timeout={300} in animation={`message-${placement}`} key={key}>
-          <Message type={type} content={content} />
+        <Transition
+          timeout={300}
+          in
+          animation={`message-${placement}`}
+          key={key}
+        >
+          <Message
+            type={type}
+            content={content}
+          />
         </Transition>
       ))}
     </TransitionGroup>
