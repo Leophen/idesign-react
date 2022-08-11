@@ -2,6 +2,7 @@ import React from 'react';
 import './index.scss';
 import { NotificationMethod, NotificationProps, PositionType } from './type';
 import Icon from '../Icon';
+import classNames from 'classnames';
 
 const Notification: React.FC<NotificationProps> & {
   success?: NotificationMethod;
@@ -32,10 +33,13 @@ const Notification: React.FC<NotificationProps> & {
         }
         size={20}
       />
-      <div className="i-notification__main">
-        {title && (
-          <div className="i-notification__title">{title}</div>
+      <div
+        className={classNames(
+          'i-notification__main',
+          closeable && 'i-notification__main-closeable',
         )}
+      >
+        {title && <div className="i-notification__title">{title}</div>}
         <div className="i-notification__content">{content}</div>
       </div>
       {closeable && (

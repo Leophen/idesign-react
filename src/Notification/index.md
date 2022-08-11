@@ -154,7 +154,8 @@ const App = () => {
           Notification.info({
             title: '这是一条不关闭的通知',
             content: "这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知",
-            duration: 0
+            duration: 0,
+            closeable: true
           });
         }}
       >

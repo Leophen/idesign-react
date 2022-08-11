@@ -47,16 +47,22 @@
   }
 }
 
+.i-notification__main-closeable {
+  padding-right: 24px;
+}
+
 .i-notification__title {
   margin-bottom: 8px;
   color: var(--i-font-2);
   font-size: 16px;
   line-height: 24px;
+  word-break: break-all;
 }
 
 .i-notification__content {
   color: var(--i-font-5);
   line-height: 22px;
+  word-break: break-all;
 }
 
 .i-notification-wrapper {
