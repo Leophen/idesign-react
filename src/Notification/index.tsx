@@ -1,157 +1,175 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import Icon from '../Icon';
-import { TransitionGroup } from 'react-transition-group'
-import Transition from '../Transition'
-import { NotificationConfig, NotificationPlacement, NotificationProps } from './type';
+import {
+  MergeConfigType,
+  NotificationConfig,
+  NotificationConfigType,
+  NotificationListData,
+  NotificationType,
+  PositionType,
+} from './type';
 import { useContainer } from '../hooks/useContainer';
+import Notification from './Notification';
+import NotificationList from './NotificationList';
 
 // 创建通知容器
-const popupWrapper = useContainer('i-popup-wrapper', document.body)
-const notificationWrapper = useContainer('i-notification-container', popupWrapper)
+const popupWrapper = useContainer('i-popup-wrapper', document.body);
+const notificationWrapper = useContainer('i-notification-container', popupWrapper);
 
-const Notification: React.FC<NotificationProps> & {
-  success?: any
-  warning?: any
-  error?: any
-  info?: any
-  closeAll?: any
-} = (props) => {
-  const {
-    type = 'info',
-    title,
-    content = '',
-    closeable = false,
-    onClose
-  } = props;
-
-  const clickCloseBtn = () => {
-    onClose?.()
-  }
-
-  return (
-    <div
-      className='i-notification'
-    >
-      <Icon
-        name={
-          {
-            info: 'TipInfo',
-            success: 'TipCheckFill',
-            warning: 'TipWarningFill',
-            error: 'TipCloseFill',
-          }[type]
-        }
-        size={20}
-      />
-      <div className="i-notification__main">
-        {title && <div className="i-notification__title">{title}</div>}
-        <div className="i-notification__content">{content}</div>
-      </div>
-      {closeable && <div className="i-notification__close" onClick={clickCloseBtn}>
-        <Icon name="Close" />
-      </div>}
-    </div>
-  );
+const getWrapper = (location: PositionType) => {
+  return document.querySelector(`#i-notification-wrapper__${location}`);
 };
 
-interface NotificationContainerProps {
-  notificationListData: any[]
-  placement?: NotificationPlacement;
-}
-
-const NotificationContainer: React.FC<NotificationContainerProps> = (props) => {
-  const { notificationListData, placement = 'top-right' } = props
-  const onclose = (index: number) => {
-    notificationList[placement].splice(index, 1)
-    let el = document.querySelector(`#i-notification-wrapper__${placement}`)
-    ReactDOM.render(<NotificationContainer placement={placement} notificationListData={notificationList[placement]} />, el)
-  }
-  return (
-    <TransitionGroup>
-      {
-        notificationListData.map(({ key, type, title, content, closeable }, index) => (
-          <Transition
-            timeout={300}
-            in
-            animation={`slide-in-${placement}`}
-            key={key}
-          >
-            <Notification type={type} title={title} content={content} closeable={closeable} onClose={() => onclose(index)} />
-          </Transition>
-        ))
-      }
-    </TransitionGroup>
-  )
-}
-
-const notificationList: any = {
+const notificationList: NotificationListData = {
   'top-left': [],
   'top-right': [],
   'bottom-left': [],
-  'bottom-right': []
-}
+  'bottom-right': [],
+};
 
-const createNotificationWrapper = (placement: NotificationPlacement) => {
-  const idName = `i-notification-wrapper__${placement}`
-  const container = useContainer(idName, notificationWrapper, `i-notification-wrapper ${idName}`)
-  ReactDOM.render(<NotificationContainer placement={placement} notificationListData={notificationList[placement]} />, container)
-}
+const handleClose = (index: number, position: PositionType) => {
+  notificationList[position].splice(index, 1);
+  ReactDOM.render(
+    <NotificationList
+      onClose={handleClose}
+      position={position}
+      listData={notificationList[position]}
+    />,
+    getWrapper(position),
+  );
+};
 
-createNotificationWrapper('top-left')
-createNotificationWrapper('top-right')
-createNotificationWrapper('bottom-left')
-createNotificationWrapper('bottom-right')
+const createNotificationWrapper = (position: PositionType) => {
+  const idName = `i-notification-wrapper__${position}`;
+  const container = useContainer(idName, notificationWrapper, `i-notification-wrapper ${idName}`);
+  ReactDOM.render(
+    <NotificationList
+      onClose={handleClose}
+      position={position}
+      listData={notificationList[position]}
+    />,
+    container,
+  );
+};
 
-const updateNotificationContainer = (config: any, mode = 'add') => {
-  const location = config.placement
-  let el = document.querySelector(`#i-notification-wrapper__${location}`)
-  if (mode === 'add') { // 添加模式
-    location.split('-')[0] === 'top' ? notificationList[location].push(config) : notificationList[location].unshift(config)
-    // 延迟更新 DOM
-    if (config.duration > 0) {
-      setTimeout(() => {
-        notificationList[location].map((item: any, index: number) => {
-          if (item.key === config.key) {
-            notificationList[location].splice(index, 1)
-          }
-        })
-        ReactDOM.render(<NotificationContainer placement={location} notificationListData={notificationList[location]} />, el)
-      }, config.duration * 1000)
-    }
-  } else { // 删除模式
-    notificationList[location] = []
+createNotificationWrapper('top-left');
+createNotificationWrapper('top-right');
+createNotificationWrapper('bottom-left');
+createNotificationWrapper('bottom-right');
+
+const updateNotificationContainer = (config: MergeConfigType) => {
+  const { id = 0, position = 'top-right', duration = 3 } = config;
+
+  position.split('-')[0] === 'top'
+    ? notificationList[position].push(config)
+    : notificationList[position].unshift(config);
+
+  const renderContainer = getWrapper(position);
+
+  // 延迟消除
+  if (duration > 0) {
+    setTimeout(() => {
+      notificationList[position].map((item: MergeConfigType, index: number) => {
+        if (item.id === id) {
+          notificationList[position].splice(index, 1);
+        }
+      });
+      ReactDOM.render(
+        <NotificationList
+          onClose={handleClose}
+          position={position}
+          listData={notificationList[position]}
+        />,
+        renderContainer,
+      );
+    }, duration * 1000);
   }
-  ReactDOM.render(<NotificationContainer placement={location} notificationListData={notificationList[location]} />, el)
-}
+
+  // 此刻更新
+  ReactDOM.render(
+    <NotificationList
+      onClose={handleClose}
+      position={position}
+      listData={notificationList[position]}
+    />,
+    renderContainer,
+  );
+};
 
 const openNotification = (
-  type: 'info' | 'success' | 'warning' | 'error',
-  config: NotificationConfig
+  type: NotificationType,
+  NotificationConfig: NotificationConfig,
+  duration = 3,
+  position = 'top-right',
+  closeable = false,
 ) => {
-  updateNotificationContainer({
-    key: Date.now(),
+  const isConfigMode =
+    typeof NotificationConfig === 'object' && !React.isValidElement(NotificationConfig);
+  const mergeConfig: MergeConfigType = {
+    id: Date.now(),
     type,
-    title: config?.title,
-    content: config?.content,
-    duration: config?.duration === undefined ? 3 : config?.duration,
-    placement: config?.placement || 'top-right',
-    closeable: config?.closeable || false
-  }, 'add')
-}
+    title: isConfigMode ? (NotificationConfig as NotificationConfigType)?.title : undefined,
+    content: isConfigMode
+      ? (NotificationConfig as NotificationConfigType)?.content
+      : NotificationConfig,
+    duration: isConfigMode
+      ? (NotificationConfig as NotificationConfigType)?.duration ?? 3
+      : duration,
+    position: isConfigMode
+      ? (NotificationConfig as NotificationConfigType).position ?? 'top-right'
+      : (position as PositionType),
+    closeable: isConfigMode
+      ? (NotificationConfig as NotificationConfigType)?.closeable ?? false
+      : closeable,
+  };
+  updateNotificationContainer(mergeConfig);
+};
 
-const closeNotification = (config: NotificationConfig) => {
-  updateNotificationContainer({
-    placement: config?.placement || 'top-right'
-  }, 'del')
-}
+const clearNotification = (position?: PositionType) => {
+  const positionArr: PositionType[] = ['top-left', 'top-right', 'bottom-left', 'bottom-right'];
+  if (position) {
+    notificationList[position] = [];
+    ReactDOM.render(
+      <NotificationList onClose={handleClose} position={position} listData={[]} />,
+      getWrapper(position),
+    );
+  } else {
+    positionArr.forEach((item) => {
+      notificationList[item] = [];
+      ReactDOM.render(
+        <NotificationList onClose={handleClose} position={item} listData={[]} />,
+        getWrapper(item),
+      );
+    });
+  }
+};
 
-Notification.info = (config: NotificationConfig) => openNotification('info', config)
-Notification.success = (config: NotificationConfig) => openNotification('success', config)
-Notification.warning = (config: NotificationConfig) => openNotification('warning', config)
-Notification.error = (config: NotificationConfig) => openNotification('error', config)
-Notification.closeAll = (config: NotificationConfig) => closeNotification(config)
+Notification.info = (
+  NotificationConfig: NotificationConfig,
+  duration?: number,
+  position?: PositionType,
+  closeable?: boolean,
+) => openNotification('info', NotificationConfig, duration, position, closeable);
+Notification.success = (
+  NotificationConfig: NotificationConfig,
+  duration?: number,
+  position?: PositionType,
+  closeable?: boolean,
+) => openNotification('success', NotificationConfig, duration, position, closeable);
+Notification.warning = (
+  NotificationConfig: NotificationConfig,
+  duration?: number,
+  position?: PositionType,
+  closeable?: boolean,
+) => openNotification('warning', NotificationConfig, duration, position, closeable);
+Notification.error = (
+  NotificationConfig: NotificationConfig,
+  duration?: number,
+  position?: PositionType,
+  closeable?: boolean,
+) => openNotification('error', NotificationConfig, duration, position, closeable);
+Notification.clear = (position?: PositionType) => clearNotification(position);
 
 Notification.displayName = 'Notification';
 
