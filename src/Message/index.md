@@ -114,14 +114,14 @@ const App = () => {
     <div className="idesign-demo-block-row">
       <Button
         onClick={() => {
-          Message.info("这是一条不关闭的提示", 3);
+          Message.info("这是一条顶部的提示", 3);
         }}
       >
         展示在顶部的提示
       </Button>
       <Button
         onClick={() => {
-          Message.info("这是一条不关闭的提示", 3, "bottom");
+          Message.info("这是一条底部的提示", 3, "bottom");
         }}
       >
         展示在底部的提示
