@@ -3,49 +3,6 @@ $line_exit: transform 300ms linear 100ms, opacity 300ms ease-in-out;
 $incline_enter: transform 300ms ease-out, opacity 300ms ease-in-out;
 $incline_exit: transform 300ms linear, opacity 600ms ease-in-out;
 
-$message_line_enter: all 200ms ease-out, opacity 200ms ease-in-out;
-$message_line_exit: all 300ms linear 100ms, opacity 300ms ease-in-out;
-
-// 顶部消息动画
-.i-message-top-enter {
-  transform: translateY(-100%);
-  opacity: 0;
-}
-.i-message-top-enter-active {
-  transform: translate(0);
-  opacity: 1;
-  transition: $message_line_enter;
-}
-.i-message-top-exit {
-  opacity: 1;
-}
-.i-message-top-exit-active {
-  transform: translateY(-100%);
-  margin-top: -90px;
-  opacity: 0;
-  transition: $message_line_exit;
-}
-
-// 底部消息动画
-.i-message-bottom-enter {
-  transform: translateY(100%);
-  opacity: 0;
-}
-.i-message-bottom-enter-active {
-  transform: translate(0);
-  opacity: 1;
-  transition: $message_line_enter;
-}
-.i-message-bottom-exit {
-  opacity: 1;
-}
-.i-message-bottom-exit-active {
-  transform: translateY(100%);
-  margin-bottom: -90px;
-  opacity: 0;
-  transition: $message_line_exit;
-}
-
 // 从上到下渐进渐出
 .i-slide-in-top-enter {
   transform: translateY(-100%);

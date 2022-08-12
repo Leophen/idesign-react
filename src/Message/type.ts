@@ -11,6 +11,10 @@ export interface MessageProps {
    * 全局提示内容
    */
   content: React.ReactNode;
+  /**
+   * 是否完成进入动画
+   */
+  entered?: boolean;
 }
 
 export interface MessageListData {

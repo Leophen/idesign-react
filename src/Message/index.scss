@@ -4,6 +4,7 @@
   box-sizing: border-box;
   width: fit-content;
   padding: 10px 16px;
+  overflow: hidden;
   color: var(--i-font-2);
   font-size: 14px;
   background-color: var(--i-bg);
@@ -38,11 +39,67 @@
     flex-direction: column;
     align-items: center;
   }
-  .i-message:not(:last-of-type) {
-    margin-bottom: 16px;
-  }
   &.i-message-wrapper__bottom {
     top: unset;
     bottom: 20px;
   }
+}
+
+.i-message-wrapper__top {
+  .i-message:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}
+
+.i-message-wrapper__bottom {
+  .i-message:not(:first-of-type) {
+    margin-top: 16px;
+  }
+}
+
+$message_line_enter: all 200ms ease-out;
+$message_line_exit: all 200ms linear;
+
+// 顶部消息动画
+.i-message-top-enter {
+  transform: translateY(-100%);
+  opacity: 0;
+}
+.i-message-top-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $message_line_enter;
+}
+.i-message-top-exit {
+  opacity: 1;
+}
+.i-message-top-exit-active {
+  height: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: $message_line_exit;
+}
+
+// 底部消息动画
+.i-message-bottom-enter {
+  transform: translateY(100%);
+  opacity: 0;
+}
+.i-message-bottom-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $message_line_enter;
+}
+.i-message-bottom-exit {
+  opacity: 1;
+}
+.i-message-bottom-exit-active {
+  height: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: $message_line_exit;
 }
