@@ -73,9 +73,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  .i-notification:not(:last-of-type) {
-    margin-bottom: 16px;
-  }
   &.i-notification-wrapper__bottom-right {
     top: unset;
     bottom: 24px;
@@ -90,4 +87,119 @@
     bottom: 24px;
     left: 24px;
   }
+}
+
+.i-notification-wrapper[class*="top"] {
+  .i-notification:not(:last-of-type) {
+    margin-bottom: 16px;
+  }
+}
+
+.i-notification-wrapper[class*="bottom"] {
+  .i-notification:not(:first-of-type) {
+    margin-top: 16px;
+  }
+}
+
+$notification_line_enter: all 300ms ease-out;
+$notification_line_exit: all 300ms ease-out;
+
+// 从左上渐进垂直渐出
+.i-notification-top-left-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.i-notification-top-left-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $notification_line_enter;
+}
+
+.i-notification-top-left-exit {
+  opacity: 1;
+}
+
+.i-notification-top-left-exit-active {
+  height: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: $notification_line_exit;
+}
+
+// 从右上渐进垂直渐出
+.i-notification-top-right-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.i-notification-top-right-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $notification_line_enter;
+}
+
+.i-notification-top-right-exit {
+  opacity: 1;
+}
+
+.i-notification-top-right-exit-active {
+  height: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(-100%);
+  opacity: 0;
+  transition: $notification_line_exit;
+}
+
+// 从右下渐进垂直渐出
+.i-notification-bottom-right-enter {
+  transform: translateX(100%);
+  opacity: 0;
+}
+
+.i-notification-bottom-right-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $notification_line_enter;
+}
+
+.i-notification-bottom-right-exit {
+  opacity: 1;
+}
+
+.i-notification-bottom-right-exit-active {
+  height: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: $notification_line_exit;
+}
+
+// 从左下渐进垂直渐出
+.i-notification-bottom-left-enter {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.i-notification-bottom-left-enter-active {
+  transform: translate(0);
+  opacity: 1;
+  transition: $notification_line_enter;
+}
+
+.i-notification-bottom-left-exit {
+  opacity: 1;
+}
+
+.i-notification-bottom-left-exit-active {
+  height: 0 !important;
+  margin-top: 0 !important;
+  padding: 0 16px !important;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: $notification_line_exit;
 }

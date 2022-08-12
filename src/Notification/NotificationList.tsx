@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Notification from './Notification';
 import { TransitionGroup } from 'react-transition-group';
 import Transition from '../Transition';
@@ -7,17 +7,30 @@ import './index.scss';
 
 const NotificationList: React.FC<NotificationListProps> = (props) => {
   const { listData, position = 'top-right', onClose } = props;
+  const [enteredIds, setEnteredIds] = useState<number[]>([])
+
+  const handleEntered = (id: number) => {
+    enteredIds.push(id)
+    setEnteredIds([...enteredIds])
+  }
 
   return (
     <TransitionGroup>
       {listData.map(({ id, type, title, content, closeable }, index) => (
-        <Transition timeout={300} in animation={`slide-in-${position}`} key={id}>
+        <Transition
+          timeout={300}
+          in
+          animation={`notification-${position}`}
+          key={id}
+          onEntered={() => handleEntered(id)}
+        >
           <Notification
             type={type}
             title={title}
             content={content}
             closeable={closeable}
-            onClose={() => onClose?.(index,position)}
+            entered={enteredIds.includes(id)}
+            onClose={() => onClose?.(index, position)}
           />
         </Transition>
       ))}

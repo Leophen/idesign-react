@@ -57,8 +57,8 @@
   }
 }
 
-$message_line_enter: all 200ms ease-out;
-$message_line_exit: all 200ms linear;
+$message_line_enter: all 300ms ease-out;
+$message_line_exit: all 300ms ease-out;
 
 // 顶部消息动画
 .i-message-top-enter {

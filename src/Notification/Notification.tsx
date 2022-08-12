@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './index.scss';
 import { NotificationMethod, NotificationProps, PositionType } from './type';
 import Icon from '../Icon';
@@ -16,9 +16,19 @@ const Notification: React.FC<NotificationProps> & {
     content,
     title,
     closeable = false,
+    entered = false,
     onClose,
     ...restProps
   } = props;
+
+  const ntfRef = useRef<HTMLDivElement>(null)
+  const [ntfHeight, setNtfHeight] = useState<number | undefined>(undefined)
+  useEffect(() => {
+    if (entered) {
+      const { height } = (ntfRef.current as HTMLDivElement).getBoundingClientRect()
+      setNtfHeight(height)
+    }
+  }, [entered])
 
   return (
     <div className="i-notification" {...restProps}>
@@ -38,6 +48,8 @@ const Notification: React.FC<NotificationProps> & {
           'i-notification__main',
           closeable && 'i-notification__main-closeable',
         )}
+        style={{ height: ntfHeight }}
+        ref={ntfRef}
       >
         {title && <div className="i-notification__title">{title}</div>}
         <div className="i-notification__content">{content}</div>

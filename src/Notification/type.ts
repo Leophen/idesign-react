@@ -21,6 +21,10 @@ export interface NotificationProps {
    */
   closeable?: boolean;
   /**
+   * 是否完成进入动画
+   */
+  entered?: boolean;
+  /**
    * 点击关闭按钮触发
    */
   onClose?: () => void;
