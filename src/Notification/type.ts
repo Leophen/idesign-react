@@ -56,7 +56,7 @@ export interface NotificationListProps {
   listData: MergeConfigType[];
   /**
    * 消息出现位置
-   * @default top
+   * @default top-right
    */
   position?: PositionType;
   /**
@@ -78,7 +78,7 @@ export interface MergeConfigType extends NotificationProps {
   duration: number;
   /**
    * 消息出现位置
-   * @default top
+   * @default top-right
    */
   position: PositionType;
 }
@@ -91,7 +91,7 @@ export interface NotificationConfigType extends NotificationProps {
   duration?: number;
   /**
    * 消息出现位置
-   * @default top
+   * @default top-right
    */
   position?: PositionType;
 }

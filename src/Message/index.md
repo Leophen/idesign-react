@@ -212,7 +212,7 @@ export default App;
 
 ## 自定义提示内容
 
-通知内容或标题节点均可自定义展示：
+`content` 可通过传入节点来自定义提示内容：
 
 ```tsx
 import React from 'react'

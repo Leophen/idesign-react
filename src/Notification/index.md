@@ -150,6 +150,11 @@ const App = () => {
   return (
     <div className="idesign-demo-block-row">
       <Button
+        onClick={() => Notification.info("这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知", 0)}
+      >
+        通知不关闭（默认）
+      </Button>
+      <Button
         onClick={() => {
           Notification.info({
             title: '这是一条不关闭的通知',
@@ -158,11 +163,6 @@ const App = () => {
             closeable: true
           });
         }}
-      >
-        通知不关闭（默认）
-      </Button>
-      <Button
-        onClick={() => Notification.info("这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知这是一条消息通知", 0)}
       >
         通知不关闭（配置项）
       </Button>
@@ -308,7 +308,7 @@ export default App
 
 ## 手动关闭所有提示
 
-可通过 `Notification.clear()` 来关闭所有提示。
+可通过 `Notification.clear()` 来关闭所有提示：
 
 ```tsx
 import React from 'react';
