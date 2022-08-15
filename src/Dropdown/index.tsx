@@ -42,6 +42,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
 
   // 下拉选中项
   const [innerValue, setInnerValue] = useState(value)
+  const [updateKey, setUpdateKey] = useState(0)
   useEffect(() => {
     if (value !== innerValue) {
       setInnerValue(value)
@@ -65,6 +66,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
         }
       })
       curMultiSelected.includes(item.value) ? curMultiSelected.splice(delIndex, 1) : curMultiSelected.push(item.value)
+      setUpdateKey(updateKey + 1)
       onClick?.(curMultiSelected, event)
     }
   }

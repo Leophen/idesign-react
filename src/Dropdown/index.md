@@ -522,41 +522,51 @@ const App = () => {
     }
   ]
 
-  const [value, setValue] = useState([])
-  const handleSelect = (val) => {
+  const [singleVal, setSingleVal] = useState([])
+  const [multiVal, setMultiVal] = useState([])
+
+  const handleSingleSelect = (val) => {
     console.log(val)
-    setValue(val)
+    setSingleVal(val)
+  }
+  const handleMultiSelect = (val) => {
+    console.log(val)
+    setMultiVal(val)
   }
 
   return (
     <div className="idesign-demo-block-row">
       <Dropdown
         options={options}
-        onClick={handleSelect}
+        value={singleVal}
+        onClick={handleSingleSelect}
       >
         <Button>级联菜单</Button>
       </Dropdown>
+
       <Dropdown
         options={options}
-        value={value}
+        value={multiVal}
         multiple={true}
-        onClick={handleSelect}
+        onClick={handleMultiSelect}
       >
         <Button>级联多选菜单</Button>
       </Dropdown>
+
       <Dropdown
         options={options}
         cascaderDirection="left"
-        onClick={handleSelect}
+        onClick={handleSingleSelect}
       >
         <Button>向左展开的级联菜单</Button>
       </Dropdown>
+
       <Dropdown
         options={options}
-        value={value}
+        value={multiVal}
         cascaderDirection="left"
         multiple={true}
-        onClick={handleSelect}
+        onClick={handleMultiSelect}
       >
         <Button>向左展开的级联多选菜单</Button>
       </Dropdown>
