@@ -14,7 +14,7 @@ export interface MenuProps {
   /**
    * 导航宽度
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width'];
   /**
    * 固定选中值（受控）
    */
@@ -43,7 +43,27 @@ export interface MenuProps {
   onChange?: (value: string | number) => void;
 }
 
-export interface MenuItemProps {
+interface MenuInject {
+  /**
+   * 索引值
+   */
+  index: number;
+  /**
+   * 透传选中值
+   */
+  active: string | number;
+  /**
+   * 透传导航方向
+   * @default horizontal
+   */
+  direction: 'horizontal' | 'vertical';
+  /**
+   * 透传点击菜单项时触发
+   */
+  onChange: (value: string | number) => void;
+}
+
+export interface MenuItemProps extends MenuInject {
   /**
    * 类名
    */
@@ -67,7 +87,7 @@ export interface MenuItemProps {
   onClick?: (value: string | number) => void;
 }
 
-export interface MenuGroupProps {
+export interface MenuGroupProps extends MenuInject {
   /**
    * 类名
    */
@@ -83,5 +103,5 @@ export interface MenuGroupProps {
   /**
    * 组标题
    */
-  title?: React.ReactNode
+  title?: React.ReactNode;
 }

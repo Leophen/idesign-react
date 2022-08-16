@@ -21,7 +21,7 @@ import React, { useState } from 'react'
 import { Menu } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState(1)
+  const [value, setValue] = useState('1')
 
   const handleChange = (val) => {
     console.log(val)
@@ -99,7 +99,7 @@ import React, { useState } from 'react';
 import { Menu } from 'idesign-react';
 
 const App = () => {
-  const [value, setValue] = useState('2-1')
+  const [value, setValue] = useState('menu2-2-4')
 
   const handleChange = (val) => {
     console.log(val)
@@ -108,18 +108,19 @@ const App = () => {
 
   return (
     <Menu active={value} onChange={handleChange}>
-      <Menu.Item value='1'>菜单1</Menu.Item>
+      <Menu.Item>菜单1</Menu.Item>
       <Menu.Group title='菜单2'>
-        <Menu.Item value='2-1'>菜单2-1</Menu.Item>
+        <Menu.Item>菜单2-1</Menu.Item>
         <Menu.Group title='菜单2-2'>
-          <Menu.Item value='2-2-1'>菜单2-2-1</Menu.Item>
-          <Menu.Item value='2-2-2'>菜单2-2-2</Menu.Item>
-          <Menu.Item value='2-2-3'>菜单2-2-3</Menu.Item>
+          <Menu.Item>菜单2-2-1</Menu.Item>
+          <Menu.Item>菜单2-2-2</Menu.Item>
+          <Menu.Item>菜单2-2-3</Menu.Item>
+          <Menu.Item value='menu2-2-4'>菜单2-2-4</Menu.Item>
         </Menu.Group>
-        <Menu.Item value='2-3'>菜单2-3</Menu.Item>
+        <Menu.Item value='menu2-3'>菜单2-3</Menu.Item>
       </Menu.Group>
-      <Menu.Item value='3'>菜单3</Menu.Item>
-      <Menu.Item value='4'>菜单4</Menu.Item>
+      <Menu.Item>菜单3</Menu.Item>
+      <Menu.Item>菜单4</Menu.Item>
     </Menu>
   );
 };
@@ -139,7 +140,7 @@ const App = () => {
   const prefix = <img src="/images/logo.svg" />
   const suffix = <div>个人中心</div>
 
-  const [value, setValue] = useState(0)
+  const [value, setValue] = useState('menu2-2-4')
 
   const handleChange = (val) => {
     console.log(val)
@@ -162,8 +163,9 @@ const App = () => {
           <Menu.Item>菜单2-2-1</Menu.Item>
           <Menu.Item>菜单2-2-2</Menu.Item>
           <Menu.Item>菜单2-2-3</Menu.Item>
+          <Menu.Item value='menu2-2-4'>菜单2-2-4</Menu.Item>
         </Menu.Group>
-        <Menu.Item>菜单2-3</Menu.Item>
+        <Menu.Item value='menu2-3'>菜单2-3</Menu.Item>
       </Menu.Group>
       <Menu.Item>菜单3</Menu.Item>
       <Menu.Item>菜单4</Menu.Item>

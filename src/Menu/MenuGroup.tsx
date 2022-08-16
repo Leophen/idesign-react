@@ -1,30 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { ReactElement, ReactNode, useContext, useEffect, useRef, useState } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import _ from 'lodash'
 import Collapse from '../Collapse';
 import Dropdown from '../Dropdown';
 import Icon from '../Icon';
-import { MenuContext } from './index'
 import { MenuGroupProps } from './type';
 
 const MenuGroup: React.FC<MenuGroupProps> = (props) => {
-  // 从 Menu Context 注入全局属性
-  const context = useContext(MenuContext);
-  const newProps = context ? context.inject(props) : props;
-
   const {
     children,
     className,
     style,
     title,
-    // 以下为 context 传入
+    // 以下为 Parent 透传
     index,
     active,
     direction,
     onChange,
     ...restProps
-  } = newProps
+  } = props
 
   // 水平 group
   const [horizonGroupValues, setHorizonGroupValues] = useState<any[]>([])
@@ -32,23 +27,27 @@ const MenuGroup: React.FC<MenuGroupProps> = (props) => {
 
   const valuesArr: any[] = []
   // 将 Menu.Item 递归转为 Dropdown 可用的数组，同时更新组 value 集
-  const getOptions = (childList: any[]) => {
+  const mergeIndex = (itemIdx: number, injectIdx: string | number) => {
+    return `${injectIdx}.${itemIdx}`
+  }
+  const getOptions = (childList: any, injectIdx: string) => {
     const result: any[] = []
-    childList.map(item => {
+    React.Children.map(childList, (item, itemIdx) => {
       if (!_.isArray(item.props.children)) {
-        const itemValue = item.props.value || item.props.children
+        const itemValue = item.props.value || mergeIndex(itemIdx, injectIdx)
         valuesArr.push(itemValue)
         result.push({
           content: item.props.children,
           value: itemValue
         })
       } else {
-        const itemValue = item.props.value || item.props.title
+        // 嵌套
+        const itemValue = item.props.value || mergeIndex(itemIdx, injectIdx)
         valuesArr.push(itemValue)
         result.push({
           content: item.props.title,
           value: itemValue,
-          children: getOptions(item.props.children)
+          children: getOptions(item.props.children, mergeIndex(itemIdx, injectIdx))
         })
       }
     })
@@ -57,13 +56,13 @@ const MenuGroup: React.FC<MenuGroupProps> = (props) => {
 
   useEffect(() => {
     if (direction === 'horizontal') {
-      setHorizonGroupOptions([...getOptions(children)])
+      setHorizonGroupOptions([...getOptions(children, String(index))])
       setHorizonGroupValues([...valuesArr])
     }
   }, [])
 
-  const handleSelectItem = (val: any) => {
-    onChange?.(val)
+  const handleSelectItem = (val: string | number | Array<string | number>) => {
+    onChange?.(val as string | number)
   }
 
   const [hover, setHover] = useState(false)
@@ -71,12 +70,57 @@ const MenuGroup: React.FC<MenuGroupProps> = (props) => {
     setHover(trigger)
   }
 
+  const getRenderList = (childList: any, groupIdx: string | number) => {
+    const result: ReactNode[] = []
+    childList.map((item: ReactElement, itemIdx: number) => {
+      if (_.isArray(item.props.children)) {
+        const itemProps = {
+          index: mergeIndex(itemIdx, groupIdx),
+          key: mergeIndex(itemIdx, groupIdx),
+          active,
+          onChange,
+          ...item.props,
+          children: getRenderList(item.props.children, mergeIndex(itemIdx, groupIdx)),
+        }
+        result.push(React.cloneElement(item, itemProps))
+      } else {
+        const itemProps = {
+          index: mergeIndex(itemIdx, groupIdx),
+          key: mergeIndex(itemIdx, groupIdx),
+          active,
+          onChange,
+          ...item.props
+        }
+        result.push(React.cloneElement(item, itemProps))
+      }
+    })
+    return result
+  }
+
+  const renderVertical = getRenderList(children, index)
+
+  const ifGroupActive = (childList: ReactNode[]) => {
+    let result = false
+    Array.from(childList).map((item: any) => {
+      if (_.isArray(item.props.children)) {
+        ifGroupActive(item.props.children) && (result = true)
+      } else {
+        if (item.props.value) {
+          (item.props.value === active) && (result = true)
+        } else {
+          (item.props.index === active) && (result = true)
+        }
+      }
+    })
+    return result
+  }
+
   return (
     <>
       {direction === 'horizontal' ? (
         <Dropdown
           className='i-menu-item__group-dropdown'
-          trigger="hover"
+          trigger="click"
           value={active}
           options={horizonGroupOptions}
           onClick={handleSelectItem}
@@ -98,26 +142,17 @@ const MenuGroup: React.FC<MenuGroupProps> = (props) => {
         <Collapse
           className={classNames(
             'i-menu-item__group',
+            ifGroupActive(renderVertical) && 'i-menu-item__group-active',
             className
           )}
           style={style}
           hideBorder
+          expandAll={ifGroupActive(renderVertical)}
           iconPlacement='right'
           {...restProps}
         >
           <Collapse.Item title={title}>
-            {React.Children.map(children, (child) => {
-              if (!React.isValidElement(child)) {
-                return null;
-              }
-              const childProps = {
-                index: !_.isArray((child as any).props.children) ? (child as any).props.children : (child as any).props.title,
-                active,
-                onChange,
-                ...(child as any).props
-              };
-              return React.cloneElement(child, childProps);
-            })}
+            {renderVertical}
           </Collapse.Item>
         </Collapse>
       )}

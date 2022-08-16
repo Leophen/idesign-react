@@ -120,19 +120,22 @@
 
 .i-menu-item__group {
   width: 100%;
-  .i-collapse-item__header {
-    border-radius: 8px;
-    &[data-active='1'] {
+  &.i-menu-item__group-active {
+    & > .i-collapse-item > .i-collapse-item__header {
       .i-collapse-item__header-txt,
       .icon-ArrowCaretRight {
         color: var(--i-primary-txt);
       }
     }
+  }
+  .i-collapse-item__header {
+    border-radius: 8px;
     &:hover {
       background: var(--i-bg-active);
     }
   }
-  .i-collapse-item__content {
+  .i-collapse-item.i-collapse-item__icon-right .i-collapse-item__content {
+    padding-left: 0px;
     &[data-active='1'] {
       margin-bottom: -8px;
     }
@@ -152,12 +155,12 @@
     .i-collapse-item__content-inner {
       .i-menu-item,
       .i-collapse-item__header {
-        padding: 0 12px 0 48px;
+        padding: 0 12px 0 36px;
       }
       .i-collapse-item__content-inner {
         .i-menu-item,
         .i-collapse-item__header {
-          padding: 0 12px 0 60px;
+          padding: 0 12px 0 48px;
         }
       }
     }
