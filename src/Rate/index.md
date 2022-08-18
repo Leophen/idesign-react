@@ -122,7 +122,7 @@ import { Rate } from 'idesign-react'
 
 const App = () => {
   return (
-    <Rate count={10} />
+    <Rate defaultValue={6} count={10} />
   )
 }
 
@@ -139,7 +139,7 @@ import { Rate } from 'idesign-react'
 
 const App = () => {
   return (
-    <Rate activeColor="#427FEA" voidColor="#E06B67" />
+    <Rate defaultValue={3} activeColor="#427FEA" voidColor="#E06B67" />
   )
 }
 
@@ -156,7 +156,7 @@ import { Rate } from 'idesign-react'
 
 const App = () => {
   return (
-    <Rate activeIcon="BellFill" voidIcon="Bell" />
+    <Rate defaultValue={3} activeIcon="BellFill" voidIcon="Bell" />
   )
 }
 

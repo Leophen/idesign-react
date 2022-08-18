@@ -4,10 +4,10 @@ import './index.scss';
 import Icon from '../Icon';
 import PreviewDialog from './PreviewDialog';
 import { ImageProps } from './type';
+import Loading from '../Loading';
 
-const Image: React.FC<ImageProps> = (props) => {
+const IImage: React.FC<ImageProps> = (props) => {
   const {
-    children = '',
     className,
     style,
     src,
@@ -19,7 +19,26 @@ const Image: React.FC<ImageProps> = (props) => {
 
   const iImage = useRef<any>(null)
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 })
+
+  const [url, setUrl] = useState('')
+  const urlToBase64 = (url: string) => {
+    const Img = new Image();
+    Img.src = url + '?v=' + Math.random();
+    Img.setAttribute('crossOrigin', 'Anonymous');
+    Img.onload = function () {
+      const canvas = document.createElement('canvas'),
+        width = Img.width,
+        height = Img.height;
+      canvas.width = width;
+      canvas.height = height;
+      canvas.getContext('2d')?.drawImage(Img, 0, 0, width, height);
+      const dataURL = canvas.toDataURL('image/jpeg');
+      setUrl(dataURL)
+    };
+  }
+
   useEffect(() => {
+    src && urlToBase64(src)
     const rect = iImage.current.getBoundingClientRect()
     dialogPosition.x = rect.left
     dialogPosition.y = rect.top
@@ -36,14 +55,14 @@ const Image: React.FC<ImageProps> = (props) => {
       ref={iImage}
       {...restProps}
     >
-      <img className='i-image-img' src={src} />
+      {url === '' ? (<Loading />) : (<img className='i-image-img' src={url} />)}
       <div className="i-image-mask" onClick={() => setPreviewShow(true)}>
         <Icon name="View" color="#fff" />
         预览
       </div>
       <PreviewDialog
         visible={previewShow}
-        image={src}
+        image={url}
         x={dialogPosition.x}
         y={dialogPosition.y}
         onClose={() => setPreviewShow(false)}
@@ -52,6 +71,6 @@ const Image: React.FC<ImageProps> = (props) => {
   );
 };
 
-Image.displayName = 'Image';
+IImage.displayName = 'Image';
 
-export default Image;
+export default IImage;

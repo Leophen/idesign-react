@@ -171,6 +171,7 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
             ref={dialog}
             onWheel={handleWheel}
             onMouseDown={handleDown}
+            onMouseUp={handleUp}
           />
         </div>
       </Transition>

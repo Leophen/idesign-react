@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import './index.scss';
 import Icon from '../Icon';
 import useDefault from '../hooks/useDefault';
-import tinycolor from 'tinycolor2';
 import { RateProps } from './type';
 
 const Rate: React.FC<RateProps> = (props) => {
@@ -16,8 +15,8 @@ const Rate: React.FC<RateProps> = (props) => {
     allowClear = false,
     allowHalf = false,
     count = 5,
-    activeColor,
-    voidColor,
+    activeColor = '#f5db4d',
+    voidColor = 'var(--i-bg-back)',
     activeIcon = 'StarFill',
     voidIcon = 'StarFill',
     onChange = () => { },
@@ -53,10 +52,10 @@ const Rate: React.FC<RateProps> = (props) => {
   }
 
   const getStar = (index: number, type: 'name' | 'color') => {
-    let result = (type === 'name') ? voidIcon : (voidColor ?? 'void')
+    let result = (type === 'name') ? voidIcon : voidColor
     const compareValue = ifHover ? hoverValue : innerValue
     if (compareValue > index) {
-      result = (type === 'name') ? activeIcon : (activeColor ?? 'active')
+      result = (type === 'name') ? activeIcon : activeColor
     }
     return result
   }
@@ -76,17 +75,14 @@ const Rate: React.FC<RateProps> = (props) => {
       {Array(count).fill('star').map((item, index) =>
         !allowHalf ? (
           <div
-            className={classNames(
-              'i-rate-star',
-              getStar(index, 'color') === 'active' && 'i-rate-star__active',
-            )}
+            className="i-rate-star"
             onMouseEnter={() => handleEnterRateItem(index)}
             onMouseDown={() => handleDownRateItem(index)}
             key={`${item}${index}`}
           >
             <Icon
               name={getStar(index, 'name')}
-              color={tinycolor(getStar(index, 'color')).isValid() ? getStar(index, 'color') : undefined}
+              color={getStar(index, 'color')}
               size={20}
             />
           </div>) : (
@@ -95,32 +91,24 @@ const Rate: React.FC<RateProps> = (props) => {
             key={`${item}${index}`}
           >
             <div
-              className={classNames(
-                'i-rate-star',
-                'i-rate-star__first',
-                getStar(index, 'color') === 'active' && 'i-rate-star__active',
-              )}
+              className="i-rate-star__first"
               onMouseEnter={() => handleEnterRateItem(index)}
               onMouseDown={() => handleDownRateItem(index)}
             >
               <Icon
                 name={getStar(index, 'name')}
-                color={tinycolor(getStar(index, 'color')).isValid() ? getStar(index, 'color') : undefined}
+                color={getStar(index, 'color')}
                 size={20}
               />
             </div>
             <div
-              className={classNames(
-                'i-rate-star',
-                'i-rate-star__second',
-                getStar(index, 'color') === 'active' && 'i-rate-star__active',
-              )}
+              className="i-rate-star__second"
               onMouseEnter={() => handleEnterRateItem(index + 0.5)}
               onMouseDown={() => handleDownRateItem(index + 0.5)}
             >
               <Icon
                 name={getStar(index + 0.5, 'name')}
-                color={tinycolor(getStar(index + 0.5, 'color')).isValid() ? getStar(index, 'color') : undefined}
+                color={getStar(index + 0.5, 'color')}
                 size={20}
               />
             </div>

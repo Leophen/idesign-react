@@ -8,11 +8,11 @@ export interface RateProps {
    */
   style?: React.CSSProperties;
   /**
-   * 固定分值（受控）
+   * 分值
    */
   value?: number;
   /**
-   * 默认分值（非受控）
+   * 默认分值
    * @default 0
    */
   defaultValue?: number;
@@ -38,10 +38,12 @@ export interface RateProps {
   count?: number;
   /**
    * 选中颜色
+   * @default #f5db4d
    */
   activeColor?: string;
   /**
    * 未选中颜色
+   * @default #e5e6ea | #333336
    */
   voidColor?: string;
   /**

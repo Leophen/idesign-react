@@ -29,7 +29,7 @@ export interface MenuProps {
    */
   prefixContent?: React.ReactNode;
   /**
-   * 前置内容
+   * 后置内容
    */
   suffixContent?: React.ReactNode;
   /**

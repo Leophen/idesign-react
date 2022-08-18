@@ -28,7 +28,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
   })
 
   const switchPageSize = (pageSize: number) => {
-    console.log(current, total, pageSize)
+    pageData.current = 1
     pageData.pageSize = pageSize
     setPageData({ ...pageData })
     onChange?.(pageData)
@@ -98,6 +98,7 @@ const Pagination: React.FC<PaginationProps> = (props) => {
             minNumber={1}
             onChange={handleInputChange}
             onEnter={handleInputEnter}
+            onBlur={handleInputEnter}
             onMoveUp={handleInputEnter}
           />
           <span>页</span>

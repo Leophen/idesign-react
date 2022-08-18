@@ -15,14 +15,6 @@
   position: relative;
   cursor: pointer;
   transition: all 0.1s ease-out;
-  .i-icon {
-    color: var(--i-bg-back);
-  }
-  &.i-rate-star__active {
-    .i-icon {
-      color: #f2cd5e;
-    }
-  }
   &:active {
     transform: scale(1.2);
   }
