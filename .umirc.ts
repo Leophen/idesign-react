@@ -9,11 +9,11 @@ export default defineConfig({
   description: 'iDesign React 组件库',
   outputPath: 'docs-dist',
   mode: 'site',
-  algolia: {
-    appId: 'MH9A52MZTO',
-    apiKey: '4d89644522b528406ec821a713da60fe',
-    indexName: 'idesign-react',
-  },
+  // algolia: {
+  //   appId: 'MH9A52MZTO',
+  //   apiKey: '4d89644522b528406ec821a713da60fe',
+  //   indexName: 'idesign-react',
+  // },
   navs: [
     null, // null 值代表保留约定式生成的导航，只做增量配置
     {
