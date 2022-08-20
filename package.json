@@ -1,7 +1,7 @@
 {
   "private": false,
   "name": "idesign-react",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "iDesign 前端通用组件库",
   "scripts": {
     "start": "dumi dev",
@@ -32,8 +32,8 @@
     ]
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.5",
     "@docsearch/react": "3",
+    "@popperjs/core": "^2.11.5",
     "@umijs/plugin-sass": "^1.1.1",
     "axios": "^0.25.0",
     "classnames": "^2.3.1",
