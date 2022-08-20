@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import _ from 'lodash';
 import './index.scss';
 import Icon from '../Icon';
-import { DropdownItemProps, DropdownMenuProps, DropdownOption, dropdownValue } from './type';
+import { DropdownItemProps, DropdownMenuProps, DropdownOption } from './type';
 
 const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
   const {
@@ -41,12 +41,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = (props) => {
     return false
   }
 
-  const hasChildSelected = (itemContent: any) => {
+  const hasChildSelected = (itemContent: DropdownItemProps | DropdownItemProps[]) => {
     let result = false
     if (!_.isArray(itemContent)) {
       ifSelected(itemContent.value) && (result = true)
     } else {
-      itemContent.map((item: any) => {
+      itemContent.map((item: DropdownOption) => {
         if (item.children && item.children.length > 0) {
           hasChildSelected(item.children) && (result = true)
         } else {

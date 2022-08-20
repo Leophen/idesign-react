@@ -23,7 +23,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     style,
     width,
     value,
-    defaultValue=[],
+    defaultValue = [],
     placeholder = '请选择',
     options = [],
     size,
@@ -137,7 +137,7 @@ const Select: React.FC<SelectProps> & { Item: React.ElementType } = (props) => {
     }
   }
 
-  const handleClear = (e: any) => {
+  const handleClear = (e: React.MouseEvent) => {
     !dropdownShow && e.stopPropagation()
     let nullVal: '' | [] = ''
     if (multiple) {

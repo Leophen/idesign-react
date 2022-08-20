@@ -11,7 +11,7 @@ const ColorCursor: React.FC<ColorCursorProps> = (props) => {
     style
   } = props
 
-  const cursor = useRef<any>(null)
+  const cursorRef = useRef<HTMLDivElement>(null)
 
   const [translate, setTranslate] = useState({
     x: 0,
@@ -24,8 +24,8 @@ const ColorCursor: React.FC<ColorCursorProps> = (props) => {
   })
 
   useEffect(() => {
-    parent.width = cursor.current.parentNode.clientWidth
-    parent.height = cursor.current.parentNode.clientHeight
+    parent.width = (cursorRef.current?.parentNode as HTMLElement).clientWidth
+    parent.height = (cursorRef.current?.parentNode as HTMLElement).clientHeight
     setParent({ ...parent })
   }, [])
 
@@ -44,7 +44,7 @@ const ColorCursor: React.FC<ColorCursorProps> = (props) => {
   return (
     <div
       className="i-color-picker__cursor"
-      ref={cursor}
+      ref={cursorRef}
       style={{
         ...(style || {}),
         ...{

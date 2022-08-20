@@ -34,7 +34,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
     e.persist();
     maxLength && setValueLength((e.target as HTMLTextAreaElement).value.length);
-    setInnerValue((e.target as HTMLTextAreaElement).value, e as any)
+    setInnerValue((e.target as HTMLTextAreaElement).value, e)
     resize()
   };
 
@@ -57,7 +57,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   }
 
   // 通用事件
-  const handleEvent = (eventType: 'focus' | 'blur', e: any) => {
+  const handleEvent = (eventType: 'focus' | 'blur', e: React.FocusEvent<HTMLTextAreaElement, Element>) => {
     e.persist();
     if (eventType === 'focus') {
       onFocus?.(e.target.value, e);

@@ -113,7 +113,7 @@ export interface TimePanelProps {
   /**
    * 选中值发生变化时触发
    */
-  onChange?: (type: string, value: string) => void;
+  onChange?: (type: TimeType, value: string) => void;
   /**
    * 面板关闭时触发
    */
@@ -123,6 +123,8 @@ export interface TimePanelProps {
    */
   onConfirm?: () => void;
 }
+
+export type TimeType = 'hour' | 'minute' | 'second' | 'meridiem';
 
 export interface TimesType {
   hour?: string;

@@ -90,7 +90,7 @@ const Slider: React.FC<SliderProps> = (props) => {
   }
 
   const lastVal = useRef(0)
-  const handleSliderMove = _.throttle((e: any) => {
+  const handleSliderMove = _.throttle((e: MouseEvent) => {
     let move = 0
     let minMove = 0
     let maxMove = 0

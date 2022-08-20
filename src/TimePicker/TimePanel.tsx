@@ -5,7 +5,7 @@ import _ from 'lodash';
 import dayjs from 'dayjs';
 import Button from '../Button';
 import { DEFAULT_FORMAT, DEFAULT_STEPS, MERIDIEM_LIST, timeArr } from './index'
-import { EPickerCols, TimePanelProps } from './type';
+import { EPickerCols, TimePanelProps, TimeType } from './type';
 
 const TimePanel: React.FC<TimePanelProps> = (props) => {
   const {
@@ -115,7 +115,7 @@ const TimePanel: React.FC<TimePanelProps> = (props) => {
     updateScroll('smooth')
   }, [value]);
 
-  const clickItem = (type: string, val: string) => {
+  const clickItem = (type: TimeType, val: string) => {
     onChange?.(type, val)
   }
 

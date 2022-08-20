@@ -51,10 +51,10 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   );
   const childrenLength = childrenList.length;
 
-  const carouselRef = useRef<any>(null);
+  const carouselRef = useRef<HTMLDivElement>(null);
   const [wrapWidth, setWrapWidth] = useState(0)
   useEffect(() => {
-    setWrapWidth(carouselRef.current.getBoundingClientRect().width)
+    carouselRef.current && setWrapWidth(carouselRef.current.getBoundingClientRect().width)
   }, [])
 
   // 创建渲染用的节点列表

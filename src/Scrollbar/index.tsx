@@ -75,8 +75,8 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
     if (autoScroll) {
       e.persist();
       // 滚动占比
-      const scrollXProportion = (e.target.scrollLeft / viewWidth) || 0
-      const scrollYProportion = (e.target.scrollTop / viewHeight) || 0
+      const scrollXProportion = ((e.target as HTMLElement).scrollLeft / viewWidth) || 0
+      const scrollYProportion = ((e.target as HTMLElement).scrollTop / viewHeight) || 0
 
       emitScrollX(scrollXProportion)
       emitScrollY(scrollYProportion)
@@ -91,7 +91,7 @@ const Scrollbar: React.FC<ScrollbarProps> = (props) => {
   const startY = useRef(0)
 
   // 滚动条聚焦控制
-  const handleThumbMove = (e: any) => {
+  const handleThumbMove = (e: MouseEvent) => {
     const maxX = viewCurrentWidth - thumbWidth - 4
     startX.current += e.movementX;
     startX.current < 0 && (startX.current = 0)

@@ -4,13 +4,13 @@ import './index.scss';
 import Icon from '../Icon';
 import useDefault from '../hooks/useDefault';
 import InputGroup from './InputGroup';
-import { InputProps } from './type'
+import { InputProps } from './type';
 import InputSlider from './inputSlider';
 import ReactDOM from 'react-dom';
 import { useContainer } from '../hooks/useContainer';
 
 // 创建输入框滑块容器
-const inputSliderWrapper = useContainer('i-input-slider-wrapper', document.body)
+const inputSliderWrapper = useContainer('i-input-slider-wrapper', document.body);
 
 const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const {
@@ -67,7 +67,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     e.persist();
     maxLength && setValueLength(e.target.value.length);
-    let currentValue = e.target.value
+    let currentValue = e.target.value;
     if (type === 'number') {
       if (currentValue !== '') {
         if (Number(currentValue) > maxNumber) {
@@ -82,47 +82,56 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         }
       }
     }
-    setInnerValue(currentValue, e as any)
+    setInnerValue(currentValue, e);
   };
 
   // 点击清空按钮
-  const handleClear = (e: any) => {
-    setInnerValue('', e)
+  const handleClear = (e: React.MouseEvent<HTMLDivElement>) => {
+    setInnerValue('', e);
     onClear?.(e);
   };
 
   const [currentType, setCurrentType] = useState(type);
   // 密码类型切换
-  const handleSwitchPassword = (e: any) => {
+  const handleSwitchPassword = (e: React.MouseEvent) => {
     e.stopPropagation();
     currentType !== 'password' ? setCurrentType('password') : setCurrentType('text');
   };
 
   // 键盘事件
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.persist();
-    e.key === 'Enter' && onEnter?.(e.target.value, e);
-    onKeyDown?.(e.target.value, e);
+    e.key === 'Enter' && onEnter?.((e.target as HTMLInputElement).value, e);
+    onKeyDown?.((e.target as HTMLInputElement).value, e);
   };
 
   // 通用事件
-  const handleEvent = (eventType: 'focus' | 'blur' | 'up', e: any) => {
+  const handleEvent = (
+    eventType: 'focus' | 'blur' | 'up',
+    e: React.FocusEvent<HTMLInputElement, Element> | React.KeyboardEvent<HTMLInputElement>,
+  ) => {
     e.persist();
     if (eventType === 'focus') {
-      onFocus?.(e.target.value, e);
+      onFocus?.(
+        (e.target as HTMLInputElement).value,
+        e as React.FocusEvent<HTMLInputElement, Element>,
+      );
       if (selectAll) {
-        inputRef.current?.select()
+        inputRef.current?.select();
       }
     }
     if (eventType === 'blur') {
-      if (type === 'number' && e.target.value) {
-        const fixedValue = Number(e.target.value).toFixed(precision);
-        e.target.value = fixedValue;
+      if (type === 'number' && (e.target as HTMLInputElement).value) {
+        const fixedValue = Number((e.target as HTMLInputElement).value).toFixed(precision);
+        (e.target as HTMLInputElement).value = fixedValue;
       }
-      onBlur?.(e.target.value, e);
+      onBlur?.(
+        (e.target as HTMLInputElement).value,
+        e as React.FocusEvent<HTMLInputElement, Element>,
+      );
     }
     if (eventType === 'up') {
-      onKeyUp?.(e.target.value, e);
+      onKeyUp?.((e.target as HTMLInputElement).value, e as React.KeyboardEvent<HTMLInputElement>);
       if (type === 'number') {
         // 设置最大值最小值按钮禁用状态
         const currentValue = Number(inputRef.current?.value);
@@ -169,13 +178,13 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
   useEffect(() => {
     if (type === 'number') {
       if (Number(innerValue) <= minNumber) {
-        setIfLeastValue(true)
+        setIfLeastValue(true);
       }
       if (Number(innerValue) >= maxNumber) {
-        setIfMaximum(true)
+        setIfMaximum(true);
       }
     }
-  }, [])
+  }, []);
 
   // 数字调整按钮
   const handleAdjustValue = (handle = true, e: React.MouseEvent<HTMLDivElement>) => {
@@ -192,21 +201,21 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
       }
       // 设置最大值最小值按钮禁用状态
       if (computedValue >= maxNumber) {
-        computedValue = maxNumber
-        setIfMaximum(true)
+        computedValue = maxNumber;
+        setIfMaximum(true);
       } else {
-        setIfMaximum(false)
+        setIfMaximum(false);
       }
       if (computedValue <= minNumber) {
-        computedValue = minNumber
-        setIfLeastValue(true)
+        computedValue = minNumber;
+        setIfLeastValue(true);
       } else {
-        setIfLeastValue(false)
+        setIfLeastValue(false);
       }
     }
     const result = computedValue.toFixed(precision);
     (inputRef.current as HTMLInputElement).value = result;
-    setInnerValue(result, e as any)
+    setInnerValue(result, e);
   };
 
   const renderNumberBtn = (
@@ -230,20 +239,20 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     left: 0,
     top: 0,
     translateX: 0,
-    translateY: 0
-  })
+    translateY: 0,
+  });
   let startX = 0;
   let startY = 0;
   let countValue = 0;
   let criticalValue = 0;
-  const handleSliderMove = (e: any) => {
-    startX += e.movementX;
-    startY += e.movementY;
+  const handleSliderMove = (e: MouseEvent | React.ChangeEvent<HTMLInputElement>) => {
+    startX += (e as MouseEvent).movementX;
+    startY += (e as MouseEvent).movementY;
 
     // 滑块更新输入框数值
     if (inputRef) {
       countValue = Number(inputRef.current?.value);
-      criticalValue += e.movementX;
+      criticalValue += (e as MouseEvent).movementX;
       let changeSpeedNum = { slow: 30, default: 10, fast: 1 }[speed];
       if (criticalValue > changeSpeedNum && countValue < maxNumber) {
         criticalValue = 0;
@@ -259,35 +268,35 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
       const result = countValue.toFixed(precision);
       (inputRef.current as HTMLInputElement).value = result;
-      setInnerValue(result, e as any)
-      onMove?.(result, e as any);
+      setInnerValue(result, e);
+      onMove?.(result, e as React.ChangeEvent<HTMLInputElement>);
     }
 
     // 滑块超出屏幕边界处理
-    if (e.clientX + startX < 0) {
+    if ((e as MouseEvent).clientX + startX < 0) {
       startX += window.innerWidth;
     }
-    if (e.clientX + startX > window.innerWidth) {
+    if ((e as MouseEvent).clientX + startX > window.innerWidth) {
       startX -= window.innerWidth;
     }
-    if (e.clientY + startY < 0) {
+    if ((e as MouseEvent).clientY + startY < 0) {
       startY += window.innerHeight;
     }
-    if (e.clientY + startY > window.innerHeight) {
+    if ((e as MouseEvent).clientY + startY > window.innerHeight) {
       startY -= window.innerHeight;
     }
 
     // 更新滑块位置
-    slider.translateX = startX
-    slider.translateY = startY
-    setSlider({ ...slider })
+    slider.translateX = startX;
+    slider.translateY = startY;
+    setSlider({ ...slider });
   };
   const handleSliderUp = () => {
     document.exitPointerLock();
-    slider.ifDown = false
-    slider.translateX = 0
-    slider.translateY = 0
-    setSlider({ ...slider })
+    slider.ifDown = false;
+    slider.translateX = 0;
+    slider.translateY = 0;
+    setSlider({ ...slider });
     onMoveUp?.((inputRef.current as HTMLInputElement).value);
     window.removeEventListener('mouseup', handleSliderUp);
     window.removeEventListener('mousemove', handleSliderMove);
@@ -303,23 +312,26 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     }
     slider.left = e.clientX - 14;
     (e.target as HTMLElement).requestPointerLock();
-    slider.ifDown = true
-    setSlider({ ...slider })
+    slider.ifDown = true;
+    setSlider({ ...slider });
     window.addEventListener('mouseup', handleSliderUp);
     window.addEventListener('mousemove', handleSliderMove);
   };
   const renderNumberSlider = (
     <div className="i-input-number-slider" onMouseDown={handleSliderDown}>
-      {slider.ifDown &&
+      {slider.ifDown && (
         <>
-          {ReactDOM.createPortal(<InputSlider
-            left={slider.left}
-            top={slider.top}
-            translateX={slider.translateX}
-            translateY={slider.translateY}
-          />, inputSliderWrapper as HTMLElement)}
+          {ReactDOM.createPortal(
+            <InputSlider
+              left={slider.left}
+              top={slider.top}
+              translateX={slider.translateX}
+              translateY={slider.translateY}
+            />,
+            inputSliderWrapper as HTMLElement,
+          )}
         </>
-      }
+      )}
     </div>
   );
 
@@ -328,25 +340,33 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     e.persist();
     e.stopPropagation();
     if (clickPrefixIcon && location === 'pre') {
-      clickPrefixIcon(e as any);
+      clickPrefixIcon(e);
       return;
     }
     if (clickSuffixIcon && location === 'suf') {
-      clickSuffixIcon(e as any);
+      clickSuffixIcon(e);
       return;
     }
     focusInputNode();
   };
   const renderPrefixIcon = (
     <Icon
-      className={classNames('i-input-prefix-icon', clickPrefixIcon && 'i-input-icon-cursor', prefixIconClass)}
+      className={classNames(
+        'i-input-prefix-icon',
+        clickPrefixIcon && 'i-input-icon-cursor',
+        prefixIconClass,
+      )}
       name={prefixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('pre', e)}
     />
   );
   const renderSuffixIcon = (
     <Icon
-      className={classNames('i-input-suffix-icon', clickSuffixIcon && 'i-input-icon-cursor', suffixIconClass)}
+      className={classNames(
+        'i-input-suffix-icon',
+        clickSuffixIcon && 'i-input-icon-cursor',
+        suffixIconClass,
+      )}
       name={suffixIcon}
       onClick={(e: React.MouseEvent<HTMLDivElement>) => handleClickInnerIcon('suf', e)}
     />
@@ -390,14 +410,11 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
         {!disabled && type === 'number' && !hideNumberBtn && renderNumberBtn}
         {!disabled && type === 'number' && renderNumberSlider}
       </div>
-      {tips && <div
-        className={classNames(
-          'i-input__tips',
-          status && `i-input__tips--status-${status}`,
-        )}
-      >
-        {tips}
-      </div>}
+      {tips && (
+        <div className={classNames('i-input__tips', status && `i-input__tips--status-${status}`)}>
+          {tips}
+        </div>
+      )}
     </>
   );
 };

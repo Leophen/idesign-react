@@ -7,6 +7,7 @@ import Transition from '../Transition';
 import ReactDOM from 'react-dom';
 import { DrawerProps } from './type';
 import { useContainer } from '../hooks/useContainer';
+import { useHasParent } from '../hooks/useHasParent';
 
 // 获取触发抽屉打开的 DOM 节点原位置
 let clickOpenTarget: EventTarget | null;
@@ -38,7 +39,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     ...restProps
   } = props;
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose?.()
     }
@@ -49,25 +50,14 @@ const Drawer: React.FC<DrawerProps> = (props) => {
     closeOnEsc && document.removeEventListener('keydown', handleKeyDown)
   }
 
-  // 判断点击节点是否父元素内
-  const hasParent = (node: any, parent: HTMLElement) => {
-    while (node) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode
-    }
-    return false;
-  };
-
-  const handleClick = (e: any) => {
-    if (!hasParent(e.target, drawer.current) && e.target !== clickOpenTarget) {
+  const handleClick = (e: MouseEvent) => {
+    if (!useHasParent(e.target as HTMLElement, drawerRef.current as HTMLElement) && e.target !== clickOpenTarget) {
       closeDrawer()
       document.removeEventListener('click', handleClick, true)
     }
   }
 
-  const drawer = useRef<any>(null);
+  const drawerRef = useRef<HTMLDivElement>(null);
 
   // 打开抽屉时禁止背景滚动，对原 overflow 进行备份
   const bodyOverflow = useRef<string>(document.body.style.overflow);
@@ -106,7 +96,7 @@ const Drawer: React.FC<DrawerProps> = (props) => {
         key='i-drawer'
       >
         <div
-          ref={drawer}
+          ref={drawerRef}
           className={classNames(
             'i-drawer',
             placement !== 'right' && `i-drawer--placement-${placement}`,

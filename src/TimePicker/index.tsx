@@ -6,7 +6,7 @@ import Popup from '../Popup';
 import useDefault from '../hooks/useDefault';
 import TimePanel from './TimePanel';
 import TimeInput from './TimeInput';
-import { EPickerCols, TimePickerProps, TimesType } from './type';
+import { EPickerCols, TimePickerProps, TimesType, TimeType } from './type';
 
 export const MERIDIEM_LIST = ['AM', 'PM'];
 export const DEFAULT_STEPS = [1, 1, 1];
@@ -42,7 +42,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
 
   const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
 
-  const [timeValue, setTimeValue] = useState<any>({
+  const [timeValue, setTimeValue] = useState<TimesType>({
     hour: '00',
     minute: '00',
     second: '00',
@@ -94,7 +94,7 @@ const TimePicker: React.FC<TimePickerProps> = (props) => {
     setInnerValue(currentTime)
   }
 
-  const selectTime = (type: string, val: string) => {
+  const selectTime = (type: TimeType, val: string) => {
     timeValue[type] = val
     updateValue()
   }

@@ -72,13 +72,13 @@ export interface TextareaProps {
   /**
    * 输入内容变化时触发
    */
-  onChange?: (value: string | number, context?: { e?: React.FormEvent<HTMLDivElement> }) => void;
+  onChange?: (value: string | number, ev?: React.FormEvent<HTMLDivElement>) => void;
   /**
    * 输入框聚焦时触发
    */
-  onFocus?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
+  onFocus?: (value: string | number, ev?: React.FocusEvent<HTMLTextAreaElement>) => void;
   /**
    * 输入框失焦时触发
    */
-  onBlur?: (value: string | number, context?: { e?: React.FocusEvent<HTMLInputElement> }) => void;
+  onBlur?: (value: string | number, ev?: React.FocusEvent<HTMLTextAreaElement>) => void;
 }

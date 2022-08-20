@@ -27,9 +27,7 @@ const Upload: React.FC<UploadProps> = (props) => {
     inputRef.current?.click()
   }
 
-  const handleUpload = (e: React.ChangeEvent) => {
-    e.persist()
-    const file = ((e.target as HTMLInputElement).files || [])[0]
+  const uploadFile = (file: File) => {
     if (file) {
       if (file.size > MAX_SIZE) {
         const unit = MAX_SIZE > 1 * 1024 ? 'M' : 'kb'
@@ -39,6 +37,12 @@ const Upload: React.FC<UploadProps> = (props) => {
         onChange?.(file)
       }
     }
+  }
+
+  const handleUpload = (e: React.ChangeEvent) => {
+    e.persist()
+    const file = ((e.target as HTMLInputElement).files || [])[0]
+    uploadFile(file)
   }
 
   const [ifDragIn, setIfDragIn] = useState(false)
@@ -52,9 +56,10 @@ const Upload: React.FC<UploadProps> = (props) => {
     setIfDragIn(false)
   }
 
-  const handleDragDrop = (e: React.MouseEvent) => {
+  const handleDragDrop = (e: React.DragEvent) => {
     e.preventDefault()
-    handleClickInput()
+    const file = e.dataTransfer.files[0]
+    uploadFile(file)
     setIfDragIn(false)
   }
 

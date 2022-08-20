@@ -185,8 +185,8 @@ html[data-prefers-color='dark'] {
     font-size: 20px;
   }
   code {
-    border-radius: 2px;
     color: var(--i-success) !important;
+    border-radius: 2px;
   }
   table {
     box-sizing: border-box;
@@ -364,6 +364,11 @@ ul[role='slug-list'] li > a.active {
   row-gap: 16px;
   .i-select {
     width: 200px;
+  }
+  &.vertical {
+    h4 {
+      margin: 0;
+    }
   }
 }
 

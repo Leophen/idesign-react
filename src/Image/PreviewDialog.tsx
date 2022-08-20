@@ -14,11 +14,11 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
     onClose = () => { }
   } = props;
 
-  const dialog = useRef<any>(null)
+  const dialogRef = useRef<HTMLImageElement>(null)
 
   const [origin, setOrigin] = useState({ x: `0px`, y: `0px` })
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose?.()
     }
@@ -31,11 +31,11 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
   }
 
   const [scale, setScale] = useState(1)
-  const handleWheel = (e: any) => {
+  const handleWheel = (e: React.WheelEvent) => {
     e.persist()
 
-    origin.x = `${e.clientX - dialog.current.offsetLeft}px`
-    origin.y = `${e.clientY - dialog.current.offsetTop}px`
+    origin.x = `${e.clientX - (dialogRef.current as HTMLElement).offsetLeft}px`
+    origin.y = `${e.clientY - (dialogRef.current as HTMLElement).offsetTop}px`
     setOrigin({ ...origin })
 
     let newScale = scale
@@ -49,13 +49,13 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
 
   const [position, setPosition] = useState({ x: '-50%', y: '-50%' })
   const start = useRef({ x: 0, y: 0 })
-  const handleDown = (e: any) => {
+  const handleDown = (e: React.MouseEvent) => {
     e.stopPropagation()
     start.current.x = e.clientX
     start.current.y = e.clientY
     window.addEventListener('mousemove', handleMove)
   }
-  const handleMove = (e: any) => {
+  const handleMove = (e: MouseEvent) => {
     position.x = `calc(-50% + ${e.clientX - start.current.x}px)`
     position.y = `calc(-50% + ${e.clientY - start.current.y}px)`
     setPosition({ ...position })
@@ -79,8 +79,8 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
       closeOnEsc && document.addEventListener('keydown', handleKeyDown)
 
       // 初始缩放位置
-      origin.x = `${x - dialog.current.offsetLeft}px`
-      origin.y = `${y - dialog.current.offsetTop}px`
+      origin.x = `${x - (dialogRef.current as HTMLElement).offsetLeft}px`
+      origin.y = `${y - (dialogRef.current as HTMLElement).offsetTop}px`
       setOrigin({ ...origin })
       setScale(1)
 
@@ -168,7 +168,7 @@ const PreviewDialog: React.FC<PreviewDialogProps> = (props) => {
             className='i-preview-img'
             draggable={false}
             src={image}
-            ref={dialog}
+            ref={dialogRef}
             onWheel={handleWheel}
             onMouseDown={handleDown}
             onMouseUp={handleUp}

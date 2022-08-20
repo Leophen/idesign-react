@@ -27,7 +27,7 @@ const BackTop: React.FC<BackTopProps> = (props) => {
     return target === window ? document.documentElement : (target as HTMLElement);
   };
 
-  const handleScroll = _.throttle((e: any) => {
+  const handleScroll = _.throttle((e: Event) => {
     const top = (e.target as HTMLElement).scrollTop
     top >= visibleHeight ? setVisible(true) : setVisible(false)
     onScroll?.()

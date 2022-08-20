@@ -66,11 +66,7 @@ import { Upload } from 'idesign-react';
 
 const App = () => {
   return (
-    <div className="idesign-demo-block-row">
-      <Upload placeholder="自定义占位符" />
-      <Upload placeholder="自定义占位符" />
-      <Upload placeholder="自定义占位符" />
-    </div>
+    <Upload placeholder="自定义占位符" />
   );
 };
 

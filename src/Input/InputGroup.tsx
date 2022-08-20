@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import './index.scss';
-import { InputGroupProps } from './type'
+import { InputGroupProps } from './type';
 
 const InputGroup: React.FC<InputGroupProps> = (props) => {
   const {
@@ -15,19 +15,19 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
   } = props;
 
   const [contentHeight, setContentHeight] = useState(0);
-  const groupNode = useRef(null);
+  const groupRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     let maxHeight = 0;
-    const groupChild = groupNode.current && (groupNode.current as HTMLElement).childNodes;
+    const groupChild = groupRef.current && (groupRef.current as HTMLElement).childNodes;
     groupChild &&
-      Array.from(groupChild).map((item: any) => {
+      Array.from(groupChild).map((item) => {
         if (
-          item.className !== 'i-input__group-prefix' &&
-          item.className !== 'i-input__group-suffix' &&
-          item.offsetHeight > maxHeight
+          (item as HTMLElement).className !== 'i-input__group-prefix' &&
+          (item as HTMLElement).className !== 'i-input__group-suffix' &&
+          (item as HTMLElement).offsetHeight > maxHeight
         ) {
-          maxHeight = item.offsetHeight;
+          maxHeight = (item as HTMLElement).offsetHeight;
         }
       });
     setContentHeight(maxHeight);
@@ -37,11 +37,11 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
     e.persist();
     e.stopPropagation();
     if (clickPrefix && location === 'pre') {
-      clickPrefix(e as any);
+      clickPrefix(e);
       return;
     }
     if (clickSuffix && location === 'suf') {
-      clickSuffix(e as any);
+      clickSuffix(e);
       return;
     }
   };
@@ -50,7 +50,7 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
     <div
       className={classNames('i-input__group', className)}
       style={{ ...(style || {}), ...{ height: contentHeight } }}
-      ref={groupNode}
+      ref={groupRef}
     >
       {prefixContent && (
         <div

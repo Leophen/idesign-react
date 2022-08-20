@@ -4,7 +4,7 @@ import _ from 'lodash';
 import './index.scss';
 import Popup from '../Popup';
 import DropdownMenu from './DropdownMenu';
-import { DropdownOption, DropdownProps } from './type';
+import { DropdownOption, DropdownProps, DropdownValue } from './type';
 
 const Dropdown: React.FC<DropdownProps> = (props) => {
   const {
@@ -58,7 +58,7 @@ const Dropdown: React.FC<DropdownProps> = (props) => {
     } else {
       // 多选模式
       let delIndex = 0
-      let curMultiSelected: any = innerValue
+      let curMultiSelected: DropdownValue | undefined = innerValue
       !Array.isArray(curMultiSelected) && (curMultiSelected = [])
       curMultiSelected.map((it: string | number, index: number) => {
         if (it === item.value) {

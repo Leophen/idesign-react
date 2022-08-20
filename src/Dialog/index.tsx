@@ -7,6 +7,7 @@ import Transition from '../Transition';
 import ReactDOM from 'react-dom';
 import { DialogProps } from './type';
 import { useContainer } from '../hooks/useContainer';
+import { useHasParent } from '../hooks/useHasParent';
 
 // 获取触发对话框打开的 DOM 节点原位置
 let clickOpenTarget: EventTarget | null;
@@ -44,7 +45,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
     ...restProps
   } = props;
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       onClose?.()
     }
@@ -55,25 +56,14 @@ const Dialog: React.FC<DialogProps> = (props) => {
     closeOnEsc && document.removeEventListener('keydown', handleKeyDown)
   }
 
-  // 判断点击节点是否父元素内
-  const hasParent = (node: any, parent: HTMLElement) => {
-    while (node) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode
-    }
-    return false;
-  };
-
-  const handleClick = (e: any) => {
-    if (!hasParent(e.target, dialog.current) && e.target !== clickOpenTarget) {
+  const handleClick = (e: MouseEvent) => {
+    if (!useHasParent(e.target as HTMLElement, dialogRef.current as HTMLElement) && e.target !== clickOpenTarget) {
       closeDialog()
       document.removeEventListener('click', handleClick, true)
     }
   }
 
-  const dialog = useRef<any>(null);
+  const dialogRef = useRef<HTMLDivElement>(null);
 
   // 打开对话框时禁止背景滚动，对原 overflow 进行备份
   const bodyOverflow = useRef<string>(document.body.style.overflow);
@@ -85,8 +75,8 @@ const Dialog: React.FC<DialogProps> = (props) => {
       // 退出键功能
       closeOnEsc && document.addEventListener('keydown', handleKeyDown)
       // 展开动画出发点
-      if (mousePosition && dialog.current) {
-        dialog.current.style.transformOrigin = `${mousePosition.x - dialog.current.offsetLeft}px ${mousePosition.y - dialog.current.offsetTop
+      if (mousePosition && dialogRef.current) {
+        dialogRef.current.style.transformOrigin = `${mousePosition.x - dialogRef.current.offsetLeft}px ${mousePosition.y - dialogRef.current.offsetTop
           }px`;
       }
       // 无遮罩层时点击关闭功能
@@ -115,7 +105,7 @@ const Dialog: React.FC<DialogProps> = (props) => {
         key='i-dialog'
       >
         <div
-          ref={dialog}
+          ref={dialogRef}
           className={classNames(
             'i-dialog',
             className

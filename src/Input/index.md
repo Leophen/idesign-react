@@ -21,7 +21,7 @@ import React, { useState } from 'react'
 import { Input } from 'idesign-react'
 
 const App = () => {
-  const [value, setValue] = useState('这是默认值')
+  const [value, setValue] = useState('iDesign')
 
   const handleChange = (val) => {
     console.log(val)

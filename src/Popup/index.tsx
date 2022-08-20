@@ -6,17 +6,7 @@ import Transition from '../Transition';
 import useDefault from '../hooks/useDefault';
 import { PopupProps } from './type';
 import Portal from './Portal';
-
-// 触发节点是否在指定包裹层中
-const hasParent = (node: any, parent: HTMLElement | null) => {
-  while (node) {
-    if (node === parent) {
-      return true;
-    }
-    node = node.parentNode
-  }
-  return false;
-};
+import { useHasParent } from '../hooks/useHasParent';
 
 const Popup: React.FC<PopupProps> = (props) => {
   const {
@@ -144,24 +134,24 @@ const Popup: React.FC<PopupProps> = (props) => {
 
   // 通用方法 - 判断该位置是否在气泡外
   const ifOutContent = (target: HTMLElement) => {
-    return !hasParent(target, contentRef.current as HTMLElement)
+    return !useHasParent(target, contentRef.current as HTMLElement)
   }
 
   // 通用方法 - 判断该位置是否在触发节点外
   const ifOutReference = (target: HTMLElement) => {
-    return !hasParent(target, referenceRef.current as HTMLElement)
+    return !useHasParent(target, referenceRef.current as HTMLElement)
   }
 
   const [listenClick, setListenClick] = useState(false)
   const [listenContextMenu, setListenContextMenu] = useState(false)
 
   // 悬浮后的操作
-  const hoverHandle = (e: any) => {
+  const hoverHandle = (e: MouseEvent) => {
     e.preventDefault()
     // 悬浮位置在气泡外
-    if (ifOutContent(e.target)) {
+    if (ifOutContent(e.target as HTMLElement)) {
       // 悬浮位置既在气泡外 又在触发节点外
-      if (ifOutReference(e.target)) {
+      if (ifOutReference(e.target as HTMLElement)) {
         switchPopupShow(false)
       }
       window.removeEventListener('mouseover', hoverHandle)

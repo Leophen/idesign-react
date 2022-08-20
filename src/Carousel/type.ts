@@ -20,12 +20,12 @@ export interface CarouselProps {
    * 轮播图的宽度
    * @default 100%
    */
-  width?: React.CSSProperties["width"];
+  width?: React.CSSProperties['width'];
   /**
    * 轮播图的高度
    * @default 300
    */
-  height?: React.CSSProperties["height"];
+  height?: React.CSSProperties['height'];
   /**
    * 是否自动播放
    * @default false
@@ -106,13 +106,13 @@ export interface CarouselItemProps {
    */
   duration?: number;
   /**
-   * 包裹层 ref
+   * 包裹层宽度
    */
-  wrapWidth?: any;
+  wrapWidth?: number;
   /**
    * 点击轮播项触发
    */
-  clickItem?: (index: number) => void
+  clickItem?: (index: number) => void;
 }
 
 export interface CarouselNavigationProps {
@@ -120,7 +120,7 @@ export interface CarouselNavigationProps {
    * 轮播项数量
    * @default 0
    */
-  itemNum?: number
+  itemNum?: number;
   /**
    * 当前轮播项
    * @default 0
@@ -129,5 +129,5 @@ export interface CarouselNavigationProps {
   /**
    * 悬浮导航项时触发
    */
-  onEnter?: (current: number) => void
+  onEnter?: (current: number) => void;
 }

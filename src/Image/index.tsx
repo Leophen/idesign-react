@@ -17,7 +17,7 @@ const IImage: React.FC<ImageProps> = (props) => {
 
   const [previewShow, setPreviewShow] = useState(false)
 
-  const iImage = useRef<any>(null)
+  const iImageRef = useRef<HTMLDivElement>(null)
   const [dialogPosition, setDialogPosition] = useState({ x: 0, y: 0 })
 
   const [url, setUrl] = useState('')
@@ -39,7 +39,7 @@ const IImage: React.FC<ImageProps> = (props) => {
 
   useEffect(() => {
     src && urlToBase64(src)
-    const rect = iImage.current.getBoundingClientRect()
+    const rect = (iImageRef.current as HTMLElement).getBoundingClientRect()
     dialogPosition.x = rect.left
     dialogPosition.y = rect.top
     setDialogPosition({ ...dialogPosition })
@@ -52,7 +52,7 @@ const IImage: React.FC<ImageProps> = (props) => {
         className
       )}
       style={{ ...style, width }}
-      ref={iImage}
+      ref={iImageRef}
       {...restProps}
     >
       {url === '' ? (<Loading />) : (<img className='i-image-img' src={url} />)}

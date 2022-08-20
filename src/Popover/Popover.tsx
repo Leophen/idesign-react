@@ -5,6 +5,7 @@ import Transition from '../Transition';
 import useDefault from '../hooks/useDefault';
 import Portal from './Portal';
 import { PopoverProps } from './type';
+import { useHasParent } from '../hooks/useHasParent';
 
 // 原 Popup 原生实现写法
 const Popover: React.FC<PopoverProps> = (props) => {
@@ -38,17 +39,6 @@ const Popover: React.FC<PopoverProps> = (props) => {
 
   const [innerVisible, setInnerVisible] = useDefault(visible, defaultVisible, onTrigger);
 
-  // 触发节点是否在指定包裹层中
-  const hasParent = (node: any, parent: HTMLElement | null) => {
-    while (node) {
-      if (node === parent) {
-        return true;
-      }
-      node = node.parentNode
-    }
-    return false;
-  };
-
   // 手动更新实时位置
   useEffect(() => {
     const currentTriggerNode = (triggerNode.current as any).children[0]
@@ -81,15 +71,15 @@ const Popover: React.FC<PopoverProps> = (props) => {
   }
 
   // 气泡包裹层节点
-  const triggerNode = useRef(null)
+  const triggerNode = useRef<HTMLDivElement>(null)
 
   // 全局监听事件，判断点击节点是否在气泡内，以确定是否关闭气泡
   const [listenClick, setListenClick] = useState(false)
   const ifClickInPopover = (e: any) => {
     // 点击位置在气泡外
-    if (!hasParent(e.target, popoverRef.current)) {
+    if (!useHasParent(e.target, popoverRef.current)) {
       // 点击位置既在气泡外 又在触发节点外
-      if (!hasParent(e.target, triggerNode.current)) {
+      if (!useHasParent(e.target, triggerNode?.current as HTMLElement)) {
         closePopover()
       }
       setListenClick(false)
@@ -113,16 +103,16 @@ const Popover: React.FC<PopoverProps> = (props) => {
     } return
   }
 
-  const popoverRef = useRef(null)
+  const popoverRef = useRef<any>(null)
   const getPopoverRef = (ref: any) => {
-    popoverRef.current = ref.current
+    popoverRef.current = ref.current as HTMLElement
   }
 
   // 判断点击和右击节点是否在气泡内
   const [listenContextMenu, setListenContextMenu] = useState(false)
   const ifHandleInPopover = (e: any) => {
     e.preventDefault();
-    if (!hasParent(e.target, popoverRef.current as any)) {
+    if (!useHasParent(e.target, popoverRef.current as any)) {
       closePopover()
       setListenContextMenu(false)
       window.removeEventListener('click', ifHandleInPopover)
@@ -154,9 +144,9 @@ const Popover: React.FC<PopoverProps> = (props) => {
   const ifHoverInPopover = (e: any) => {
     e.preventDefault();
     // 悬浮位置在气泡外
-    if (!hasParent(e.target, popoverRef.current)) {
+    if (!useHasParent(e.target, popoverRef.current)) {
       // 悬浮位置既在气泡外 又在触发节点外
-      if (!hasParent(e.target, triggerNode.current)) {
+      if (!useHasParent(e.target, triggerNode?.current as HTMLElement)) {
         closePopover()
       }
       window.removeEventListener('click', ifClickInPopover)

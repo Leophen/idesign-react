@@ -1,6 +1,6 @@
 import { placementType } from '../Popup/type';
 
-export type dropdownValue = string | number | Array<string | number>
+export type DropdownValue = string | number | Array<string | number>
 
 export interface DropdownProps {
   /**
@@ -156,7 +156,7 @@ export interface DropdownMenuProps {
   /**
    * 选中值
    */
-  selectedValue?: dropdownValue;
+  selectedValue?: DropdownValue;
   /**
    * 点击菜单项触发事件
    */

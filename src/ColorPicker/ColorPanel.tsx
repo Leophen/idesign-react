@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import './index.scss';
-import tinycolor from 'tinycolor2'
+import tinycolor, { Instance } from 'tinycolor2'
 import Select from '../Select';
 import Input from '../Input';
 import Icon from '../Icon';
@@ -115,7 +115,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
     }
   })
 
-  const emitColor = (tinyObj: any) => {
+  const emitColor = (tinyObj: Instance) => {
     if (colorType === 'hex') {
       setInnerValue(tinyObj.toHex8String())
     } else {
@@ -124,7 +124,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   }
 
   // 通用更新滑块位置函数
-  const updateCursorLocation = (tinyObj: any) => {
+  const updateCursorLocation = (tinyObj: Instance) => {
     location.panel.x = tinyObj.toHsv().s
     location.panel.y = 1 - tinyObj.toHsv().v
     location.rgb.x = tinyObj.toHsv().h / 360
@@ -186,7 +186,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   }
 
   // 移动调色板
-  const handlePanelMove = (e: any) => {
+  const handlePanelMove = (e: MouseEvent) => {
     let moveX = e.clientX - rect.panel.left
     let moveY = e.clientY - rect.panel.top
     const maxX = rect.panel.width
@@ -206,7 +206,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   };
 
   // 移动色阶柱
-  const handleRgbMove = (e: any) => {
+  const handleRgbMove = (e: MouseEvent) => {
     let moveX = e.clientX - rect.rgb.left
     const maxX = rect.rgb.width
     const minX = 0
@@ -221,7 +221,7 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
   };
 
   // 移动透明度柱
-  const handleAMove = (e: any) => {
+  const handleAMove = (e: MouseEvent) => {
     let moveX = e.clientX - rect.a.left
     const maxX = rect.a.width
     const minX = 0
@@ -278,9 +278,9 @@ const ColorPanel: React.FC<ColorPanelProps> = (props) => {
 
   // 选择颜色值类型
   const [colorType, setColorType] = useState('hex')
-  const handleSelect = (val: any) => {
+  const handleSelect = (val: string | number | (string | number)[]) => {
     if (disabled) return
-    setColorType(val)
+    setColorType(val as string)
   }
 
   // RGBA 输入框变化时触发

@@ -42,7 +42,7 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
     const resizeObserver = new ResizeObserver(entries => {
       setContentHeight(entries[0].contentRect.height + 16)
     });
-    resizeObserver.observe((contentInnerRef.current as any))
+    resizeObserver.observe((contentInnerRef.current as HTMLElement))
     return () => resizeObserver.disconnect()
   }, [])
 
