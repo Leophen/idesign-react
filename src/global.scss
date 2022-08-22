@@ -7,6 +7,14 @@
 
 .__dumi-default-navbar {
   padding: 0 36px !important;
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: saturate(0.5) blur(8px);
+}
+
+html[data-prefers-color="dark"] {
+  .__dumi-default-navbar {
+    background-color: rgba(20, 20, 20, 0.7) !important;
+  }
 }
 
 .__dumi-default-search-input {
@@ -26,7 +34,7 @@
 }
 
 .__dumi-default-navbar-logo {
-  font-weight: bold !important;
+  font-weight: 600 !important;
 }
 
 .__dumi-default-layout-footer-meta {
@@ -95,7 +103,7 @@ body {
   overflow: overlay !important;
   &:hover {
     &::-webkit-scrollbar-thumb {
-      background: rgba(104, 106, 114, 1);
+      background: var(--i-font-disabled);
     }
   }
   &::-webkit-scrollbar {
@@ -105,15 +113,16 @@ body {
   }
   // 滚动条背景
   &::-webkit-scrollbar-track {
-    background: rgba(87, 89, 98, 0);
+    background: transparent;
   }
   // 滚动条
   &::-webkit-scrollbar-thumb {
-    background: rgba(104, 106, 114, 0);
+    background: transparent;
     cursor: pointer;
     transition: all 0.2s ease-out;
+    border-radius: 4px;
     &:hover {
-      background: rgb(132, 134, 145);
+      background: var(--i-font-5);
     }
   }
 }
@@ -245,7 +254,7 @@ html[data-prefers-color='dark'] {
   box-sizing: border-box;
   width: 100%;
   height: auto;
-  // margin-bottom: 4px;
+  margin-bottom: 4px;
   margin-left: 24px;
   padding: 8px 2px;
   font-size: 14.4px;
