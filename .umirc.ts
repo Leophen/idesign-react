@@ -35,7 +35,7 @@ export default defineConfig({
     mode: 'emit',
   },
   sitemap: {
-    hostname: 'https://idesign-react.vercel.app/components',
+    hostname: 'https://idesign-react.leophen.top/components',
     excludes: []
   }
 });

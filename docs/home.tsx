@@ -51,7 +51,7 @@ const contentArr = [
 
 const Home = () => {
   const toVueVersion = () => {
-    window.open('https://idesign-vue.vercel.app/');
+    window.open('https://idesign-vue.leophen.top/');
   };
   const [tipVisible, setTipVisible] = useState(false);
   const [copyText, setCopyText] = useState('点击复制邮箱');

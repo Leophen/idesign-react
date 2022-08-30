@@ -26,7 +26,7 @@ const App = () => {
     <div className="idesign-demo-block-row">
       <Tag>普通标签</Tag>
 
-      <a href="https://idesign-react.vercel.app/" target="_blank" rel="noreferrer">
+      <a href="https://idesign-react.leophen.top/" target="_blank" rel="noreferrer">
         <Tag>超链接标签一</Tag>
       </a>
 
