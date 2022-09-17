@@ -12,8 +12,9 @@ describe('Avatar 组件测试', () => {
   });
 
   it('children', () => {
-    const { queryByText } = render(<Avatar>L</Avatar>);
-    expect(queryByText('L')).toBeInTheDocument();
+    const wrapper = render(<Avatar>L</Avatar>);
+    const x = wrapper.queryByText('L');
+    expect(x).toBeInTheDocument();
   });
 
   it('size', () => {

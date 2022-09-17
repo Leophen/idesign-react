@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BackTop 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-back-top"
+  >
+    <button
+      class="i-button i-button--type-primary i-button--shape-circle i-back-top--button i-fade-in-appear i-fade-in-appear-active"
+    >
+      <i
+        class="i-icon icon-ArrowUpBold"
+      />
+    </button>
+  </div>
+</DocumentFragment>
+`;

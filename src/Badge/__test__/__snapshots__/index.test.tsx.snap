@@ -1,0 +1,16 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Badge 组件测试 color 1`] = `
+<DocumentFragment>
+  <div
+    class="i-badge"
+  >
+    <sup
+      class="i-badge__content i-badge--circle"
+      style="background: red;"
+    >
+      0
+    </sup>
+  </div>
+</DocumentFragment>
+`;

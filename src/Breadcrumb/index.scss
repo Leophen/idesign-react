@@ -46,6 +46,10 @@
 }
 
 .i-breadcrumb-is-disabled {
+  pointer-events: none;
+  * {
+    pointer-events: none;
+  }
   .i-breadcrumb__inner,
   .i-breadcrumb__inner a {
     color: var(--i-font-disabled);

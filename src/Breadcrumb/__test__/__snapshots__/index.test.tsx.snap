@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Breadcrumb 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-breadcrumb"
+  >
+    <div
+      class="i-breadcrumb__item"
+    >
+      <span
+        class="i-breadcrumb__inner"
+        style="max-width: 200px;"
+      >
+        item1
+      </span>
+      <span
+        class="i-breadcrumb__separator"
+      >
+        <i
+          class="i-icon icon-ArrowRight"
+          style="font-size: 16px;"
+        />
+      </span>
+    </div>
+    <div
+      class="i-breadcrumb__item"
+    >
+      <span
+        class="i-breadcrumb__inner"
+        style="max-width: 200px;"
+      >
+        item2
+      </span>
+      <span
+        class="i-breadcrumb__separator"
+      >
+        <i
+          class="i-icon icon-ArrowRight"
+          style="font-size: 16px;"
+        />
+      </span>
+    </div>
+    <div
+      class="i-breadcrumb__item"
+    >
+      <span
+        class="i-breadcrumb__inner"
+        style="max-width: 200px;"
+      >
+        item3
+      </span>
+      <span
+        class="i-breadcrumb__separator"
+      >
+        <i
+          class="i-icon icon-ArrowRight"
+          style="font-size: 16px;"
+        />
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

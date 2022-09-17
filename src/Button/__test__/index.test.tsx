@@ -49,7 +49,7 @@ describe('Button 组件测试', () => {
     const clickFn = jest.fn();
     const { container } = render(<Button onClick={clickFn} />);
     fireEvent.click(container.firstChild);
-    expect(clickFn).toBeCalledTimes(1);
+    expect(clickFn).toHaveBeenCalled();
   });
 });
 
