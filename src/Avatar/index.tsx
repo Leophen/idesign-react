@@ -18,6 +18,7 @@ const Avatar: React.FC<AvatarProps> & { Group: React.ElementType } = (props) => 
     size = 32,
     shape = "circle",
     color,
+    alt,
     ...restProps
   } = newProps;
 
@@ -40,6 +41,7 @@ const Avatar: React.FC<AvatarProps> & { Group: React.ElementType } = (props) => 
         <img
           className='i-avatar__image'
           src={image}
+          alt={alt}
           onError={handleImgLoadError}
           referrerPolicy="no-referrer"
         /> :

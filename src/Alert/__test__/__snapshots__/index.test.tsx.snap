@@ -1,0 +1,89 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Alert 组件测试 type 1`] = `
+<DocumentFragment>
+  <div
+    class="i-alert i-alert--type-info"
+  >
+    <i
+      class="i-icon icon-TipInfo"
+      style="font-size: 16px;"
+    />
+    <div
+      class="i-alert--content"
+    >
+      <div
+        class="i-alert--description"
+      >
+        Alert 内容
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Alert 组件测试 type 2`] = `
+<DocumentFragment>
+  <div
+    class="i-alert i-alert--type-success"
+  >
+    <i
+      class="i-icon icon-TipCheckFill"
+      style="font-size: 16px;"
+    />
+    <div
+      class="i-alert--content"
+    >
+      <div
+        class="i-alert--description"
+      >
+        Alert 内容
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Alert 组件测试 type 3`] = `
+<DocumentFragment>
+  <div
+    class="i-alert i-alert--type-warning"
+  >
+    <i
+      class="i-icon icon-TipWarningFill"
+      style="font-size: 16px;"
+    />
+    <div
+      class="i-alert--content"
+    >
+      <div
+        class="i-alert--description"
+      >
+        Alert 内容
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Alert 组件测试 type 4`] = `
+<DocumentFragment>
+  <div
+    class="i-alert i-alert--type-error"
+  >
+    <i
+      class="i-icon icon-TipCloseFill"
+      style="font-size: 16px;"
+    />
+    <div
+      class="i-alert--content"
+    >
+      <div
+        class="i-alert--description"
+      >
+        Alert 内容
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

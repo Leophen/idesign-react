@@ -16,6 +16,10 @@ export interface AvatarProps {
    */
   image?: string;
   /**
+   * 头像图片 alt 属性
+   */
+  alt?: string;
+  /**
    * 头像大小
    * @default 32
    */
