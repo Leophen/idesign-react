@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Button 组件测试 icon 1`] = `
+<DocumentFragment>
+  <button
+    class="i-button i-button--type-primary"
+  >
+    <i
+      class="i-icon icon-ThePlus i-button-icon"
+    />
+  </button>
+</DocumentFragment>
+`;
