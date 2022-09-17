@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Carousel 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-carousel"
+    style="width: 100%; height: 300px;"
+  >
+    <div
+      class="i-carousel__content"
+    >
+      <ul
+        class="i-carousel__wrapper"
+        style="transform: translate3d(-200%, 0px, 0px);"
+      >
+        <li
+          class="i-carousel-item"
+        >
+          item3
+        </li>
+        <li
+          class="i-carousel-item"
+        >
+          item1
+        </li>
+        <li
+          class="i-carousel-item"
+        >
+          item2
+        </li>
+        <li
+          class="i-carousel-item"
+        >
+          item3
+        </li>
+        <li
+          class="i-carousel-item"
+        >
+          item1
+        </li>
+      </ul>
+    </div>
+    <ul
+      class="i-carousel__navigation"
+    >
+      <li
+        class="i-carousel__navigation-item"
+      />
+      <li
+        class="i-carousel__navigation-item i-carousel__navigation-item__active"
+      />
+      <li
+        class="i-carousel__navigation-item"
+      />
+    </ul>
+    <div
+      class="i-carousel__arrow-last"
+    >
+      <i
+        class="i-icon icon-ArrowLeft"
+        style="color: rgb(255, 255, 255);"
+      />
+    </div>
+    <div
+      class="i-carousel__arrow-next"
+    >
+      <i
+        class="i-icon icon-ArrowRight"
+        style="color: rgb(255, 255, 255);"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

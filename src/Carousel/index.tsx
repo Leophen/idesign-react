@@ -25,6 +25,16 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     ...restProps
   } = props;
 
+  // 进行子组件筛选，创建子节点列表
+  const childrenList = useMemo(
+    () =>
+      React.Children.toArray(children).filter(
+        (child: any) => child.type.displayName === CarouselItem.displayName,
+      ),
+    [children],
+  );
+  const childrenLength = childrenList.length;
+
   const resetDefaultCurrent = (index: number) => {
     if (type === 'default') {
       if (index >= childrenLength) {
@@ -41,21 +51,13 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
 
   const [innerCurrent, setInnerCurrent] = useState(resetDefaultCurrent(defaultCurrent));
 
-  // 进行子组件筛选，创建子节点列表
-  const childrenList = useMemo(
-    () =>
-      React.Children.toArray(children).filter(
-        (child: any) => child.type.displayName === CarouselItem.displayName,
-      ),
-    [children],
-  );
-  const childrenLength = childrenList.length;
-
   const carouselRef = useRef<HTMLDivElement>(null);
   const [wrapWidth, setWrapWidth] = useState(0)
   useEffect(() => {
     carouselRef.current && setWrapWidth(carouselRef.current.getBoundingClientRect().width)
   }, [])
+
+  const [ifAnimation, setIfAnimation] = useState(false);
 
   // 创建渲染用的节点列表
   const carouselItemList = childrenList.map((child: any, index: number) =>
@@ -96,7 +98,6 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   }
   const carouselItemLength = carouselItemList.length
 
-  const [ifAnimation, setIfAnimation] = useState(false);
   const animationTimer = useRef<any>(null); // 计时器指针
 
   // 轮播图通用跳转函数
