@@ -1,0 +1,97 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Collapse 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-collapse"
+  >
+    <div
+      class="i-collapse-item"
+    >
+      <header
+        class="i-collapse-item__header i-collapse-item__header-fold"
+        data-active="0"
+      >
+        <i
+          class="i-icon icon-ArrowCaretRight"
+          style="transform: rotate(0deg);"
+        />
+        <span
+          class="i-collapse-item__header-txt"
+        >
+          折叠标题1
+        </span>
+      </header>
+      <section
+        class="i-collapse-item__content"
+        data-active="0"
+        style="height: 0px;"
+      >
+        <div
+          class="i-collapse-item__content-inner"
+        >
+          折叠内容 1
+        </div>
+      </section>
+    </div>
+    <div
+      class="i-collapse-item"
+    >
+      <header
+        class="i-collapse-item__header i-collapse-item__header-fold"
+        data-active="0"
+      >
+        <i
+          class="i-icon icon-ArrowCaretRight"
+          style="transform: rotate(0deg);"
+        />
+        <span
+          class="i-collapse-item__header-txt"
+        >
+          折叠标题2
+        </span>
+      </header>
+      <section
+        class="i-collapse-item__content"
+        data-active="0"
+        style="height: 0px;"
+      >
+        <div
+          class="i-collapse-item__content-inner"
+        >
+          折叠内容 2
+        </div>
+      </section>
+    </div>
+    <div
+      class="i-collapse-item"
+    >
+      <header
+        class="i-collapse-item__header i-collapse-item__header-fold"
+        data-active="0"
+      >
+        <i
+          class="i-icon icon-ArrowCaretRight"
+          style="transform: rotate(0deg);"
+        />
+        <span
+          class="i-collapse-item__header-txt"
+        >
+          折叠标题3
+        </span>
+      </header>
+      <section
+        class="i-collapse-item__content"
+        data-active="0"
+        style="height: 0px;"
+      >
+        <div
+          class="i-collapse-item__content-inner"
+        >
+          折叠内容 3
+        </div>
+      </section>
+    </div>
+  </div>
+</DocumentFragment>
+`;

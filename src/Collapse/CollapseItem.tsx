@@ -39,11 +39,13 @@ const CollapseItem: React.FC<CollapseItemProps> = (props) => {
     const height = contentInnerRef.current?.getBoundingClientRect().height || 0
     setContentHeight(height + 16) // 加上下 padding
 
-    const resizeObserver = new ResizeObserver(entries => {
-      setContentHeight(entries[0].contentRect.height + 16)
-    });
-    resizeObserver.observe((contentInnerRef.current as HTMLElement))
-    return () => resizeObserver.disconnect()
+    if(typeof ResizeObserver !== 'undefined') {
+      const resizeObserver = new ResizeObserver(entries => {
+        setContentHeight(entries[0].contentRect.height + 16)
+      });
+      resizeObserver.observe((contentInnerRef.current as HTMLElement))
+      return () => resizeObserver.disconnect()
+    }
   }, [])
 
   return (

@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Checkbox 组件测试 create 1`] = `
+<DocumentFragment>
+  <label
+    class="i-checkbox"
+  >
+    <input
+      class="i-checkbox__former"
+      readonly=""
+      type="checkbox"
+      value=""
+    />
+    <span
+      class="i-checkbox__input"
+    />
+    <span
+      class="i-checkbox__label"
+    />
+  </label>
+</DocumentFragment>
+`;
