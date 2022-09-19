@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Grid 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-grid"
+  >
+    <div
+      class="i-grid__item i-grid__item--span-8"
+      style="flex: 1;"
+    >
+      <div>
+        GridItem1
+      </div>
+    </div>
+    <div
+      class="i-grid__item i-grid__item--span-8"
+      style="flex: 1;"
+    >
+      <div>
+        GridItem2
+      </div>
+    </div>
+    <div
+      class="i-grid__item i-grid__item--span-8"
+      style="flex: 1;"
+    >
+      <div>
+        GridItem3
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

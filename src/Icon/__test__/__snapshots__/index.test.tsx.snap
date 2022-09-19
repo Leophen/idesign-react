@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Icon 组件测试 create 1`] = `
+<DocumentFragment>
+  <i
+    class="i-icon icon-ModeLight"
+  />
+</DocumentFragment>
+`;

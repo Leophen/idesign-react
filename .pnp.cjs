@@ -39,8 +39,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:280adc3cfa419bb00326a6a2b02ca6c2cddab7e4abf036335f0712004694cd8517ffd0027b04f67d79eab824bcfd0ba5b936213fa40489ef32d67dfcd269c350#npm:7.18.6"],\
             ["@docsearch/react", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:3.2.1"],\
             ["@popperjs/core", "npm:2.11.6"],\
+            ["@testing-library/dom", "npm:8.18.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:13.4.0"],\
+            ["@testing-library/user-event", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:14.4.3"],\
             ["@types/jest", "npm:27.5.2"],\
             ["@types/lodash", "npm:4.14.185"],\
             ["@types/node", "npm:17.0.45"],\
@@ -6119,6 +6121,28 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             "@types/react",\
             "react-dom",\
             "react"\
+          ],\
+          "linkType": "HARD"\
+        }]\
+      ]],\
+      ["@testing-library/user-event", [\
+        ["npm:14.4.3", {\
+          "packageLocation": "./.yarn/cache/@testing-library-user-event-npm-14.4.3-2d1a75355f-852c48ea6d.zip/node_modules/@testing-library/user-event/",\
+          "packageDependencies": [\
+            ["@testing-library/user-event", "npm:14.4.3"]\
+          ],\
+          "linkType": "SOFT"\
+        }],\
+        ["virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:14.4.3", {\
+          "packageLocation": "./.yarn/__virtual__/@testing-library-user-event-virtual-e43f9996f2/0/cache/@testing-library-user-event-npm-14.4.3-2d1a75355f-852c48ea6d.zip/node_modules/@testing-library/user-event/",\
+          "packageDependencies": [\
+            ["@testing-library/user-event", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:14.4.3"],\
+            ["@testing-library/dom", "npm:8.18.0"],\
+            ["@types/testing-library__dom", null]\
+          ],\
+          "packagePeers": [\
+            "@testing-library/dom",\
+            "@types/testing-library__dom"\
           ],\
           "linkType": "HARD"\
         }]\
@@ -14462,8 +14486,10 @@ function $$SETUP_STATE(hydrateRuntimeState, basePath) {
             ["@babel/preset-typescript", "virtual:280adc3cfa419bb00326a6a2b02ca6c2cddab7e4abf036335f0712004694cd8517ffd0027b04f67d79eab824bcfd0ba5b936213fa40489ef32d67dfcd269c350#npm:7.18.6"],\
             ["@docsearch/react", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:3.2.1"],\
             ["@popperjs/core", "npm:2.11.6"],\
+            ["@testing-library/dom", "npm:8.18.0"],\
             ["@testing-library/jest-dom", "npm:5.16.5"],\
             ["@testing-library/react", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:13.4.0"],\
+            ["@testing-library/user-event", "virtual:7bead7462769e08e3e477433fdc51b2ef6b42988bac45e9e740097aa45adc6b100aa70604319c0d4e4cd3e1f7d2d0beb00b644fc6c271e74a4d48b0645864b7c#npm:14.4.3"],\
             ["@types/jest", "npm:27.5.2"],\
             ["@types/lodash", "npm:4.14.185"],\
             ["@types/node", "npm:17.0.45"],\
