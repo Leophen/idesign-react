@@ -3,6 +3,11 @@ import userEvent from '@testing-library/user-event';
 import Input from '../index';
 
 describe('Input 组件测试', () => {
+  const renderInput = (input) => {
+    const { container } = render(input);
+    return container.querySelector('.i-input__inner')
+  }
+
   it('create', () => {
     const { asFragment } = render(<Input />);
     expect(asFragment()).toMatchSnapshot();
@@ -18,13 +23,11 @@ describe('Input 组件测试', () => {
   });
 
   it('value', () => {
-    const { container } = render(<Input value='iDesign' />);
-    expect(container.firstChild.firstChild.value).toEqual('iDesign');
+    expect(renderInput(<Input value='iDesign' />).value).toEqual('iDesign');
   });
 
   it('defaultValue', () => {
-    const { container } = render(<Input defaultValue='iDesign' />);
-    expect(container.firstChild.firstChild.value).toEqual('iDesign');
+    expect(renderInput(<Input defaultValue='iDesign' />).value).toEqual('iDesign');
   });
 
   it('disabled', () => {
@@ -51,14 +54,13 @@ describe('Input 组件测试', () => {
   })
 
   it('password', () => {
-    const { container } = render(<Input type="password" />);
-    expect(container.firstChild.firstChild.type).toEqual('password');
+    expect(renderInput(<Input type="password" />).type).toEqual('password');
   })
 
   it('number', () => {
     const { asFragment, container } = render(<Input type="number" />);
     expect(asFragment()).toMatchSnapshot();
-    expect(container.firstChild.firstChild.type).toEqual('number');
+    expect(container.querySelector('.i-input__inner').type).toEqual('number');
   })
 
   it('clearable', () => {

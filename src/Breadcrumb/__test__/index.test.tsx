@@ -2,6 +2,11 @@ import { render } from '@testing-library/react';
 import Breadcrumb from '../index';
 
 describe('Breadcrumb 组件测试', () => {
+  const renderFirstItem = (breadcrumb) => {
+    const { container } = render(breadcrumb);
+    return container.firstChild.firstChild
+  }
+
   it('create', () => {
     const el = (
       <Breadcrumb>
@@ -20,8 +25,7 @@ describe('Breadcrumb 组件测试', () => {
         <Breadcrumb.Item>item</Breadcrumb.Item>
       </Breadcrumb>
     );
-    const { container } = render(el);
-    expect(container.firstChild.firstChild).toHaveTextContent('item');
+    expect(renderFirstItem(el)).toHaveTextContent('item');
   });
 
   it('breadcrumbItem disabled', () => {
@@ -30,8 +34,7 @@ describe('Breadcrumb 组件测试', () => {
         <Breadcrumb.Item disabled>item</Breadcrumb.Item>
       </Breadcrumb>
     );
-    const { container } = render(el);
-    expect(container.firstChild.firstChild).toHaveClass('i-breadcrumb-is-disabled');
+    expect(renderFirstItem(el)).toHaveClass('i-breadcrumb-is-disabled');
   });
 
   it('max width', () => {
@@ -40,8 +43,7 @@ describe('Breadcrumb 组件测试', () => {
         <Breadcrumb.Item>item</Breadcrumb.Item>
       </Breadcrumb>
     );
-    const { container } = render(el);
-    expect(container.firstChild.firstChild.firstChild).toHaveStyle('max-width: 120px');
+    expect(renderFirstItem(el).firstChild).toHaveStyle('max-width: 120px');
   });
 
   it('separator', () => {
@@ -50,8 +52,8 @@ describe('Breadcrumb 组件测试', () => {
         <Breadcrumb.Item>item</Breadcrumb.Item>
       </Breadcrumb>
     );
-    const { container } = render(el);
-    expect(container.firstChild.firstChild.lastChild).toHaveTextContent('👉');
+    const { queryByText } = render(el);
+    expect(queryByText('👉')).toBeInTheDocument();
   });
 });
 

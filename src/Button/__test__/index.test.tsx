@@ -2,42 +2,46 @@ import { render, fireEvent } from '@testing-library/react';
 import Button from '../index';
 
 describe('Button 组件测试', () => {
+  const renderBtn = (btn) => {
+    const { container } = render(btn);
+    return container.firstChild
+  }
+
+  const renderBtnHasClass = (btn, className) => {
+    return expect(renderBtn(btn)).toHaveClass(className);
+  }
+
   it('children', () => {
     const { queryByText } = render(<Button>foo</Button>);
     expect(queryByText('foo')).toBeInTheDocument();
   });
 
   it('type', () => {
-    const { container } = render(<Button type="success" />);
-    expect(container.firstChild.classList.contains('i-button--type-success')).toBeTruthy();
+    renderBtnHasClass(<Button type="success" />, 'i-button--type-success')
   });
 
   it('variant', () => {
-    const { container } = render(<Button variant="outline" />);
-    expect(container.firstChild.classList.contains('i-button--variant-outline')).toBeTruthy();
+    renderBtnHasClass(<Button variant="outline" />, 'i-button--variant-outline')
   });
 
   it('active', () => {
-    const { container } = render(<Button active />);
-    expect(container.firstChild.classList.contains('i-button-active')).toBeTruthy();
+    renderBtnHasClass(<Button active />, 'i-button-active')
   });
 
   it('disabled', () => {
     const clickFn = jest.fn();
-    const { container } = render(<Button disabled onClick={clickFn} />);
-    expect(container.firstChild).toBeDisabled();
-    fireEvent.click(container.firstChild);
+    const btn = renderBtn(<Button disabled onClick={clickFn} />)
+    expect(btn).toBeDisabled();
+    fireEvent.click(btn);
     expect(clickFn).toBeCalledTimes(0);
   });
 
   it('size', () => {
-    const { container } = render(<Button size="small" />);
-    expect(container.firstChild.classList.contains('i-button--size-small')).toBeTruthy();
+    renderBtnHasClass(<Button size="small" />, 'i-button--size-small')
   });
 
   it('shape', () => {
-    const { container } = render(<Button shape="circle" />);
-    expect(container.firstChild.classList.contains('i-button--shape-circle')).toBeTruthy();
+    renderBtnHasClass(<Button shape="circle" />, 'i-button--shape-circle')
   });
 
   it('icon', () => {
@@ -47,8 +51,7 @@ describe('Button 组件测试', () => {
 
   it('onClick', () => {
     const clickFn = jest.fn();
-    const { container } = render(<Button onClick={clickFn} />);
-    fireEvent.click(container.firstChild);
+    fireEvent.click(renderBtn(<Button onClick={clickFn} />));
     expect(clickFn).toHaveBeenCalled();
   });
 });

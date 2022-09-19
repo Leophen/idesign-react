@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Avatar 组件测试 image alt 1`] = `
+<DocumentFragment>
+  <div
+    class="i-avatar"
+    style="width: 32px; height: 32px;"
+  >
+    <img
+      alt="test-avatar"
+      class="i-avatar__image"
+      referrerpolicy="no-referrer"
+      src="https://picsum.photos/180/120"
+    />
+  </div>
+</DocumentFragment>
+`;
