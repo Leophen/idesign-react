@@ -2,8 +2,6 @@ import { render } from '@testing-library/react';
 import Alert from '../index';
 
 describe('Alert 组件测试', () => {
-  const testId = 'alert-test-id';
-
   it('type', () => {
     const props = {
       message: 'Alert 内容',
