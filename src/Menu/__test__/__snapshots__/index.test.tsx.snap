@@ -1,0 +1,237 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Menu 组件测试 Menu Group 1`] = `
+<DocumentFragment>
+  <div
+    class="i-menu"
+  >
+    <ul
+      class="i-menu-item__wrapper"
+    >
+      <li
+        class="i-menu-item i-menu-item__active"
+        direction="horizontal"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单1
+        </span>
+      </li>
+      <div
+        class="i-popup__reference"
+      >
+        <div
+          class="i-menu-item__group-wrapper"
+        >
+          <span
+            class="i-menu-item__txt"
+          >
+            菜单2
+          </span>
+          <i
+            class="i-icon icon-ArrowUpBold"
+            style="font-size: 12px;"
+          />
+        </div>
+      </div>
+      <li
+        class="i-menu-item"
+        direction="horizontal"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单3
+        </span>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Menu 组件测试 Menu Group width & Direction 1`] = `
+<DocumentFragment>
+  <div
+    class="i-menu i-menu__vertical"
+    style="width: 200px;"
+  >
+    <ul
+      class="i-menu-item__wrapper"
+    >
+      <li
+        class="i-menu-item i-menu-item__active"
+        direction="vertical"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单1
+        </span>
+      </li>
+      <div
+        class="i-collapse i-collapse__hide-border i-menu-item__group"
+      >
+        <div
+          class="i-collapse-item i-collapse-item__icon-right"
+        >
+          <header
+            class="i-collapse-item__header i-collapse-item__header-fold"
+            data-active="0"
+          >
+            <i
+              class="i-icon icon-ArrowCaretRight"
+              style="transform: rotate(0deg);"
+            />
+            <span
+              class="i-collapse-item__header-txt"
+            >
+              菜单2
+            </span>
+          </header>
+          <section
+            class="i-collapse-item__content"
+            data-active="0"
+            style="height: 0px;"
+          >
+            <div
+              class="i-collapse-item__content-inner"
+            >
+              <li
+                class="i-menu-item"
+              >
+                <span
+                  class="i-menu-item__txt"
+                >
+                  菜单2-1
+                </span>
+              </li>
+              <div
+                class="i-collapse i-collapse__hide-border i-menu-item__group"
+              >
+                <div
+                  class="i-collapse-item i-collapse-item__icon-right"
+                >
+                  <header
+                    class="i-collapse-item__header i-collapse-item__header-fold"
+                    data-active="0"
+                  >
+                    <i
+                      class="i-icon icon-ArrowCaretRight"
+                      style="transform: rotate(0deg);"
+                    />
+                    <span
+                      class="i-collapse-item__header-txt"
+                    >
+                      菜单2-2
+                    </span>
+                  </header>
+                  <section
+                    class="i-collapse-item__content"
+                    data-active="0"
+                    style="height: 0px;"
+                  >
+                    <div
+                      class="i-collapse-item__content-inner"
+                    >
+                      <li
+                        class="i-menu-item"
+                      >
+                        <span
+                          class="i-menu-item__txt"
+                        >
+                          菜单2-2-1
+                        </span>
+                      </li>
+                      <li
+                        class="i-menu-item"
+                      >
+                        <span
+                          class="i-menu-item__txt"
+                        >
+                          菜单2-2-2
+                        </span>
+                      </li>
+                      <li
+                        class="i-menu-item"
+                      >
+                        <span
+                          class="i-menu-item__txt"
+                        >
+                          菜单2-2-3
+                        </span>
+                      </li>
+                    </div>
+                  </section>
+                </div>
+              </div>
+              <li
+                class="i-menu-item"
+              >
+                <span
+                  class="i-menu-item__txt"
+                >
+                  菜单2-3
+                </span>
+              </li>
+            </div>
+          </section>
+        </div>
+      </div>
+      <li
+        class="i-menu-item"
+        direction="vertical"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单3
+        </span>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Menu 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-menu"
+  >
+    <ul
+      class="i-menu-item__wrapper"
+    >
+      <li
+        class="i-menu-item i-menu-item__active"
+        direction="horizontal"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单1
+        </span>
+      </li>
+      <li
+        class="i-menu-item"
+        direction="horizontal"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单2
+        </span>
+      </li>
+      <li
+        class="i-menu-item"
+        direction="horizontal"
+      >
+        <span
+          class="i-menu-item__txt"
+        >
+          菜单3
+        </span>
+      </li>
+    </ul>
+  </div>
+</DocumentFragment>
+`;
