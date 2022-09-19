@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Divider 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-divider"
+  />
+</DocumentFragment>
+`;
