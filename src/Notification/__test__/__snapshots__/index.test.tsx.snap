@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Notification 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-notification"
+  >
+    <i
+      class="i-icon icon-TipInfo"
+      style="font-size: 20px;"
+    />
+    <div
+      class="i-notification__main"
+    >
+      <div
+        class="i-notification__content"
+      />
+    </div>
+  </div>
+</DocumentFragment>
+`;

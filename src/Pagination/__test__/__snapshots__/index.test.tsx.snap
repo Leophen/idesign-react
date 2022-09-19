@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-pagination"
+  >
+    <div
+      class="i-pagination-select"
+    >
+      <div
+        class="i-select"
+      >
+        <div
+          class="i-popup__reference"
+        >
+          <div
+            class="i-input i-input-is-readonly i-input__hide-clear"
+          >
+            <input
+              class="i-input__inner"
+              placeholder="请选择"
+              readonly=""
+              value="10 条/页"
+            />
+            <i
+              class="i-icon icon-TipCloseFill"
+            />
+            <i
+              class="i-icon icon-ArrowDown i-input-suffix-icon"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="i-pagination-control"
+    >
+      <div
+        class="i-pagination-btn i-pagination-btn__handle i-pagination-btn__disabled"
+      >
+        <i
+          class="i-icon icon-ArrowLeft"
+          style="font-size: 12px;"
+        />
+      </div>
+      <div
+        class="i-pagination-btn i-pagination-btn__active"
+      >
+        1
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        2
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        3
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        4
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        5
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        6
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        7
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        8
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        9
+      </div>
+      <div
+        class="i-pagination-btn"
+      >
+        10
+      </div>
+      <div
+        class="i-pagination-btn i-pagination-btn__handle"
+      >
+        <i
+          class="i-icon icon-ArrowRight"
+          style="font-size: 12px;"
+        />
+      </div>
+    </div>
+    <section
+      class="i-pagination-input"
+    >
+      <span>
+        前往
+      </span>
+      <div
+        class="i-input i-input--type-number"
+        style="width: 36px;"
+      >
+        <input
+          class="i-input__inner"
+          max="10"
+          min="1"
+          placeholder=""
+          step="1"
+          type="number"
+          value="1"
+        />
+        <div
+          class="i-input-number-slider"
+        />
+      </div>
+      <span>
+        页
+      </span>
+    </section>
+  </div>
+</DocumentFragment>
+`;

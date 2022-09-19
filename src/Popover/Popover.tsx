@@ -165,12 +165,14 @@ const Popover: React.FC<PopoverProps> = (props) => {
 
   // 触发节点宽高变化时重定位
   useEffect(() => {
-    const resizeObserver = new ResizeObserver(entries => {
-      setWidth((entries[0].contentRect.width || 0))
-      setHeight((entries[0].contentRect.height || 0))
-    });
-    resizeObserver.observe((triggerNode.current as any))
-    return () => resizeObserver.disconnect()
+    if (typeof ResizeObserver !== 'undefined') {
+      const resizeObserver = new ResizeObserver(entries => {
+        setWidth((entries[0].contentRect.width || 0))
+        setHeight((entries[0].contentRect.height || 0))
+      });
+      resizeObserver.observe((triggerNode.current as any))
+      return () => resizeObserver.disconnect()
+    }
   }, [])
 
   return (

@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Popup 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-popup__reference"
+  >
+    <button>
+      悬浮提示
+    </button>
+  </div>
+</DocumentFragment>
+`;

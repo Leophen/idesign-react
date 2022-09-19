@@ -57,7 +57,7 @@ const PaginationList: React.FC<PaginationListProps> = (props) => {
 
   useEffect(() => {
     updateArrowShow()
-    pagesRef.current && pagesRef.current.scrollTo({
+    pagesRef.current?.scrollTo({
       left: 32 * (current - 3) + 8 * (current - 3),
       behavior: 'smooth'
     });
