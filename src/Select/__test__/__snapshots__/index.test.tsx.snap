@@ -1,0 +1,27 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Select 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-select"
+  >
+    <div
+      class="i-popup__reference"
+    >
+      <div
+        class="i-input i-input-is-readonly"
+      >
+        <input
+          class="i-input__inner"
+          placeholder="请选择"
+          readonly=""
+          value=""
+        />
+        <i
+          class="i-icon icon-ArrowDown i-input-suffix-icon"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

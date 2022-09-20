@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Switch 组件测试 create 1`] = `
+<DocumentFragment>
+  <button
+    class="i-switch"
+    role="switch"
+    type="button"
+  >
+    <span
+      class="i-switch__handle"
+    />
+  </button>
+</DocumentFragment>
+`;
