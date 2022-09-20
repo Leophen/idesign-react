@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Radio 组件测试 create 1`] = `
+<DocumentFragment>
+  <label
+    class="i-radio"
+  >
+    <input
+      class="i-radio__former"
+      readonly=""
+      type="radio"
+      value=""
+    />
+    <span
+      class="i-radio__input"
+    />
+    <span
+      class="i-radio__label"
+    />
+  </label>
+</DocumentFragment>
+`;
