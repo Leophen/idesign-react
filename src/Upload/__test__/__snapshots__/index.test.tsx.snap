@@ -1,0 +1,76 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Upload 组件测试 block 1`] = `
+<DocumentFragment>
+  <div
+    class="i-upload"
+  >
+    <input
+      style="display: none;"
+      type="file"
+    />
+    <div
+      class="i-upload__block"
+    >
+      <i
+        class="i-icon icon-ThePlus"
+        style="font-size: 20px;"
+      />
+      点击上传
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Upload 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-upload"
+  >
+    <input
+      style="display: none;"
+      type="file"
+    />
+    <button
+      class="i-button i-button--type-info i-button--variant-outline"
+    >
+      <i
+        class="i-icon icon-ArrowLineUpload i-button-icon"
+      />
+      点击上传
+    </button>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Upload 组件测试 drag 1`] = `
+<DocumentFragment>
+  <div
+    class="i-upload"
+  >
+    <input
+      style="display: none;"
+      type="file"
+    />
+    <div
+      class="i-upload__drag"
+      draggable="true"
+    >
+      <i
+        class="i-icon icon-ArrowLineUpload"
+        style="font-size: 20px;"
+      />
+      <span
+        class="i-upload-placeholder"
+      >
+        点击或拖动到框内上传
+      </span>
+      <span
+        class="i-upload-tip"
+      >
+        支持不超过 10M 的 excel 类型文件
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;

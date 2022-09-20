@@ -1,5 +1,4 @@
 import { render } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import DatePicker from '../index';
 
 describe('DatePicker 组件测试', () => {
@@ -7,8 +6,9 @@ describe('DatePicker 组件测试', () => {
     const { container } = render(comp);
     return container.querySelector('.i-input__inner').value
   }
+
   it('create', () => {
-    const { asFragment } = render(<DatePicker />);
+    const { asFragment } = render(<DatePicker value='2022-05-20' />);
     expect(asFragment()).toMatchSnapshot();
   });
 

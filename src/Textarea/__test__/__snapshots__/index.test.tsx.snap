@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Textarea 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-textarea"
+  >
+    <textarea
+      class="i-textarea__inner"
+      placeholder="请输入"
+    />
+  </div>
+</DocumentFragment>
+`;

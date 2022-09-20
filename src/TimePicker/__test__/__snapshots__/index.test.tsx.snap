@@ -1,0 +1,85 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TimePicker 组件测试 create 1`] = `
+<DocumentFragment>
+  <div
+    class="i-time-picker"
+  >
+    <div
+      class="i-popup__reference i-time-popup"
+    >
+      <div
+        class="i-input i-input-is-readonly"
+      >
+        <div
+          class="i-input i-input--size-small i-input--type-number"
+        >
+          <input
+            class="i-input__inner"
+            max="23"
+            min="0"
+            placeholder=""
+            step="1"
+            type="number"
+            value="12"
+          />
+          <div
+            class="i-input-number-slider"
+          />
+        </div>
+        <div
+          class="i-time-colon"
+        >
+          :
+        </div>
+        <div
+          class="i-input i-input--size-small i-input--type-number"
+        >
+          <input
+            class="i-input__inner"
+            max="59"
+            min="0"
+            placeholder=""
+            step="1"
+            type="number"
+            value="34"
+          />
+          <div
+            class="i-input-number-slider"
+          />
+        </div>
+        <div
+          class="i-time-colon"
+        >
+          :
+        </div>
+        <div
+          class="i-input i-input--size-small i-input--type-number"
+        >
+          <input
+            class="i-input__inner"
+            max="59"
+            min="0"
+            placeholder=""
+            step="1"
+            type="number"
+            value="56"
+          />
+          <div
+            class="i-input-number-slider"
+          />
+        </div>
+        <input
+          class="i-input__inner"
+          placeholder=""
+          readonly=""
+          value=""
+        />
+        <i
+          class="i-icon icon-Clock i-input-suffix-icon"
+        />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
