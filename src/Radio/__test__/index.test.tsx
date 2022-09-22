@@ -22,12 +22,19 @@ describe('Radio 组件测试', () => {
     expect(renderRadio(<Radio defaultChecked={true} />)).toHaveClass('i-radio', 'i-radio-is-checked');
   });
 
+  it('onChange', () => {
+    const changeFn = jest.fn();
+    const radio = renderRadio(<Radio onChange={changeFn} />)
+    fireEvent.click(radio);
+    expect(changeFn).toHaveBeenCalled();
+  });
+
   it('disabled', () => {
-    const fn = jest.fn();
-    const radio = renderRadio(<Radio disabled={true} onChange={fn} />)
+    const changeFn = jest.fn();
+    const radio = renderRadio(<Radio disabled={true} onChange={changeFn} />)
     expect(radio).toHaveClass('i-radio-is-disabled');
     fireEvent.click(radio);
-    expect(fn).toBeCalledTimes(0);
+    expect(changeFn).toBeCalledTimes(0);
   });
 
   it('type', () => {
@@ -61,16 +68,16 @@ describe('RadioGroup 组件测试', () => {
   });
 
   it('disabled', () => {
-    const fn = jest.fn();
+    const changeFn = jest.fn();
     const { getByTestId } = render(
-      <Radio.Group disabled>
+      <Radio.Group onChange={changeFn} disabled>
         <Radio value="gz" data-testid='gz-item'>广州</Radio>
         <Radio value="sz">深圳</Radio>
       </Radio.Group>,
     );
     expect(getByTestId('gz-item')).toHaveClass('i-radio-is-disabled');
     fireEvent.click(getByTestId('gz-item'));
-    expect(fn).toBeCalledTimes(0);
+    expect(changeFn).toBeCalledTimes(0);
   });
 
   it('size', () => {
