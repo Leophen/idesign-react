@@ -14,7 +14,7 @@ order: 1
 
 ## 基本用法
 
-Alert 组件提供了四种不同的提示类型：`info`（默认）、`success`、`warning` 和 `error`。
+Alert 组件提供了四种提示类型：`info`（默认）、`success`、`warning` 和 `error`
 
 ```tsx
 import React from 'react';
