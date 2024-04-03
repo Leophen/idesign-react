@@ -1,0 +1,443 @@
+$white: #bbc3d2;
+$sfgrey: #bbbbbb;
+$grey: #818a9b;
+$yellow: #edc67e;
+$green: #98c379;
+$greblue: #54c4b9;
+$blue: #61afef;
+$red: #e06c75;
+$orange: #d19a66;
+$purple: #bd93f9;
+
+div[class*='codeBlockContainer'] {
+    border-radius: 8px;
+    box-shadow: 0 2px 20px rgb(0 0 0 / 10%), 0 0px 0px 1px var(--ifm-color-gray-800);
+    box-sizing: border-box;
+    overflow: hidden;
+
+    code {
+        border-radius: 0;
+    }
+}
+
+.markdown {
+    div[class*='codeBlockTitle_'] {
+        background-color: #292C33;
+        color: $white;
+        border-bottom: 1px solid var(--ifm-toc-border-color);
+    }
+
+    .prism-code {
+        background-color: var(--code-bg-color) !important;
+
+        .token-line {
+            .token {
+
+                // js
+                &.imports,
+                &.plain-text {
+                    color: $white !important;
+                }
+
+                &.string,
+                &.identifier {
+                    color: $yellow !important;
+                }
+
+                &.boolean {
+                    color: $greblue !important;
+                }
+
+                &.keyword {
+                    color: $greblue !important;
+                    font-style: italic !important;
+
+                    &.control-flow {
+                        color: $red !important;
+                    }
+
+                    &.module {
+                        color: $red !important;
+                    }
+                }
+
+                &.exports {
+                    color: $white !important;
+
+                    &.operator {
+                        color: $greblue !important;
+                    }
+                }
+
+                &.imports {
+                    color: $white !important;
+
+                    &.operator {
+                        color: $greblue !important;
+                    }
+                }
+
+                &.function {
+                    color: $green !important;
+                }
+
+                &.function-variable {
+                    &.function {
+                        &.maybe-class-name {
+                            color: $green !important;
+                        }
+                    }
+                }
+
+                &.method.function.property-access {
+                    color: $green !important;
+                }
+
+                &.punctuation {
+                    color: $yellow !important;
+                }
+
+                &.parameter {
+                    color: $orange !important;
+
+                    &.punctuation {
+                        color: $white !important;
+                    }
+                }
+
+                &,
+                &.parameter,
+                &.spread {
+                    &.operator {
+                        color: $red !important;
+                    }
+
+                    &.string {
+                        color: $yellow !important;
+                    }
+                }
+
+                &.plain {
+                    color: $white !important;
+                }
+
+                &.comment {
+                    color: $grey !important;
+                    font-style: unset !important;
+                }
+
+                &.number {
+                    color: $purple !important;
+                }
+
+                &.dom.variable {
+                    color: $purple !important;
+                    font-style: italic !important;
+                }
+
+                &.constant {
+                    color: $purple !important;
+                }
+
+                &.property-access {
+                    color: $greblue !important;
+                }
+
+                &.known-class-name.class-name {
+                    color: $blue !important;
+                }
+
+                &.console.class-name {
+                    color: $blue !important;
+                }
+
+                &.class-name {
+                    color: $blue !important;
+                }
+
+                &.regex {
+                    &.regex-delimiter {
+                        color: $yellow !important;
+                    }
+
+                    &.regex-source.language-regex {
+                        color: $greblue !important;
+                    }
+
+                    &.regex-flags {
+                        color: $red !important;
+                    }
+                }
+
+                &.maybe-class-name {
+                    // color: $blue !important;
+                    color: $white !important;
+                }
+
+                &.template-string {
+                    &.html {
+                        color: $yellow !important;
+                    }
+
+                    &.string {
+                        color: $yellow !important;
+                    }
+
+                    &.interpolation {
+                        color: $blue !important;
+
+                        &.operator,
+                        &.punctuation {
+                            color: $red !important;
+                        }
+
+                        &.interpolation-punctuation.punctuation {
+                            color: $purple !important;
+                        }
+
+                        &.function {
+                            color: $green !important;
+                        }
+
+                        &.regex {
+                            &.regex-delimiter {
+                                color: $yellow !important;
+                            }
+
+                            &.regex-flags {
+                                color: $red !important;
+                            }
+                        }
+                    }
+                }
+
+                &.script {
+                    &.language-javascript {
+                        color: $blue;
+                    }
+                }
+
+                // python
+                &.builtin {
+                    color: $blue !important;
+                }
+
+                // html
+                &.tag {
+                    color: $red !important;
+
+                    &.punctuation {
+                        color: $sfgrey !important;
+                    }
+
+                    &.attr-name {
+                        color: $green !important;
+
+                        &.namespace {
+                            color: $greblue !important;
+                            opacity: 1 !important;
+                        }
+                    }
+
+                    &.class-name {
+                        color: $blue !important;
+                    }
+
+                    &.spread {
+                        &.punctuation {
+                            color: $purple !important;
+                        }
+
+                        &.string {
+                            color: $yellow !important;
+                        }
+
+                        &.attr-value {
+                            color: $orange !important;
+                        }
+                    }
+
+                    &.attr-value {
+                        color: $yellow !important;
+
+                        &.punctuation {
+                            color: $yellow !important;
+
+                            &.attr-equals {
+                                color: $red !important;
+                            }
+                        }
+                    }
+
+                    &.script.language-javascript {
+                        color: $white !important;
+
+                        &.operator,
+                        &.script-punctuation.punctuation {
+                            color: $red !important;
+                        }
+
+                        &.punctuation {
+                            color: $purple !important;
+                        }
+
+                        &.function,
+                        &.property-access {
+                            color: $blue !important;
+                        }
+
+                        &.keyword {
+                            color: $greblue !important;
+                        }
+
+                        &.parameter {
+                            color: $orange !important;
+                        }
+
+                        &.string {
+                            color: $yellow !important;
+                        }
+
+                        &.tag {
+                            &.class-name {
+                                color: $blue !important;
+                            }
+                        }
+                    }
+                }
+
+                &.entity.named-entity {
+                    color: $greblue !important;
+                }
+
+                &.style.language-css {
+                    color: $blue;
+
+                    &.atrule {
+                        &.rule {
+                            color: $red !important;
+                        }
+
+                        &.url {
+                            color: $orange !important;
+
+                            &.function {
+                                color: $green !important;
+                            }
+                        }
+                    }
+                }
+
+                &.doctype {
+                    font-style: unset !important;
+
+                    &.punctuation {
+                        color: $white !important;
+                    }
+
+                    &.doctype-tag {
+                        color: $red !important;
+                    }
+
+                    &.name {
+                        color: $greblue !important;
+                    }
+                }
+
+                // xml
+                &.prolog {
+                    color: $purple !important;
+                    font-style: italic !important;
+                }
+
+                // css
+                &.selector {
+                    color: $green !important;
+
+                    &.parent.important {
+                        color: $red !important;
+                    }
+                }
+
+                &.property {
+                    color: $greblue !important;
+                }
+
+                &.unit {
+                    color: $red !important;
+                }
+
+                &.important {
+                    color: $red !important;
+                }
+
+                &.hexcode.color {
+                    color: $purple !important;
+                }
+
+                &.color {
+                    color: $purple !important;
+                }
+
+                &.atrule {
+                    color: $red !important;
+
+                    &.rule {
+                        color: $purple !important;
+                    }
+
+                    &.keyword {
+                        color: $blue !important;
+                    }
+
+                    &.punctuation {
+                        color: $orange !important;
+                    }
+
+                    &.property {
+                        color: $greblue !important;
+                    }
+
+                    &.number {
+                        color: $purple !important;
+                    }
+
+                    &.unit {
+                        color: $red !important;
+                    }
+                }
+
+                // diff
+                &.unchanged.line {
+                    color: $white !important;
+                }
+
+                &.inserted-sign {
+                    &.inserted {
+
+                        &.line,
+                        &.prefix.inserted {
+                            color: $green !important;
+                        }
+
+                        &.prefix.inserted {
+                            user-select: none;
+                        }
+                    }
+                }
+
+                &.deleted-sign.deleted {
+
+                    &.line,
+                    &.prefix.deleted {
+                        color: $red !important;
+                    }
+
+                    &.prefix.deleted {
+                        user-select: none;
+                    }
+                }
+            }
+        }
+    }
+}
