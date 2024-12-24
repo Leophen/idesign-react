@@ -22,7 +22,7 @@
         "clsx": "^2.0.0",
         "docusaurus-plugin-image-zoom": "^2.0.0",
         "docusaurus-plugin-sass": "^0.2.5",
-        "idesign-react": "^1.1.1",
+        "idesign-react": "workspace:*",
         "prism-react-renderer": "^2.3.1",
         "react": "^18.0.0",
         "react-dom": "^18.0.0",

@@ -5,8 +5,9 @@ h4,
 h5,
 h6,
 p {
-    --ifm-heading-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
+
+    --ifm-heading-font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
 
     &:hover {
         .hash-link {
@@ -17,6 +18,7 @@ p {
 
 h1 {
     margin: 25px 0 50px !important;
+
     font-size: 32px;
     font-weight: 700;
 }
@@ -25,18 +27,21 @@ h1 {
 >h3,
 >h4 {
     &::before {
-        opacity: 0;
         position: absolute;
         left: -10px;
+
         content: '#';
-        color: var(--ifm-color-primary);
         transition: all 0.2s ease-out;
+
+        opacity: 0;
+        color: var(--ifm-color-primary);
     }
 
     &:hover {
         &::before {
-            opacity: 1;
             left: -20px;
+
+            opacity: 1;
         }
     }
 }
@@ -45,11 +50,13 @@ h1 {
     position: absolute;
     left: -20px;
     // width: calc(100% + 20px);
+
     width: 20px;
 }
 
 >h2 {
     margin: 50px 0 16px;
+
     font-size: 22px;
     font-weight: bold;
 
@@ -59,11 +66,13 @@ h1 {
 }
 
 >h3 {
+    margin: 36px 0 16px 0px !important;
+    padding: 4px 0px;
+
+    border-radius: 10px;
+
     font-size: 18px;
     font-weight: bold;
-    padding: 4px 0px;
-    margin: 36px 0 16px 0px !important;
-    border-radius: 10px;
 
     code {
         font-size: 20px;
@@ -75,13 +84,17 @@ h1 {
 >h4,
 >h5 {
     position: relative;
+
     width: fit-content;
 
     code {
         padding: 0;
+
         vertical-align: unset;
+
         border: none !important;
         background-color: transparent !important;
+
         font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif !important;
     }
 }
@@ -89,8 +102,9 @@ h1 {
 >h4,
 >h5 {
     margin: 40px 0 10px !important;
-    font-size: 17px;
     padding-bottom: 10px;
+
+    font-size: 17px;
 
     code {
         font-size: 20px;
@@ -98,8 +112,9 @@ h1 {
 }
 
 >h5 {
-    color: var(--ifm-color-primary);
     margin: 24px 0 10px !important;
+
+    color: var(--ifm-color-primary);
 }
 
 >h6 {
@@ -110,6 +125,7 @@ h1 {
 div[class*='tabItem']>p,
 >p {
     margin: 16px auto !important;
+
     font-size: 16px;
 }
 
@@ -118,11 +134,16 @@ div[class*='tabItem']>p,
 li {
     &>img {
         transform: translateY(3px);
+
         border: none;
     }
 }
 
 &>table {
+    thead {
+        background: hsl(220, 45%, 96%); 
+    }
+
     thead tr {
         border: none;
     }
@@ -166,6 +187,7 @@ div[class*='tabItem']>li,
 &>ul li,
 &>li {
     position: relative;
+
     font-size: 16px;
 
     p {
@@ -178,28 +200,36 @@ div[class*='tabItem']>li,
     }
 
     &::before {
-        content: '';
+        position: absolute;
+        top: 7px;
+        left: -20px;
+
         width: 10px;
         height: 10px;
-        position: absolute;
-        left: -20px;
-        top: 7px;
+
+        content: '';
+
         border-radius: 50%;
         background-color: var(--dot-color);
     }
 
     ul {
         position: relative;
+
         padding-left: 15px;
 
         &::after {
             position: absolute;
-            content: '';
-            display: block;
-            left: -15.5px;
             top: -22px;
+            left: -15.5px;
+
+            display: block;
+
             width: 1px;
             height: calc(50%);
+
+            content: '';
+
             background-color: var(--dot-color);
         }
 
@@ -208,28 +238,36 @@ div[class*='tabItem']>li,
 
             &::marker {
                 color: var(--dot-color);
+
                 font-size: 16px;
             }
 
             &::before {
                 position: absolute;
-                content: '';
-                display: block;
-                left: -30.5px;
                 top: -15px;
+                left: -30.5px;
+
+                display: block;
+
                 width: 1px;
                 height: calc(100% + 4px);
+
+                content: '';
+
                 border-radius: 0;
                 background-color: var(--dot-color);
             }
 
             &::after {
                 position: absolute;
-                left: -30px;
                 top: 12px;
-                content: '';
+                left: -30px;
+
                 width: 16px;
                 height: 1px;
+
+                content: '';
+
                 background-color: var(--dot-color);
             }
 
@@ -244,8 +282,10 @@ div[class*='tabItem']>li,
             &:only-of-type {
                 &::before {
                     top: -15px;
-                    height: 31px;
+
                     display: block;
+
+                    height: 31px;
                 }
             }
         }
@@ -262,16 +302,20 @@ div[class*='tabItem']>ol,
 &>ol {
     li {
         &::before {
+            top: 2px;
+            left: -33px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
             width: 20px;
             height: 20px;
-            left: -33px;
-            top: 2px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+
+            background-color: var(--code-bg);
+
             font-size: 13px;
             font-weight: 700;
-            background-color: var(--code-bg);
             // box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
         }
     }
@@ -437,8 +481,8 @@ a {
 }
 
 &>table {
-    background-color: var(--ifm-background-color);
     border-radius: 8px;
+    background-color: var(--ifm-background-color);
     box-shadow: 0 0 0 1px var(--ifm-toc-border-color);
 
     thead {
@@ -451,23 +495,28 @@ a {
     }
 
     tbody {
-        width: 100%;
         display: table;
+
+        width: 100%;
 
         tr:first-of-type {
             td {
                 position: relative;
 
                 &::before {
-                    width: calc(100% - 12px);
-                    height: 100%;
                     position: absolute;
-                    left: -1px;
                     top: -50px;
-                    background-color: var(--ifm-background-color);
+                    left: -1px;
+
                     display: flex;
                     align-items: center;
+
+                    width: calc(100% - 12px);
+                    height: 100%;
                     padding-left: 12px;
+
+                    background-color: var(--ifm-background-color);
+
                     font-weight: bold;
                 }
 
@@ -491,8 +540,8 @@ a {
 
         tr {
             td {
-                border-left: none;
                 border-right: none;
+                border-left: none;
             }
 
             &:last-of-type {
@@ -515,8 +564,8 @@ div[class*='tabItem']>img {
     }
 
     &.notOpen {
-        box-shadow: none;
         border: none !important;
+        box-shadow: none;
     }
 }
 

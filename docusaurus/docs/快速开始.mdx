@@ -11,7 +11,7 @@ import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 <div align="center">
-  <a href="https://arco.design" target="_blank">
+  <a href="https://idesign.leophen.cn/" target="_blank">
     <img
       alt="iDesign Logo"
       width="200"
@@ -31,28 +31,19 @@ import TabItem from "@theme/TabItem";
 
 基于 React，TypeScript 友好的 React UI 组件库。
 
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/arco-design/arco-design/blob/main/LICENSE)
-[![Awesome](https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg)](https://github.com/arco-design/awesome-arco)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/Leophen/idesign-react/blob/main/LICENSE)
 
 </div>
 
 ## 特性
 
-### 高性能
-
-为严苛场景精心优化，拥有最佳的包体积大小和极致的性能。
-
-### 可定制
-
-可以高效地对组件外观进行调整，或是创造出自己的主题。
-
-### 流畅性
-
-拥有流畅和细腻的动画，助力产品打造出极致体验。
+|高性能|可定制|流畅性|
+|-|-|-|
+|为严苛场景精心优化，拥有最佳的包体积大小和极致的性能。|可以高效地对组件外观进行调整，或是创造出自己的主题。|拥有流畅和细腻的动画，助力产品打造出极致体验。|
 
 ## 安装
 
-[npm package](https://www.npmjs.com/package/@arco-design/web-react)
+[npm package](https://www.npmjs.com/package/idesign)
 
 ```mdx-code-block
 <Tabs>
@@ -60,7 +51,7 @@ import TabItem from "@theme/TabItem";
 ```
 
 ```bash
-npm install --save @baidu/acud-pro-components
+npm install --save idesign-react
 ```
 
 ```mdx-code-block
@@ -69,7 +60,7 @@ npm install --save @baidu/acud-pro-components
 ```
 
 ```bash
-yarn add @baidu/acud-pro-components -D
+yarn add idesign-react -D
 ```
 
 ```mdx-code-block
@@ -79,26 +70,25 @@ yarn add @baidu/acud-pro-components -D
 
 ## 例子
 
-```typescript
-import React from "react";
-import ReactDOM from "react-dom";
-import { Button } from "@arco-design/web-react";
-import "@arco-design/web-react/dist/css/arco.css";
+```jsx
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { Button } from 'idesign';
 
 function App() {
-  return <Button type="secondary">Hello World</Button>;
+  return (
+    <Button type="primary">
+      Hello World
+    </Button>
+  );
 }
 
-ReactDOM.render(<App />, document.getElementById("app"));
+ReactDOM.render(<App />, document.getElementById('app'));
 ```
 
 ## 生态
 
-| 项目           | 介绍                                                        |
-| -------------- | ----------------------------------------------------------- |
-| [Vue 组件库]   | 基于 [Arco Design](https://arco.design/) 的 Vue UI 组件库。 |
-
-[Vue 组件库]: https://arco.design/vue/docs/start
+- [Vue 组件库](https://idesign-vue.leophen.cn/)
 
 ## 浏览器兼容性
 
@@ -116,4 +106,4 @@ ReactDOM.render(<App />, document.getElementById("app"));
 
 ## License
 
-[MIT 协议](https://github.com/Leophen/react-library-template/blob/main/LICENSE)
+[MIT 协议](https://github.com/Leophen/idesign-react/blob/main/LICENSE)

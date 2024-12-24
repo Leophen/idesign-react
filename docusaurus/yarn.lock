@@ -5112,7 +5112,7 @@ icss-utils@^5.0.0, icss-utils@^5.1.0:
   resolved "https://registry.yarnpkg.com/icss-utils/-/icss-utils-5.1.0.tgz#c6be6858abd013d768e98366ae47e25d5887b1ae"
   integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
 
-idesign-react@^1.0.20, idesign-react@^1.1.1:
+idesign-react@^1.0.20, "idesign-react@workspace:*":
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/idesign-react/-/idesign-react-1.1.1.tgz#f6a089db7849e029c56ec0892f197bbd691aa5e1"
   integrity sha512-sWCatrBBC7TJTxEzt+pKz8MTXXfWbbGXcoUf0jqJo9Iui6MgjnULYd9R0uEj/VXoFXxy06xb9KAZhs9yDvDObA==
