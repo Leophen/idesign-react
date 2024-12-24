@@ -33,8 +33,10 @@
         "@ant-design/icons": "^5.3.5",
         "@docusaurus/module-type-aliases": "3.1.1",
         "@docusaurus/types": "3.1.1",
+        "@types/lodash": "^4.17.13",
         "antd": "^5.15.4",
-        "classnames": "^2.5.1"
+        "classnames": "^2.5.1",
+        "lodash": "^4.17.21"
     },
     "browserslist": {
         "production": [
