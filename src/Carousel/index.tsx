@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import classNames from 'classnames';
 import './index.scss';
 import _ from 'lodash';
-import Icon from '../Icon'
+import Icon from '../Icon';
 import CarouselItem from './CarouselItem';
 import CarouselNavigation from './CarouselNavigation';
 import { CarouselProps } from './type';
@@ -35,27 +35,33 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   );
   const childrenLength = childrenList.length;
 
+  /**
+   * 重置索引
+   *
+   * @param index 当前索引
+   * @returns 重置后的索引
+   */
   const resetDefaultCurrent = (index: number) => {
     if (type === 'default') {
       if (index >= childrenLength) {
-        return 0
+        return 0;
       } else if (index <= -1) {
-        return childrenLength - 1
+        return childrenLength - 1;
       } else {
-        return index + 1
+        return index + 1;
       }
     } else {
-      return index
+      return index;
     }
-  }
+  };
 
-  const [innerCurrent, setInnerCurrent] = useState(resetDefaultCurrent(defaultCurrent));
+  const [innerCurrent, setInnerCurrent] = useState<number>(resetDefaultCurrent(defaultCurrent));
 
   const carouselRef = useRef<HTMLDivElement>(null);
-  const [wrapWidth, setWrapWidth] = useState(0)
+  const [wrapWidth, setWrapWidth] = useState(0);
   useEffect(() => {
-    carouselRef.current && setWrapWidth(carouselRef.current.getBoundingClientRect().width)
-  }, [])
+    carouselRef.current && setWrapWidth(carouselRef.current.getBoundingClientRect().width);
+  }, []);
 
   const [ifAnimation, setIfAnimation] = useState(false);
 
@@ -72,8 +78,8 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
       duration,
       clickItem: (index: number) => {
         if (type === 'card') {
-          setInnerCurrent(index)
-          onChange?.(index)
+          setInnerCurrent(index);
+          onChange?.(index);
         }
       },
       ...child.props,
@@ -86,19 +92,19 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     carouselItemList.push(
       React.cloneElement(firstEle, {
         ...firstEle.props,
-        key: childrenLength
+        key: childrenLength,
       }),
     );
     carouselItemList.unshift(
       React.cloneElement(lastEle, {
         ...lastEle.props,
-        key: -1
+        key: -1,
       }),
     );
   }
-  const carouselItemLength = carouselItemList.length
+  const carouselItemLength = carouselItemList.length;
 
-  const animationTimer = useRef<any>(null); // 计时器指针
+  const animationTimer = useRef<number | null>(null); // 计时器指针
 
   // 轮播图通用跳转函数
   const handleTo = useCallback(
@@ -141,18 +147,18 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
     }, duration + 50);
   }, [innerCurrent, carouselItemLength, duration, type]);
 
-  const [ifHoverContent, setIfHoverContent] = useState(false)
+  const [ifHoverContent, setIfHoverContent] = useState(false);
 
   const handleEnterContent = () => {
-    stopOnHover && setIfHoverContent(true)
-  }
+    stopOnHover && setIfHoverContent(true);
+  };
 
   const handleLeaveContent = () => {
-    stopOnHover && setIfHoverContent(false)
-  }
+    stopOnHover && setIfHoverContent(false);
+  };
 
   // 自动轮播
-  const loopTimer = useRef<any>(null); // 自动轮播指针
+  const loopTimer = useRef<number | null>(null); // 自动轮播指针
   const setLoopTimer = useCallback(() => {
     if (!ifHoverContent && autoPlay && interval > 0) {
       loopTimer.current = setTimeout(
@@ -172,8 +178,14 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
   useEffect(() => {
     setLoopTimer();
     return () => clearLoopTimer();
-  }, [setLoopTimer])
+  }, [setLoopTimer]);
 
+  /**
+   * 处理点击箭头的事件
+   *
+   * @param handle 箭头类型，last 表示上一个，next 表示下一个
+   * @returns 如果在动画过程中则返回 false，否则根据箭头类型和当前位置返回相应的处理结果
+   */
   const handleClickArrow = (handle: 'last' | 'next') => {
     if (ifAnimation) {
       return false;
@@ -193,7 +205,7 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
         }
       }
     }
-  }
+  };
 
   // Item 包裹层样式
   const getWrapperStyle = () => {
@@ -224,7 +236,7 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
         'i-carousel',
         direction === 'vertical' && 'i-carousel__vertical',
         type === 'card' && 'i-carousel__card',
-        className
+        className,
       )}
       style={{ ...style, width, height }}
       ref={carouselRef}
@@ -235,10 +247,7 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
         onMouseEnter={handleEnterContent}
         onMouseLeave={handleLeaveContent}
       >
-        <ul
-          className='i-carousel__wrapper'
-          style={getWrapperStyle()}
-        >
+        <ul className="i-carousel__wrapper" style={getWrapperStyle()}>
           {carouselItemList}
         </ul>
       </div>
@@ -247,16 +256,10 @@ const Carousel: React.FC<CarouselProps> & { Item: React.ElementType } = (props) 
         current={type === 'default' ? innerCurrent : innerCurrent + 1}
         onEnter={(current: number) => handleTo(type === 'default' ? current + 1 : current)}
       />
-      <div
-        className="i-carousel__arrow-last"
-        onClick={() => handleClickArrow('last')}
-      >
+      <div className="i-carousel__arrow-last" onClick={() => handleClickArrow('last')}>
         <Icon color="#fff" name="ArrowLeft" />
       </div>
-      <div
-        className="i-carousel__arrow-next"
-        onClick={() => handleClickArrow('next')}
-      >
+      <div className="i-carousel__arrow-next" onClick={() => handleClickArrow('next')}>
         <Icon color="#fff" name="ArrowRight" />
       </div>
     </div>
