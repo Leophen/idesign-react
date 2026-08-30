@@ -2,9 +2,12 @@
   "name": "idesign-react",
   "version": "1.1.2",
   "description": "iDesign 前端通用组件库",
+  "engines": {
+    "node": "22.x"
+  },
   "scripts": {
     "start": "node --openssl-legacy-provider ./node_modules/dumi/bin/dumi.js dev",
-    "docs:build": "dumi build",
+    "docs:build": "node --openssl-legacy-provider ./node_modules/dumi/bin/dumi.js build",
     "docs:deploy": "gh-pages -d docs-dist",
     "build": "father-build",
     "deploy": "npm run docs:build && npm run docs:deploy",

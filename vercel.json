@@ -1,0 +1,7 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": "umijs",
+  "installCommand": "npm ci --legacy-peer-deps",
+  "buildCommand": "npm run docs:build",
+  "outputDirectory": "docs-dist"
+}
