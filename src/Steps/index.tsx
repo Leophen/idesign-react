@@ -4,7 +4,7 @@ import './index.scss';
 import StepsItem from './StepsItem';
 import { StepsContextValue, StepsProps } from './type';
 
-export const StepsContext = React.createContext<StepsContextValue>(null as any);
+export const StepsContext = React.createContext<StepsContextValue | null>(null);
 
 const Steps: React.FC<StepsProps> & { Item: React.ElementType } = (props) => {
   const {
@@ -14,7 +14,7 @@ const Steps: React.FC<StepsProps> & { Item: React.ElementType } = (props) => {
     current = 0,
     layout = 'horizontal',
     reverse,
-    dot = false
+    dot = false,
   } = props;
 
   // 注入每一项的 context
@@ -48,7 +48,7 @@ const Steps: React.FC<StepsProps> & { Item: React.ElementType } = (props) => {
           'i-steps',
           layout && `i-steps__layout-${layout}`,
           dot && 'i-steps__dot',
-          className
+          className,
         )}
         style={{ ...style }}
       >
@@ -58,7 +58,7 @@ const Steps: React.FC<StepsProps> & { Item: React.ElementType } = (props) => {
   );
 };
 
-Steps.Item = StepsItem
+Steps.Item = StepsItem;
 
 StepsItem.displayName = 'StepsItem';
 Steps.displayName = 'Steps';

@@ -5,20 +5,22 @@ import useDefault from '../hooks/useDefault';
 import TabsItem from './TabsItem';
 import { TabsContextValue, TabsItemProps, TabsProps } from './type';
 
-export const TabsContext = React.createContext<TabsContextValue>(null as any);
+export const TabsContext = React.createContext<TabsContextValue | null>(null);
 
 const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
-  let defaultVal
-  React.Children.map(props.children, (child, index) => {
-    index === 0 && (defaultVal = (child as any).props.value || 0)
-  })
+  let defaultVal: string | number | undefined;
+  React.Children.forEach(props.children, (child, index) => {
+    if (index === 0 && React.isValidElement<TabsItemProps>(child)) {
+      defaultVal = child.props.value ?? 0;
+    }
+  });
 
   const {
     children = '',
     className,
     style,
     active,
-    defaultActive = defaultVal,
+    defaultActive = defaultVal ?? 0,
     disabled = false,
     theme = 'normal',
     onChange,
@@ -27,36 +29,36 @@ const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
 
   const [innerActive, setInnerActive] = useDefault(active, defaultActive, onChange);
 
-  const tabsRef = useRef<HTMLDivElement>(null)
-  const [tabsRefLeft, setTabsRefLeft] = useState(0)
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const [tabsRefLeft, setTabsRefLeft] = useState(0);
   useEffect(() => {
-    const curTabsRefLeft = tabsRef.current?.getBoundingClientRect().left || 0
-    setTabsRefLeft(curTabsRefLeft)
-    updateBarPosition(curTabsRefLeft)
-  }, [])
+    const curTabsRefLeft = tabsRef.current?.getBoundingClientRect().left || 0;
+    setTabsRefLeft(curTabsRefLeft);
+    updateBarPosition(curTabsRefLeft);
+  }, []);
 
   const [bar, setBar] = useState({
     width: 0,
-    left: 0
-  })
+    left: 0,
+  });
 
   const updateBarPosition = (parentLeft: number) => {
-    tabsRef.current?.childNodes.forEach(item => {
+    tabsRef.current?.childNodes.forEach((item) => {
       if (
         (item as HTMLElement).dataset.active === 'true' &&
         (item as HTMLElement).dataset.disabled !== 'true'
       ) {
-        const tabRect = (item as HTMLElement).getBoundingClientRect()
-        bar.left = tabRect.left - parentLeft
-        bar.width = tabRect.width
-        setBar({ ...bar })
+        const tabRect = (item as HTMLElement).getBoundingClientRect();
+        bar.left = tabRect.left - parentLeft;
+        bar.width = tabRect.width;
+        setBar({ ...bar });
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
-    tabsRefLeft !== 0 && updateBarPosition(tabsRefLeft)
-  }, [innerActive])
+    tabsRefLeft !== 0 && updateBarPosition(tabsRefLeft);
+  }, [innerActive]);
 
   // 注入每一项的 context
   const context: TabsContextValue = {
@@ -67,7 +69,9 @@ const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
         active: innerActive,
         disabled,
         onClick(value?: string | number) {
-          setInnerActive(value)
+          if (value !== undefined) {
+            setInnerActive(value);
+          }
         },
         ...singleTabsProps,
       };
@@ -77,10 +81,7 @@ const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
   return (
     <TabsContext.Provider value={context}>
       <div
-        className={classNames(
-          'i-tabs',
-          className
-        )}
+        className={classNames('i-tabs', className)}
         ref={tabsRef}
         style={{ ...style }}
         {...restProps}
@@ -91,7 +92,7 @@ const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
           }
           const childProps = {
             index,
-            ...child.props
+            ...child.props,
           };
           return React.cloneElement(child, childProps);
         })}
@@ -100,7 +101,7 @@ const Tabs: React.FC<TabsProps> & { Item: React.ElementType } = (props) => {
             className="i-tabs__bar"
             style={{
               width: bar.width,
-              left: bar.left
+              left: bar.left,
             }}
           />
         )}

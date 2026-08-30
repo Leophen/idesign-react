@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import './index.scss';
 import _ from 'lodash';
 import dayjs from 'dayjs';
-import isBetween from 'dayjs/plugin/isBetween'
+import isBetween from 'dayjs/plugin/isBetween';
 import Popup from '../Popup';
 import Input from '../Input';
 import useDefault from '../hooks/useDefault';
@@ -11,19 +11,19 @@ import DatePanel from './DatePanel';
 import DateRangePanel from './DateRangePanel';
 import { DatePickerProps } from './type';
 
-dayjs.extend(isBetween)
+dayjs.extend(isBetween);
 
 export const DATE_FORMAT = 'YYYY-MM-DD';
-export const WEEK_HEAD_0 = ['日', '一', '二', '三', '四', '五', '六']
-export const WEEK_HEAD_1 = ['一', '二', '三', '四', '五', '六', '日']
+export const WEEK_HEAD_0 = ['日', '一', '二', '三', '四', '五', '六'];
+export const WEEK_HEAD_1 = ['一', '二', '三', '四', '五', '六', '日'];
 
 const getDefaultVal = (type: string) => {
   if (type === 'range') {
-    return [dayjs().format(DATE_FORMAT), dayjs().add(1, 'month').format(DATE_FORMAT)]
+    return [dayjs().format(DATE_FORMAT), dayjs().add(1, 'month').format(DATE_FORMAT)];
   } else {
-    return dayjs().format(DATE_FORMAT)
+    return dayjs().format(DATE_FORMAT);
   }
-}
+};
 
 const DatePicker: React.FC<DatePickerProps> = (props) => {
   const {
@@ -31,38 +31,31 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
     style,
     value,
     defaultValue = getDefaultVal(props.type || 'date'),
-    trigger = "click",
+    trigger = 'click',
     disabled = false,
     type = 'date',
     rangeSeparator = '~',
     firstDayOfWeek = 1,
-    onChange
+    onChange,
   } = props;
 
-  const [popupVisible, setPopupVisible] = useState(false)
+  const [popupVisible, setPopupVisible] = useState(false);
   const switchPopup = (visible: boolean) => {
-    setPopupVisible(visible)
-  }
+    setPopupVisible(visible);
+  };
 
-  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
+  const [innerValue, setInnerValue] = useDefault<string | string[]>(value, defaultValue, onChange);
 
-  const handleChange = (val: string) => {
-    setInnerValue(val)
-  }
+  const handleChange = (val: string | string[]) => {
+    setInnerValue(val);
+  };
 
   const handleClose = () => {
-    setPopupVisible(false)
-  }
+    setPopupVisible(false);
+  };
 
   return (
-    <div
-      className={classNames(
-        'i-date-picker',
-        className
-      )}
-      data-type={type}
-      style={{ ...style }}
-    >
+    <div className={classNames('i-date-picker', className)} data-type={type} style={{ ...style }}>
       <Popup
         content={
           type === 'date' ? (
@@ -91,7 +84,11 @@ const DatePicker: React.FC<DatePickerProps> = (props) => {
         <Input
           readonly
           disabled={disabled}
-          value={!_.isArray(innerValue) ? innerValue : `${innerValue[0]} ${rangeSeparator} ${innerValue[1]}`}
+          value={
+            !_.isArray(innerValue)
+              ? innerValue
+              : `${innerValue[0]} ${rangeSeparator} ${innerValue[1]}`
+          }
           placeholder="请选择日期"
           suffixIcon="Calendar"
         />

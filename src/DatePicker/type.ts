@@ -10,11 +10,11 @@ export interface DatePickerProps {
   /**
    * 固定选中值（受控）
    */
-  value?: string;
+  value?: string | string[];
   /**
    * 默认选中值（非受控）
    */
-  defaultValue?: string;
+  defaultValue?: string | string[];
   /**
    * 触发方式
    * @default click
@@ -43,7 +43,7 @@ export interface DatePickerProps {
   /**
    * 选中值发生变化时触发
    */
-  onChange?: (value: string) => void;
+  onChange?: (value: string | string[]) => void;
 }
 
 export interface DateHeaderBtnProps {
@@ -59,10 +59,10 @@ export interface DatePanelProps {
   firstDayOfWeek?: number;
   onChange?: Function;
   onHover?: Function;
-  onClose?: Function
+  onClose?: Function;
 }
 
-export interface DatePanelRangeProps extends DatePanelProps { }
+export interface DatePanelRangeProps extends DatePanelProps {}
 
 export interface MonthSelectPanelProps {
   month: number;

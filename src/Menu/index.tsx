@@ -7,14 +7,14 @@ import MenuGroup from './MenuGroup';
 import { MenuItemProps, MenuProps } from './type';
 
 const Menu: React.FC<MenuProps> & {
-  Item: React.ElementType,
-  Group: React.ElementType
+  Item: React.ElementType;
+  Group: React.ElementType;
 } = (props) => {
   // 初始默认值（导航第一项）
-  let defaultVal
+  let defaultVal;
   React.Children.map(props.children, (child, index) => {
-    index === 0 && (defaultVal = (child as ReactElement).props.value || '0')
-  })
+    index === 0 && (defaultVal = (child as ReactElement).props.value || '0');
+  });
 
   const {
     children,
@@ -22,7 +22,7 @@ const Menu: React.FC<MenuProps> & {
     style,
     width,
     active,
-    defaultActive = defaultVal,
+    defaultActive = defaultVal ?? '0',
     prefixContent,
     suffixContent,
     direction = 'horizontal',
@@ -33,24 +33,16 @@ const Menu: React.FC<MenuProps> & {
   const [innerActive, setInnerActive] = useDefault(active, defaultActive, onChange);
 
   const handleChange = (val: string | number) => {
-    setInnerActive(val)
-  }
+    setInnerActive(val);
+  };
 
   return (
     <div
-      className={classNames(
-        'i-menu',
-        direction === 'vertical' && 'i-menu__vertical',
-        className
-      )}
+      className={classNames('i-menu', direction === 'vertical' && 'i-menu__vertical', className)}
       style={{ ...style, width }}
       {...restProps}
     >
-      {prefixContent && (
-        <header className="i-menu__logo">
-          {prefixContent}
-        </header>
-      )}
+      {prefixContent && <header className="i-menu__logo">{prefixContent}</header>}
       <ul className="i-menu-item__wrapper">
         {React.Children.map(children, (child, index) => {
           if (!React.isValidElement(child)) {
@@ -61,18 +53,14 @@ const Menu: React.FC<MenuProps> & {
             direction,
             active: innerActive,
             onChange: handleChange,
-            ...child.props
+            ...child.props,
           };
           return React.cloneElement(child, childProps);
         })}
       </ul>
-      {suffixContent && (
-        <footer className="i-menu__operations">
-          {suffixContent}
-        </footer>
-      )}
+      {suffixContent && <footer className="i-menu__operations">{suffixContent}</footer>}
     </div>
-  )
+  );
 };
 
 Menu.Item = MenuItem;

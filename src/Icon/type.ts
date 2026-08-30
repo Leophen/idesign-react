@@ -27,5 +27,5 @@ export interface IconProps {
   /**
    * 点击图标触发事件
    */
-  onClick?: any;
+  onClick?: React.MouseEventHandler<HTMLElement>;
 }

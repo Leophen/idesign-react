@@ -118,27 +118,27 @@ export interface InputProps {
   /**
    * 输入框值发生变化时触发
    */
-  onChange?: (value: string, ev?: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (value: string | number, ev?: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * 输入框聚焦时触发
    */
-  onFocus?: (value: string, ev?: React.FocusEvent<HTMLInputElement>) => void;
+  onFocus?: (value: string | number, ev?: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * 输入框失焦时触发
    */
-  onBlur?: (value: string, ev?: React.FocusEvent<HTMLInputElement>) => void;
+  onBlur?: (value: string | number, ev?: React.FocusEvent<HTMLInputElement>) => void;
   /**
    * 键盘按下时触发
    */
-  onKeyDown?: (value: string, ev: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyDown?: (value: string | number, ev: React.KeyboardEvent<HTMLInputElement>) => void;
   /**
    * 键盘按下回车键时触发
    */
-  onEnter?: (value: string, ev: React.KeyboardEvent<HTMLInputElement>) => void;
+  onEnter?: (value: string | number, ev: React.KeyboardEvent<HTMLInputElement>) => void;
   /**
    * 释放键盘时触发
    */
-  onKeyUp?: (value: string, ev: React.KeyboardEvent<HTMLInputElement>) => void;
+  onKeyUp?: (value: string | number, ev: React.KeyboardEvent<HTMLInputElement>) => void;
   /**
    * 清空按钮点击时触发
    */
@@ -146,11 +146,11 @@ export interface InputProps {
   /**
    * 数字输入框移动滑块时触发
    */
-  onMove?: (value: string, ev?: React.ChangeEvent<HTMLInputElement>) => void;
+  onMove?: (value: string | number, ev?: React.ChangeEvent<HTMLInputElement>) => void;
   /**
    * 数字输入框滑块失焦时触发
    */
-  onMoveUp?: (value: string) => void;
+  onMoveUp?: (value: string | number) => void;
   /**
    * 点击前置图标触发事件
    */

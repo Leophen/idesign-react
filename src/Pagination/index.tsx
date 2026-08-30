@@ -25,54 +25,44 @@ const Pagination: React.FC<PaginationProps> = (props) => {
     current: current,
     total: total,
     pageSize: pageSize,
-  })
+  });
 
   const switchPageSize = (pageSize: number) => {
-    pageData.current = 1
-    pageData.pageSize = pageSize
-    setPageData({ ...pageData })
-    onChange?.(pageData)
-  }
+    pageData.current = 1;
+    pageData.pageSize = pageSize;
+    setPageData({ ...pageData });
+    onChange?.(pageData);
+  };
 
   const clickPageNum = (page: number) => {
-    pageData.current = page
-    setPageData({ ...pageData })
-    onChange?.(pageData)
-  }
+    pageData.current = page;
+    setPageData({ ...pageData });
+    onChange?.(pageData);
+  };
 
-  const [inputVal, setInputVal] = useState(String(pageData.current))
+  const [inputVal, setInputVal] = useState(String(pageData.current));
 
   useEffect(() => {
-    setInputVal(String(pageData.current))
-  }, [pageData.current])
+    setInputVal(String(pageData.current));
+  }, [pageData.current]);
 
-  const handleInputEnter = (val: string) => {
-    if (val !== '') {
-      clickPageNum(Number(val))
+  const handleInputEnter = (val: string | number) => {
+    const text = String(val);
+    if (text !== '') {
+      clickPageNum(Number(text));
     } else {
-      clickPageNum(1)
+      clickPageNum(1);
     }
-  }
+  };
 
-  const handleInputChange = (val: string) => {
-    setInputVal(val)
-  }
+  const handleInputChange = (val: string | number) => {
+    setInputVal(String(val));
+  };
 
   return (
-    <div
-      className={classNames(
-        'i-pagination',
-        className
-      )}
-      style={{ ...style }}
-      {...restProps}
-    >
+    <div className={classNames('i-pagination', className)} style={{ ...style }} {...restProps}>
       {!hideSelect && (
-        <PaginationSelect
-          value={pageData.pageSize}
-          disabled={disabled}
-          onSelect={switchPageSize}
-        />
+        <PaginationSelect value={pageData.pageSize} disabled={disabled} onSelect={switchPageSize} />
       )}
       <PaginationList
         current={pageData.current}
@@ -82,15 +72,15 @@ const Pagination: React.FC<PaginationProps> = (props) => {
         onChoose={clickPageNum}
       />
       {!hideInput && (
-        <section className='i-pagination-input'>
+        <section className="i-pagination-input">
           <span>前往</span>
           <Input
             style={{
-              width: String(_.ceil(pageData.total / pageData.pageSize)).length * 8 + 20
+              width: String(_.ceil(pageData.total / pageData.pageSize)).length * 8 + 20,
             }}
-            placeholder=''
-            type='number'
-            speed='slow'
+            placeholder=""
+            type="number"
+            speed="slow"
             hideNumberBtn
             value={inputVal}
             disabled={disabled}

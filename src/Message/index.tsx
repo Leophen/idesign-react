@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot, Root } from 'react-dom/client';
 import Message from './Message';
 import MessageList from './MessageList';
 import {
@@ -13,7 +13,6 @@ import {
 import { useContainer } from '../hooks/useContainer';
 import './index.scss';
 
-// 创建消息提示容器
 const popupWrapper = useContainer('i-popup-wrapper', document.body);
 const messageWrapper = useContainer('i-message-container', popupWrapper);
 
@@ -22,13 +21,24 @@ const messageList: MessageListData = {
   bottom: [],
 };
 
+const rootMap = new Map<PositionType, Root>();
+
+const renderMessageList = (position: PositionType, container: Element | null) => {
+  if (!container) {
+    return;
+  }
+  let root = rootMap.get(position);
+  if (!root) {
+    root = createRoot(container);
+    rootMap.set(position, root);
+  }
+  root.render(<MessageList position={position} listData={messageList[position]} />);
+};
+
 const createMessageWrapper = (position: PositionType) => {
   const idName = `i-message-wrapper__${position}`;
   const container = useContainer(idName, messageWrapper, `i-message-wrapper ${idName}`);
-  ReactDOM.render(
-    <MessageList position={position} listData={messageList[position]} />,
-    container,
-  );
+  renderMessageList(position, container);
 };
 
 createMessageWrapper('top');
@@ -41,29 +51,25 @@ const getWrapper = (position: PositionType) => {
 const updateMessageWrapper = (config: MergeConfigType) => {
   const { id = 0, position = 'top', duration = 3 } = config;
 
-  position === 'top' ? messageList[position].push(config) : messageList[position].unshift(config);
+  if (position === 'top') {
+    messageList[position].push(config);
+  } else {
+    messageList[position].unshift(config);
+  }
   const renderContainer = getWrapper(position);
 
-  // 延迟消除
   if (duration > 0) {
     setTimeout(() => {
-      messageList[position].map((item: MergeConfigType, index: number) => {
+      messageList[position].forEach((item: MergeConfigType, index: number) => {
         if (item.id === id) {
           messageList[position].splice(index, 1);
         }
       });
-      ReactDOM.render(
-        <MessageList position={position} listData={messageList[position]} />,
-        renderContainer,
-      );
+      renderMessageList(position, renderContainer);
     }, duration * 1000);
   }
 
-  // 此刻更新
-  ReactDOM.render(
-    <MessageList position={position} listData={messageList[position]} />,
-    renderContainer,
-  );
+  renderMessageList(position, renderContainer);
 };
 
 const openMessage = (
@@ -78,7 +84,9 @@ const openMessage = (
     type,
     content: isConfigMode ? (messageConfig as MessageConfigType)?.content : messageConfig,
     duration: isConfigMode ? (messageConfig as MessageConfigType)?.duration ?? 3 : duration,
-    position: isConfigMode ? (messageConfig as MessageConfigType)?.position ?? 'top' : (position as PositionType),
+    position: isConfigMode
+      ? (messageConfig as MessageConfigType)?.position ?? 'top'
+      : (position as PositionType),
   };
   updateMessageWrapper(mergeConfig);
 };
@@ -87,11 +95,11 @@ const clearMessage = (position?: PositionType) => {
   const positionArr: PositionType[] = ['top', 'bottom'];
   if (position) {
     messageList[position] = [];
-    ReactDOM.render(<MessageList position={position} listData={[]} />, getWrapper(position));
+    renderMessageList(position, getWrapper(position));
   } else {
     positionArr.forEach((item) => {
       messageList[item] = [];
-      ReactDOM.render(<MessageList position={item} listData={[]} />, getWrapper(item));
+      renderMessageList(item, getWrapper(item));
     });
   }
 };

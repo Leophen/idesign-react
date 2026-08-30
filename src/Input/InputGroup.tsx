@@ -4,15 +4,8 @@ import './index.scss';
 import { InputGroupProps } from './type';
 
 const InputGroup: React.FC<InputGroupProps> = (props) => {
-  const {
-    className,
-    children,
-    style,
-    prefixContent,
-    suffixContent,
-    clickPrefix,
-    clickSuffix
-  } = props;
+  const { className, children, style, prefixContent, suffixContent, clickPrefix, clickSuffix } =
+    props;
 
   const [contentHeight, setContentHeight] = useState(0);
   const groupRef = useRef<HTMLDivElement>(null);
@@ -34,7 +27,6 @@ const InputGroup: React.FC<InputGroupProps> = (props) => {
   });
 
   const handleClickWith = (location: 'pre' | 'suf', e: React.MouseEvent<HTMLDivElement>) => {
-    e.persist();
     e.stopPropagation();
     if (clickPrefix && location === 'pre') {
       clickPrefix(e);

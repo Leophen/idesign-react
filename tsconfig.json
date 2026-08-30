@@ -5,9 +5,11 @@
     "moduleResolution": "node",
     "jsx": "react",
     "esModuleInterop": true,
-    "types": ["jest"],
+    "types": ["jest", "@testing-library/jest-dom"],
     "strict": true,
     "skipLibCheck": true,
     "declaration": true
-  }
+  },
+  "include": ["src/**/*.ts", "src/**/*.tsx", "typings.d.ts"],
+  "exclude": ["src/**/__test__/**", "src/**/__snapshots__/**", "docusaurus/**", "docs/**"]
 }

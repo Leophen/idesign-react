@@ -3,37 +3,28 @@ import './index.scss';
 import { MessageMethod, MessageProps, PositionType } from './type';
 import Icon from '../Icon';
 
-// @ts-ignore
-const Message: React.FC<MessageProps> & {
+export interface MessageComponent extends React.FC<MessageProps> {
   success: MessageMethod;
   warning: MessageMethod;
   error: MessageMethod;
   info: MessageMethod;
   clear: (position?: PositionType) => void;
-} = (props) => {
-  const {
-    type = 'info',
-    content,
-    entered = false,
-    ...restProps
-  } = props;
+}
 
-  const msgRef = useRef<HTMLDivElement>(null)
-  const [msgHeight, setMsgHeight] = useState<number | undefined>(undefined)
+const Message = ((props: MessageProps) => {
+  const { type = 'info', content, entered = false, ...restProps } = props;
+
+  const msgRef = useRef<HTMLDivElement>(null);
+  const [msgHeight, setMsgHeight] = useState<number | undefined>(undefined);
   useEffect(() => {
     if (entered) {
-      const { height } = (msgRef.current as HTMLDivElement).getBoundingClientRect()
-      setMsgHeight(height)
+      const { height } = (msgRef.current as HTMLDivElement).getBoundingClientRect();
+      setMsgHeight(height);
     }
-  }, [entered])
+  }, [entered]);
 
   return (
-    <div
-      className="i-message"
-      style={{ height: msgHeight }}
-      ref={msgRef}
-      {...restProps}
-    >
+    <div className="i-message" style={{ height: msgHeight }} ref={msgRef} {...restProps}>
       <Icon
         name={
           {
@@ -48,7 +39,7 @@ const Message: React.FC<MessageProps> & {
       {content}
     </div>
   );
-};
+}) as MessageComponent;
 
 Message.displayName = 'Message';
 

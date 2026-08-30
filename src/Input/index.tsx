@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import classNames from 'classnames';
 import './index.scss';
 import Icon from '../Icon';
-import useDefault from '../hooks/useDefault';
+import useDefault, { ChangeHandler } from '../hooks/useDefault';
 import InputGroup from './InputGroup';
 import { InputProps } from './type';
 import InputSlider from './inputSlider';
@@ -60,12 +60,21 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     inputRef.current?.focus();
   };
 
-  const [innerValue, setInnerValue] = useDefault(value, defaultValue, onChange);
+  const [innerValue, setInnerValue] = useDefault<
+    string | number,
+    [React.ChangeEvent<HTMLInputElement> | React.MouseEvent | MouseEvent]
+  >(
+    value,
+    defaultValue,
+    onChange as ChangeHandler<
+      string | number,
+      [React.ChangeEvent<HTMLInputElement> | React.MouseEvent | MouseEvent]
+    >,
+  );
 
   const [valueLength, setValueLength] = useState(innerValue?.toString().length || 0);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.persist();
     maxLength && setValueLength(e.target.value.length);
     let currentValue = e.target.value;
     if (type === 'number') {
@@ -87,7 +96,7 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
   // 点击清空按钮
   const handleClear = (e: React.MouseEvent<HTMLDivElement>) => {
-    setInnerValue('', e);
+    (setInnerValue as (value: string | number) => void)('');
     onClear?.(e);
   };
 
@@ -100,7 +109,6 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
   // 键盘事件
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    e.persist();
     e.key === 'Enter' && onEnter?.((e.target as HTMLInputElement).value, e);
     onKeyDown?.((e.target as HTMLInputElement).value, e);
   };
@@ -110,7 +118,6 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     eventType: 'focus' | 'blur' | 'up',
     e: React.FocusEvent<HTMLInputElement, Element> | React.KeyboardEvent<HTMLInputElement>,
   ) => {
-    e.persist();
     if (eventType === 'focus') {
       onFocus?.(
         (e.target as HTMLInputElement).value,
@@ -302,7 +309,6 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
     window.removeEventListener('mousemove', handleSliderMove);
   };
   const handleSliderDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.persist();
     if (size && size === 'small') {
       slider.top = e.clientY - 8;
     } else if (size && size === 'large') {
@@ -337,7 +343,6 @@ const Input: React.FC<InputProps> & { Group: React.ElementType } = (props) => {
 
   // 内置图标
   const handleClickInnerIcon = (location: 'pre' | 'suf', e: React.MouseEvent<HTMLDivElement>) => {
-    e.persist();
     e.stopPropagation();
     if (clickPrefixIcon && location === 'pre') {
       clickPrefixIcon(e);

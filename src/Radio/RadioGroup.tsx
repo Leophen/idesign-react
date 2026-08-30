@@ -4,26 +4,28 @@ import './index.scss';
 import { RadioContextValue, RadioGroupProps, RadioProps } from './type';
 import useDefault from '../hooks/useDefault';
 
-export const RadioContext = React.createContext<RadioContextValue>(null as any);
+export const RadioContext = React.createContext<RadioContextValue | null>(null);
 
-// 单选框组
+// 单选框�?
 const RadioGroup: React.FC<RadioGroupProps> = (props) => {
   const initSelectedValue = () => {
-    let result = props.defaultSelected
+    let result = props.defaultSelected;
     if (!result) {
-      React.Children.map(props.children, (child: any, index) => {
-        index === 0 && (result = child?.props.value)
-      })
+      React.Children.forEach(props.children, (child, index) => {
+        if (index === 0 && React.isValidElement<RadioProps>(child)) {
+          result = child.props.value;
+        }
+      });
     }
-    return result
-  }
-  initSelectedValue()
+    return result;
+  };
+  initSelectedValue();
   const {
     children = '',
     className,
     style,
     selected,
-    defaultSelected = initSelectedValue(),
+    defaultSelected = initSelectedValue() ?? '',
     type = 'radio',
     size,
     disabled,
@@ -32,11 +34,11 @@ const RadioGroup: React.FC<RadioGroupProps> = (props) => {
 
   const [groupValue, setGroupValue] = useDefault(selected, defaultSelected, onChange);
 
-  // 注入每一项单选框的 context
+  // 注入每一项单选框�?context
   const context: RadioContextValue = {
-    // 将单选框组的 props 注入单项单选框的方法
+    // 将单选框组的 props 注入单项单选框的方�?
     inject: (itemProps: RadioProps) => {
-      // 拿到单项单选框的 value，方便与单选框组的 groupValue 做比较
+      // 拿到单项单选框�?value，方便与单选框组的 groupValue 做比�?
       const itemVal = itemProps.value;
       return {
         ...itemProps,
@@ -45,9 +47,8 @@ const RadioGroup: React.FC<RadioGroupProps> = (props) => {
         disabled,
         checked: groupValue === itemVal,
         onChange(checked, e) {
-          e.persist();
           // 触发单选框组传入的 onChange
-          itemVal && setGroupValue(itemVal, e)
+          itemVal && setGroupValue(itemVal, e);
         },
       };
     },

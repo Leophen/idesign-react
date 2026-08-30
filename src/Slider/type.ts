@@ -60,7 +60,7 @@ export interface SliderProps {
   /**
    * 滑块值变化时触发
    */
-  onChange?: (value: number) => void;
+  onChange?: (value: number | number[]) => void;
 }
 
 export interface SliderBtnProps extends SliderProps {

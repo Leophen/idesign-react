@@ -26,7 +26,7 @@ const App = () => {
     <div className="idesign-demo-block-row">
       <Tag>普通标签</Tag>
 
-      <a href="https://idesign-react.leophen.top/" target="_blank" rel="noreferrer">
+      <a href="https://idesign-react.leophen.cn/" target="_blank" rel="noreferrer">
         <Tag>超链接标签一</Tag>
       </a>
 
@@ -153,7 +153,13 @@ const App = () => {
         <Tag type="primary" theme="dark" onClose={() => alert('close')}>
           标签三
         </Tag>
-        <Tag type="primary" theme="dark" icon="TagPrice" onClick={() => alert('click')} onClose={() => alert('close')}>
+        <Tag
+          type="primary"
+          theme="dark"
+          icon="TagPrice"
+          onClick={() => alert('click')}
+          onClose={() => alert('close')}
+        >
           标签四
         </Tag>
       </div>

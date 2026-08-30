@@ -72,7 +72,7 @@ export interface TextareaProps {
   /**
    * 输入内容变化时触发
    */
-  onChange?: (value: string | number, ev?: React.FormEvent<HTMLDivElement>) => void;
+  onChange?: (value: string | number, ev?: React.FormEvent<HTMLTextAreaElement>) => void;
   /**
    * 输入框聚焦时触发
    */

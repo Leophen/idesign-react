@@ -8,7 +8,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   const {
     className,
     style,
-    placeholder = "请输入",
+    placeholder = '请输入',
     disabled = false,
     readonly = false,
     status,
@@ -32,33 +32,39 @@ const Textarea: React.FC<TextareaProps> = (props) => {
   const [valueLength, setValueLength] = useState(innerValue?.toString().length || 0);
 
   const handleChange = (e: React.FormEvent<HTMLTextAreaElement>) => {
-    e.persist();
     maxLength && setValueLength((e.target as HTMLTextAreaElement).value.length);
-    setInnerValue((e.target as HTMLTextAreaElement).value, e)
-    resize()
+    setInnerValue((e.target as HTMLTextAreaElement).value, e);
+    resize();
   };
 
   // 高度自适应
   useEffect(() => {
-    autoSize ? resize() : ''
-  }, [autoSize])
-  const textareaRef = useRef(null)
+    autoSize ? resize() : '';
+  }, [autoSize]);
+  const textareaRef = useRef(null);
   const resize = () => {
     if (autoSize && textareaRef.current) {
       // 如果字数减少，重设高度
       (textareaRef.current as HTMLElement).style.height = 'auto';
       // 如果高度不够，重新设置
-      if ((textareaRef.current as HTMLElement).scrollHeight >= (textareaRef.current as HTMLElement).offsetHeight) {
+      if (
+        (textareaRef.current as HTMLElement).scrollHeight >=
+        (textareaRef.current as HTMLElement).offsetHeight
+      ) {
         let val;
-        (textareaRef.current as HTMLElement).scrollHeight > 32 ? val = (textareaRef.current as HTMLElement).scrollHeight - 10 : val = (textareaRef.current as HTMLElement).scrollHeight;
-        (textareaRef.current as HTMLElement).style.height = val + 'px'
+        (textareaRef.current as HTMLElement).scrollHeight > 32
+          ? (val = (textareaRef.current as HTMLElement).scrollHeight - 10)
+          : (val = (textareaRef.current as HTMLElement).scrollHeight);
+        (textareaRef.current as HTMLElement).style.height = val + 'px';
       }
     }
-  }
+  };
 
   // 通用事件
-  const handleEvent = (eventType: 'focus' | 'blur', e: React.FocusEvent<HTMLTextAreaElement, Element>) => {
-    e.persist();
+  const handleEvent = (
+    eventType: 'focus' | 'blur',
+    e: React.FocusEvent<HTMLTextAreaElement, Element>,
+  ) => {
     if (eventType === 'focus') {
       onFocus?.(e.target.value, e);
     }
@@ -69,14 +75,7 @@ const Textarea: React.FC<TextareaProps> = (props) => {
 
   return (
     <>
-      <div
-        className={classNames(
-          'i-textarea',
-          className
-        )}
-        style={{ ...style }}
-        {...restProps}
-      >
+      <div className={classNames('i-textarea', className)} style={{ ...style }} {...restProps}>
         <textarea
           className={classNames(
             'i-textarea__inner',
@@ -85,9 +84,9 @@ const Textarea: React.FC<TextareaProps> = (props) => {
             status && `i-textarea__inner--status-${status}`,
           )}
           style={{
-            minHeight: autoSize ? minRows && (22 * minRows) || 22 : minRows && (22 * minRows),
-            maxHeight: maxRows && (22 * maxRows),
-            resize: noResize ? 'none' : undefined
+            minHeight: autoSize ? (minRows && 22 * minRows) || 22 : minRows && 22 * minRows,
+            maxHeight: maxRows && 22 * maxRows,
+            resize: noResize ? 'none' : undefined,
           }}
           placeholder={placeholder}
           disabled={disabled}
@@ -109,14 +108,13 @@ const Textarea: React.FC<TextareaProps> = (props) => {
           </div>
         )}
       </div>
-      {tips && <div
-        className={classNames(
-          'i-textarea__tips',
-          status && `i-textarea__tips--status-${status}`,
-        )}
-      >
-        {tips}
-      </div>}
+      {tips && (
+        <div
+          className={classNames('i-textarea__tips', status && `i-textarea__tips--status-${status}`)}
+        >
+          {tips}
+        </div>
+      )}
     </>
   );
 };

@@ -1,9 +1,9 @@
 import React from 'react';
 import classNames from 'classnames';
 import './index.scss';
-import { AvatarContextValue, AvatarGroupProps, AvatarProps } from './type'
+import { AvatarContextValue, AvatarGroupProps, AvatarProps } from './type';
 
-export const AvatarContext = React.createContext<AvatarContextValue>(null as any);
+export const AvatarContext = React.createContext<AvatarContextValue | null>(null);
 
 const AvatarGroup: React.FC<AvatarGroupProps> = (props) => {
   const {
@@ -11,10 +11,10 @@ const AvatarGroup: React.FC<AvatarGroupProps> = (props) => {
     className,
     style,
     size = 32,
-    shape = "circle",
+    shape = 'circle',
     color,
-    cascading = "right",
-  } = props
+    cascading = 'right',
+  } = props;
 
   // 注入每一项的 context
   const context: AvatarContextValue = {
@@ -32,17 +32,13 @@ const AvatarGroup: React.FC<AvatarGroupProps> = (props) => {
   return (
     <AvatarContext.Provider value={context}>
       <div
-        className={classNames(
-          'i-avatar-group',
-          `i-avatar__offset-${cascading}`,
-          className
-        )}
+        className={classNames('i-avatar-group', `i-avatar__offset-${cascading}`, className)}
         style={{ ...style }}
       >
         {children}
       </div>
     </AvatarContext.Provider>
-  )
-}
+  );
+};
 
 export default AvatarGroup;

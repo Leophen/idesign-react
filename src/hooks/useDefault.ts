@@ -1,26 +1,20 @@
 import { useState } from 'react';
 
-export interface ChangeHandler<T, P extends any[]> {
-  // @ts-ignore
-  (value: T, ...args: P);
-}
+export type ChangeHandler<T, P extends unknown[] = []> = (value: T, ...args: P) => void;
 
-export default function useDefault<T, P extends any[]>(
+export default function useDefault<T, P extends unknown[] = []>(
   value: T | undefined,
   defaultValue: T,
-  onChange: ChangeHandler<T, P> | any,
+  onChange?: ChangeHandler<T, P>,
 ): [T, ChangeHandler<T, P>] {
-  // 无论是否受控，都要 useState，因为 Hooks 是无条件的
   const [internalValue, setInternalValue] = useState(defaultValue);
 
-  const defaultFn = () => {};
+  const defaultFn: ChangeHandler<T, P> = () => {};
 
-  // 受控模式
   if (typeof value !== 'undefined') {
-    return [value, onChange || defaultFn];
+    return [value, onChange ?? defaultFn];
   }
 
-  // 非受控模式
   return [
     internalValue,
     (newValue, ...args) => {

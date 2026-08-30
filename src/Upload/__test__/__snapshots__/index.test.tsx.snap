@@ -68,7 +68,7 @@ exports[`Upload 组件测试 drag 1`] = `
       <span
         class="i-upload-tip"
       >
-        支持不超过 10M 的 excel 类型文件
+        ????? 10M ? excel ????
       </span>
     </div>
   </div>

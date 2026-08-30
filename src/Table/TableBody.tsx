@@ -5,34 +5,21 @@ import ColumnGroup from './ColumnGroup';
 import { TableBodyProps } from './type';
 
 const TableBody: React.FC<TableBodyProps> = (props) => {
-  const {
-    data = [],
-    columns = [],
-    maxHeight,
-    stripe = false
-  } = props
+  const { data = [], columns = [], maxHeight, stripe = false } = props;
 
   return (
-    <div
-      className="i-table-tbody__box"
-      style={{ maxHeight }}
-    >
+    <div className="i-table-tbody__box" style={{ maxHeight }}>
       <table className="i-table-tbody__wrapper">
         <ColumnGroup columns={columns} />
-        <tbody
-          className={classNames(
-            'i-table-tbody',
-            stripe && 'i-table-tbody__stripe'
-          )}
-        >
-          {data.map((item) => (
+        <tbody className={classNames('i-table-tbody', stripe && 'i-table-tbody__stripe')}>
+          {data.map((item, rowIndex) => (
             <tr
-              className='i-table-tr'
-              key={item.key}
+              className="i-table-tr"
+              key={String((item as Record<string, unknown>).key ?? rowIndex)}
             >
               {columns.map((cell) => (
                 <td className="i-table-td" key={cell.key}>
-                  {item[cell.key]}
+                  {String((item as Record<string, unknown>)[cell.key] ?? '')}
                 </td>
               ))}
             </tr>

@@ -5,13 +5,13 @@ import useDefault from '../hooks/useDefault';
 import CollapseItem from './CollapseItem';
 import { CollapseContextValue, CollapseItemProps, CollapseProps, CollapseValueType } from './type';
 
-export const CollapseContext = React.createContext<CollapseContextValue>(null as any);
+export const CollapseContext = React.createContext<CollapseContextValue | null>(null);
 
 const Collapse: React.FC<CollapseProps> & { Item: React.ElementType } = (props) => {
-  let defaultVal: CollapseValueType = []
+  let defaultVal: CollapseValueType = [];
   React.Children.map(props.children, (child, index) => {
-    !props.defaultActive && props.expandAll && (defaultVal.push((child as any).props.value || index))
-  })
+    !props.defaultActive && props.expandAll && defaultVal.push((child as any).props.value || index);
+  });
 
   const {
     children = '',
@@ -33,7 +33,7 @@ const Collapse: React.FC<CollapseProps> & { Item: React.ElementType } = (props) 
 
   // 更新展开项
   const updateInnerActive = (value: string | number) => {
-    let newValue: CollapseValueType = [].concat(innerActive as any || []);
+    let newValue: CollapseValueType = [].concat((innerActive as any) || []);
     const index = newValue.indexOf(value);
     if (index >= 0) {
       newValue.splice(index, 1);
@@ -66,7 +66,7 @@ const Collapse: React.FC<CollapseProps> & { Item: React.ElementType } = (props) 
           'i-collapse',
           hideBorder && 'i-collapse__hide-border',
           noIndent && 'i-collapse__no-indent',
-          className
+          className,
         )}
         style={{ ...style }}
         {...restProps}

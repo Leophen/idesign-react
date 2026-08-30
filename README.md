@@ -1,5 +1,5 @@
 <div align="center">
-  <a href="https://idesign-react.leophen.top/" target="_blank">
+  <a href="https://idesign-react.leophen.cn/" target="_blank">
     <img alt="iDesign Logo" width="200" src="https://i.postimg.cc/fbLPyXJd/logo.png"/>
   </a>
 </div>
@@ -56,7 +56,7 @@ ReactDOM.render(<App />, document.getElementById('app'));
 
 ## 生态
 
-- [iDesign Vue](https://idesign-vue.leophen.top/)
+- [iDesign Vue](https://idesign-vue.leophen.cn/)
 
 # 浏览器兼容性
 
